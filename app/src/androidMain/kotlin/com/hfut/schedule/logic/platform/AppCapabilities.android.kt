@@ -45,6 +45,27 @@ actual object AppCapabilities {
     actual fun screenHeightDp(): Int =
         com.hfut.schedule.application.MyApplication.context.resources.configuration.screenHeightDp
 
+    actual fun saveAndShareTextFile(fileName: String, content: String, chooserTitle: String): String? = runCatching {
+        val ctx = com.hfut.schedule.application.MyApplication.context
+        val file = java.io.File(ctx.getExternalFilesDir(null), fileName)
+        file.writeText(content)
+        val uri = androidx.core.content.FileProvider.getUriForFile(
+            ctx,
+            "${ctx.packageName}.provider",
+            file
+        )
+        val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(android.content.Intent.EXTRA_STREAM, uri)
+            addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        ctx.startActivity(
+            android.content.Intent.createChooser(shareIntent, chooserTitle)
+                .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        file.absolutePath
+    }.getOrNull()
+
     actual fun openOperation(info: String) {
         com.hfut.schedule.ui.screen.home.focus.funiction.openOperation(
             info,

@@ -2,8 +2,6 @@ package com.hfut.schedule.ui.screen.home.calendar.multi
 
 import com.xah.common.ui.res.Strings
 
-import android.content.Intent
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -38,22 +36,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.parse.SemesterParser
 import com.hfut.schedule.logic.util.storage.file.LargeStringDataManager
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
-import com.hfut.schedule.logic.util.sys.CourseLiveUpdateScheduler
-import com.hfut.schedule.logic.util.sys.PermissionSet.checkAndRequestNotificationPermission
 import com.hfut.schedule.logic.util.sys.Starter.refreshLogin
-import com.hfut.schedule.logic.util.sys.addCourseToEvent
-import com.hfut.schedule.logic.util.sys.delAllCourseEvent
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.CardListItem
@@ -91,7 +82,6 @@ fun MultiScheduleSettings(
     onShowUiSettings  : (Boolean) -> Unit,
     vm : NetWorkViewModel,
 ) {
-    val context = LocalContext.current
     var showBottomSheet_add by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -121,7 +111,7 @@ fun MultiScheduleSettings(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 HazeBottomSheetTopBar("上课提醒(以教务课表为数据源)", isPaddingStatusBar = false)
-                EventUI()
+                com.hfut.schedule.ui.nav.UiSlots.Render("course_events_ui")
                 Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP))
             }
         }
@@ -270,8 +260,14 @@ fun MultiScheduleSettings(
                         },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                LargeStringDataManager.read(LargeStringDataManager.getJxglstuDatumKey(SemesterParser.getSemester()))?.let { saveTextToFile("HFUT-Schedule-Share.txt", it) }
-                                shareTextFile("HFUT-Schedule-Share.txt")
+                                // 导出教务课表：Android 走系统分享，桌面落到下载目录并打开文件夹
+                                com.hfut.schedule.logic.platform.AppCapabilities.saveAndShareTextFile(
+                                    "HFUT-Schedule-Share.txt",
+                                    LargeStringDataManager.read(
+                                        LargeStringDataManager.getJxglstuDatumKey(SemesterParser.getSemester())
+                                    ) ?: "",
+                                    "分享课表给他人"
+                                )
                             }
                         }
                     )
@@ -318,190 +314,6 @@ fun MultiScheduleSettings(
 //                    )
 //                }
             }
-        }
-    }
-}
-
-fun saveTextToFile( fileName: String, content: String) {
-    val file = File(MyApplication.context.getExternalFilesDir(null), fileName)
-    file.writeText(content)
-}
-
-fun shareTextFile(fileName: String) {
-    val file = File(MyApplication.context.getExternalFilesDir(null), fileName)
-    val uri = FileProvider.getUriForFile(MyApplication.context, "${AppVersion.appPackageName}.provider", file)
-
-    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_STREAM, uri)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    }
-    MyApplication.context.startActivity(Intent.createChooser(shareIntent, "分享课表给他人").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-}
-
-
-@Composable
-private fun EventUI() {
-    val activity = LocalActivity.current
-    val context = LocalContext.current
-    val time by DataStoreManager.liveCourseReminderMinutes.collectAsState(initial = 20)
-    val enableLiveCourseReminder by DataStoreManager.enableLiveCourseReminder.collectAsState(initial = false)
-    val scope = rememberCoroutineScope()
-    var loading by remember { mutableStateOf(false) }
-    if(loading) {
-        LoadingUI("勿动稍等")
-    } else {
-        CardListItem(
-            overlineContent = {
-                Text("提醒时间")
-            },
-            headlineContent = {
-                Text("上课前${time}min")
-            },
-            trailingContent = {
-                Row {
-                    FilledTonalIconButton(
-                        onClick = {
-                            scope.launch {
-                                DataStoreManager.saveLiveCourseReminderMinutes(time + 5)
-                                if (enableLiveCourseReminder) {
-                                    CourseLiveUpdateScheduler.cancelAll(context)
-                                    CourseLiveUpdateScheduler.scheduleAll(context)
-                                }
-                            }
-                        }
-                    ) {
-                        Icon(painterResource(Drawables.add),null)
-                    }
-                    time.let {
-                        if(it >= 5) {
-                            FilledTonalIconButton(
-                                onClick = {
-                                    scope.launch {
-                                        DataStoreManager.saveLiveCourseReminderMinutes(time - 5)
-                                        if (enableLiveCourseReminder) {
-                                            CourseLiveUpdateScheduler.cancelAll(context)
-                                            CourseLiveUpdateScheduler.scheduleAll(context)
-                                        }
-                                    }
-                                }
-                            ) {
-                                Icon(painterResource(Drawables.remove),null)
-                            }
-                        }
-                    }
-                }
-            },
-            leadingContent = { Icon(painterResource(Drawables.schedule),null) },
-            modifier = Modifier.clickable {
-                scope.launch {
-                    DataStoreManager.saveLiveCourseReminderMinutes(20)
-                    if (enableLiveCourseReminder) {
-                        CourseLiveUpdateScheduler.cancelAll(context)
-                        CourseLiveUpdateScheduler.scheduleAll(context)
-                    }
-                }
-            }
-        )
-        DividerTextExpandedWith("实时通知") {
-            CustomCard(color = cardNormalColor()) {
-                TransplantListItem(
-                    headlineContent = {
-                        Text(if (enableLiveCourseReminder) "Android 16 Live Activity 已开启" else "开启 Android 16 Live Activity 提醒")
-                    },
-                    supportingContent = {
-                        Text("使用上方提醒时间，上课前${time}min弹出并显示教室；低版本降级为普通通知")
-                    },
-                    leadingContent = { Icon(painterResource(Drawables.notifications), null) },
-                    modifier = Modifier.clickable {
-                        activity?.let { checkAndRequestNotificationPermission(it) }
-                        scope.launch {
-                            if (enableLiveCourseReminder) {
-                                CourseLiveUpdateScheduler.cancelAll(context)
-                                DataStoreManager.saveLiveCourseReminder(false)
-                                showToast("已关闭 Live Activity 提醒")
-                            } else if (CourseLiveUpdateScheduler.canPostNotification(context)) {
-                                val count = CourseLiveUpdateScheduler.scheduleAll(context)
-                                CourseLiveUpdateScheduler.showCurrentWindowCourses(context)
-                                DataStoreManager.saveLiveCourseReminder(true)
-                                showToast("已开启 Live Activity 提醒，共调度${count}节课")
-                            } else {
-                                showToast("请先授予通知权限")
-                            }
-                        }
-                    }
-                )
-                PaddingHorizontalDivider()
-                TransplantListItem(
-                    headlineContent = {
-                        Text("刷新 Live Activity 提醒")
-                    },
-                    supportingContent = {
-                        Text("课表或提醒时间变化后重新调度后台提醒")
-                    },
-                    leadingContent = { Icon(painterResource(Drawables.rotate_right), null) },
-                    modifier = Modifier.clickable {
-                        scope.launch {
-                            CourseLiveUpdateScheduler.cancelAll(context)
-                            val count = CourseLiveUpdateScheduler.scheduleAll(context)
-                            CourseLiveUpdateScheduler.showCurrentWindowCourses(context)
-                            DataStoreManager.saveLiveCourseReminder(true)
-                            showToast("已刷新 Live Activity 提醒，共调度${count}节课")
-                        }
-                    }
-                )
-            }
-        }
-        DividerTextExpandedWith("日历日程") {
-            CardListItem(
-                headlineContent = {
-                    Text("清空+导入")
-                },
-                supportingContent = {
-                    Text("将目前的教务课表写入到日程")
-                },
-                leadingContent = { Icon(painterResource(Drawables.event_upcoming),null) },
-                modifier = Modifier.clickable {
-                    activity?.let {
-                        scope.launch {
-                            async { loading = true }.await()
-                            async { delAllCourseEvent(activity = it) }.await()
-                            async { addCourseToEvent(activity = it,time) }.await()
-                            launch { loading = false }
-                        }
-                    }
-                }
-            )
-            CardListItem(
-                headlineContent = {
-                    Text("清空")
-                },
-                supportingContent = {
-                    Text("清空导入的日程")
-                },
-                leadingContent = { Icon(painterResource(Drawables.event_busy),null) },
-                modifier = Modifier.clickable {
-                    activity?.let {
-                        scope.launch {
-                            async { loading = true }.await()
-                            async { delAllCourseEvent(activity = it) }.await()
-                            launch { loading = false }
-                        }
-                    }
-                }
-            )
-            CardListItem(
-                headlineContent = {
-                    Text("导出为ics")
-                },
-                supportingContent = {
-                    Text("将目前的教务课表写入到日程ics文件")
-                },
-                leadingContent = { Icon(painterResource(Drawables.attach_file),null) },
-                modifier = Modifier.clickable {
-                    showToast("正在开发")
-                }
-            )
         }
     }
 }

@@ -288,16 +288,17 @@ fun MainScreen(
 //            isFullScreen = false
         ) {
             Column {
-                com.hfut.schedule.ui.nav.UiSlots.Render(
-                    "multi_schedule_settings",
-                    listOf(
-                        ifSaved,
-                        swapUI,
-                        { showBottomSheet_multi = false },
-                        { newSelected: Int -> swapUI = newSelected },
-                        { showUiSettings = true; showBottomSheet_multi = false },
-                        vm
-                    )
+                // 多课表面板已平台化（MultiScheduleSettings 在共享层），两端直接调用
+                com.hfut.schedule.ui.screen.home.calendar.multi.MultiScheduleSettings(
+                    ifSaved = ifSaved,
+                    select = swapUI,
+                    onDismissed = { showBottomSheet_multi = false },
+                    onSelectedChange = { newSelected: Int -> swapUI = newSelected },
+                    onShowUiSettings = { _: Boolean ->
+                        showUiSettings = true
+                        showBottomSheet_multi = false
+                    },
+                    vm = vm,
                 )
                 Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP))
             }

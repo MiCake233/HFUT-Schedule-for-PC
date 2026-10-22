@@ -93,6 +93,13 @@ fun DesktopApp(exitApp: () -> Unit) {
 
     CompositionLocalProvider(LocalViewModelStoreOwner provides owner) {
         DesktopAppTheme {
+            // 启动自检标记：UI 真正组合成功后落一个文件，供打包后的自动化验收使用
+            androidx.compose.runtime.LaunchedEffect(Unit) {
+                runCatching {
+                    java.io.File(System.getProperty("java.io.tmpdir"), "hfut-desktop-started.txt")
+                        .writeText("UI_STARTED " + java.time.LocalDateTime.now())
+                }
+            }
             MainHost(
                 networkVm = networkVm,
                 loginVm = loginVm,

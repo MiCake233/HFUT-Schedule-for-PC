@@ -36,6 +36,13 @@ expect object AppCapabilities {
     /** 屏幕高度（dp）。Android 取配置；桌面端取默认值 */
     fun screenHeightDp(): Int
 
+    /**
+     * 把文本写成文件并「分享」出去。
+     * Android：写入应用外部目录后调起系统分享面板；桌面：写入下载目录并打开所在文件夹。
+     * @return 实际写入的绝对路径（失败返回 null）
+     */
+    fun saveAndShareTextFile(fileName: String, content: String, chooserTitle: String): String?
+
     /** 按文本内容打开对应应用或网页（学习通 / U 校园 / 雨课堂 / MOOC / 外链） */
     fun openOperation(info: String)
 

@@ -35,6 +35,18 @@ actual object AppCapabilities {
     actual fun queryCalendars(): List<Pair<Long, String>> = emptyList()
     actual fun screenHeightDp(): Int = 900
 
+    actual fun saveAndShareTextFile(fileName: String, content: String, chooserTitle: String): String? = runCatching {
+        // 桌面端：写到「下载」目录，然后用资源管理器定位到该文件
+        val downloads = java.io.File(System.getProperty("user.home"), "Downloads")
+        val dir = if (downloads.isDirectory) downloads else java.io.File(System.getProperty("user.home"))
+        dir.mkdirs()
+        val file = java.io.File(dir, fileName)
+        file.writeText(content)
+        java.awt.Desktop.getDesktop().open(dir)
+        com.hfut.schedule.logic.util.sys.showToast("已导出到 ${file.absolutePath}")
+        file.absolutePath
+    }.getOrNull()
+
     actual fun openOperation(info: String) {
         when {
             info.contains("U校园") -> com.hfut.schedule.logic.util.sys.Starter.startWebUrlOuter(

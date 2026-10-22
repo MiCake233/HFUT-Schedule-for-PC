@@ -47,6 +47,19 @@ compose.desktop {
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "GPL-3.0"
+            // 内置 JRE 的模块清单：Room/SQLite 用到 java.sql，OkHttp 用到 jdk.unsupported，
+            // 加密/证书链还需要 jdk.crypto.ec，缺一个都会在启动时抛 NoClassDefFoundError
+            modules(
+                "java.instrument",
+                "java.prefs",
+                "java.sql",
+                "java.naming",
+                "jdk.unsupported",
+                "jdk.crypto.ec",
+                "jdk.crypto.cryptoki",
+                "jdk.management",
+                "java.management"
+            )
             windows {
                 menuGroup = "HFUT-Schedule"
                 // 固定升级 UUID，保证 MSI 覆盖安装而不是并存
@@ -54,6 +67,8 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 perUserInstall = true
+                // 应用图标（由 .idea/icon.png 转出的多尺寸 ico）
+                iconFile.set(project.file("icons/app.ico"))
             }
         }
     }
@@ -81,11 +96,13 @@ tasks.register<JavaExec>("snapshotHome") {
     systemProperty("java.awt.headless", "false")
 }
 
-// 临时：打印桌面运行时里 savedstate 相关的 jar
-tasks.register("printSavedState") {
-    val cp = sourceSets["main"].runtimeClasspath
-    doLast {
-        cp.files.filter { it.name.contains("savedstate") || it.name.contains("core-bundle") || it.name.contains("lifecycle") }
-            .forEach { println("CP: " + it.name) }
-    }
+// 验证「写入日历」在桌面端导出 .ics
+tasks.register<JavaExec>("verifyIcs") {
+    group = "verification"
+    description = "调用 addToCalendars，检查是否导出 HFUT-Schedule.ics"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-ics")
+    systemProperty("java.awt.headless", "false")
 }
