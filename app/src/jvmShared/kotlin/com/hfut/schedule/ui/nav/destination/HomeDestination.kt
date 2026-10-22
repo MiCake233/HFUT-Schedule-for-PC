@@ -4,8 +4,6 @@ import com.xah.common.ui.res.Strings
 
 import com.xah.common.ui.res.Drawables
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems
 import com.hfut.schedule.logic.util.sys.datetime.Celebration
@@ -30,7 +28,6 @@ data class HomeDestination(
         const val KEY = "home"
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @Composable
     override fun Content() {
         val networkVm = LocalNavDependencies.current.get<NetWorkViewModel>()

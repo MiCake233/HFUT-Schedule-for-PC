@@ -45,6 +45,11 @@ object UiSlots {
     /** 取平台动作；桌面端未注册时返回 null，调用方直接跳过即可 */
     fun action(key: String): ((Any?) -> Unit)? = actions[key]
 
+    /** 检查更新（Android 端实现；桌面端没有自更新通道，返回 null） */
+    var updateChecker: (suspend (Any?) -> Any?)? = null
+
+    suspend fun checkUpdates(arg: Any?): Any? = updateChecker?.invoke(arg)
+
     @Composable
     fun Render(key: String, arg: Any? = null, fallback: (@Composable () -> Unit)? = null) {
         val slot = slots[key]

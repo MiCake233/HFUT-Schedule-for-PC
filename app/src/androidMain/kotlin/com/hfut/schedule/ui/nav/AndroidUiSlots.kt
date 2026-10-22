@@ -75,6 +75,39 @@ fun registerAndroidUiSlots() {
             rememberHazeBlurCompat()
         )
     }
+    // 课表设置面板（原 MainUI 里的 BottomSheet）
+    UiSlots.register("calendar_ui_settings") {
+        com.hfut.schedule.ui.screen.home.cube.screen.CalendarUISettings(true)
+    }
+    // 参数：ifSaved / 当前选择 / 关闭回调 / 选择回调 / 打开设置回调 / ViewModel
+    UiSlots.register("multi_schedule_settings") { arg ->
+        val args = arg as List<*>
+        @Suppress("UNCHECKED_CAST")
+        com.hfut.schedule.ui.screen.home.calendar.multi.MultiScheduleSettings(
+            ifSaved = args[0] as Boolean,
+            select = args[1] as Int,
+            onDismissed = args[2] as () -> Unit,
+            onSelectedChange = args[3] as (Int) -> Unit,
+            onShowUiSettings = args[4] as (Boolean) -> Unit,
+            vm = args[5] as NetWorkViewModel
+        )
+    }
+    // 参数：内边距 / ViewModel
+    UiSlots.register("home_settings") { arg ->
+        val args = arg as List<*>
+        com.hfut.schedule.ui.screen.home.cube.HomeSettingScreen(
+            args[0] as androidx.compose.foundation.layout.PaddingValues,
+            args[1] as NetWorkViewModel
+        )
+    }
+    UiSlots.registerAction("app_env_warning") { arg ->
+        com.hfut.schedule.ui.nav.window.AppEnvWarningWindow.also {
+            (arg as? com.xah.floating.controller.FloatingController)?.push(it)
+        }
+    }
+    UiSlots.updateChecker = { arg ->
+        com.hfut.schedule.ui.screen.home.cube.sub.update.getUpdates(arg as NetWorkViewModel)
+    }
     // 参数：内边距
     UiSlots.register("download_ml") { arg ->
         com.hfut.schedule.ui.screen.home.cube.sub.DownloadMLUI(

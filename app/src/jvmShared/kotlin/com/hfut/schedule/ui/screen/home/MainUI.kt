@@ -2,11 +2,7 @@ package com.hfut.schedule.ui.screen.home
 
 import com.hfut.schedule.logic.model.AppConst
 
-import android.animation.ValueAnimator
-import android.content.Context
-import android.os.Build
-import androidx.activity.compose.BackHandler
-import androidx.annotation.RequiresApi
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.LinearEasing
@@ -18,10 +14,6 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
@@ -84,6 +76,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -93,7 +86,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInWindow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.xah.common.ui.res.Drawables
@@ -106,18 +98,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.database.core.DataBaseManager
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.database.entity.FriendEntity
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems.CALENDAR
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems.FOCUS
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems.FUNCTIONS
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems.SETTINGS
-import com.hfut.schedule.logic.util.other.AppVersion
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager.SEARCH_DEFAULT_STR
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
@@ -157,23 +145,17 @@ import com.hfut.schedule.ui.nav.destination.AddEventDestination
 import com.hfut.schedule.ui.nav.destination.ControlCenterDestination
 import com.hfut.schedule.ui.nav.destination.FunctionsSortDestination
 import com.hfut.schedule.ui.nav.destination.NotificationBoxDestination
-import com.hfut.schedule.ui.nav.destination.SettingsSearchDestination
 import com.hfut.schedule.ui.nav.destination.TermCoursesDestination
 import com.hfut.schedule.ui.nav.destination.WorkAndRestDestination
 import com.hfut.schedule.ui.nav.effect.ControlCenterTransitionEffect
-import com.hfut.schedule.ui.nav.window.AppEnvWarningWindow
 import com.hfut.schedule.ui.screen.home.calendar.common.ScheduleTopDate
 import com.hfut.schedule.ui.screen.home.calendar.common.numToChinese
 import com.hfut.schedule.ui.screen.home.calendar.communtiy.CommunityCourseTableUI
 import com.hfut.schedule.ui.screen.home.calendar.jxglstu.JxglstuCourseTableTwo
 import com.hfut.schedule.ui.screen.home.calendar.jxglstu.JxglstuCourseTableUI
 import com.hfut.schedule.ui.screen.home.calendar.multi.CourseType
-import com.hfut.schedule.ui.screen.home.calendar.multi.MultiScheduleSettings
 import com.hfut.schedule.ui.screen.home.calendar.uniapp.UniAppCoursesScreen
 import com.hfut.schedule.ui.screen.home.calendar.zjgd.ZhiJianCourseTableUI
-import com.hfut.schedule.ui.screen.home.cube.HomeSettingScreen
-import com.hfut.schedule.ui.screen.home.cube.screen.CalendarUISettings
-import com.hfut.schedule.ui.screen.home.cube.sub.update.getUpdates
 import com.hfut.schedule.ui.screen.home.focus.TodayScreen
 import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventOrigin
 import com.hfut.schedule.ui.screen.home.search.SearchAppBeanLite
@@ -190,16 +172,13 @@ import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.theme.warnColor
 import com.hfut.schedule.ui.util.isThemeDark
-import com.hfut.schedule.ui.util.loadBitmap
 import com.hfut.schedule.ui.util.nav2Composable
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.navigation.currentRouteWithoutArgs
 import com.hfut.schedule.ui.util.navigation.isCurrentRouteWithoutArgs
 import com.hfut.schedule.ui.util.navigation.navigateForBottomBar
-import com.hfut.schedule.ui.util.pickColorFromTop
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.Backdrop
 import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
@@ -229,27 +208,20 @@ import kotlinx.coroutines.withContext
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyGridState
 import java.io.File
+import kotlinx.coroutines.CoroutineScope
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
+import androidx.compose.ui.graphics.ImageBitmap
+import com.hfut.schedule.ui.nav.destination.SettingsSearchPlatformDestination
 
 private val titles = listOf("重要安排","其他事项")
 
-fun smoothToOne(scaleFactor: MutableState<Float>) {
-    // 创建一个 ValueAnimator，从当前值平滑过渡到 1f
-    val animator = ValueAnimator.ofFloat(scaleFactor.value, 1f)
-    animator.duration = AppAnimationManager.ANIMATION_SPEED*1L
-
-    // 更新 scaleFactor 的值
-    animator.addUpdateListener { animation ->
-        scaleFactor.value = animation.animatedValue as Float
-    }
-
-    // 开始动画
-    animator.start()
+fun smoothToOne(scope: CoroutineScope, scaleFactor: MutableState<Float>) {
+    // 原实现用 ValueAnimator（Android 专属），这里改成两端通用的协程动画
+    scope.launch { com.hfut.schedule.ui.util.smoothToOneLocal(scaleFactor) }
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
-    ExperimentalGlideComposeApi::class, ExperimentalAnimationGraphicsApi::class,
-    ExperimentalHazeMaterialsApi::class
+        ExperimentalHazeMaterialsApi::class
 )
 @Composable
 fun MainScreen(
@@ -264,8 +236,9 @@ fun MainScreen(
     val hazeState = rememberHazeBlur()
     val backdrop = rememberLayerBackdrop()
 
+    // 更新检查只有 Android 端有（桌面端走手动更新）
     val update by produceState<GiteeReleaseResponse?>(initialValue = null) {
-        value = getUpdates(vm)
+        value = com.hfut.schedule.ui.nav.UiSlots.checkUpdates(vm) as GiteeReleaseResponse?
     }
     val showBadge = update?.assets?.isNotEmpty() ?: false
 
@@ -304,7 +277,7 @@ fun MainScreen(
                 color= MaterialTheme.colorScheme.surface,
                 shape = MaterialTheme.shapes.large
             ) {
-                CalendarUISettings(true)
+                com.hfut.schedule.ui.nav.UiSlots.Render("calendar_ui_settings")
             }
         }
     }
@@ -315,18 +288,16 @@ fun MainScreen(
 //            isFullScreen = false
         ) {
             Column {
-                MultiScheduleSettings(
-                    ifSaved = ifSaved,
-                    select = swapUI,
-                    onDismissed = { showBottomSheet_multi = false },
-                    onSelectedChange = { newSelected ->
-                        swapUI = newSelected
-                    },
-                    onShowUiSettings = {
-                        showUiSettings = it
-                        showBottomSheet_multi = false
-                    },
-                    vm = vm,
+                com.hfut.schedule.ui.nav.UiSlots.Render(
+                    "multi_schedule_settings",
+                    listOf(
+                        ifSaved,
+                        swapUI,
+                        { showBottomSheet_multi = false },
+                        { newSelected: Int -> swapUI = newSelected },
+                        { showUiSettings = true; showBottomSheet_multi = false },
+                        vm
+                    )
                 )
                 Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP))
             }
@@ -364,10 +335,10 @@ fun MainScreen(
     }
 
     val backGroundSource = rememberLayerBackdrop()
+    val scope = rememberCoroutineScope()
 
     val customBackground by DataStoreManager.customBackground.collectAsState(initial = EMPTY_STRING)
     val useCustomBackground = customBackground != EMPTY_STRING
-    val context = LocalContext.current
     var zhiJianStudentId by rememberSaveable { mutableStateOf(getPersonInfo().getStudentIdFinally() ?: EMPTY_STRING) }
     // 捏合手势
     val scaleFactor = rememberSaveable { mutableFloatStateOf(1f) } // 捏合手势缩放因子
@@ -468,7 +439,7 @@ fun MainScreen(
                         },
                         title = {
                             ScrollText(
-                                topBarText(targetPage,context),
+                                topBarText(targetPage),
                                 modifier = Modifier.controlCenterDrag()
                             )
                         },
@@ -561,10 +532,12 @@ fun MainScreen(
                                    Row(modifier = Modifier.padding(end = APP_HORIZONTAL_DP-CARD_NORMAL_DP)) {
                                        val enableDataStore by DataStoreManager.enableDataStore.collectAsState(initial = true)
 
-                                       if(!AppVersion.isNormalEnv || !enableDataStore) {
+                                       if(!AppInfo.isNormalEnv || !enableDataStore) {
                                            LiquidButton(
                                                onClick = {
-                                                   floatingController.push(AppEnvWarningWindow)
+                                                   com.hfut.schedule.ui.nav.UiSlots.action("app_env_warning")
+                                                       ?.invoke(floatingController)
+                                                       ?: com.hfut.schedule.logic.util.sys.showToast("桌面端暂不提供该检测页")
                                                },
                                                isCircle = true,
                                                backdrop = backdrop
@@ -579,7 +552,7 @@ fun MainScreen(
                                        }
                                        LiquidButton(
                                            onClick = {
-                                               navHostTopController.push(SettingsSearchDestination, effect = RollTransitionEffect())
+                                               navHostTopController.push(SettingsSearchPlatformDestination, effect = RollTransitionEffect())
                                            },
                                            isCircle = true,
                                            backdrop = backdrop
@@ -637,7 +610,7 @@ fun MainScreen(
                                     color = Color.Transparent
                                 ) {
                                     ScrollText(
-                                        topBarText(CALENDAR,context),
+                                        topBarText(CALENDAR),
                                         modifier = Modifier
                                             .padding(
                                                 vertical = CARD_NORMAL_DP * 2,
@@ -750,12 +723,16 @@ fun MainScreen(
                                         ,
                                         color = Color.Transparent
                                     ) {
-                                        val animatedImageVector = AnimatedImageVector.animatedVectorResource(id = R.drawable.ic_anim_expand)
-                                        val painter = rememberAnimatedVectorPainter(animatedImageVector, showAll)
+                                        // 原 AVD 是「箭头旋转 180°」，跨平台改成同一张图标 + 旋转动画
+                                        val expandRotation by androidx.compose.animation.core.animateFloatAsState(
+                                            targetValue = if (showAll) 180f else 0f,
+                                            label = "expand_rotation"
+                                        )
+                                        val painter = painterResource(Drawables.collapse_content)
                                         Icon(
                                             painter = painter,
                                             contentDescription = EMPTY_STRING,
-                                            modifier = Modifier.padding(CARD_NORMAL_DP*3),
+                                            modifier = Modifier.padding(CARD_NORMAL_DP*3).rotate(expandRotation),
                                             tint = iconColor,
                                         )
                                     }
@@ -774,7 +751,7 @@ fun MainScreen(
                             colors = topBarTransplantColor(),
                             title = {
                                 ScrollText(
-                                    topBarText(CALENDAR,context),
+                                    topBarText(CALENDAR),
                                     modifier = Modifier.controlCenterDrag()
                                 )
                             },
@@ -1079,23 +1056,21 @@ fun MainScreen(
                     if (useCustomBackground) {
                         // 状态栏反色
                         val file = remember(customBackground) { File(customBackground) }
-                        val color by produceState<Int?>(initialValue = null) {
-                            value = withContext(Dispatchers.IO) {
-                                val bitmap = loadBitmap(file) ?: return@withContext null
-                                val result = pickColorFromTop(bitmap)
-                                bitmap.recycle()
-                                result
-                            }
+                        val image by produceState<ImageBitmap?>(initialValue = null) {
+                            value = com.hfut.schedule.logic.util.other.loadImageBitmap(file)
                         }
+                        val color = image?.let { com.hfut.schedule.logic.util.other.pickColorFromTop(it) }
                         TransparentSystemBars(color?.let { it1 -> Color(it1) })
-                        GlideImage(
-                            model = file,
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .backDropSource(backGroundSource)
-                                .fillMaxSize()
-                        )
+                        image?.let { bitmap ->
+                            androidx.compose.foundation.Image(
+                                painter = androidx.compose.ui.graphics.painter.BitmapPainter(bitmap),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .backDropSource(backGroundSource)
+                                    .fillMaxSize()
+                            )
+                        }
                     }
 
                     Scaffold(
@@ -1126,7 +1101,7 @@ fun MainScreen(
                                     hazeState = hazeState,
                                     backGroundHaze = if (useCustomBackground) backGroundSource else null,
                                     onSwapShowAll = { showAll = it },
-                                    onRestoreHeight = { smoothToOne(scaleFactor) }
+                                    onRestoreHeight = { smoothToOne(scope, scaleFactor) }
                                 )
                                 // 合工大教务
                                 CourseType.UNI_APP.code -> UniAppCoursesScreen(
@@ -1138,7 +1113,7 @@ fun MainScreen(
                                     hazeState,
                                     if (useCustomBackground) backGroundSource else null,
                                     { showAll = it },
-                                    { smoothToOne(scaleFactor) }
+                                    { smoothToOne(scope, scaleFactor) }
                                 )
                                 // 教务
                                 CourseType.JXGLSTU.code -> JxglstuCourseTableUI(
@@ -1155,7 +1130,7 @@ fun MainScreen(
                                     isEnabled,
                                     { isEnabled = it },
                                     { showAll = it },
-                                    { smoothToOne(scaleFactor) }
+                                    { smoothToOne(scope, scaleFactor) }
                                 )
                                 // 教务2
                                 CourseType.JXGLSTU2.code -> JxglstuCourseTableTwo(
@@ -1195,7 +1170,7 @@ fun MainScreen(
                                 hazeState,
                                 backGroundHaze = if (useCustomBackground) backGroundSource else null,
                                 onSwapShowAll = { showAll = it },
-                                onRestoreHeight = { smoothToOne(scaleFactor) }
+                                onRestoreHeight = { smoothToOne(scope, scaleFactor) }
                             )
                     }
                 }
@@ -1224,7 +1199,7 @@ fun MainScreen(
             }
             nav2Composable(SETTINGS.name) {
                 Scaffold {
-                    HomeSettingScreen(innerPadding,vm)
+                    com.hfut.schedule.ui.nav.UiSlots.Render("home_settings", listOf(innerPadding, vm))
                 }
             }
         }
@@ -1232,7 +1207,7 @@ fun MainScreen(
 }
 
 
-fun topBarText(num : BottomBarItems,context: Context) : String = when(num) {
+fun topBarText(num : BottomBarItems) : String = when(num) {
     FUNCTIONS -> stringOf(Strings.functions_center_title)
     SETTINGS -> stringOf(Strings.settings_title)
     else -> {
@@ -1475,7 +1450,7 @@ fun SearchEditScreen() {
 
 @Composable
 private fun ZhiJianSearchBar(
-    backdrop: Backdrop? = null,
+    backdrop: PlatformBackdrop? = null,
     input : String,
     showAll : Boolean,
     onValueChange : (String) -> Unit,

@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
+import com.hfut.schedule.ui.nav.destination.HomeDestination
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.screen.login.LoginScreen
 import com.hfut.schedule.ui.screen.welcome.UseAgreementScreen
@@ -26,8 +27,8 @@ object DesktopWindowState {
  *
  * 三条路径全部复用共享层页面：
  * 1) 未同意协议 → 欢迎页 UseAgreementScreen
- * 2) 未登录     → 登录页 LoginScreen（与 Android 完全同一份实现）
- * 3) 已登录     → 桌面主界面 DesktopHomeScreen
+ * 2) 未登录     → 登录页 LoginScreen（与 Android 同一份实现）
+ * 3) 已登录     → HomeDestination（也就是 Android 的 MainScreen，1:1 复刻）
  */
 object DesktopRootDestination : NavDestination() {
     override val key: String = "desktop_root"
@@ -43,7 +44,7 @@ object DesktopRootDestination : NavDestination() {
         when {
             !enableUse -> UseAgreementScreen()
             !DesktopWindowState.loggedIn -> LoginScreen(loginVm, networkVm)
-            else -> DesktopHomeScreen(networkVm)
+            else -> HomeDestination().Content()
         }
     }
 }

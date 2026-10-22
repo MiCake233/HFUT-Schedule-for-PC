@@ -79,6 +79,11 @@ fun DesktopApp(exitApp: () -> Unit) {
         PlatformHooks.onLoginSuccess = { DesktopWindowState.loggedIn = true }
         PlatformHooks.onNavigateHome = { /* 协议页同意后 DataStore 会自动置位，无需额外状态 */ }
         PlatformHooks.onExitApp = exitApp
+        // 桌面端「选项」页签：接管共享主界面里的 home_settings 槽位
+        com.hfut.schedule.ui.nav.UiSlots.register("home_settings") { arg ->
+            val args = arg as List<*>
+            DesktopSettingsScreen(args[0] as androidx.compose.foundation.layout.PaddingValues)
+        }
         onDispose {
             PlatformHooks.onLoginSuccess = null
             PlatformHooks.onNavigateHome = null
