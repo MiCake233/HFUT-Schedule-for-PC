@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
-import com.hfut.schedule.ui.screen.home.search.function.school.teacherSearch.ApiToTeacherSearch
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -44,31 +43,8 @@ data class TeacherSearchApiDestination(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val hazeState = rememberHazeBlur()
-
-        Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                MediumTopAppBar(
-                    modifier = Modifier.topBarBlur(hazeState),
-                    scrollBehavior = scrollBehavior,
-                    title = { Text("${title.asString()}: $teacherName") },
-                    colors = topBarTransplantColor(),
-                    navigationIcon = {
-                        TopBarNavigationIcon()
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState)
-            ) {
-                ApiToTeacherSearch(teacherName, vm, innerPadding)
-            }
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("teacher_search_api_$teacherName")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }
 }

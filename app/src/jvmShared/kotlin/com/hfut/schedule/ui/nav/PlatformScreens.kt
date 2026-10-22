@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.xah.common.ui.model.text.UiText
 import com.xah.common.ui.res.Drawables
-import com.xah.common.ui.res.asStringNow
+import com.xah.common.ui.model.text.asStringNow
 import com.xah.common.ui.res.painterResource
 
 /**

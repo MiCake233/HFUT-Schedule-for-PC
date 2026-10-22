@@ -86,6 +86,7 @@ import com.xah.common.ui.style.padding.navigationBarHeightPadding
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 import org.json.JSONArray
+import com.hfut.schedule.logic.network.repo.json
 
 private val items = listOf(
     NavigationBarItemData(

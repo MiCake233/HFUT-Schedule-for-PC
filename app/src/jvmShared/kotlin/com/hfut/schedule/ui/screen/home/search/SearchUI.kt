@@ -153,6 +153,7 @@ import com.xah.container.component.base.sharedContainer
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.LogUtil
 import dev.chrisbanes.haze.HazeState
+import com.hfut.schedule.network.api.inf.pay
 
 data class SearchAppBean(
     val id : Int,

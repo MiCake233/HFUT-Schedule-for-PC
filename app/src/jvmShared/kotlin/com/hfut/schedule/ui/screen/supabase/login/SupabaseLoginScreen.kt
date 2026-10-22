@@ -60,6 +60,8 @@ import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.navigation.util.LocalNavController
 import kotlinx.coroutines.launch
+import com.hfut.schedule.ui.screen.supabase.login.regSupabase
+import com.hfut.schedule.ui.screen.supabase.login.loginSupabaseWithPassword
 
 private const val TAB_LOGIN = 0
 private const val TAB_REG = 1

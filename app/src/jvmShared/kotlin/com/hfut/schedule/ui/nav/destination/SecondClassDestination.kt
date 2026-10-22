@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.school.SecondClassScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.res
@@ -18,7 +17,8 @@ object SecondClassDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        SecondClassScreen(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("second_class")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

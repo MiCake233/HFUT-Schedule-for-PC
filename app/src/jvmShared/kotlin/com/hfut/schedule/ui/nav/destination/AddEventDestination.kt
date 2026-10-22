@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
@@ -31,12 +30,8 @@ data class AddEventDestination(
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        val eventId = if(id == null || id <= 0) {
-            -1
-        } else {
-            id
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("AddEventDestination#${if(id == null || id <= 0) -1 else id}#$enableCopy#$isSupabase")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
-        AddEventScreen(vm,eventId,enableCopy,isSupabase)
     }
 }

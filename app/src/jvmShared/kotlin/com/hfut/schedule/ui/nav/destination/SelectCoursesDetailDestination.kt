@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse.SelectCourseDetailScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
@@ -27,7 +26,8 @@ data class SelectCoursesDetailDestination(
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        SelectCourseDetailScreen(vm,index,name)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("select_courses_detail#$index")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

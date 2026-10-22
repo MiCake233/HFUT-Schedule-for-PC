@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -34,8 +33,7 @@ import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.PermissionSet
 import com.hfut.schedule.ui.component.dialog.LittleDialog
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
-import com.hfut.schedule.ui.screen.xwx.saveImageToFile
-import com.hfut.schedule.ui.style.special.rememberHazeBlur
+import com.hfut.schedule.logic.util.sys.saveImageToGallery\nimport com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.util.text
 import com.xah.container.component.base.SharedContent
@@ -119,7 +117,7 @@ private fun ZoomableImage(
                 scope.launch {
                     // 保存图片
                     activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
-                    saveImageToFile(bitmap.asAndroidBitmap())
+                    saveImageToGallery(bitmap)?.let { showToast("已保存至 $it") }
                     displayDialog = false
                 }
             },

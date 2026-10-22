@@ -3,7 +3,6 @@ package com.hfut.schedule.ui.nav.destination
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.ClassmatesScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
@@ -27,7 +26,8 @@ data class CourseClassmatesScreen(
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        ClassmatesScreen(vm,lessonId,text("$TITLE-$description"),isScheduled)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("_$courseName")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.card.CardUI
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.text
 import com.xah.navigation.util.LocalNavDependencies
@@ -16,7 +15,8 @@ object SchoolCardDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val networkVm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        CardUI(networkVm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("school_card")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

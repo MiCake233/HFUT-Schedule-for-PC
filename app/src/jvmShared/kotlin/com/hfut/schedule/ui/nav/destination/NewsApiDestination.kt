@@ -7,7 +7,6 @@ import com.xah.common.ui.res.Drawables
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.network.api.model.Constant.PARTY_BRANCH_URL
-import com.hfut.schedule.ui.screen.home.search.function.my.holiday.NewsApiScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
@@ -39,7 +38,8 @@ class NewsApiDestination(
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        NewsApiScreen(vm, keyword,filteredHost)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("news_api_$keyword")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

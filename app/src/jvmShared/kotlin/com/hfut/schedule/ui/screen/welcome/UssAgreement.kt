@@ -60,6 +60,7 @@ import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import com.xah.common.ui.res.work
 
 val arguments = listOf(
     "本应用所使用权限为：网络、日历(用于向日历写入日程)、存储(用于导入导出文件)、相机(用于扫码)、通知，均由用户自由决定授予；",

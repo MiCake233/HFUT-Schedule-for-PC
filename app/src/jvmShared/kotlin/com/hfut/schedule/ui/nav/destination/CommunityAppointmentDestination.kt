@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.community.appointment.AppointmentScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -16,6 +15,8 @@ object CommunityAppointmentDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        AppointmentScreen()
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("community_appointment")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

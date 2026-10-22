@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuLesson
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.courseSearch.CourseSearchCalendarScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -28,6 +27,8 @@ data class CourseSearchTableDestination(
 
     @Composable
     override fun Content() {
-        CourseSearchCalendarScreen(term,name,code,classes,list)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("course_search_table_$classes")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

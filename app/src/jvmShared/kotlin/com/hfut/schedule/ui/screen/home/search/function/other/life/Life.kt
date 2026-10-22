@@ -57,6 +57,9 @@ import com.xah.navigation.util.LocalNavController
 import com.xah.common.logic.util.LogUtil
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
+import com.hfut.schedule.ui.screen.home.search.function.other.life.CampusMapScreen
+import com.hfut.schedule.ui.screen.home.search.function.other.life.WeatherScreen
+import com.hfut.schedule.ui.screen.home.search.function.other.life.StarterScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable

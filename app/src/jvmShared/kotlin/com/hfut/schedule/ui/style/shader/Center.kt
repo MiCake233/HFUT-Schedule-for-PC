@@ -1,8 +1,8 @@
 package com.hfut.schedule.ui.style.shader
 
-import android.graphics.RenderEffect
-import android.graphics.RuntimeShader
-import android.os.Build
+import androidx.compose.ui.graphics.RenderEffect
+import com.xah.shader.skia.RuntimeShader
+import com.xah.shader.skia.canUseRuntimeShader
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -14,7 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.asComposeRenderEffect
+import com.xah.shader.skia.RuntimeShaderEffect
+import com.xah.shader.skia.BlurRenderEffect
+import com.xah.shader.skia.chain
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.graphicsLayer
 import com.xah.shader.state.recordPosition
 import org.intellij.lang.annotations.Language
@@ -49,7 +52,7 @@ fun Modifier.centerSelf(
     dispersion : Float = 0f,
     anchor : Offset = Offset(0.5f,0.5f)
 ): Modifier =
-    if(Build.VERSION.SDK_INT < 33 || distortFactor == 0f) {
+    if(!canUseRuntimeShader || distortFactor == 0f) {
         this
     } else {
         composed {
@@ -65,9 +68,7 @@ fun Modifier.centerSelf(
                             setFloatUniform("distortFactor", distortFactor)
                             setFloatUniform("anchor",anchor.x,anchor.y)
                         }
-                        renderEffect = RenderEffect
-                            .createRuntimeShaderEffect(runtimeShader, "content")
-                            .asComposeRenderEffect()
+                        renderEffect = RuntimeShaderEffect(runtimeShader, "content")
                     }
                 }
                 .recordPosition {

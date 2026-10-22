@@ -26,19 +26,8 @@ data class WebViewDestination(
 
     @Composable
     override fun Content() {
-//        val url = backStackEntry.arguments?.getString(AppNavRoute.WebView.Args.URL.argName) ?: return@transitionComposable
-//        val cookies = backStackEntry.arguments?.getString(AppNavRoute.WebView.Args.COOKIES.argName)
-//        val title = backStackEntry.arguments?.getString(AppNavRoute.WebView.Args.TITLE.argName) ?: getPureUrl(url)
-//        val icon = backStackEntry.arguments?.getInt(AppNavRoute.WebView.Args.ICON.argName)
-//
-//        WebViewScreenForNavigation(
-//            url,
-//            title,
-//            icon,
-//            cookies,
-//            navController,
-//            drawerState
-//        ) { containerColor = it }
-//        WebViewScreenForNavigation(url, name, icon, cookies)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("WebViewDestination")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

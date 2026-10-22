@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.welcome.VersionInfoScreen
 import com.xah.common.ui.util.res
 
 object VersionInfoDestination : NavDestination() {
@@ -16,6 +15,8 @@ object VersionInfoDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        VersionInfoScreen()
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("version_info")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

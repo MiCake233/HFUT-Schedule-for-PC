@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.shower.ShowerGuaGua
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.res
 import com.xah.navigation.util.LocalNavDependencies
@@ -18,7 +17,8 @@ object GuaGuaDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val networkVm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        ShowerGuaGua(networkVm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("guagua_home")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

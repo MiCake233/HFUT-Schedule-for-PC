@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.program.ProgramConfirmationScreen
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.res
 import com.xah.navigation.util.LocalNavDependencies
@@ -18,7 +17,8 @@ object ProgramConfirmationDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        ProgramConfirmationScreen(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("program_confirmation")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

@@ -7,7 +7,6 @@ import com.xah.common.ui.res.Drawables
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.JxglstuProgramPlanCourse
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.competition.JxglstuProgramCompetitionDetail
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.program.ProgramCompetitionDetailScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -31,6 +30,8 @@ data class ProgramCompetitionDetailDestination(
 
     @Composable
     override fun Content() {
-        ProgramCompetitionDetailScreen(item,programCourseMap,programTypeMap)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("program_competition_detail")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

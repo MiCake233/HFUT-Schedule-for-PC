@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.util.ExceptionScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -24,6 +23,8 @@ data class ExceptionDestination(
 
     @Composable
     override fun Content() {
-        ExceptionScreen(exception)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("exception")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

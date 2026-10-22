@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.exam.ExamScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -24,6 +23,8 @@ data class ExamDestination(
 
     @Composable
     override fun Content() {
-        ExamScreen()
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("_$origin")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.calendar.communtiy.CourseDetailApiScreen
 import com.xah.common.ui.util.res
 
 data class CourseDetailApiDestination(
@@ -29,6 +28,8 @@ data class CourseDetailApiDestination(
 
     @Composable
     override fun Content() {
-        CourseDetailApiScreen(courseName, classroom, courseCode)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("course_detail_api_$courseCode")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

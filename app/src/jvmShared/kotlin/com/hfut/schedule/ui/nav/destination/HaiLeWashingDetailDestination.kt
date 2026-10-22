@@ -8,7 +8,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.network.api.model.response.json.haile.HaiLeNearPositionBean
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.washing.HaiLeDetailScreen
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.res
 import com.xah.navigation.util.LocalNavDependencies
@@ -24,7 +23,8 @@ data class HaiLeWashingDetailDestination(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        HaiLeDetailScreen(vm,item,description)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("washing_detail")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

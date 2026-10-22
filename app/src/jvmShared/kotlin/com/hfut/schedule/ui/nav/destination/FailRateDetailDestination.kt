@@ -19,7 +19,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.hfut.schedule.network.api.model.response.json.community.CommunityCourseFailRate
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
-import com.hfut.schedule.ui.screen.home.search.function.community.failRate.FailRateDetailScreen
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -45,30 +44,8 @@ data class FailRateDetailDestination(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val hazeState = rememberHazeBlur()
-
-        Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                MediumTopAppBar(
-                    modifier = Modifier.topBarBlur(hazeState),
-                    scrollBehavior = scrollBehavior,
-                    title = { Text("${title.asString()}: $courseName") },
-                    colors = topBarTransplantColor(),
-                    navigationIcon = {
-                        TopBarNavigationIcon()
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState)
-            ) {
-                FailRateDetailScreen(innerPadding,bean)
-            }
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("fail_rate_detail")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }
 }

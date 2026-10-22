@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.NotificationBoxScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -16,6 +15,8 @@ object NotificationBoxDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        NotificationBoxScreen()
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("notification_box")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

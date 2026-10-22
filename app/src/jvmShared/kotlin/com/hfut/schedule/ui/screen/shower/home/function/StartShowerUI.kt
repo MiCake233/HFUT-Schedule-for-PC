@@ -73,6 +73,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.hfut.schedule.ui.screen.shower.home.function.text
 
 suspend fun startShower(vm : NetWorkViewModel, macLocation : String) = withContext(Dispatchers.IO) {
     val loginCode = SharedPrefs.prefs.getString("loginCode",null)

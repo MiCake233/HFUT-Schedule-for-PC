@@ -5,9 +5,7 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.community.bus.BusScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.search.function.community.bus.BusScreenV2
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
 import com.xah.common.ui.util.res
@@ -19,7 +17,8 @@ object BusDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        BusScreenV2(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("bus")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

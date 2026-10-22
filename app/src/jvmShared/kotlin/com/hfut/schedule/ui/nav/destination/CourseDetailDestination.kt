@@ -21,7 +21,6 @@ import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuL
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.DetailItems
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.xah.common.ui.style.color.topBarTransplantColor
@@ -47,30 +46,8 @@ data class CourseDetailDestination(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val hazeState = rememberHazeBlur()
-
-        Scaffold (
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                MediumTopAppBar(
-                    modifier = Modifier.topBarBlur(hazeState),
-                    scrollBehavior = scrollBehavior,
-                    colors = topBarTransplantColor(),
-                    title = { Text(description) },
-                    navigationIcon = {
-                        TopBarNavigationIcon()
-                    },
-                )
-            },
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState)
-            ) {
-                DetailItems(innerPadding,lesson,courseBookData)
-            }
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("course_detail")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }
 }

@@ -4,7 +4,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.xwx.XwxMainScreen
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.text
 import com.xah.navigation.util.LocalNavDependencies
@@ -16,7 +15,8 @@ object XiaoWuXingDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        XwxMainScreen(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("xwx_home")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

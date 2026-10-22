@@ -1,6 +1,5 @@
 package com.hfut.schedule.logic.util.storage.file
 
-import androidx.core.content.edit
 import com.hfut.schedule.logic.util.parse.SemesterParser
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs

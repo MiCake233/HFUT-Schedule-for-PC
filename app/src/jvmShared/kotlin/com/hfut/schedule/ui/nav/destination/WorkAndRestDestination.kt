@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.community.workRest.TimeTableScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -25,6 +24,8 @@ data class WorkAndRestDestination(
 
     @Composable
     override fun Content() {
-        TimeTableScreen(name)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("_$name")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

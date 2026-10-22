@@ -1,9 +1,8 @@
 package com.hfut.schedule.ui.style.shader
 
-import android.graphics.RenderEffect
-import android.graphics.RuntimeShader
-import android.graphics.Shader
-import android.os.Build
+import androidx.compose.ui.graphics.RenderEffect
+import com.xah.shader.skia.RuntimeShader
+import com.xah.shader.skia.canUseRuntimeShader
 import androidx.compose.foundation.background
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +14,10 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asComposeRenderEffect
+import com.xah.shader.skia.RuntimeShaderEffect
+import com.xah.shader.skia.BlurRenderEffect
+import com.xah.shader.skia.chain
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.layer.drawLayer
 import androidx.compose.ui.graphics.rememberGraphicsLayer
@@ -64,7 +66,7 @@ fun Modifier.glassLayer(
     style: GlassStyle = largeStyle,
     enabled : Boolean = true,
 ) : Modifier =
-    if(!enabled || style.overlayColor.alpha == 1f || Build.VERSION.SDK_INT < 31) {
+    if(!enabled || style.overlayColor.alpha == 1f || !canUseRuntimeShader) {
         // 只有蒙版
         this.background(style.overlayColor)
     } else {
@@ -73,11 +75,11 @@ fun Modifier.glassLayer(
             val localLayer = rememberGraphicsLayer()
             val density = LocalDensity.current
             val customRenderEffect =
-            if(Build.VERSION.SDK_INT in 31 until 33) {
+            if(false) {
                 // 只有模糊
                 remember(style) {
                     val blurDp = with(density) { style.blur.toPx() }
-                    RenderEffect.createBlurEffect(blurDp, blurDp, Shader.TileMode.CLAMP).asComposeRenderEffect()
+                    BlurRenderEffect(blurDp, blurDp, TileMode.Clamp)
                 }
             } else {
                 // 着色器
@@ -106,11 +108,11 @@ fun Modifier.glassLayer(
                     val enhanceEffect = enhanceColorShader(true)
 
                     val blurDp = with(density) { style.blur.toPx() }
-                    val blurEffect =  RenderEffect.createBlurEffect(blurDp, blurDp, Shader.TileMode.CLAMP)
+                    val blurEffect =  BlurRenderEffect(blurDp, blurDp, TileMode.Clamp)
 
-                    val mirrorShader = RenderEffect.createRuntimeShaderEffect(runtimeShader, "content")
-                    val chained = RenderEffect.createChainEffect(enhanceEffect, mirrorShader)
-                    RenderEffect.createChainEffect(blurEffect, chained).asComposeRenderEffect()
+                    val mirrorShader = RuntimeShaderEffect(runtimeShader, "content")
+                    val chained = (enhanceEffect).chain(mirrorShader)
+                    (blurEffect).chain(chained)
                 }
             }
 

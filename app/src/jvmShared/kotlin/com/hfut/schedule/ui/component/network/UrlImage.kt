@@ -26,9 +26,7 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.logic.util.ocr.TesseractUtils.isExistModule
-import com.hfut.schedule.logic.util.ocr.TesseractUtils.recognizeCaptcha
-import com.hfut.schedule.logic.util.ocr.preprocessCaptcha
+import com.hfut.schedule.logic.util.ocr.OcrSupport
 import com.hfut.schedule.logic.util.other.rememberImageState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -74,7 +72,7 @@ fun UrlImage(
             null
         }
 
-    val bitmap = imageState?.value?.asImageBitmap()
+    val bitmap = imageState?.value
 
     if (bitmap != null) {
         val window = remember(bitmap) { ImagePreviewWindow(bitmap) }
@@ -145,7 +143,7 @@ fun UrlImage(
     ) {
         val imageState = rememberImageState(url, cookie = cookie)
         imageState.value?.let { bitmap ->
-            val imageBitmap = bitmap.asImageBitmap()
+            val imageBitmap = bitmap
             val window = ImagePreviewWindow(imageBitmap)
             Image(
                 bitmap = imageBitmap,
@@ -185,7 +183,7 @@ fun UrlImageNoCrop(
     val scope = rememberCoroutineScope()
     val imageState = rememberImageState(url, cookie = cookie)
     imageState.value?.let { bitmap ->
-        val imageBitmap = bitmap.asImageBitmap()
+        val imageBitmap = bitmap
         val window = ImagePreviewWindow(imageBitmap)
         Image(
             bitmap = imageBitmap,
@@ -229,16 +227,16 @@ fun UrlImageWithAutoOcr(
     ) {
         val imageState = rememberImageState(url, cookie = cookie)
         imageState.value?.let { bitmap ->
-            val preProgressed = preprocessCaptcha(bitmap)
+            val preProgressed = OcrSupport.preprocessCaptcha(bitmap)
             Image(
-                bitmap = bitmap.asImageBitmap(),
+                bitmap = bitmap,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
             val switch_open by DataStoreManager.enableOcrCaptcha.collectAsState(initial = false)
             if(switch_open) {
-                onResult(recognizeCaptcha(preProgressed))
+                onResult(OcrSupport.recognizeCaptcha(preProgressed) ?: "")
             }
         } ?:
         Image(
@@ -249,5 +247,4 @@ fun UrlImageWithAutoOcr(
         )
     }
 }
-
 

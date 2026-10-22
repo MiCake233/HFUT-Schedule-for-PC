@@ -19,7 +19,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.cube.screen.CalendarSettingsUI
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.xah.common.ui.style.color.topBarTransplantColor
@@ -38,35 +37,8 @@ object CalendarConfigDestination : NavDestination() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val hazeState = rememberHazeBlur()
-
-        Scaffold(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                MediumTopAppBar(
-                    modifier = Modifier.topBarBlur(hazeState, MaterialTheme.colorScheme.surfaceContainer),
-                    scrollBehavior = scrollBehavior,
-                    title = { Text(title.asString()) },
-                    colors = topBarTransplantColor(),
-                    navigationIcon = {
-                        TopBarNavigationIcon()
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState)
-            ) {
-                LazyColumn {
-                    item { InnerPaddingHeight(innerPadding,true) }
-                    item { CalendarSettingsUI() }
-                    item { InnerPaddingHeight(innerPadding,false) }
-                }
-            }
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("calendar_config")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }
 }

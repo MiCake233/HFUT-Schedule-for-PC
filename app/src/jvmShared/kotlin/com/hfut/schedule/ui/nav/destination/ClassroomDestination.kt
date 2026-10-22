@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.school.classroom.ClassroomScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
@@ -26,7 +25,8 @@ data class ClassroomDestination(
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        ClassroomScreen(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("classroom#$origin")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

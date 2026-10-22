@@ -1,8 +1,8 @@
 package com.hfut.schedule.ui.style.shader
 
-import android.graphics.RenderEffect
-import android.graphics.RuntimeShader
-import android.os.Build
+import androidx.compose.ui.graphics.RenderEffect
+import com.xah.shader.skia.RuntimeShader
+import com.xah.shader.skia.canUseRuntimeShader
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.asComposeRenderEffect
+import com.xah.shader.skia.RuntimeShaderEffect
+import com.xah.shader.skia.BlurRenderEffect
+import com.xah.shader.skia.chain
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.xah.shader.state.recordPosition
@@ -24,7 +27,7 @@ fun Modifier.scaleMirror(
     scale: Float = 1f,
     clipShape: Shape = RoundedCornerShape(0.dp),
 ): Modifier =
-    if(Build.VERSION.SDK_INT < 33 || scale == 1f) {
+    if(!canUseRuntimeShader || scale == 1f) {
         this
     } else {
         composed {
@@ -39,9 +42,7 @@ fun Modifier.scaleMirror(
                         runtimeShader.setFloatUniform("size", r.width, r.height)
                         runtimeShader.setFloatUniform("scale", scale)
 
-                        renderEffect = RenderEffect
-                            .createRuntimeShaderEffect(runtimeShader, "content")
-                            .asComposeRenderEffect()
+                        renderEffect = RuntimeShaderEffect(runtimeShader, "content")
                     }
                 }
                 .recordPosition {

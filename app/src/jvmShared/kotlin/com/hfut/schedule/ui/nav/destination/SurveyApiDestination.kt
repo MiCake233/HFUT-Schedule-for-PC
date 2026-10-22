@@ -25,7 +25,8 @@ class SurveyApiDestination(
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        // TODO
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("survey_$lessonCode")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

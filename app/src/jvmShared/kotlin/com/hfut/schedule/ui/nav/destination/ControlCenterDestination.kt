@@ -4,7 +4,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.util.ControlCenterScreen
 import com.xah.common.ui.util.text
 
 object ControlCenterDestination : NavDestination() {
@@ -15,6 +14,8 @@ object ControlCenterDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        ControlCenterScreen()
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("control_center")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

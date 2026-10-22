@@ -31,7 +31,6 @@ import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.search.function.jxglstu.courseSearch.ApiForCourseSearch
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
@@ -63,71 +62,8 @@ data class CourseSearchApiDestination(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val hazeState = rememberHazeBlur()
-        val uiState by vm.courseSearchResponse.state.collectAsState()
-        val navController = LocalNavController.current
-
-        Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                MediumTopAppBar(
-                    modifier = Modifier.topBarBlur(hazeState),
-                    scrollBehavior = scrollBehavior,
-                    title = { Text("${TITLE.asString()}: $description") },
-                    colors = topBarTransplantColor(),
-                    navigationIcon = {
-                        TopBarNavigationIcon()
-                    },
-                    actions = {
-                        val canNotUse = courseName == null && code == null
-                        val enabled = uiState is NetworkUiState.Success && !canNotUse
-                        val dest = remember(enabled) {
-                            if(enabled) {
-                                val data = (uiState as NetworkUiState.Success).data
-                                val term = if(data.isNotEmpty()) {
-                                    data[0].semester.id
-                                } else {
-                                    null
-                                }
-                                CourseSearchTableDestination(term,courseName,code,null,data)
-                            } else {
-                                null
-                            }
-                        }
-                        SharedContainer(
-                            key = dest?.key,
-                            shape = CircleShape,
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            modifier = Modifier.padding(end = BUTTON_END_PADDING),
-                        ) {
-                            LiquidButton(
-                                onClick = {
-                                    navController.push(dest!!)
-                                },
-                                shape = NoneRoundShape,
-                                backdrop = rememberLayerBackdrop(),
-                                isCircle = true,
-                                enabled = enabled
-                            ) {
-                                Icon(
-                                    painterResource(Drawables.calendar),
-                                    null,
-                                )
-                            }
-                        }
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState)
-            ){
-                ApiForCourseSearch(vm,courseName,code,term,innerPadding)
-            }
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("course_search_api_$courseName")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }
 }

@@ -4,7 +4,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
-import com.hfut.schedule.ui.screen.home.cube.UpdateContents
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.util.text
 import com.xah.navigation.util.LocalNavDependencies
@@ -16,7 +15,8 @@ object UpdateHistoryDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        UpdateContents(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("update_history")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

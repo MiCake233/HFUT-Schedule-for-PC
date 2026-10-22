@@ -565,21 +565,6 @@ fun pickColorFromTop(
     return colorMap.maxByOrNull { it.value }?.key
 }
 
-@Composable
-fun isThemeDark() : Boolean {
-    val colorCode = remember { ColorMode.entries }
-    val setting by DataStoreManager.colorMode.collectAsState(initial = null)
-    if(setting != null) {
-        val mode = colorCode.find { it.code == setting } ?: ColorMode.AUTO
-        return when(mode) {
-            ColorMode.AUTO -> isSystemInDarkTheme()
-            ColorMode.DARK -> true
-            ColorMode.LIGHT -> false
-        }
-    } else {
-        return isSystemInDarkTheme()
-    }
-}
 
 
 

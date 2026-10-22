@@ -91,9 +91,11 @@ object WeChatZhiJianRepository : WeChatZhiJianRepositoryInf {
                 // 先解析原 URL
                 val originalUri = url.toHttpUrlOrNull() ?: error("非法URL: $url")
                 // 用原路径和查询参数替换 host
+                val wxUrl = Constant.WX_URL.toHttpUrl()
                 val newUrl = originalUri.newBuilder()
-                    .encodedAuthority(Constant.WX_URL.toHttpUrl().encodedAuthority)
-                    .scheme(Constant.WX_URL.toHttpUrl().scheme)
+                    .host(wxUrl.host)
+                    .port(wxUrl.port)
+                    .scheme(wxUrl.scheme)
                     .build()
                     .toString()
                 // 处理URL 将其HOST换成

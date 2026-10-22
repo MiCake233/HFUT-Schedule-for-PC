@@ -27,6 +27,8 @@ import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.HazeState
+import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI
+import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.getInGuaGua
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

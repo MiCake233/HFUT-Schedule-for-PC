@@ -27,7 +27,6 @@ import androidx.compose.ui.draw.scale
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.style.align.CenterScreen
 import kotlinx.coroutines.delay

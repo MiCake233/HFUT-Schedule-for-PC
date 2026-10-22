@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.ui.screen.home.search.function.school.scan.ScanScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
@@ -38,7 +37,8 @@ object ScanQrCodeDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-        ScanScreen(vm)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("scan_qr_code")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

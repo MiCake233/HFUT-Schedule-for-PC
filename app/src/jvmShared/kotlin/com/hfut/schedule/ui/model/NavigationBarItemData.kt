@@ -84,7 +84,6 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.cardNormalColor
 import com.hfut.schedule.ui.style.special.canLayerBlur

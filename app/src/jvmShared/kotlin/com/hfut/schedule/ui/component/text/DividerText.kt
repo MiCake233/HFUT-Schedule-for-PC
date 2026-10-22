@@ -31,9 +31,8 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogWindowProvider
+import com.hfut.schedule.ui.util.isInDialogWindow
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
@@ -202,12 +201,3 @@ fun DividerTextExpandedWith(
         DividerTextExpandedWithDefault(text,openBlurAnimation,defaultIsExpanded,contentColor,content)
     }
 }
-
-@Composable
-fun isInDialogWindow(): Boolean {
-    val view = LocalView.current
-    return remember(view) {
-        view.parent is DialogWindowProvider
-    }
-}
-

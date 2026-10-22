@@ -33,6 +33,7 @@ import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 
 import kotlinx.coroutines.launch
+import com.hfut.schedule.ui.screen.home.cube.sub.activity
 
 @Composable
 fun CalendarSettingsScreen(innerPadding : PaddingValues) {

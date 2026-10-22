@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.ui.screen.home.search.function.my.holiday.HolidayScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -16,6 +15,8 @@ object HolidayDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        HolidayScreen()
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("holiday")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }

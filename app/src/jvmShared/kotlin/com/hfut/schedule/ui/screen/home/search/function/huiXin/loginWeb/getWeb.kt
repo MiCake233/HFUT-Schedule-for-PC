@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.json
 
 suspend fun getXwxPsk() : String? = withContext(Dispatchers.IO) {
     return@withContext try {

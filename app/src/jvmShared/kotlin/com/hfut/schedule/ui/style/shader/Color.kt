@@ -1,8 +1,8 @@
 package com.hfut.schedule.ui.style.shader
 
-import android.graphics.RenderEffect
-import android.graphics.RuntimeShader
-import android.os.Build
+import androidx.compose.ui.graphics.RenderEffect
+import com.xah.shader.skia.RuntimeShader
+import com.xah.shader.skia.canUseRuntimeShader
 import androidx.annotation.RequiresApi
 import org.intellij.lang.annotations.Language
 
@@ -14,7 +14,7 @@ fun enhanceColorShader(
     enhanceColor.setFloatUniform("saturation", if(enabled) 1.25f else 1f)
     enhanceColor.setFloatUniform("contrast", if(enabled) 1.1f else 1f)
 
-    val enhanceEffect = RenderEffect.createRuntimeShaderEffect(enhanceColor, "content")
+    val enhanceEffect = RuntimeShaderEffect(enhanceColor, "content")
     return enhanceEffect
 }
 

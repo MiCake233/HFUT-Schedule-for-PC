@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.network.api.model.response.html.JxglstuGrade
-import com.hfut.schedule.ui.screen.grade.grade.jxglstu.GradeDetailScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.xah.common.ui.util.res
 
@@ -28,6 +27,8 @@ data class GradeDetailDestination(
 
     @Composable
     override fun Content() {
-        GradeDetailScreen(bean,allAvgGpa,allAvgScore,allTotalCredits)
+        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("grade_detail")) {
+            com.hfut.schedule.ui.nav.UnavailableFeature(title)
+        }
     }
 }
