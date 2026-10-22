@@ -55,4 +55,6 @@ actual object AppCapabilities {
     actual fun exitApplication() {
         runCatching { com.hfut.schedule.logic.util.storage.file.killAppUnSafely() }
     }
+
+    actual fun supportsProgressiveBlur(): Boolean = true
 }

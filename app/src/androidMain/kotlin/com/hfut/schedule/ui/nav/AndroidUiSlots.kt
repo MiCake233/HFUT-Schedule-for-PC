@@ -75,6 +75,12 @@ fun registerAndroidUiSlots() {
             rememberHazeBlurCompat()
         )
     }
+    // 参数：内边距
+    UiSlots.register("download_ml") { arg ->
+        com.hfut.schedule.ui.screen.home.cube.sub.DownloadMLUI(
+            arg as androidx.compose.foundation.layout.PaddingValues
+        )
+    }
     // 参数：isSupabase / isVisible / 内边距 / ViewModel
     UiSlots.register("add_event_fab") { arg ->
         val args = arg as List<*>

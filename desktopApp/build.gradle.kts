@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.jetbrainsKotlinJvm)
@@ -7,50 +8,84 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
+// 桌面端壳工程：只负责窗口 / 启动流程 / MSI 打包，业务代码全部来自 :app 的 jvm 目标
 dependencies {
+    implementation(project(":app"))
+
     implementation(compose.desktop.currentOs)
     implementation(compose.runtime)
     implementation(compose.foundation)
     implementation(compose.ui)
     implementation(compose.components.resources)
-    // KMP 版 Material3（CMP 1.12.2 对应 Jetpack M3 1.5.0-alpha22）
     implementation(libs.jb.material3)
-    // 桌面端导航/转场/浮窗骨架
     implementation(libs.sharednavJvm)
     implementation(libs.jb.lifecycle.viewmodel)
     implementation(libs.jb.lifecycle.viewmodel.compose)
+    // 主题取色（与 Android 端同一套动态配色）
+    implementation(libs.material.kolor)
     // 模糊
     implementation(libs.haze)
     implementation(libs.haze.materials)
+    // 底栏用到的 Nav2（KMP，桌面有 jvm 变体）
+    implementation(libs.navigation2)
     implementation(libs.kotlinx.coroutines.core)
-}
-
-compose.resources {
-    publicResClass = true
-    packageOfResClass = "hfutprobe.resources"
+    implementation(libs.kotlinx.coroutines.swing)
 }
 
 compose.desktop {
     application {
-        mainClass = "hfutprobe.MainKt"
+        mainClass = "com.hfut.schedule.desktop.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Msi)
-            packageName = "HFUTScheduleProbe"
+            packageName = "HFUT-Schedule"
             packageVersion = "1.0.0"
+            description = "HFUT 课程表 桌面版"
+            vendor = "HFUT-Schedule Desktop Port"
+            copyright = "GPL-3.0"
+            windows {
+                menuGroup = "HFUT-Schedule"
+                // 固定升级 UUID，保证 MSI 覆盖安装而不是并存
+                upgradeUuid = "8f3c1a2e-6b47-4d19-9c85-2f1a7d4e9b60"
+                shortcut = true
+                dirChooser = true
+                perUserInstall = true
+            }
         }
     }
 }
 
-// 无窗口离屏渲染，用于自动化验证 UI 是否真的画得出来
+// 无窗口离屏渲染，用于自动化验证「界面真的画得出来」
 tasks.register<JavaExec>("snapshot") {
     group = "verification"
-    description = "离屏渲染探针界面为 PNG"
+    description = "离屏渲染桌面端界面为 PNG"
     dependsOn(tasks.named("classes"))
-    mainClass.set("hfutprobe.MainKt")
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
-    args = listOf("--snapshot", "E:/dshworkspace/research/hfut-desktop/probe.png")
+    args = listOf("--snapshot", "E:/dshworkspace/research/hfut-desktop/desktop-home.png")
     systemProperty("java.awt.headless", "false")
+}
+
+// 渲染「已登录」状态的主界面
+tasks.register<JavaExec>("snapshotHome") {
+    group = "verification"
+    description = "离屏渲染已登录的桌面主界面为 PNG"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--snapshot", "E:/dshworkspace/research/hfut-desktop/desktop-main.png", "--logged-in")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 临时：打印桌面运行时里 savedstate 相关的 jar
+tasks.register("printSavedState") {
+    val cp = sourceSets["main"].runtimeClasspath
+    doLast {
+        cp.files.filter { it.name.contains("savedstate") || it.name.contains("core-bundle") || it.name.contains("lifecycle") }
+            .forEach { println("CP: " + it.name) }
+    }
 }

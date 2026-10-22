@@ -48,7 +48,9 @@ actual object PlatformStarter {
     actual fun restartToLogin() = showToast("请重新登录")
 
     actual fun showLoginSuccess() {
-        showToast("登录成功")
+        // 桌面端：由窗口层切到主界面；未注册钩子时退化为提示
+        val hook = com.hfut.schedule.logic.util.sys.PlatformHooks.onLoginSuccess
+        if (hook != null) hook() else showToast("登录成功")
     }
 
     actual fun showFix() = showToast("桌面端暂不提供修复页")

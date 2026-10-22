@@ -49,6 +49,11 @@ actual object AppCapabilities {
     }
 
     actual fun exitApplication() {
-        kotlin.system.exitProcess(0)
+        val hook = com.hfut.schedule.logic.util.sys.PlatformHooks.onExitApp
+        if (hook != null) hook() else kotlin.system.exitProcess(0)
     }
+
+    // haze 桌面版（1.6.2）的 skia 着色器与 Compose 1.11 的 ShaderBrush 签名不一致，
+    // 渐进模糊会抛 NoSuchMethodError，这里关掉它，改由渐变叠加实现同样的观感。
+    actual fun supportsProgressiveBlur(): Boolean = false
 }

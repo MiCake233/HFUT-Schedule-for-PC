@@ -41,4 +41,11 @@ expect object AppCapabilities {
 
     /** 退出整个应用 */
     fun exitApplication()
+
+    /**
+     * 是否支持渐进式模糊（haze 的 HazeProgressive）。
+     * desktop 版 haze 的着色器与当前 Compose 版本的 shader 签名不兼容，
+     * 桌面端改用等价的渐变叠加来实现同样的观感。
+     */
+    fun supportsProgressiveBlur(): Boolean
 }

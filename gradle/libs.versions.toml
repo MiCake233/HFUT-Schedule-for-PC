@@ -44,7 +44,7 @@ material = "1.0.5"
 material3 = "1.5.0-alpha12"
 # Nav2就是一坨答辩，尽管再封装了一次，也只勉强用了 4.17 4.18 4.19 三个大版本，随着SharedNav的开发完成，Nav2在项目中的占比很小了，只剩下一小部分负责管理平切场景的导航（带BottomBar的页面），等后续SharedNav继续迭代接管此功能就可以删了
 #navigationCompose = "2.7.5" # 2.9.1 2.7.5
-navigationComposeVersion = "2.7.0-alpha07" # 2.9.0-beta04
+navigationComposeVersion = "2.9.2" # 2.7.0-alpha07 时代依赖旧版 savedstate，与 Compose 1.11 冲突
 okhttp = "4.9.0"
 palette = "1.0.0"
 profileinstaller = "1.4.1"

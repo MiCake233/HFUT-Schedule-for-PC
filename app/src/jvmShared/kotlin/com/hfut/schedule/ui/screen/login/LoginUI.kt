@@ -2,11 +2,7 @@ package com.hfut.schedule.ui.screen.login
 import com.hfut.schedule.logic.util.sys.runOnMain
 
 //import androidx.compose.ui.tooling.preview.Preview
-import android.content.Context
-import android.os.Build
-import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalActivity
-import androidx.annotation.RequiresApi
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.fadeIn
@@ -62,7 +58,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -96,7 +91,6 @@ import com.hfut.schedule.ui.component.text.BottomSheetTopBar
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.screen.card.function.main.RefreshHuiXin
 import com.hfut.schedule.ui.screen.card.function.main.RefreshUniApp
-import com.hfut.schedule.ui.screen.home.cube.sub.DownloadMLUI
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 import com.hfut.schedule.ui.style.color.textFiledTransplant
 import com.hfut.schedule.ui.style.corner.bottomSheetRound
@@ -137,7 +131,6 @@ private fun saveInput(
 
 //登录方法，auto代表前台调用
 private fun loginClick(
-    context: Context,
     vm : LoginViewModel,
     username : String,
     inputAES : String,
@@ -263,7 +256,6 @@ private const val TAB_LOGIN = 0
 private const val TAB_SETTRINGS = 1
 
 private data class CheckResult(val can : Boolean?,val text : String,val code : Int?)
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun LoginScreen(
@@ -271,7 +263,6 @@ fun LoginScreen(
     networkVm : NetWorkViewModel,
 ) {
     val scope = rememberCoroutineScope()
-    val activity = LocalActivity.current
     val hazeState = rememberHazeBlur()
     val Savedusername = prefs.getString("Username", EMPTY_STRING)
     var username by remember { mutableStateOf(Savedusername ?: EMPTY_STRING) }
@@ -283,7 +274,6 @@ fun LoginScreen(
     val showTip = username.startsWith(DateTimeManager.Date_yyyy) && getPersonInfo().isAnonymous()
     val showTip2 = jxglstuStatus != null && jxglstuStatus!! >= 400
     var tab by remember { mutableIntStateOf(TAB_LOGIN) }
-    val context = LocalContext.current
 
     BackHandler(tab == TAB_SETTRINGS) {
         tab = TAB_LOGIN
@@ -355,7 +345,7 @@ fun LoginScreen(
                     },
                     navigationIcon  = {
                         IconButton(onClick = {
-                            activity?.finish()
+                            com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
                         }) {
                             Icon(painterResource(id = Drawables.close), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
                         }
@@ -651,7 +641,6 @@ private suspend fun refresh(vm: LoginViewModel) = withContext(Dispatchers.IO) {
     launch { GlobalEventHolder.captchaRefreshCallback.emit(Unit) }
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 private fun TwoTextField(
@@ -660,7 +649,6 @@ private fun TwoTextField(
     username : String,
     onUsername : (String) -> Unit
 ) {
-    val context = LocalContext.current
     var hidden by rememberSaveable { mutableStateOf(true) }
     var inputAES by rememberSaveable { mutableStateOf(prefs.getString("Password",EMPTY_STRING) ?: EMPTY_STRING) }
     var inputCode by rememberSaveable { mutableStateOf( EMPTY_STRING) }
@@ -682,7 +670,8 @@ private fun TwoTextField(
                 topBar = {
                     BottomSheetTopBar("图片验证码自动填充")
                 },) {innerPadding ->
-                DownloadMLUI(innerPadding)
+                // OCR 模型下载页只在 Android 端有（桌面端不做验证码识别）
+                com.hfut.schedule.ui.nav.UiSlots.Render("download_ml", innerPadding)
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }
@@ -834,7 +823,7 @@ private fun TwoTextField(
                 onClick = {
                     val cookie = prefs.getString("LOGIN_FLAVORING", "")
                     if (cookie != null) {
-                        loginClick(context,vm,username,inputAES,inputCode, onLoad = { loading = it }, onResult = { status = it}, scope)
+                        loginClick(vm,username,inputAES,inputCode, onLoad = { loading = it }, onResult = { status = it}, scope)
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),

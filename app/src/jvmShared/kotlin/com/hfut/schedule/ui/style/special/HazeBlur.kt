@@ -119,7 +119,7 @@ fun Modifier.bottomBarBlur(
                 noiseFactor = 0f
             ),
             block = fun HazeEffectScope.() {
-                progressive = HazeProgressive.verticalGradient(
+                if (com.hfut.schedule.logic.platform.AppCapabilities.supportsProgressiveBlur()) progressive = HazeProgressive.verticalGradient(
                     startIntensity = 0f,
                     endIntensity = 1f,
                 )
@@ -167,7 +167,7 @@ fun Modifier.newBottomBarBlur(
                 noiseFactor = 0f
             ),
             block = fun HazeEffectScope.() {
-                progressive = HazeProgressive.verticalGradient(
+                if (com.hfut.schedule.logic.platform.AppCapabilities.supportsProgressiveBlur()) progressive = HazeProgressive.verticalGradient(
                     startIntensity = 0f,
                     endIntensity = 1f,
                 )
@@ -211,7 +211,7 @@ fun Modifier.topBarBlur(
                 noiseFactor = 0f
             ),
             block = fun HazeEffectScope.() {
-                progressive = HazeProgressive.verticalGradient(
+                if (com.hfut.schedule.logic.platform.AppCapabilities.supportsProgressiveBlur()) progressive = HazeProgressive.verticalGradient(
                     // 适配安卓12不了一点儿，效果比较差，直接砍了
                     startIntensity = if(HAZE_BLUR_FOR_S) 0.9f else 1f,
                     endIntensity = if(HAZE_BLUR_FOR_S) 0.1f else 0f,
