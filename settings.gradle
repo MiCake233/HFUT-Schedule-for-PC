@@ -37,6 +37,7 @@ dependencyResolutionManagement {
 rootProject.name = "肥工课程表"
 
 include ':app'
+include ':androidApp'
 include ':desktopApp'
 include ':common-ui'
 include ':consumption-forecast'

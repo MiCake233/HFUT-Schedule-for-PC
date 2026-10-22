@@ -19,7 +19,7 @@ dependencies {
     // KMP 版 Material3（CMP 1.12.2 对应 Jetpack M3 1.5.0-alpha22）
     implementation(libs.jb.material3)
     // 桌面端导航/转场/浮窗骨架
-    implementation(libs.sharednav.jvm)
+    implementation(libs.sharednavJvm)
     implementation(libs.jb.lifecycle.viewmodel)
     implementation(libs.jb.lifecycle.viewmodel.compose)
     // 模糊

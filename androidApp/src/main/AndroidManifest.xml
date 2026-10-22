@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      桌面端改造后，Android 应用壳被抽成独立模块 :androidApp，
+      其余业务/UI/组件声明仍留在 :app（Android Library）的清单里，由清单合并带入。
+    -->
+    <application />
+
+</manifest>
