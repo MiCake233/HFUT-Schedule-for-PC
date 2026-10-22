@@ -1,7 +1,6 @@
 package com.hfut.schedule.logic.util.storage.file
 
 import androidx.core.content.edit
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.parse.SemesterParser
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
@@ -13,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 private const val CACHE_DIR_NAME = "data_cache"
 
-object LargeStringDataManager : LargeStringDataStore(CACHE_DIR_NAME, MyApplication.context) {
+object LargeStringDataManager : LargeStringDataStore(CACHE_DIR_NAME) {
     private const val DATUM_HEAD = "datum_"
     const val PROGRAM = "program"
     const val PROGRAM_PERFORMANCE = "program_performance"

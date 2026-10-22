@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.xah.common.logic.state.NetworkUiState
@@ -48,7 +47,6 @@ fun TeacherListUI(
             it.filter { it.name == t }
         } ?: it
     }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     if(dataList.isEmpty()) {
         CenterScreen {
@@ -87,7 +85,7 @@ fun TeacherListUI(
                         },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context,it.url,it.name, icon = icon)
+                                Starter.startWebUrlInner(it.url,it.name, icon = icon)
                             }
                         }
                     )

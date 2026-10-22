@@ -3,7 +3,7 @@ package com.hfut.schedule.ui.screen.home.cube.sub.update
 import com.hfut.schedule.network.api.model.response.json.gitee.GiteeReleaseResponse
 import com.hfut.schedule.logic.util.dev.ExceptionHelper.getKeyStackTraceDesc
 import com.xah.common.logic.state.NetworkUiState
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.bsdiffs.model.Patch
 import com.xah.bsdiffs.util.parsePatchFile
@@ -20,7 +20,7 @@ suspend fun getUpdates(vm : NetWorkViewModel) : GiteeReleaseResponse? = withCont
         }
         is NetworkUiState.Success -> {
             val data = update.data
-            if(data.name == AppVersion.getVersionName()) {
+            if(data.name == AppInfo.getVersionName()) {
                 null
             } else {
                 data

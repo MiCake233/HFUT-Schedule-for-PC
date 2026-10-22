@@ -32,7 +32,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.logic.util.LogUtil

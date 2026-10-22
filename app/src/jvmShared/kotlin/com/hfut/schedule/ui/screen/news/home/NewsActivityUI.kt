@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.news.home
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,13 +39,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.enumeration.NewsBarItems
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter
@@ -80,7 +77,7 @@ import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.navigation.currentRouteWithoutArgs
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.state.NetworkUiState
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
@@ -101,7 +98,6 @@ private val items = listOf(
         NewsBarItems.School.name,"各级学院", Drawables.school,Drawables.school_filled
     )
 )
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun NewsScreen(
@@ -116,7 +112,6 @@ fun NewsScreen(
         NewsBarItems.School.name -> NewsBarItems.School
         else -> NewsBarItems.News
     }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val newsTitles = listOf("总","宣城校区")
     val newsPagerState = rememberPagerState(pageCount = { newsTitles.size })
@@ -276,7 +271,6 @@ fun TotalNewsScreen(
     val cookies by produceState<String?>(initialValue = null) {
         value = getWebVpnCookie()
     }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var page by rememberSaveable { mutableIntStateOf(1) }
     val uiState by vm.newsResult.state.collectAsState()
@@ -324,7 +318,7 @@ fun TotalNewsScreen(
                         leadingContent = { Text(text = (item + 1).toString()) },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context,listItem.link,listItem.title, icon = Drawables.stream, cookie = cookies)
+                                Starter.startWebUrlInner(listItem.link,listItem.title, icon = Drawables.stream, cookie = cookies)
                             }
                         },
                     )

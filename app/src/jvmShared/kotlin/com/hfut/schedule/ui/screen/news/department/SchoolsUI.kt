@@ -16,7 +16,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.sys.Starter
@@ -36,7 +35,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun SchoolsUI(vm : NetWorkViewModel,innerPadding : PaddingValues? = null) {
     val uiState by vm.departmentsResp.state.collectAsState()
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     val refreshNetwork = suspend {
@@ -85,7 +83,7 @@ fun SchoolsUI(vm : NetWorkViewModel,innerPadding : PaddingValues? = null) {
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            Starter.startWebUrlInner(context,item.url, icon = icon)
+                            Starter.startWebUrlInner(item.url, icon = icon)
                         }
                     }
                 )

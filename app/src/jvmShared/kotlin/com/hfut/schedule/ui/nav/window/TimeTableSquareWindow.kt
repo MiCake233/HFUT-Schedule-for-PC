@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.compositeOver
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.showDevelopingToast
 import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
@@ -51,7 +50,7 @@ import com.hfut.schedule.ui.screen.home.calendar.jxglstu.CourseDetailOrigin
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.TimeTableItem
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.TimeTableType
 import com.hfut.schedule.ui.util.layout.measureDpSize
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.util.text

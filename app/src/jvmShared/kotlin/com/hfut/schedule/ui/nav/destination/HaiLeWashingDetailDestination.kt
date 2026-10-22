@@ -6,7 +6,6 @@ import com.xah.common.ui.res.Drawables
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.haile.HaiLeNearPositionBean
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.washing.HaiLeDetailScreen

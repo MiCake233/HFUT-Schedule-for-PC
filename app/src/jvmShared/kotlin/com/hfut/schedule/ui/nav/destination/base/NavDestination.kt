@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.status.StatusIcon
 import com.xah.common.ui.model.text.UiText
 import com.xah.navigation.model.dest.Destination

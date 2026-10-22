@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.xwx
 
-import android.annotation.SuppressLint
 import android.os.Environment
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
@@ -39,7 +38,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.dto.XiaoWuXingLoginInfoDto
 import com.hfut.schedule.logic.util.other.decodeImageBitmap
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -79,7 +77,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun XwxMainScreen(vm: NetWorkViewModel) {
@@ -254,8 +251,7 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
                         },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(
-                                    context, Constant.XWX_PICTURE_URL + "xwx-cms/","校务行"
+                                Starter.startWebUrlInner(Constant.XWX_PICTURE_URL + "xwx-cms/","校务行"
                                 )
                             }
                         },

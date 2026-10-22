@@ -10,7 +10,6 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel

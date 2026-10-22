@@ -10,7 +10,6 @@ import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.network.MyApiParse.getSettingInfo
 import com.hfut.schedule.logic.util.sys.datetime.getUserAge
 import com.hfut.schedule.logic.util.sys.datetime.isUserBirthday

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.navigation.NavHostController
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
@@ -32,7 +32,7 @@ fun CustomTransitionScaffold(
     backHandler : @Composable ((Float) -> Unit)? = null, // 自定义返回 将覆盖原有逻辑 可传入预测式
     content: @Composable ((PaddingValues) -> Unit)
 ) {
-    val predictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+    val predictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
     Scaffold(
         modifier = modifier,
         containerColor = containerColor ?:  MaterialTheme.colorScheme.surface,

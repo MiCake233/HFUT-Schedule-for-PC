@@ -1,6 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
 
-import android.annotation.SuppressLint
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,16 +21,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.room.Update
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
@@ -65,7 +63,6 @@ import kotlinx.coroutines.launch
 
 private const val RELEASE_DATE = "2026-10-10"
 
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun VersionInfo() {
     VersionInfoCard()
@@ -135,21 +132,20 @@ fun VersionInfo() {
 }
 
 
-@SuppressLint("SuspiciousIndentation")
 @Composable
 private fun VersionInfoCard() {
     Column {
         Spacer(Modifier.height(CARD_NORMAL_DP))
         DividerTextExpandedWith("版本信息") {
             LargeCard(
-                title = "版本 " + AppVersion.getVersionName()
+                title = "版本 " + AppInfo.getVersionName()
             ) {
                 Row {
                     TransplantListItem(
                         // fixme:这里用gradle自动签日期会影响F-Droid构建后校验Smail代码，暂时还是手动标注吧 [issue#50]
                         overlineContent = { ScrollText(text = RELEASE_DATE) },
                         leadingContent = { Icon(painter = painterResource(id = Drawables.code), contentDescription = EMPTY_STRING) },
-                        headlineContent = { Text(text = "版本号 ${AppVersion.getVersionCode()}") },
+                        headlineContent = { Text(text = "版本号 ${AppInfo.getVersionCode()}") },
                         modifier = Modifier.weight(.5f)
                     )
                     AppVersion.getSplitType().let {
@@ -222,7 +218,6 @@ private fun UpdateItems(
     val floatingController = LocalFloatingControllerSafely.current
 
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     CustomCard(
         color = cardNormalColor()
@@ -242,7 +237,7 @@ private fun UpdateItems(
                     items(developers.size,key = { it }) { index ->
                         val item = developers[index]
                         UrlImage(
-                            Constant.GITHUB_USER_IMAGE_URL + MyApplication.contributors[item],
+                            Constant.GITHUB_USER_IMAGE_URL + AppConst.contributors[item],
                             shape = CircleShape,
                             enableClick = false,
                             modifier = Modifier
@@ -251,7 +246,7 @@ private fun UpdateItems(
                                 .size(30.dp)
                                 .clickable {
                                     scope.launch {
-                                        Starter.startWebUrlInner(context, Constant.GITHUB_URL + item)
+                                        Starter.startWebUrlInner(Constant.GITHUB_URL + item)
                                     }
                                 }
                         )

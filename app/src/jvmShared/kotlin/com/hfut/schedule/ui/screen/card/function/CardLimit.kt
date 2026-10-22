@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.google.gson.JsonObject
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.container.CardListItem

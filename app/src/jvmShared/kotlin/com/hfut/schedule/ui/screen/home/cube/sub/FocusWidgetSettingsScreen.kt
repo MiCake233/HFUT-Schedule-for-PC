@@ -32,14 +32,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 
 import com.hfut.schedule.logic.util.parse.roundOffString
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -63,7 +61,7 @@ fun FocusWidgetSettingsScreen(
    innerPadding : PaddingValues,
 //   navController : NavHostController
 ) {
-//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
 //    var scale by remember { mutableFloatStateOf(1f) }
 //    TransitionBackHandler(navController,enablePredictive) {
 //        scale = it
@@ -79,7 +77,6 @@ fun FocusWidgetSettingsUI(
     innerPadding : PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val focusWidgetCount by produceState(initialValue = 0) {
         value = hasFocusWidget(context)
     }

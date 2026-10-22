@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.animation.AnimatedVisibility
@@ -41,7 +40,6 @@ import androidx.compose.ui.graphics.Color
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.util.insertSafely
 import com.xah.common.logic.model.CampusRegion
@@ -246,7 +244,6 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
 }
 
 
-@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun FocusCard(

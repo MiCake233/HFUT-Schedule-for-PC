@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.work
 
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -44,12 +43,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastMap
-import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.model.enumeration.WorkSearchType
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -79,7 +76,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.isEmptyOrBlank
@@ -98,7 +95,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun Work() {
     val navController = LocalNavController.current
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     TransplantListItem(
@@ -110,7 +106,7 @@ fun Work() {
             FilledTonalIconButton(
                 onClick = {
                     scope.launch {
-                        Starter.startWebUrlInner(context, Constant.WORK_SYSTEM_URL + "Login.aspx","就业系统（学生端）")
+                        Starter.startWebUrlInner(Constant.WORK_SYSTEM_URL + "Login.aspx","就业系统（学生端）")
                     }
                 },
                 modifier = Modifier.size(30.dp)
@@ -142,7 +138,6 @@ fun WorkScreen(
         vm.workSearchResult.clear()
         vm.searchWorks(keyword = input.let { if(it.isEmptyOrBlank()) null else it }, page = currentPage, type = page,campus)
     }
-    val context = LocalContext.current
     Scaffold (
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -166,9 +161,7 @@ fun WorkScreen(
                                 backdrop = backDrop,
                                 onClick = {
                                     scope.launch {
-                                        Starter.startWebUrlInner(
-                                            context,
-                                            url = url,
+                                        Starter.startWebUrlInner(url = url,
                                             title = "就业网(${campus.description})",
                                             icon = Drawables.net,
                                         )
@@ -184,7 +177,7 @@ fun WorkScreen(
                                 backdrop = backDrop,
                                 onClick = {
                                     scope.launch {
-                                        Starter.startWebUrlInner(context, Constant.WORK_SYSTEM_URL + "Login.aspx","就业系统（学生端）")
+                                        Starter.startWebUrlInner(Constant.WORK_SYSTEM_URL + "Login.aspx","就业系统（学生端）")
                                     }
                                 },
                             ) {
@@ -247,7 +240,6 @@ fun WorkScreen(
 }
 // 模范写法
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterialApi::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun WorkSearchUI(
     vm : NetWorkViewModel,
@@ -258,7 +250,6 @@ private fun WorkSearchUI(
     refreshNetwork: suspend (Int,Int) -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     HorizontalPager(state = pagerState) { page ->
         val uiState by vm.workSearchResult.state.collectAsState()
@@ -302,7 +293,7 @@ private fun WorkSearchUI(
                                 
                                     modifier = Modifier.clickable {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,url,title, icon = WorkDestination.icon)
+                                            Starter.startWebUrlInner(url,title, icon = WorkDestination.icon)
                                         }
                                     },
                                     leadingContent = { Text((index+1).toString()) }

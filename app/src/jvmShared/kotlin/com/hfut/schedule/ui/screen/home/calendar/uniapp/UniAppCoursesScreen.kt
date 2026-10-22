@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.uniapp
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
@@ -26,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
 import com.hfut.schedule.logic.util.sys.showToast
@@ -47,7 +48,6 @@ import com.hfut.schedule.ui.screen.home.calendar.timetable.ui.TimeTableDetail
 import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventOrigin
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.safelySetDate
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
-import com.kyant.backdrop.Backdrop
 import com.xah.shader.state.ShaderState
 
 
@@ -99,7 +99,7 @@ fun UniAppCoursesScreen(
 
     val weekSwap = remember(currentWeek,today) { object : TimeTableWeekSwap {
         override fun backToCurrentWeek() {
-            if(DateTimeManager.currentWeek !in 1..MyApplication.MAX_WEEK) {
+            if(DateTimeManager.currentWeek !in 1..AppConst.MAX_WEEK) {
                 if(termStartDate == null) {
                     return
                 }
@@ -115,7 +115,7 @@ fun UniAppCoursesScreen(
             if(currentWeek == i) {
                 return
             }
-            if (i in 1..MyApplication.MAX_WEEK) {
+            if (i in 1..AppConst.MAX_WEEK) {
                 val day = 7L*(i - currentWeek)
                 onDateChange(today.plusDays(day))
                 currentWeek = i
@@ -125,7 +125,7 @@ fun UniAppCoursesScreen(
 
         override fun nextWeek() {
             LogUtil.debug("today=$today")
-            if (currentWeek < MyApplication.MAX_WEEK) {
+            if (currentWeek < AppConst.MAX_WEEK) {
                 onDateChange(today.plusDays(7))
                 currentWeek++
             }
@@ -159,7 +159,7 @@ fun UniAppCoursesScreen(
 
     val floatingController = LocalFloatingController.current
     val isExpand = floatingController.isRunning
-    val items by produceState(initialValue = List(MyApplication.MAX_WEEK) { emptyList() }, key1 = termStartDate) {
+    val items by produceState(initialValue = List(AppConst.MAX_WEEK) { emptyList() }, key1 = termStartDate) {
         value = allToTimeTableDataUniApp()
     }
 
@@ -183,9 +183,9 @@ fun UniAppCoursesScreen(
             detectHorizontalDragGestures(
                 onDragEnd = {
                     // 手指松开后根据累积的水平拖动量决定
-                    if (totalDragX > MyApplication.SWIPE) { // 阈值
+                    if (totalDragX > AppConst.SWIPE) { // 阈值
                         weekSwap.previousWeek()
-                    } else if (totalDragX < -MyApplication.SWIPE) {
+                    } else if (totalDragX < -AppConst.SWIPE) {
                         weekSwap.nextWeek()
                     }
                     totalDragX = 0f // 重置

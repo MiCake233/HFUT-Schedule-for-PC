@@ -8,9 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.hfut.schedule.logic.util.sys.Starter.refreshLogin
 import com.hfut.schedule.ui.component.container.TransplantListItem
@@ -28,7 +27,6 @@ fun Transfer(
     ifSaved : Boolean,
 ){
     val navController = LocalNavController.current
-    val context = LocalContext.current
 
     TransplantListItem(
         headlineContent = { ScrollText(text =TransferMajorDestination.title.asString()) },

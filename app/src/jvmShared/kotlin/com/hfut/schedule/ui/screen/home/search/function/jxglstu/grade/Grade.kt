@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.grade
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
@@ -20,7 +19,6 @@ import androidx.compose.ui.Modifier
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.icon.LoadingIcon
@@ -38,7 +36,6 @@ import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun Grade(
     vm : NetWorkViewModel,

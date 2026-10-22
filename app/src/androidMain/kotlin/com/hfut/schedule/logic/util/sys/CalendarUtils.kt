@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.sys
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.app.Activity
 import android.content.ContentUris
 import android.content.ContentValues
@@ -72,7 +74,7 @@ private suspend fun checkExistEvent(dateTime: DateTime, title: String, activity:
         null
     }
 }
-private const val CALENDAR_COURSE_TAG = MyApplication.APP_NAME
+private const val CALENDAR_COURSE_TAG = AppConst.APP_NAME
 
 suspend fun delAllCourseEvent(activity: Activity) = withContext(Dispatchers.IO) {
     checkAndRequestCalendarPermission(activity)

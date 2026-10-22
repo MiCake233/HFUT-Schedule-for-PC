@@ -1,6 +1,5 @@
 package com.hfut.schedule.application
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Context
@@ -35,6 +34,19 @@ class MyApplication : Application() {
         super.onCreate()
         // 暴露全局Context
         context = applicationContext
+        // 把平台信息注入共享层（桌面端在 main() 里注入）
+        com.hfut.schedule.logic.util.other.AppInfo.apply {
+            versionName = com.hfut.schedule.logic.util.other.AppVersion.getVersionName()
+            versionCode = com.hfut.schedule.logic.util.other.AppVersion.getVersionCode()
+            deviceName = com.hfut.schedule.logic.util.other.AppVersion.deviceName
+            isDebug = com.hfut.schedule.logic.util.other.AppVersion.isDebug
+            isSignatureValid = com.hfut.schedule.logic.util.other.AppVersion.isSignatureValid
+            isRunningOnAvd = com.hfut.schedule.logic.util.other.AppVersion.isRunningOnAvd
+            isRunningOnWsa = com.hfut.schedule.logic.util.other.AppVersion.isRunningOnWsa
+            isHarmony = com.hfut.schedule.logic.util.other.AppVersion.isHarmony
+            sdkInt = com.hfut.schedule.logic.util.other.AppVersion.sdkInt
+        }
+        com.xah.common.platform.PlatformAndroid.init(applicationContext)
         // 初始化崩溃处理
         CrashHandler.init()
         // 初始化日志工具
@@ -98,46 +110,21 @@ class MyApplication : Application() {
 
     companion object {
         // 全局动画速度ANIMATION_SPEED=400ms已经迁移到AnimationManager
-        @SuppressLint("StaticFieldLeak")
         // 全局上下文
         lateinit var context: Context
-        // 方格默认高度
-        const val CALENDAR_SQUARE_HEIGHT = 70f
-        const val CALENDAR_SQUARE_TEXT_PADDING = 1.35f
-        const val CALENDAR_SQUARE_ALPHA = 0.6f
-        const val CALENDAR_SQUARE_BLUR = 0.2f
-        const val SWIPE = 5f
-        // HAZE模糊半径
-        const val BLUR_RADIUS = 20
-        // 宣城校区免费流量额度 GiB
-        const val DEFAULT_MAX_FREE_FLOW = 200
-        // 最大周
-        const val MAX_WEEK = 20
-        // 三个校区的经纬度 来自高德地图坐标拾取器
-        val campusLocations by lazy {
-            mapOf(
-                Campus.FCH to Location(117.20346, 31.77014),
-                Campus.TXL to Location(117.29597, 31.843905),
-                Campus.XC to Location(118.710182, 30.903593)
-            )
-        }
-        // 贡献者
-        val contributors by lazy {
-            // 通过 https://api.github.com/users/${用户名}获取ID
-            mapOf(
-                Constant.GITHUB_DEVELOPER_NAME to 116127902,
-                "tinyvan" to 27542299,
-                "linsui" to 36977733,
-                "James-Zhang2" to 175417444,
-                "Today1337" to 110648923,
-                "zxbmmmmmmmmm" to 96322503,
-                "Junpgle" to 81464408,
-            )
-        }
-        // App名称
-        const val APP_NAME = "聚在工大"
-        // 邮箱后缀
-        const val EMAIL = "@mail.hfut.edu.cn"
+        // 常量已抽到跨平台的 AppConst（桌面端同样可用），这里转为别名保持旧代码兼容
+        const val CALENDAR_SQUARE_HEIGHT = AppConst.CALENDAR_SQUARE_HEIGHT
+        const val CALENDAR_SQUARE_TEXT_PADDING = AppConst.CALENDAR_SQUARE_TEXT_PADDING
+        const val CALENDAR_SQUARE_ALPHA = AppConst.CALENDAR_SQUARE_ALPHA
+        const val CALENDAR_SQUARE_BLUR = AppConst.CALENDAR_SQUARE_BLUR
+        const val SWIPE = AppConst.SWIPE
+        const val BLUR_RADIUS = AppConst.BLUR_RADIUS
+        const val DEFAULT_MAX_FREE_FLOW = AppConst.DEFAULT_MAX_FREE_FLOW
+        const val MAX_WEEK = AppConst.MAX_WEEK
+        val campusLocations get() = AppConst.campusLocations
+        val contributors get() = AppConst.contributors
+        const val APP_NAME = AppConst.APP_NAME
+        const val EMAIL = AppConst.EMAIL
         // Activity栈
         private val activities = Collections.synchronizedList(mutableListOf<Activity>())
         // 安全地退出App

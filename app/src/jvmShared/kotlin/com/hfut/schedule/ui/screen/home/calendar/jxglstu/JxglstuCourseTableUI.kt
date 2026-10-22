@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.jxglstu
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
@@ -27,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.network.interceptor.GoToInterceptorState
 import com.hfut.schedule.logic.network.repo.UniAppRepository
 import com.hfut.schedule.logic.util.network.isNotBadRequest
@@ -57,7 +58,6 @@ import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPerson
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.safelySetDate
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.Backdrop
 import com.xah.common.ui.component.status.LoadingUI
 import com.xah.shader.state.ShaderState
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -156,7 +156,7 @@ fun JxglstuCourseTableUI(
 
     val weekSwap = remember(currentWeek,today) { object : TimeTableWeekSwap {
         override fun backToCurrentWeek() {
-            if(DateTimeManager.currentWeek !in 1..MyApplication.MAX_WEEK) {
+            if(DateTimeManager.currentWeek !in 1..AppConst.MAX_WEEK) {
                 if(termStartDate == null) {
                     return
                 }
@@ -174,7 +174,7 @@ fun JxglstuCourseTableUI(
             if(currentWeek == i) {
                 return
             }
-            if (i in 1..MyApplication.MAX_WEEK) {
+            if (i in 1..AppConst.MAX_WEEK) {
                 val day = 7L*(i - currentWeek)
                 onDateChange(today.plusDays(day))
                 currentWeek = i
@@ -183,7 +183,7 @@ fun JxglstuCourseTableUI(
         }
 
         override fun nextWeek() {
-            if (currentWeek < MyApplication.MAX_WEEK) {
+            if (currentWeek < AppConst.MAX_WEEK) {
                 onDateChange(today.plusDays(7))
                 currentWeek++
             }
@@ -475,7 +475,7 @@ fun JxglstuCourseTableUI(
             LoadingUI(if(webVpn) "WebVpn登录过程比较慢，请等待" else null)
         }
     } else {
-        val items by produceState(initialValue = List(MyApplication.MAX_WEEK) { emptyList() }, key1 = termStartDate) {
+        val items by produceState(initialValue = List(AppConst.MAX_WEEK) { emptyList() }, key1 = termStartDate) {
             value = allToTimeTableData()
         }
         LaunchedEffect(currentWeek,items) {
@@ -498,9 +498,9 @@ fun JxglstuCourseTableUI(
                 detectHorizontalDragGestures(
                     onDragEnd = {
                         // 手指松开后根据累积的水平拖动量决定
-                        if (totalDragX > MyApplication.SWIPE) { // 阈值
+                        if (totalDragX > AppConst.SWIPE) { // 阈值
                             weekSwap.previousWeek()
-                        } else if (totalDragX < -MyApplication.SWIPE) {
+                        } else if (totalDragX < -AppConst.SWIPE) {
                             weekSwap.nextWeek()
                         }
                         totalDragX = 0f // 重置

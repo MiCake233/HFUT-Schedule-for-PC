@@ -22,9 +22,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.screen.CustomTransitionScaffold

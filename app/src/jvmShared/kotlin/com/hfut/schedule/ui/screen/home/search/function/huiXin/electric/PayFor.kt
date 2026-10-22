@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.electric
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -33,7 +32,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinFeeType
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
@@ -180,7 +178,6 @@ fun PayFor(vm : NetWorkViewModel, payNumber : Float, tipInfo : String, json : St
     Spacer(modifier = Modifier.height(10.dp))
 }
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 private fun PayStatusUI(vm : NetWorkViewModel, payNumber : Float, json: String, type : HuiXinFeeType) {
     val auth = remember { "Bearer " + SharedPrefs.prefs.getString("auth","") }

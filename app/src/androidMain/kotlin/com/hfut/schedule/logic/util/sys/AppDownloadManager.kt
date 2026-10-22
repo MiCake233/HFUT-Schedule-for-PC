@@ -1,6 +1,5 @@
 package com.hfut.schedule.logic.util.sys
 
-import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -95,7 +94,6 @@ object AppDownloadManager {
 
     fun removeDownload(downloadId: Long)  = dlManager.remove(downloadId)
 
-    @SuppressLint("Range")
     fun getDownloadProgress(downloadId: Long): Int {
         val query = DownloadManager.Query().setFilterById(downloadId)
         val cursor = dlManager.query(query)

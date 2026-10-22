@@ -8,10 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.status.EmptyIcon
@@ -25,7 +23,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun LabUI() {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val list = remember { getLab() }
     DividerTextExpandedWith(text = "实验室") {
         if(list.isEmpty()) {
@@ -37,7 +34,7 @@ fun LabUI() {
                     leadingContent = { Icon(painterResource(Drawables.net), contentDescription = "Localized description",) },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            Starter.startWebUrlInner(context ,item.info,item.title, icon= WebFolderDestination.icon)
+                            Starter.startWebUrlInner(item.info,item.title, icon= WebFolderDestination.icon)
                         }
                     }
                 )

@@ -17,7 +17,7 @@ import com.hfut.schedule.network.api.inf.XuanChengService
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.network.api.repo.NewsRepositoryInf
 import com.hfut.schedule.network.api.util.CryptoUtil
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.screen.news.home.transferToPostData
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.isEmptyOrBlank

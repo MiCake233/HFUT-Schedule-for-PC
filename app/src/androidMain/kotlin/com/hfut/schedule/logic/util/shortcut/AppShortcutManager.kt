@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.core.net.toUri
 import com.hfut.schedule.BuildConfig
-import com.hfut.schedule.R
 import com.hfut.schedule.activity.MainActivity
 import com.hfut.schedule.activity.util.WebViewActivity
 import com.hfut.schedule.application.MyApplication

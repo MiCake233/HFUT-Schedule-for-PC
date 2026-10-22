@@ -69,7 +69,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.google.gson.reflect.TypeToken
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.enumeration.SelectType
 import com.hfut.schedule.network.api.model.response.json.jxglstu.select.JxglstuSelectCourseDetailResponse
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -112,7 +111,7 @@ import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.state.NetworkUiState
 import com.xah.common.logic.util.EMPTY_STRING
@@ -199,9 +198,7 @@ fun SelectCourseScreen(
                         LiquidButton (
                             onClick = {
                                 scope.launch {
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        url = url,
+                                    Starter.startWebUrlInner(url = url,
                                         title = "教务系统",
                                         cookie = cookie
                                     )

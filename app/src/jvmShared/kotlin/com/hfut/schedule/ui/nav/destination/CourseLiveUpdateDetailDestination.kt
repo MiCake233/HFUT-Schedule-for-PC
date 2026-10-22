@@ -4,9 +4,7 @@ import com.xah.common.ui.res.Strings
 
 import com.xah.common.ui.res.Drawables
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.CourseLiveUpdateScheduler
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.screen.home.calendar.communtiy.CourseDetailApiScreen

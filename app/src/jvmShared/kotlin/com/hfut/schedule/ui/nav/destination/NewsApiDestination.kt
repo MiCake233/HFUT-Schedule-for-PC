@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.network.api.model.Constant.PARTY_BRANCH_URL
 import com.hfut.schedule.ui.screen.home.search.function.my.holiday.NewsApiScreen

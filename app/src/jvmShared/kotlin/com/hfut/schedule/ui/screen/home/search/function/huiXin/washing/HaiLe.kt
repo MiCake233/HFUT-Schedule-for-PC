@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.xah.common.logic.model.Campus
 import com.hfut.schedule.logic.util.helper.getCampus
 import com.hfut.schedule.network.api.model.response.json.haile.HaiLeNearPositionBean

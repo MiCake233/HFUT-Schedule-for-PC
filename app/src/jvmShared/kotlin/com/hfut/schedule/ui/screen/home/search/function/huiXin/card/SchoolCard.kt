@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.card
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -23,14 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringOf
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.community.CommunityToday
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -50,7 +47,6 @@ import com.xah.container.component.base.sharedContainer
 import com.xah.navigation.util.LocalNavController
 
 
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun SchoolCardItem(isFromFocus : Boolean) {
     val navController = LocalNavController.current
@@ -63,7 +59,6 @@ fun SchoolCardItem(isFromFocus : Boolean) {
     )
     val cardValue by remember { derivedStateOf { GlobalUiStateHolder.cardValue } }
     var text by remember { mutableStateOf(cardValue?.balance ?: prefs.getString("card","00")) }
-    val context = LocalContext.current
 
     LaunchedEffect(cardValue) {
         text = cardValue?.balance ?: prefs.getString("card","00")
@@ -121,7 +116,7 @@ fun SchoolCardItem(isFromFocus : Boolean) {
                         .size(30.dp),
                     interactionSource = interactionSource2,
                     onClick = {
-                        Starter.startAppUrl(context, Constant.ALIPAY_CARD_URL)
+                        Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
                     },
                 ) {
                     Icon(

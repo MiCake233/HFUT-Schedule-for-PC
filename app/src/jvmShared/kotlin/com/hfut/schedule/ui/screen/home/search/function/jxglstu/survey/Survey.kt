@@ -27,9 +27,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.logic.model.enumeration.PostMode
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -49,8 +48,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.Backdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 
 
@@ -70,7 +68,6 @@ fun Survey(
     ifSaved : Boolean,
 ) {
     val navController = LocalNavController.current
-    val context = LocalContext.current
 
     TransplantListItem(
         headlineContent = { ScrollText(text = SurveyDestination.TITLE.asString())},

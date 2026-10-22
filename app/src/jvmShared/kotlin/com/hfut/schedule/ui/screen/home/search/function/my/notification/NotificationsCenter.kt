@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.my.notification
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Badge
@@ -13,8 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.nav.destination.NotificationsDestination
 
@@ -22,7 +21,6 @@ import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.component.text.ScrollText
 
 
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun NotificationsCenter() {

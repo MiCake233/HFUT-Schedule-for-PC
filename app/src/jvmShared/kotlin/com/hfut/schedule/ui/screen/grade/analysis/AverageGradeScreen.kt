@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.network.repo.JxglstuRepository.parseJxglstuGrade
 import com.hfut.schedule.logic.network.repo.UniAppRepository
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -55,7 +54,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.state.NetworkUiState
 import com.xah.common.logic.util.safeDiv
 import com.xah.common.ui.component.chart.BarChart

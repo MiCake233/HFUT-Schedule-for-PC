@@ -22,12 +22,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.ocr.TesseractUtils.isExistModule
 import com.hfut.schedule.logic.util.ocr.TesseractUtils.recognizeCaptcha
 import com.hfut.schedule.logic.util.ocr.preprocessCaptcha
@@ -59,7 +57,6 @@ fun UrlImage(
 ) {
     val floatingController = LocalFloatingControllerSafely.current
     val navController = LocalNavControllerSafely.current
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     // 优化配合SharedNav，延迟加载
@@ -102,7 +99,7 @@ fun UrlImage(
                         ) {
                             floatingController?.push(window)
                                 ?: scope.launch {
-                                    Starter.startWebUrlInner(context, url, "图片", cookie)
+                                    Starter.startWebUrlInner(url, "图片", cookie)
                                 }
                         }
                     } else {
@@ -130,7 +127,6 @@ fun UrlImage(
     useCut : Boolean = true
 ) {
     val floatingControllerSafely = LocalFloatingControllerSafely.current
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val modifierCut = if(useCut) {
         Modifier
@@ -186,7 +182,6 @@ fun UrlImageNoCrop(
     cookie : String? = null,
 ) {
     val floatingControllerSafely = LocalFloatingControllerSafely.current
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val imageState = rememberImageState(url, cookie = cookie)
     imageState.value?.let { bitmap ->

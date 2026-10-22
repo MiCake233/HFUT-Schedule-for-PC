@@ -21,9 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
@@ -51,7 +49,6 @@ fun XuanquNewsUI(innerPadding : PaddingValues,vm : NetWorkViewModel) {
         vm.newsXuanChengResult.clear()
         vm.getXuanChengNews(page)
     }
-    val context = LocalContext.current
     LaunchedEffect(page) {
         refreshNetwork()
     }
@@ -71,7 +68,7 @@ fun XuanquNewsUI(innerPadding : PaddingValues,vm : NetWorkViewModel) {
                         leadingContent = { Text((index+1).toString()) },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context ,Constant.NEWS_XC_URL + item.link,item.title,icon = Drawables.stream, cookie = cookies)
+                                Starter.startWebUrlInner(Constant.NEWS_XC_URL + item.link,item.title,icon = Drawables.stream, cookie = cookies)
                             }
                         },
                     )

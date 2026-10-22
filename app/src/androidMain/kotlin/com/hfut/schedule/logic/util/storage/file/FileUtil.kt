@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.storage.file
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.content.Context
 import android.os.Environment
 import android.webkit.WebStorage
@@ -53,7 +55,7 @@ suspend fun cleanCache(context : Context): Double = withContext(Dispatchers.IO) 
                 // 删除 内部存储 Download 中 "聚在工大_" 开头的 .apk 文件
                 val publicDownloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 publicDownloadDir?.listFiles()?.forEach {
-                    if (it.name.startsWith("${MyApplication.APP_NAME}_") && it.name.endsWith(".apk")) {
+                    if (it.name.startsWith("${AppConst.APP_NAME}_") && it.name.endsWith(".apk")) {
                         totalDeletedBytes += it.length()
                         it.delete()
                     }

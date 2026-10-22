@@ -8,11 +8,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -29,7 +26,6 @@ fun WebItem() {
         WebItemData(title = "信息门户", icon = Drawables.person, url = Constant.ONE_URL),
         WebItemData(title = "WebVpn", icon = Drawables.vpn_key, url = Constant.WEBVPN_URL),
     )
-    val context = LocalContext.current
     Column(modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP)) {
         for(index in webs.indices step 2) {
             Row {
@@ -48,7 +44,7 @@ fun WebItem() {
                                 contentDescription = null
                             )
                         },
-                        modifier = Modifier.clickable { Starter.startWebUrlOuter(context,item.url) }
+                        modifier = Modifier.clickable { Starter.startWebUrlOuter(item.url) }
                     )
                 }
                 if(index+1 != webs.size) {
@@ -67,7 +63,7 @@ fun WebItem() {
                                     contentDescription = null
                                 )
                             },
-                            modifier = Modifier.clickable { Starter.startWebUrlOuter(context,item2.url) }
+                            modifier = Modifier.clickable { Starter.startWebUrlOuter(item2.url) }
                         )
                     }
                 }

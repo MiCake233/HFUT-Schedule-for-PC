@@ -2,7 +2,6 @@ package com.hfut.schedule.logic.model.enumeration
 
 import com.xah.common.ui.res.Strings
 
-import com.hfut.schedule.R
 import com.xah.common.ui.model.BaseChoice
 import com.xah.common.ui.model.text.UiText
 import com.xah.common.ui.util.res

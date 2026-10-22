@@ -14,7 +14,6 @@ import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.nav.destination.ScanQrCodeDestination
 import com.xah.common.ui.component.text.ScrollText

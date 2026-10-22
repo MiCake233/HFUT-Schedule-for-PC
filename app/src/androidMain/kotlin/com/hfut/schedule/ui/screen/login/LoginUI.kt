@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.login
 
 //import androidx.compose.ui.tooling.preview.Preview
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Handler
@@ -72,7 +71,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.network.core.StatusCode
 import com.hfut.schedule.network.api.util.CryptoUtil
 import com.hfut.schedule.logic.util.network.state.CONNECTION_ERROR_CODE
@@ -267,7 +265,6 @@ private const val TAB_SETTRINGS = 1
 
 private data class CheckResult(val can : Boolean?,val text : String,val code : Int?)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun LoginScreen(
@@ -494,7 +491,7 @@ fun LoginScreen(
                                             )
                                         },
                                         modifier = Modifier.clickable {
-                                            Starter.startWebUrlOuter(context,Constant.CAS_LOGIN_URL)
+                                            Starter.startWebUrlOuter(Constant.CAS_LOGIN_URL)
                                         },
                                     )
                                 }
@@ -576,7 +573,7 @@ fun LoginScreen(
                                     leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },
                                     modifier = Modifier.clickable {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,Drawables.lock_reset)
+                                            Starter.startWebUrlInner(Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,Drawables.lock_reset)
                                         }
                                     },
                                 )

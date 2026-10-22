@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.style.special
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -34,18 +36,15 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
-import com.hfut.schedule.logic.util.other.AppVersion
-import com.hfut.schedule.logic.util.other.AppVersion.CAN_HAZE_BLUR_BAR
-import com.hfut.schedule.logic.util.other.AppVersion.HAZE_BLUR_FOR_S
+import com.hfut.schedule.logic.util.other.AppInfo
+import com.hfut.schedule.logic.util.other.AppInfo.CAN_HAZE_BLUR_BAR
+import com.hfut.schedule.logic.util.other.AppInfo.HAZE_BLUR_FOR_S
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.hfut.schedule.ui.component.container.largeCardColor
 import com.hfut.schedule.ui.nav.destination.ControlCenterDestination
 import com.hfut.schedule.ui.style.corner.bottomSheetRound
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
-import com.kyant.backdrop.backdrops.LayerBackdrop
-import com.kyant.backdrop.backdrops.layerBackdrop
 import com.xah.shader.state.ShaderState
 import com.hfut.schedule.ui.style.shader.GlassStyle
 import com.hfut.schedule.ui.style.shader.glassLayer
@@ -74,7 +73,7 @@ fun rememberHazeBlur(): HazeState {
 
 
 private val progressiveBarBlur = 8.75.dp
-//    MyApplication.BLUR_RADIUS.dp * 1.2f
+//    AppConst.BLUR_RADIUS.dp * 1.2f
 
 @Composable
 fun enableEffect() : Boolean {
@@ -248,7 +247,7 @@ fun Modifier.backDropSource(
 ): Modifier {
     val isTransitioning = LocalNavControllerSafely.current?.isTransitioning ?: false
     val enableEffect = enableEffect()
-    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppVersion.CAN_SHADER)
+    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppInfo.CAN_SHADER)
     return if(enableLiquidGlass && enableEffect) {
         this.shaderSource(backdrop)
     } else {
@@ -261,7 +260,7 @@ fun Modifier.backDropSource(
 ): Modifier {
     val isTransitioning = LocalNavControllerSafely.current?.isTransitioning ?: false
     val enableEffect = enableEffect()
-    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppVersion.CAN_SHADER)
+    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppInfo.CAN_SHADER)
     return if(enableLiquidGlass && enableEffect) {
         this.layerBackdrop(backdrop)
     } else {
@@ -283,7 +282,7 @@ fun Modifier.normalTopBarBlur(
             style = HazeStyle(
                 tint = HazeTint(color = color.let { if(it == Color.Transparent) it else it.copy(.35f) }),
                 backgroundColor = backgroundColor,
-                blurRadius = MyApplication.BLUR_RADIUS.dp*1.2f,
+                blurRadius = AppConst.BLUR_RADIUS.dp*1.2f,
                 noiseFactor = 0f
             ),
         )
@@ -305,7 +304,7 @@ private fun Modifier.blurStyle(
         this.hazeEffect(state = hazeState, style = HazeStyle(
             tint = HazeTint(color =  tint.copy(alpha)),
             backgroundColor = tint,
-            blurRadius = MyApplication.BLUR_RADIUS.dp*radius,
+            blurRadius = AppConst.BLUR_RADIUS.dp*radius,
             noiseFactor = 0f
         ))
     } else {
@@ -361,10 +360,10 @@ fun HazeBottomSheet(
 @Composable
 fun Modifier.coverBlur(
     showBlur: Boolean,
-    radius: Dp = MyApplication.BLUR_RADIUS.dp/2,
+    radius: Dp = AppConst.BLUR_RADIUS.dp/2,
     tweenDuration: Int = AppAnimationManager.ANIMATION_SPEED / 2
 ): Modifier {
-    val motionBlur by DataStoreManager.enableMotionBlur.collectAsState(initial = AppVersion.CAN_MOTION_BLUR)
+    val motionBlur by DataStoreManager.enableMotionBlur.collectAsState(initial = AppInfo.CAN_MOTION_BLUR)
 
     val blurRadius by animateDpAsState(
         targetValue = if (showBlur && motionBlur) radius else 0.dp,
@@ -412,7 +411,7 @@ fun Modifier.layerGlass(
     state: ShaderState,
     style: GlassStyle = largeStyle,
 ) : Modifier = composed {
-    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppVersion.CAN_SHADER)
+    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppInfo.CAN_SHADER)
     val enableEffect = enableEffect()
     this.glassLayer(
         state,

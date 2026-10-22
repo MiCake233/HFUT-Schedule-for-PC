@@ -1,9 +1,12 @@
 package com.hfut.schedule.ui.screen.home.calendar.timetable.logic
 
+import com.hfut.schedule.logic.util.sys.parseTimeItem
+
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventType
 import com.hfut.schedule.logic.database.util.CustomEventMapper.entityToDto
@@ -20,7 +23,7 @@ import com.hfut.schedule.ui.screen.home.calendar.common.dateToWeek
 import com.hfut.schedule.ui.screen.home.calendar.common.examToCalendar
 import com.hfut.schedule.ui.screen.home.calendar.common.weekToDate
 import com.hfut.schedule.ui.screen.home.calendar.jxglstu.distinctUnit
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.getCoursesFromCommunity
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.LogUtil
@@ -46,7 +49,7 @@ suspend fun allToTimeTableDataUniApp(): List<List<TimeTableItem>> = withContext(
     val examList = examDeferred.await()
 
     // 合并：按周（index）叠加三个来源
-    List(MyApplication.MAX_WEEK) { i ->
+    List(AppConst.MAX_WEEK) { i ->
         jxglstuList[i] + focusList[i]+ examList[i]
     }
 }
@@ -65,7 +68,7 @@ suspend fun allToTimeTableData(friendStudentId: String?): List<List<TimeTableIte
     val examList = examDeferred.await()
 
     // 合并：按周（index）叠加三个来源
-    List(MyApplication.MAX_WEEK) { i ->
+    List(AppConst.MAX_WEEK) { i ->
         jxglstuList[i] + focusList[i]+ examList[i]
     }
 }
@@ -81,17 +84,17 @@ suspend fun allToTimeTableData(): List<List<TimeTableItem>> = withContext(Dispat
     val examList = examDeferred.await()
 
     // 合并：按周（index）叠加三个来源
-    List(MyApplication.MAX_WEEK) { i ->
+    List(AppConst.MAX_WEEK) { i ->
         jxglstuList[i] + focusList[i]+ examList[i]
     }
 }
 
 private suspend fun uniAppToTimeTableData(): List<List<TimeTableItem>> {
     val json = LargeStringDataManager.read(LargeStringDataManager.getUniAppCoursesKey(SemesterParser.getSemester()))
-        ?: return List(MyApplication.MAX_WEEK) { emptyList<TimeTableItem>() }
+        ?: return List(AppConst.MAX_WEEK) { emptyList<TimeTableItem>() }
     var tag = false
     try {
-        val result = List(MyApplication.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
+        val result = List(AppConst.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
         val list = GsonInstance.fromJson(json, UniAppCourseTableResponse::class.java).data
         val enableCalendarShowTeacher = DataStoreManager.enableCalendarShowTeacher.first()
         for(item in list) {
@@ -138,16 +141,16 @@ private suspend fun uniAppToTimeTableData(): List<List<TimeTableItem>> {
         return result
     } catch (e : Exception) {
         LogUtil.error(e)
-        return List(MyApplication.MAX_WEEK) { emptyList<TimeTableItem>() }
+        return List(AppConst.MAX_WEEK) { emptyList<TimeTableItem>() }
     }
 }
 
 private suspend fun jxglstuToTimeTableData(): List<List<TimeTableItem>> {
     val json = LargeStringDataManager.read(LargeStringDataManager.getJxglstuDatumKey(SemesterParser.getSemester()))
-        ?: return List(MyApplication.MAX_WEEK) { emptyList<TimeTableItem>() }
+        ?: return List(AppConst.MAX_WEEK) { emptyList<TimeTableItem>() }
     var tag = false
     try {
-        val result = List(MyApplication.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
+        val result = List(AppConst.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
 
         val datumResponse = GsonInstance.fromJson(json, JxglstuCourseTableResponse::class.java)
         val scheduleList = datumResponse.result.scheduleList
@@ -203,13 +206,13 @@ private suspend fun jxglstuToTimeTableData(): List<List<TimeTableItem>> {
         return result
     } catch (e : Exception) {
         LogUtil.error(e)
-        return List(MyApplication.MAX_WEEK) { emptyList() }
+        return List(AppConst.MAX_WEEK) { emptyList() }
     }
 }
 
 private suspend fun focusToTimeTableData(): List<List<TimeTableItem>> {
     try {
-        val result = List(MyApplication.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
+        val result = List(AppConst.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
         val focusList = DataBaseManager.customEventDao.getAll(CustomEventType.SCHEDULE.name).map {
             entityToDto(it)
         }
@@ -231,7 +234,7 @@ private suspend fun focusToTimeTableData(): List<List<TimeTableItem>> {
 
             // 是同一周
             val week = weekInfo.first
-            if(week > MyApplication.MAX_WEEK || week < 1) {
+            if(week > AppConst.MAX_WEEK || week < 1) {
                 // 跳过
                 continue
             }
@@ -306,13 +309,13 @@ private suspend fun focusToTimeTableData(): List<List<TimeTableItem>> {
         return result
     } catch (e : Exception) {
         LogUtil.error(e)
-        return List(MyApplication.MAX_WEEK) { emptyList() }
+        return List(AppConst.MAX_WEEK) { emptyList() }
     }
 }
 
 private suspend fun examToTimeTableData(): List<List<TimeTableItem>> {
     try {
-        val result = List(MyApplication.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
+        val result = List(AppConst.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
         val examList = examToCalendar()
         for (item in examList) {
             val startTime = item.startTime ?: continue
@@ -345,16 +348,16 @@ private suspend fun examToTimeTableData(): List<List<TimeTableItem>> {
         return result
     } catch (e : Exception) {
         LogUtil.error(e)
-        return List(MyApplication.MAX_WEEK) { emptyList() }
+        return List(AppConst.MAX_WEEK) { emptyList() }
     }
 }
 
 private suspend fun communityToTimeTableData(friendStudentId : String? = null) : List<List<TimeTableItem>> {
-    val result = List(MyApplication.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
+    val result = List(AppConst.MAX_WEEK) { mutableStateListOf<TimeTableItem>() }
     try {
         val enableCalendarShowTeacher = DataStoreManager.enableCalendarShowTeacher.first()
 
-        repeat(MyApplication.MAX_WEEK) { week ->
+        repeat(AppConst.MAX_WEEK) { week ->
             val originalData = getCoursesFromCommunity(targetWeek = week+1, friendUserName = friendStudentId)
             val list = result[week]
             repeat(7) { weekday ->

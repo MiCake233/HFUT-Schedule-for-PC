@@ -44,7 +44,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.other.AppVersion
 import com.hfut.schedule.logic.util.parse.SemesterParser
@@ -81,13 +80,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 
-enum class CourseType(override val code : Int,override val label: UiText): BaseChoice {
-    JXGLSTU(0, res(Strings.app_settings_default_calendar_choice_jxglstu)),
-    COMMUNITY(1,res(Strings.app_settings_default_calendar_choice_community)),
-    UNI_APP(2,res(Strings.app_settings_default_calendar_choice_uni_app)),
-    ZHI_JIAN(3,res(Strings.app_settings_default_calendar_choice_zhi_jian)),
-    JXGLSTU2(4,res(Strings.app_settings_default_calendar_choice_jxglstu_2)),
-}
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
 @Composable

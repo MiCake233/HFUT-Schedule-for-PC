@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.timetable.ui
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
 import com.hfut.schedule.ui.component.button.CalendarSquareBackDropSource
@@ -39,7 +40,6 @@ import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.TimeTableItem
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.TimeTableType
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.parseTimeToFloat
 import com.hfut.schedule.ui.style.special.calendarSquareGlass
-import com.kyant.backdrop.Backdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.shader.state.ShaderState
@@ -70,10 +70,10 @@ fun TimeTable(
 ) {
     val floatingController = LocalFloatingController.current
 
-    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = MyApplication.CALENDAR_SQUARE_ALPHA)
-    val calendarSquareHeight by DataStoreManager.calendarSquareHeight.collectAsState(initial = MyApplication.CALENDAR_SQUARE_HEIGHT)
+    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)
+    val calendarSquareHeight by DataStoreManager.calendarSquareHeight.collectAsState(initial = AppConst.CALENDAR_SQUARE_HEIGHT)
     val calendarSquareTextSize by DataStoreManager.calendarSquareTextSize.collectAsState(initial = 1f)
-    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = MyApplication.CALENDAR_SQUARE_TEXT_PADDING)
+    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = AppConst.CALENDAR_SQUARE_TEXT_PADDING)
 
     val enableMergeSquare by DataStoreManager.enableMergeSquare.collectAsState(initial = false)
 
@@ -88,7 +88,7 @@ fun TimeTable(
     }
 
     val list = remember(items,week) {
-        if(week > items.size || week > MyApplication.MAX_WEEK) {
+        if(week > items.size || week > AppConst.MAX_WEEK) {
             LogUtil.error("NewTimeTableUI received week out of bounds for length ${items.size} of items[${week-1}]")
             emptyList()
         }  else {

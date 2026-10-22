@@ -43,7 +43,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,7 +52,6 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.model.NavigationBarItemData
 import com.hfut.schedule.network.api.model.response.json.library.BorrowedStatus
 import com.hfut.schedule.network.api.model.response.json.library.LibrarySearchPosition
@@ -102,7 +100,7 @@ import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.navigation.currentRouteWithoutArgs
 import com.hfut.schedule.ui.util.navigation.navigateForBottomBar
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.remove
 import com.xah.common.ui.component.text.ScrollText
@@ -415,7 +413,6 @@ fun LibraryMineUI(
     libraryNavController : NavHostController,
 //    navController: NavHostController,
 ) {
-    val context = LocalContext.current
     val navController = LocalNavController.current
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
@@ -606,9 +603,7 @@ fun LibraryMineUI(
                         modifier = Modifier
                             .clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        url = Constant.NEW_LIBRARY_URL,
+                                    Starter.startWebUrlInner(url = Constant.NEW_LIBRARY_URL,
                                         title = "图书馆",
                                         icon = Drawables.globe_book,
                                     )
@@ -630,9 +625,7 @@ fun LibraryMineUI(
                         modifier = Modifier
                             .clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        url = Constant.OLD_LIBRARY_URL,
+                                    Starter.startWebUrlInner(url = Constant.OLD_LIBRARY_URL,
                                         title = "图书馆",
                                         icon = Drawables.net,
                                     )
@@ -654,9 +647,7 @@ fun LibraryMineUI(
                         modifier = Modifier
                             .clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        url = seatUrl,
+                                    Starter.startWebUrlInner(url = seatUrl,
                                         title = "座位预约",
                                         icon = Drawables.table_restaurant
                                     )
@@ -678,9 +669,7 @@ fun LibraryMineUI(
                         modifier = Modifier
                             .clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        url = Constant.MEETING_ROOM_URL,
+                                    Starter.startWebUrlInner(url = Constant.MEETING_ROOM_URL,
                                         title = "研讨间预约",
                                         icon = Drawables.meeting_room
                                     )

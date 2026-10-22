@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.grade.grade.jxglstu
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -50,13 +49,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.MIN_PASS_SCORE
 import com.hfut.schedule.logic.model.ScoreGrade
 import com.hfut.schedule.logic.model.ScoreWithGpaLevel
@@ -247,7 +244,6 @@ fun avgScoreWithCourse(
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun GradeItemJxglstuUI(
 //    navController: NavHostController,
@@ -260,7 +256,6 @@ fun GradeItemJxglstuUI(
     onChangeLargeButtonText : (String) -> Unit
 ) {
     val navController = LocalNavController.current
-    val context = LocalContext.current
     var showBottomSheet_Survey by remember { mutableStateOf(false) }
     var surveyCode by remember { mutableStateOf(EMPTY_STRING) }
     if (showBottomSheet_Survey) {
@@ -528,7 +523,6 @@ fun GradeItemJxglstuUI(
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun GradeItemUIUniApp(
 //    navController: NavHostController,

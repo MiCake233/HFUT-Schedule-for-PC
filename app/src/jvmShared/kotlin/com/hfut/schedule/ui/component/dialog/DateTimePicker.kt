@@ -37,7 +37,7 @@ import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.input.WheelPicker
 import com.hfut.schedule.ui.screen.home.calendar.common.dateToWeek
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.xah.common.logic.util.EMPTY_STRING
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

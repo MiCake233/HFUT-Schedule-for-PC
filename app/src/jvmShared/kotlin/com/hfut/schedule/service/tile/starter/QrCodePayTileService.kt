@@ -2,7 +2,6 @@ package com.hfut.schedule.service.tile.starter
 
 import com.xah.common.ui.res.Drawables
 
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.service.tile.base.BaseWebViewTileService

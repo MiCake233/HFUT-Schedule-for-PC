@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.electric
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -14,13 +13,11 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringOf
 import com.xah.common.ui.res.stringResource
-import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -34,11 +31,9 @@ import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 
 import dev.chrisbanes.haze.HazeState
 
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Electric(vm : NetWorkViewModel, card : Boolean, hazeState: HazeState) {
-    val context = LocalContext.current
     val useHefei by DataStoreManager.useHefeiElectric.collectAsState(initial = getCampusRegion() == CampusRegion.HEFEI)
     var room by remember { mutableStateOf(stringOf(Strings.navigation_label_dormitory_electricity_bill)) }
 

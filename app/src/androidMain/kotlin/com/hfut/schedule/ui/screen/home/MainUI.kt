@@ -1,7 +1,8 @@
 package com.hfut.schedule.ui.screen.home
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import androidx.activity.compose.BackHandler
@@ -199,7 +200,7 @@ import com.hfut.schedule.ui.util.pickColorFromTop
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.kyant.backdrop.Backdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.LogUtil
@@ -246,9 +247,6 @@ fun smoothToOne(scaleFactor: MutableState<Float>) {
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition",
-    "UnusedMaterial3ScaffoldPaddingParameter"
-)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
     ExperimentalGlideComposeApi::class, ExperimentalAnimationGraphicsApi::class,
     ExperimentalHazeMaterialsApi::class
@@ -970,7 +968,7 @@ fun MainScreen(
                             .navigationBarsPadding()
                             .height(APP_HORIZONTAL_DP * if(paddingSafely) 1.75f else 1f)
                     )
-                    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = MyApplication.CALENDAR_SQUARE_ALPHA)
+                    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)
                     val maxValue = remember { .8f }
                     val finalColor = if(useBackground) {
                         val backgroundAlpha = customBackgroundAlpha.coerceIn(maxValue/2f,maxValue)

@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.entity.CustomEventType
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -42,7 +41,7 @@ import com.hfut.schedule.ui.component.container.CardListItem
   
 import com.hfut.schedule.ui.component.network.onListenStateHolder
 import com.hfut.schedule.logic.util.sys.showToast
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.xah.common.ui.style.align.ColumnVertical
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel

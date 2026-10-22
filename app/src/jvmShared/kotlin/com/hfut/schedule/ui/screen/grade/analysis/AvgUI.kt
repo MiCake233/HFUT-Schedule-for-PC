@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.grade.analysis
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -22,7 +21,6 @@ import androidx.compose.ui.Modifier
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -37,7 +35,6 @@ import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun GradeCountUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
 

@@ -26,14 +26,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.button.LiquidButton
@@ -46,7 +44,7 @@ import com.hfut.schedule.ui.theme.greenColor
 import com.hfut.schedule.ui.theme.warnColor
 import com.hfut.schedule.ui.util.layout.measureDpSize
 import com.hjq.device.compat.DeviceOs
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.util.text
@@ -66,7 +64,6 @@ object AppEnvWarningWindow: FloatingWindow() {
     @Composable
     override fun BoxScope.Content() {
         val controller = LocalFloatingController.current
-        val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val enableDataStore by DataStoreManager.enableDataStore.collectAsState(initial = true)
 
@@ -111,7 +108,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                                     }
                                 )
                             }
-                            if(AppVersion.isDebug) {
+                            if(AppInfo.isDebug) {
                                 CardListItem(
                                     headlineContent = {
                                         Text(stringResource(Strings.settings_person_info_tag_debug))
@@ -124,7 +121,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                                         )
                                     }
                                 )
-                            } else if(!AppVersion.isSignatureValid) {
+                            } else if(!AppInfo.isSignatureValid) {
                                 CardListItem(
                                     headlineContent = {
                                         Text(stringResource(Strings.settings_person_info_tag_sign))
@@ -138,7 +135,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                                     }
                                 )
                             }
-                            if(AppVersion.isDev) {
+                            if(AppInfo.isDev) {
                                 CardListItem(
                                     headlineContent = {
                                         Text(stringResource(Strings.settings_person_info_tag_preview))
@@ -152,7 +149,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                                     }
                                 )
                             }
-                            if(AppVersion.isRunningOnAvd) {
+                            if(AppInfo.isRunningOnAvd) {
                                 CardListItem(
                                     headlineContent = {
                                         Text(stringResource(Strings.settings_person_info_tag_avd))
@@ -165,7 +162,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                                         )
                                     }
                                 )
-                            } else if(AppVersion.isRunningOnWsa) {
+                            } else if(AppInfo.isRunningOnWsa) {
                                 CardListItem(
                                     headlineContent = {
                                         Text(stringResource(Strings.settings_person_info_tag_wsa))

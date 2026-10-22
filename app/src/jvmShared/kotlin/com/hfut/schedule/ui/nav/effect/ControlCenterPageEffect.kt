@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.navigation.controller.NavigationController
 import com.xah.navigation.model.anim.EffectLevel
@@ -91,7 +91,7 @@ fun ControlCenterEffects(
     ) {
         override fun background(progress: Float, level: EffectLevel): PageEffectFrame {
             return when {
-                AppVersion.CAN_MOTION_BLUR -> backgroundEffect.lerp(progress)
+                AppInfo.CAN_MOTION_BLUR -> backgroundEffect.lerp(progress)
                 else -> {
                     // 蒙层完全盖住 带缩放
                     backgroundEffect
@@ -107,7 +107,7 @@ fun ControlCenterEffects(
         }
         override fun foreground(progress: Float, level: EffectLevel): PageEffectFrame {
             return when {
-                AppVersion.CAN_MOTION_BLUR -> foregroundEffect.lerp(progress)
+                AppInfo.CAN_MOTION_BLUR -> foregroundEffect.lerp(progress)
                 else -> {
                     // 蒙层完全盖住 带缩放
                     foregroundEffect

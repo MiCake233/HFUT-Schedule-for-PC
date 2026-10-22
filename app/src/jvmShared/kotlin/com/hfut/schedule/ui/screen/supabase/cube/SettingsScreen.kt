@@ -21,10 +21,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.logic.util.sys.Starter
@@ -53,7 +51,6 @@ import kotlinx.coroutines.launch
 fun SupabaseSettingsScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,hazeState: HazeState) {
     val filter by DataStoreManager.enableSupabaseFilterEvent.collectAsState(initial = false)
     val supabaseAutoCheck by DataStoreManager.enableSupabaseAutoCheck.collectAsState(initial = true)
-    val context = LocalContext.current
     val jwt by DataStoreManager.supabaseJwt.collectAsState(initial = EMPTY_STRING)
     val navController = LocalNavController.current
 

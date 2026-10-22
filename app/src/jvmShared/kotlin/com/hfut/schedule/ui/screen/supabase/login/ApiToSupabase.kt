@@ -14,10 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
@@ -61,7 +59,6 @@ fun ApiToSupabase(vm : NetWorkViewModel) {
 //            vm.supabaseGetEventLatestResp.emitPrepare()
 //        }
 //    }
-    val context = LocalContext.current
     val navController = LocalNavController.current
 
     IconButton(

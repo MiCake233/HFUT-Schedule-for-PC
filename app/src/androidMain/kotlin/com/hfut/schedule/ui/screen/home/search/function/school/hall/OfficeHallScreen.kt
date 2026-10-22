@@ -35,7 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.hall.OfficeHallSearchRecord
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -55,14 +54,14 @@ import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButto
 import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.ui.nav.destination.OfficeHallDestination
 
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.style.color.textFiledAllTransplant
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -84,9 +83,9 @@ private suspend fun openDetail(context: Context, bean : OfficeHallSearchRecord, 
         Constant.OFFICE_HALL_URL + "ServiceHall/ServiceDetail/" + id
     }
     if(!needLogin || GlobalUiStateHolder.globalWebVpn == true) {
-        Starter.startWebUrlInner(context,finalUrl,name,null, OfficeHallDestination.icon)
+        Starter.startWebUrlInner(finalUrl,name,null, OfficeHallDestination.icon)
     } else {
-        Starter.startWebUrlOuter(context,finalUrl)
+        Starter.startWebUrlOuter(finalUrl)
     }
 }
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)

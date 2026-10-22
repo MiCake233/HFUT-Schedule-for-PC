@@ -8,7 +8,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.screen.home.cube.sub.ShortcutSortScreen
 import com.xah.common.ui.model.text.UiText

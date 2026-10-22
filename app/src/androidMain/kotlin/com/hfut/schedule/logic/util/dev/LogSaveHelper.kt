@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.dev
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.os.Environment
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.dev.ExceptionHelper.getKeyStackTraceDesc
@@ -22,7 +24,7 @@ suspend fun saveErrorLog() : Int = withContext(Dispatchers.IO) {
         }
         val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val dateTime = LocalDateTime.now()
-        val filename = "${MyApplication.APP_NAME}_错误日志_${System.currentTimeMillis()}.log"
+        val filename = "${AppConst.APP_NAME}_错误日志_${System.currentTimeMillis()}.log"
         val file = File(downloadsDir, filename)
 
         val result = StringBuilder()

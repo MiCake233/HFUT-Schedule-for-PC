@@ -34,7 +34,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogWindowProvider
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.sharednav.common.helper.NoneRoundShape
@@ -99,7 +99,7 @@ private fun DividerTextExpandedWithDefault(
 
     val speed = AppAnimationManager.ANIMATION_SPEED
 
-    val motionBlur by DataStoreManager.enableMotionBlur.collectAsState(initial = AppVersion.CAN_MOTION_BLUR)
+    val motionBlur by DataStoreManager.enableMotionBlur.collectAsState(initial = AppInfo.CAN_MOTION_BLUR)
 
     var expanded by rememberSaveable() { mutableStateOf(defaultIsExpanded) }
     fun set() {

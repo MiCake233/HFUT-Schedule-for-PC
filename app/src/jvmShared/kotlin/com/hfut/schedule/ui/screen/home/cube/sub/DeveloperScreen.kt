@@ -28,9 +28,8 @@ import androidx.compose.ui.draw.scale
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -52,7 +51,7 @@ import com.xah.common.logic.util.EMPTY_STRING
 
 @Composable
 fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
-//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
 //    var scale by remember { mutableFloatStateOf(1f) }
 //    TransitionBackHandler(navController,enablePredictive) {
 //        scale = it

@@ -1,7 +1,6 @@
 package com.hfut.schedule.logic.network.repo
 
-import android.util.Base64
-import androidx.lifecycle.MutableLiveData
+import com.hfut.schedule.logic.util.state.MutableLiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
@@ -846,7 +845,7 @@ object JxglstuRepository : JxglstuRepositoryInf {
     private suspend fun savePhoto(response: Response<ResponseBody>) = try {
         val bytes = response.body()?.bytes()
         // 将字节数组转换为Base64编码的字符串
-        val base64String = Base64.encodeToString(bytes, Base64.DEFAULT)
+        val base64String = java.util.Base64.getMimeEncoder().encodeToString(bytes)
         // 保存编码后的字符串
         LargeStringDataManager.save(LargeStringDataManager.PHOTO,base64String)
     } catch (e: Exception) {

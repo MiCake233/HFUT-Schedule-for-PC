@@ -38,7 +38,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.competition.JxglstuProgramCompetitionCourse
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.JxglstuProgramPlanCourse
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.competition.JxglstuProgramCompetitionResponse
@@ -75,7 +74,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.safeDiv
 import com.xah.common.ui.component.status.LoadingScreen
 import com.xah.common.ui.component.text.BottomTip

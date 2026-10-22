@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,9 +11,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.shortcut.AppShortcutManager
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.datetime.getCelebration
@@ -43,7 +41,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalSharedTransitionApi::class)
-@SuppressLint("NewApi")
 @Composable
 fun MainHost(
     networkVm : NetWorkViewModel,
@@ -92,17 +89,16 @@ fun MainHost(
         put(isSuccessActivity,"isSuccessActivity")
     }
 
-    val context = LocalContext.current
     val transitionLevels = remember { EffectLevel.entries }
     val transition by DataStoreManager.transitionLevel.collectAsState(initial = EffectLevel.NONE.levelNum)
     val useDoubleExtension by DataStoreManager.useDoubleExtension.collectAsState(initial = false)
     val corner by DataStoreManager.screenCorner.collectAsState(-1f)
-    val motionBlur by DataStoreManager.enableMotionBlur.collectAsState(initial = AppVersion.CAN_MOTION_BLUR)
-    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppVersion.CAN_SHADER)
+    val motionBlur by DataStoreManager.enableMotionBlur.collectAsState(initial = AppInfo.CAN_MOTION_BLUR)
+    val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppInfo.CAN_SHADER)
     val enableNavSplashScreen by DataStoreManager.enableNavSplashScreen.collectAsState(initial = false)
     val enableContainerTilt by DataStoreManager.enableContainerTilt.collectAsState(initial = SharedNavTilt.ROTATION.code)
     val enableContainerShare by DataStoreManager.enableContainerShare.collectAsState(initial = true)
-    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
     val shortcutSort by DataStoreManager.shortcutSort.collectAsState(initial = null)
     val currentContainerFilledModeIndex by DataStoreManager.containerFilledStrategy.collectAsState(initial = SharedContainerFilledStrategy.DEFAULT.code)
     val defaultTransitionEffectIndex by DataStoreManager.defaultTransitionEffect.collectAsState(initial = SharedNavEffect.DEFAULT.code)

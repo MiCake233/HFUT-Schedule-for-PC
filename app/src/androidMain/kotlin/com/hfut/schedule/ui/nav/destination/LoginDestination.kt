@@ -7,7 +7,6 @@ import com.xah.common.ui.res.Drawables
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.login.LoginScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.viewmodel.network.LoginViewModel

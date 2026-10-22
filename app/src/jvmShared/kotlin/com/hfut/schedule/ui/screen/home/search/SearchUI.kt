@@ -5,7 +5,6 @@ import com.xah.common.ui.model.text.asStringNow
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringOf
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -40,11 +39,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager.SEARCH_DEFAULT_STR
 import com.hfut.schedule.network.api.model.Constant
@@ -147,7 +144,6 @@ import com.hfut.schedule.ui.style.color.textFiledAllTransplant
 import com.hfut.schedule.ui.style.color.textFiledTransplant
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.Backdrop
 
 import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -201,7 +197,6 @@ fun MutableList<SearchAppBean>.reorderByIdsStr(idOrder: String): MutableList<Sea
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalFoundationApi::class)
-@SuppressLint("CoroutineCreationDuringComposition", "SuspiciousIndentation")
 @Composable
 fun SearchScreen(
     vm : NetWorkViewModel,
@@ -211,7 +206,6 @@ fun SearchScreen(
     hazeState: HazeState,
 ) {
     val navController = LocalNavController.current
-    val context = LocalContext.current
     val searchSort by DataStoreManager.searchSort.collectAsState(initial = SEARCH_DEFAULT_STR)
     //建立索引 <搜索关键词,功能>
     var funcMaps by remember(vm, ifSaved, navController, hazeState) {

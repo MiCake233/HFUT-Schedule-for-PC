@@ -10,8 +10,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
-import androidx.lifecycle.MutableLiveData
-import com.hfut.schedule.R
+import com.hfut.schedule.logic.util.state.MutableLiveData
 import com.hfut.schedule.logic.model.dto.HuiXinCardInfoDto
 import com.hfut.schedule.logic.network.repo.JxglstuRepository
 import com.hfut.schedule.network.api.model.response.dto.SchoolNetInfo

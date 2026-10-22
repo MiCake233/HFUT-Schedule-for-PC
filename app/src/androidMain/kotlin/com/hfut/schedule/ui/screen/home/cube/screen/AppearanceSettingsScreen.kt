@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.screen
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -133,7 +135,7 @@ import com.hfut.schedule.ui.util.longToHue
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.parseColor
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.manager.AnimationSpecManager
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.LogUtil
@@ -1120,12 +1122,12 @@ fun CalendarUISettings(
     isTiny : Boolean  = false
 ) {
     val enableShowCalendarTimeLine by DataStoreManager.enableShowCalendarTimeLine.collectAsState(initial = false)
-    val calendarSquareHeightNew by DataStoreManager.calendarSquareHeight.collectAsState(initial = MyApplication.CALENDAR_SQUARE_HEIGHT)
+    val calendarSquareHeightNew by DataStoreManager.calendarSquareHeight.collectAsState(initial = AppConst.CALENDAR_SQUARE_HEIGHT)
     val calendarSquareTextSize by DataStoreManager.calendarSquareTextSize.collectAsState(initial = 1f)
-    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = MyApplication.CALENDAR_SQUARE_TEXT_PADDING)
+    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = AppConst.CALENDAR_SQUARE_TEXT_PADDING)
     val customBackground by DataStoreManager.customBackground.collectAsState(initial = EMPTY_STRING)
-    val customSquareAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = MyApplication.CALENDAR_SQUARE_ALPHA)
-    val customSquareBlur by DataStoreManager.customCalendarSquareBlur.collectAsState(initial = MyApplication.CALENDAR_SQUARE_BLUR)
+    val customSquareAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)
+    val customSquareBlur by DataStoreManager.customCalendarSquareBlur.collectAsState(initial = AppConst.CALENDAR_SQUARE_BLUR)
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val useCustomBackground = customBackground != EMPTY_STRING
@@ -1368,7 +1370,7 @@ fun CalendarUISettings(
                     Text(
                         stringResource(
                             Strings.appearance_settings_calendar_square_height_description,
-                            MyApplication.CALENDAR_SQUARE_HEIGHT.roundOffString(0)
+                            AppConst.CALENDAR_SQUARE_HEIGHT.roundOffString(0)
                         ))
             },
             leadingContent = {

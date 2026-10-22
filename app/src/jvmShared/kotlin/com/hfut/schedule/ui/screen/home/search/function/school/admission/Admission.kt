@@ -9,10 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.showToast
 
 import com.hfut.schedule.ui.component.container.TransplantListItem

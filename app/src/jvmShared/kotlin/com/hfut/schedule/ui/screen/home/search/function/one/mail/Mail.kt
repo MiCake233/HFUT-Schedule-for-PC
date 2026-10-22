@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.one.mail
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,14 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.Starter
@@ -43,7 +42,7 @@ import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.button.LargeButton
 import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
-import com.hfut.schedule.ui.screen.supabase.login.getSchoolEmail
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getSchoolEmail
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder.isSupabaseRegistering
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
@@ -62,7 +61,7 @@ fun Mail(
     var showBottomSheet by remember { mutableStateOf(false) }
     TransplantListItem(
         headlineContent = { ScrollText(text = stringResource(Strings.navigation_label_school_email)) },
-//        overlineContent = { ScrollText(text = MyApplication.EMAIL) },
+//        overlineContent = { ScrollText(text = AppConst.EMAIL) },
         leadingContent = { Icon(painter = painterResource(id = Drawables.mail), contentDescription = EMPTY_STRING) },
         modifier = Modifier.clickable {
             showBottomSheet = true
@@ -102,8 +101,7 @@ fun MailUI(vm: NetWorkViewModel) {
     LaunchedEffect(used) {
         refreshNetwork()
     }
-    val context = LocalContext.current
-    DividerTextExpandedWith (getSchoolEmail() ?: MyApplication.EMAIL) {
+    DividerTextExpandedWith (getSchoolEmail() ?: AppConst.EMAIL) {
         CommonNetworkScreen(uiState, loadingText = "正在登录邮箱", isFullScreen = false, onReload = refreshNetwork) {
             val response = (uiState as NetworkUiState.Success).data
             Column {
@@ -114,7 +112,7 @@ fun MailUI(vm: NetWorkViewModel) {
                                 response.data.let {
                                     if(it != null) {
                                         used = !used
-                                        Starter.startWebUrlInner(context,it,getSchoolEmail() ?: "邮箱", icon = Drawables.mail)
+                                        Starter.startWebUrlInner(it,getSchoolEmail() ?: "邮箱", icon = Drawables.mail)
                                     } else {
                                         showToast( "错误 " + response.msg)
                                     }
@@ -130,7 +128,7 @@ fun MailUI(vm: NetWorkViewModel) {
                         onClick = {
                             response.data.let {
                                 if(it != null) {
-                                    Starter.startWebUrlOuter(context,it)
+                                    Starter.startWebUrlOuter(it)
                                     used = !used
                                 } else {
                                     showToast( "错误 " + response.msg)
@@ -161,7 +159,7 @@ fun MailUI(vm: NetWorkViewModel) {
                 Text("若为首次使用，请前往信息门户(点击此项)进入邮箱，进行激活")
             },
             modifier = Modifier.clickable {
-                Starter.startWebUrlOuter(context,Constant.ONE_URL)
+                Starter.startWebUrlOuter(Constant.ONE_URL)
             },
             leadingContent = {
                 Icon(painterResource(Drawables.arrow_forward),null)

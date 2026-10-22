@@ -23,13 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter.refreshLogin
 import com.hfut.schedule.logic.util.sys.showDevelopingToast
@@ -55,7 +53,6 @@ import kotlinx.coroutines.launch
 fun NetworkSettingsScreen(
     innerPaddings : PaddingValues,
 ) {
-    val context = LocalContext.current
     val navTopController = LocalNavController.current
 
     Column(modifier = Modifier

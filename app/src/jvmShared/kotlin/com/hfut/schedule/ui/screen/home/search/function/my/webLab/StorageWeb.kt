@@ -13,10 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.WebURLEntity
 import com.hfut.schedule.logic.database.entity.WebURLType
@@ -74,7 +72,6 @@ fun StorageWeb(hazeState : HazeState) {
             hazeState = hazeState
         )
     }
-    val context = LocalContext.current
 
     Column {
         if(list.isEmpty()) {
@@ -111,7 +108,7 @@ fun StorageWeb(hazeState : HazeState) {
                                 modifier = Modifier.combinedClickable(
                                     onClick = {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,url,name, icon = WebFolderDestination.icon)
+                                            Starter.startWebUrlInner(url,name, icon = WebFolderDestination.icon)
                                         }
                                     },
                                     onDoubleClick = null,

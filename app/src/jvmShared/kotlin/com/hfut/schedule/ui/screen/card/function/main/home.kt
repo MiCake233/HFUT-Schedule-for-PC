@@ -42,14 +42,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.enumeration.CardBarItems
 import com.hfut.schedule.logic.network.repo.UniAppRepository
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -149,7 +147,6 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             }
         }
     })
-    val context = LocalContext.current
     val navTopController = LocalNavController.current
 
     var showBottomSheet_Range by remember { mutableStateOf(false) }
@@ -241,7 +238,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            Starter.startWebUrlInner(context,urlHuiXin,"慧新易校")
+                            Starter.startWebUrlInner(urlHuiXin,"慧新易校")
                         }
                     }
                 )
@@ -376,7 +373,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                 trailingContent = {
                                     FilledTonalIconButton(onClick = {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,payUrl,"付款码", icon = Drawables.barcode)
+                                            Starter.startWebUrlInner(payUrl,"付款码", icon = Drawables.barcode)
                                         }
                                     }) {
                                         Icon(painter = painterResource(id = Drawables.barcode), contentDescription = EMPTY_STRING)
@@ -395,7 +392,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                             if (text != null) {
                                                 //余额不足//未登录//正常
                                                 if (text != "00" && text!!.toDouble() < 10) {
-                                                    Starter.startAppUrl(context,Constant.ALIPAY_CARD_URL)
+                                                    Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
                                                 } else if (text == "00") {
                                                     refreshLogin(context)
                                                 } else {
@@ -449,7 +446,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                             headlineContent = { Text(text = "充值") },
                             supportingContent = { Text(text = "跳转至支付宝校园卡页面")},
                             leadingContent = { Icon(painter = painterResource(id = Drawables.add_card), contentDescription = EMPTY_STRING)},
-                            modifier = Modifier.clickable { Starter.startAppUrl(context,Constant.ALIPAY_CARD_URL) }
+                            modifier = Modifier.clickable { Starter.startAppUrl(Constant.ALIPAY_CARD_URL) }
                         )
                         PaddingHorizontalDivider()
                         SharedContainer(
@@ -472,7 +469,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                             leadingContent = { Icon(painter = painterResource(id = Drawables.pie_chart), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardOperation" + "?synjones-auth=" + auth,"挂失 解挂", icon = Drawables.pie_chart)
+                                    Starter.startWebUrlInner("${Constant.HUI_XIN_URL}campus-card/cardOperation" + "?synjones-auth=" + auth,"挂失 解挂", icon = Drawables.pie_chart)
                                 }
                             }
                         )
@@ -483,7 +480,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                             leadingContent = { Icon(painter = painterResource(id = Drawables.barcode), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,payUrl,"付款码", icon = Drawables.barcode)
+                                    Starter.startWebUrlInner(payUrl,"付款码", icon = Drawables.barcode)
                                 }
                             }
                         )
@@ -503,7 +500,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                             leadingContent = { Icon(painter = painterResource(id = Drawables.lock_reset), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = Drawables.lock_reset)
+                                    Starter.startWebUrlInner("${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = Drawables.lock_reset)
                                 }
                             }
                         )
@@ -514,7 +511,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                             leadingContent = { Icon(painter = painterResource(id = Drawables.corporate_fare), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,urlHuiXin,"慧新易校", icon = Drawables.corporate_fare)
+                                    Starter.startWebUrlInner(urlHuiXin,"慧新易校", icon = Drawables.corporate_fare)
                                 }
                             }
                         )

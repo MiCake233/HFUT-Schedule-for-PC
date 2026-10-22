@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -46,7 +45,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuTextbook
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuLesson
 import com.hfut.schedule.logic.network.repo.JxglstuRepository
@@ -86,7 +84,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.common.ui.model.text.UiText
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -108,7 +106,6 @@ enum class TotalCourseDataSource {
     MINE,SEARCH
 }
 
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CourseTotalUI(
@@ -230,7 +227,6 @@ fun CourseTotalUI(
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun DetailItems(
     innerPadding : PaddingValues,

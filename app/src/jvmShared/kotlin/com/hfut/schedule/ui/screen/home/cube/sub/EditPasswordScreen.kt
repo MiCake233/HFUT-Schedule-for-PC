@@ -23,11 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -63,7 +61,6 @@ import kotlinx.coroutines.withContext
 fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
     val scope = rememberCoroutineScope()
     val campus = remember { getCampusRegion() }
-    val context = LocalContext.current
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         InnerPaddingHeight(innerPadding,true)
@@ -142,7 +139,7 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = Drawables.lock_reset)
+                            Starter.startWebUrlInner("${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = Drawables.lock_reset)
                         }
                     },
                     leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },
@@ -243,9 +240,7 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                             },
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        "http://172.31.243.228/Self/setting/changePassword",
+                                    Starter.startWebUrlInner("http://172.31.243.228/Self/setting/changePassword",
                                         "修改密码",
                                         icon = Drawables.lock_reset
                                     )
@@ -306,7 +301,6 @@ suspend fun getJxglstuPassword() : String? = withContext(Dispatchers.IO) {
 @Composable
 fun EditJxglstuPasswordScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     var loading by remember { mutableStateOf(false) }
     val pwd by DataStoreManager.jxglstuPassword.collectAsState(initial = EMPTY_STRING)
 
@@ -323,7 +317,7 @@ fun EditJxglstuPasswordScreen(vm : NetWorkViewModel,innerPadding : PaddingValues
                 modifier = Modifier.clickable {
                     scope.launch {
                         val cookie = getJxglstuCookie()
-                        Starter.startWebUrlInner(context, Constant.JXGLSTU_URL + "my/account", cookie = cookie,title = "修改密码", icon = Drawables.lock_reset)
+                        Starter.startWebUrlInner(Constant.JXGLSTU_URL + "my/account", cookie = cookie,title = "修改密码", icon = Drawables.lock_reset)
                     }
                 },
                 leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },

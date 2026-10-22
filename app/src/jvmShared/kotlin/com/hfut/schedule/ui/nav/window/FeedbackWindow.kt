@@ -27,11 +27,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.logic.util.sys.Starter
@@ -42,7 +40,7 @@ import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.text.AutoSizeText
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
 import com.hfut.schedule.ui.util.layout.measureDpSize
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.util.res
 import com.xah.container.component.base.SharedContent
@@ -61,7 +59,6 @@ object FeedbackWindow: FloatingWindow() {
     @Composable
     override fun BoxScope.Content() {
         val controller = LocalFloatingController.current
-        val context = LocalContext.current
 
         val displayList = remember {
             if(getCampusRegion() == CampusRegion.XUANCHENG) {
@@ -102,7 +99,7 @@ object FeedbackWindow: FloatingWindow() {
                                             headlineContent = { Text("合肥校区") },
                                             modifier = Modifier.clickable {
                                                 scope.launch {
-                                                    Starter.startWebUrlInner(context,Constant.FEEDBACK_URL)
+                                                    Starter.startWebUrlInner(Constant.FEEDBACK_URL)
                                                 }
                                             },
                                             leadingContent = {
@@ -115,7 +112,7 @@ object FeedbackWindow: FloatingWindow() {
                                             headlineContent = { Text("宣城校区") },
                                             modifier = Modifier.clickable {
                                                 scope.launch {
-                                                    Starter.startWebUrlInner(context,Constant.FEEDBACK_XC_URL)
+                                                    Starter.startWebUrlInner(Constant.FEEDBACK_XC_URL)
                                                 }
                                             },
                                             leadingContent = {

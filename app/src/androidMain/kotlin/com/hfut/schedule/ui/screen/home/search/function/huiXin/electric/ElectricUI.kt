@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.electric
 
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
@@ -59,7 +58,6 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.Campus
 import com.xah.common.logic.model.CampusRegion
@@ -120,7 +118,6 @@ private fun getUrl(page : Int) : String {
                     HuiXinFeeType.ELECTRIC_HEFEI_UNDERGRADUATE.code
             }&name=pays&paymentUrl=${Constant.HUI_XIN_URL}plat&token=" + auth
 }
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
@@ -419,7 +416,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                     FilledTonalButton(
                         onClick = {
                             scope.launch {
-                                Starter.startWebUrlInner(context,getUrl(pagerState.currentPage), title = "慧新易校")
+                                Starter.startWebUrlInner(getUrl(pagerState.currentPage), title = "慧新易校")
                             }
                         }
                     ) {

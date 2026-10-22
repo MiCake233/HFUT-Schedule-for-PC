@@ -28,7 +28,6 @@ import androidx.compose.ui.draw.clip
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.uniapp.ClassroomOccupiedCause
 import com.hfut.schedule.network.api.model.response.json.uniapp.UniAppEmptyClassroomLesson
 import com.hfut.schedule.ui.component.button.LiquidButton
@@ -39,7 +38,7 @@ import com.hfut.schedule.ui.component.text.AutoSizeText
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
 import com.hfut.schedule.ui.screen.home.search.function.school.classroom.getClassroomSquareContainerColor
 import com.hfut.schedule.ui.util.layout.measureDpSize
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.util.text
 import com.xah.container.component.base.SharedContent

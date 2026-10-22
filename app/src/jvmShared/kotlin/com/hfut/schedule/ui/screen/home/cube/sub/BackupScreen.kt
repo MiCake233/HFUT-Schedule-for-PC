@@ -1,6 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
 
-import androidx.activity.compose.LocalActivity
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -22,13 +23,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.file.backupData
 import com.hfut.schedule.logic.util.storage.file.restoreData
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -57,10 +55,8 @@ fun BackupScreen(
     innerPadding : PaddingValues,
     isInSheet : Boolean = false
 ) {
-//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
 //    var scale by remember { mutableFloatStateOf(1f) }
-    val activity = LocalActivity.current
-    val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var file by remember { mutableStateOf<File?>(null) }
@@ -124,7 +120,7 @@ fun BackupScreen(
                 TransplantListItem(
                     headlineContent = { Text("备份数据至Download文件夹") },
                     supportingContent = {
-                        Text("文件名将以'${MyApplication.APP_NAME}备份_时间戳.zip'写出")
+                        Text("文件名将以'${AppConst.APP_NAME}备份_时间戳.zip'写出")
                     },
                     leadingContent = {
                         Icon(painterResource(Drawables.save),null)
@@ -172,7 +168,7 @@ fun BackupScreen(
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            Starter.startWebUrlOuter(context,"https://gitee.com/chiu-xah/HFUT-Schedule/releases/download/Android/hfut_schedule_guest_data.zip")
+                            Starter.startWebUrlOuter("https://gitee.com/chiu-xah/HFUT-Schedule/releases/download/Android/hfut_schedule_guest_data.zip")
                         }
                     }
                 )

@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.supabase
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,6 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.enumeration.CardBarItems
 import com.hfut.schedule.logic.model.enumeration.SortType
 import com.hfut.schedule.logic.model.enumeration.SupabaseScreen
@@ -55,7 +53,7 @@ import com.hfut.schedule.ui.util.nav2Composable
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.navigation.currentRouteWithoutArgs
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 
 import com.xah.common.ui.style.color.topBarTransplantColor
@@ -76,7 +74,6 @@ private val items = listOf(
         SupabaseScreen.SETTINGS.name,"选项", Drawables.deployed_code,Drawables.deployed_code_filled
     )
 )
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SupabaseHome(vm : NetWorkViewModel) {

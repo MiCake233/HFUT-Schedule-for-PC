@@ -53,13 +53,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.file.cleanCache
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
@@ -99,7 +97,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun UpdateSuccessScreen() {
     val navController = LocalNavController.current
-    val context = LocalContext.current
     val hazeState = rememberHazeBlur()
     val oldVersion = prefs.getString("versionName","上版本")
     val scope = rememberCoroutineScope()
@@ -156,7 +153,7 @@ fun UpdateSuccessScreen() {
                             async {
                                 SharedPrefs.saveString(
                                     "versionName",
-                                    AppVersion.getVersionName()
+                                    AppInfo.getVersionName()
                                 )
                             }.await()
                             navController.backToHome()
@@ -242,7 +239,7 @@ fun UpdateSuccessScreen() {
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "$oldVersion → ${AppVersion.getVersionName()}",
+                    text = "$oldVersion → ${AppInfo.getVersionName()}",
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(top = APP_HORIZONTAL_DP)
                 )

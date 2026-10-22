@@ -33,11 +33,10 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.util.isThemeDark
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.hfut.schedule.ui.style.shader.scaleMirror
 import com.xah.common.ui.style.mask
 import com.xah.common.logic.util.LogUtil

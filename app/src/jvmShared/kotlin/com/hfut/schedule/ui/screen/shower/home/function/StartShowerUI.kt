@@ -1,7 +1,5 @@
 package com.hfut.schedule.ui.screen.shower.home.function
 
-import android.annotation.SuppressLint
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -43,12 +41,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.ShowerLabelEntity
 import com.xah.common.logic.state.NetworkUiState
@@ -83,7 +79,6 @@ suspend fun startShower(vm : NetWorkViewModel, macLocation : String) = withConte
     phoneNumber?.let { loginCode?.let { it1 -> vm.startGuaGuaShower(phoneNumber = it, loginCode = it1, macLocation = macLocation) } }
 }
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun ShowerStatusUI(vm : NetWorkViewModel,input : String) {
     val uiState by vm.startGuaGuaShowerResp.state.collectAsState()
@@ -106,8 +101,6 @@ data class StatusMsgResponse(val message : String)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
-    val context = LocalContext.current
-    val activity = LocalActivity.current
     val scope = rememberCoroutineScope()
 
     var input by remember { mutableStateOf(EMPTY_STRING) }

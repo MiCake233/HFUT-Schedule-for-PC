@@ -63,7 +63,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.ui.component.screen.Party
 import com.hfut.schedule.ui.component.screen.PartyPlace
@@ -94,7 +93,7 @@ import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.component.status.LoadingScreen
 import com.xah.common.ui.style.APP_HORIZONTAL_DP

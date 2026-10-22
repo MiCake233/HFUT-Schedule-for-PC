@@ -38,7 +38,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.stu.TodayCampusApp
 import com.hfut.schedule.network.api.model.response.json.stu.TodayCampusAppResponse
 import com.xah.common.logic.state.NetworkUiState
@@ -68,7 +67,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.LogUtil
 import com.xah.common.ui.component.text.ScrollText
@@ -129,7 +128,7 @@ fun StuTodayCampusScreen(
                             LiquidButton(
                                 backdrop = backDrop,
                                 onClick = {
-                                    Starter.startWebUrlOuter(context,Constant.STU_URL)
+                                    Starter.startWebUrlOuter(Constant.STU_URL)
                                 },
                             ) {
                                 Text("学工系统")
@@ -220,7 +219,7 @@ fun StuAppsScreen(
                                 headlineContent = { ScrollText(name) },
                                 modifier = Modifier.clickable {
                                     scope.launch {
-                                        Starter.startWebUrlInner(context,openUrl, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
+                                        Starter.startWebUrlInner(openUrl, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
                                     }
                                 }
                             )
@@ -248,7 +247,7 @@ fun StuAppsScreen(
                                     headlineContent = { ScrollText(name) },
                                     modifier = Modifier.clickable {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context, url!!, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
+                                            Starter.startWebUrlInner(url!!, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
                                         }
                                     }
                                 )
@@ -285,7 +284,7 @@ fun StuAppsScreen(
                                                 headlineContent = { ScrollText(name) },
                                                 modifier = Modifier.clickable {
                                                     scope.launch {
-                                                        Starter.startWebUrlInner(context,openUrl, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
+                                                        Starter.startWebUrlInner(openUrl, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
                                                     }
                                                 }
                                             )
@@ -309,7 +308,7 @@ fun StuAppsScreen(
                                                     headlineContent = { ScrollText(name) },
                                                     modifier = Modifier.clickable {
                                                         scope.launch {
-                                                            Starter.startWebUrlInner(context,openUrl, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
+                                                            Starter.startWebUrlInner(openUrl, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
                                                         }
                                                     }
                                                 )
@@ -348,7 +347,7 @@ fun StuAppsScreen(
                                             headlineContent = { ScrollText(name) },
                                             modifier = Modifier.clickable {
                                                 scope.launch {
-                                                    Starter.startWebUrlInner(context,url!!, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
+                                                    Starter.startWebUrlInner(url!!, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
                                                 }
                                             }
                                         )
@@ -375,7 +374,7 @@ fun StuAppsScreen(
                                                 headlineContent = { ScrollText(name) },
                                                 modifier = Modifier.clickable {
                                                     scope.launch {
-                                                        Starter.startWebUrlInner(context,url!!, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
+                                                        Starter.startWebUrlInner(url!!, title = name, cookie =cookie, icon = StuTodayCampusDestination.icon)
                                                     }
                                                 }
                                             )

@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.supabase.login
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -22,8 +24,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-// 逻辑层
-fun getSchoolEmail() : String? = getPersonInfo().getStudentIdFinally()?.let { it + MyApplication.EMAIL }
 
 suspend fun loginSupabaseWithPassword(password : String, vm: NetWorkViewModel, navHostController: NavigationController) = withContext(Dispatchers.IO) {
     vm.supabaseLoginResp.clear()

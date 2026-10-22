@@ -31,11 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.ClipBoardHelper
 import com.hfut.schedule.logic.util.sys.Starter
@@ -60,7 +58,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.state.NetworkUiState
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.component.text.ScrollText
@@ -94,7 +92,6 @@ fun FeeScreen(
     vm : NetWorkViewModel,
 //    navController : NavHostController,
 ) {
-    val context = LocalContext.current
     val hazeState = rememberHazeBlur()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val backDrop = rememberLayerBackdrop()
@@ -112,7 +109,7 @@ fun FeeScreen(
                 },
                 actions = {
                     LiquidButton(
-                        onClick = { Starter.startWebUrlOuter(context,Constant.PAY_FEE_URL) },
+                        onClick = { Starter.startWebUrlOuter(Constant.PAY_FEE_URL) },
                         modifier = Modifier.padding(end = BUTTON_END_PADDING),
                         backdrop = backDrop
                     ) {

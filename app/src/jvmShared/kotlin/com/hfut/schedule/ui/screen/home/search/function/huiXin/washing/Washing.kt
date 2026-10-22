@@ -23,13 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinFeeType
@@ -120,7 +118,6 @@ fun WashingUI() {
         }
     )
     val auth = prefs.getString("auth","")
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val navController = LocalNavController.current
 
@@ -143,7 +140,7 @@ fun WashingUI() {
                             headlineContent = { Text("官方充值查询入口") },
                             modifier = Modifier.clickable {
                                scope.launch {
-                                   Starter.startWebUrlInner(context,url = Constant.HUI_XIN_URL + "charge-app/?name=pays&appsourse=ydfwpt&id=${HuiXinFeeType.WASHING_HEFEI.code}&name=pays&paymentUrl=${Constant.HUI_XIN_URL}plat&token=" + auth, title = "慧新易校")
+                                   Starter.startWebUrlInner(url = Constant.HUI_XIN_URL + "charge-app/?name=pays&appsourse=ydfwpt&id=${HuiXinFeeType.WASHING_HEFEI.code}&name=pays&paymentUrl=${Constant.HUI_XIN_URL}plat&token=" + auth, title = "慧新易校")
                                }
                             },
                             trailingContent = {

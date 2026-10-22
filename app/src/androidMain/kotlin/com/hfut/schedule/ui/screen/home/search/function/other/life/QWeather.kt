@@ -41,7 +41,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.network.api.model.response.json.qweather.QWeatherNow
@@ -100,7 +99,7 @@ fun HuoZaiFeiXuan() {
         },
         modifier = Modifier.clickable {
             scope.launch {
-                Starter.startWebUrlInner(context,"https://survive-hfut.cc/intro", title = "活在肥宣")
+                Starter.startWebUrlInner("https://survive-hfut.cc/intro", title = "活在肥宣")
             }
         }
     )
@@ -160,7 +159,7 @@ fun StarterScreen() {
             Text("校园卡缴费")
         },
         modifier = Modifier.clickable {
-            Starter.startAppUrl(context, Constant.ALIPAY_CARD_URL)
+            Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.ALIPAY)
@@ -172,7 +171,7 @@ fun StarterScreen() {
             Text("海乐生活热水机")
         },
         modifier = Modifier.clickable {
-            Starter.startAppUrl(context, Constant.ALIPAY_HOT_WATER_URL)
+            Starter.startAppUrl(Constant.ALIPAY_HOT_WATER_URL)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.ALIPAY)

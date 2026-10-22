@@ -26,10 +26,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
@@ -42,14 +40,14 @@ import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButto
 import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.ui.nav.destination.AllExamDestination
 import com.hfut.schedule.ui.nav.destination.NewsApiDestination
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.getWebVpnCookie
 import com.hfut.schedule.ui.screen.news.home.TotalNewsScreen
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.model.CampusRegion
 import com.xah.common.logic.model.CampusRegion.HEFEI
 import com.xah.common.logic.model.CampusRegion.XUANCHENG
@@ -80,7 +78,6 @@ fun ExamNotificationsScreen(
     val cookies by produceState<String?>(initialValue = null) {
         value = getWebVpnCookie()
     }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     Scaffold (
@@ -155,9 +152,7 @@ fun ExamNotificationsScreen(
                                                     } else {
                                                         Constant.XC_ACADEMIC_URL + item.link
                                                     }
-                                                    Starter.startWebUrlInner(
-                                                        context,
-                                                        link,
+                                                    Starter.startWebUrlInner(link,
                                                         item.title,
                                                         cookie = cookies
                                                     )

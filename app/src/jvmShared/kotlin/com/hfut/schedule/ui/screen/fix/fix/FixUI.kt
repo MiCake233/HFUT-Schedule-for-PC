@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.fix.fix
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,12 +28,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.dev.CrashHandler
 import com.hfut.schedule.logic.util.dev.ExceptionHelper.getKeyStackTrace
 import com.hfut.schedule.logic.util.dev.saveErrorLog
@@ -71,7 +68,6 @@ fun FixUI(
     innerPadding : PaddingValues,
     vm : NetWorkViewModel,
 ) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     var showBottomSheet_version by remember { mutableStateOf(false) }
@@ -150,7 +146,7 @@ fun FixUI(
             TransplantListItem(
                 headlineContent = { Text(text = "下载最新版本") },
                 leadingContent = { Icon(painterResource(Drawables.cloud_download), contentDescription = "Localized description",) },
-                modifier = Modifier.clickable{ Starter.startWebUrlOuter(context,Constant.GITEE_UPDATE_URL + "releases/tag/Android") }
+                modifier = Modifier.clickable{ Starter.startWebUrlOuter(Constant.GITEE_UPDATE_URL + "releases/tag/Android") }
             )
             PaddingHorizontalDivider()
             TransplantListItem(
@@ -172,7 +168,7 @@ fun FixUI(
                 leadingContent = { Icon(painterResource(Drawables.github), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable{
                     scope.launch {
-                        Starter.startWebUrlOuter(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
+                        Starter.startWebUrlOuter("${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
                     }
                 }
             )
@@ -215,7 +211,6 @@ fun FixUI(
 
 @Composable
 fun BugShare() {
-    val activity = LocalActivity.current
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     if(showBottomSheet) {

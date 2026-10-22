@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.sub.update
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
@@ -46,7 +48,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.network.api.model.response.json.gitee.GiteeReleaseResponse
 import com.xah.common.logic.state.NetworkUiState
@@ -263,7 +264,7 @@ fun UpdateUI(
                     )
                 }
             },
-            modifier = Modifier.clickable{ Starter.startWebUrlOuter(context,Constant.GITEE_UPDATE_URL+ "/releases/tag/Android") },
+            modifier = Modifier.clickable{ Starter.startWebUrlOuter(Constant.GITEE_UPDATE_URL+ "/releases/tag/Android") },
         )
 
         AnimatedVisibility(
@@ -295,7 +296,7 @@ fun UpdateUI(
                             update?.name?.let { version ->
                                 viewModel.startDownload(
                                     "${Constant.GITEE_UPDATE_URL}releases/download/Android/${version}.apk",
-                                    "${MyApplication.APP_NAME}_${version}.apk",
+                                    "${AppConst.APP_NAME}_${version}.apk",
                                     context
                                 )
                             }

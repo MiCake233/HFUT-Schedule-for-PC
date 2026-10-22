@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.fix.about
 
+import com.hfut.schedule.logic.model.AppConst
+
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,14 +17,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.button.BottomTextButtonGroup
@@ -69,7 +68,7 @@ fun Support(innerPadding : PaddingValues) {
         item { InnerPaddingHeight(innerPadding,true) }
         item {
             CardListItem(
-                headlineContent = { Text("${MyApplication.APP_NAME}致力于为每个用户提供平等的服务，但由于不同手机厂商对Android系统的定制，以及Android版本的不同，导致最终效果往往不同，但以下的特性均不影响APP的功能") },
+                headlineContent = { Text("${AppConst.APP_NAME}致力于为每个用户提供平等的服务，但由于不同手机厂商对Android系统的定制，以及Android版本的不同，导致最终效果往往不同，但以下的特性均不影响APP的功能") },
                 leadingContent = {
                     Icon(painterResource(Drawables.info),null)
                 }
@@ -106,7 +105,6 @@ private fun CanSupportChip(title : String) = SupportChip(title,isSupported = tru
 private fun SupportItem(item : SupportItemBean) {
     val scope = rememberCoroutineScope()
     val list = item.list
-    val context = LocalContext.current
     CustomCard(color = cardNormalColor()) {
         Column {
             TransplantListItem(
@@ -146,7 +144,7 @@ private fun SupportItem(item : SupportItemBean) {
                     CardBottomButton(item.android),
                     CardBottomButton("预览效果",item.url != null) {
                         scope.launch {
-                            item.url?.let { Starter.startWebUrlInner(context,it,"Github", icon = Drawables.github) }
+                            item.url?.let { Starter.startWebUrlInner(it,"Github", icon = Drawables.github) }
                         }
                     }
                 )

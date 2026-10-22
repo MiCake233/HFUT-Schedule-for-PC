@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.card.count.main
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
@@ -43,7 +42,6 @@ import androidx.compose.ui.graphics.Color
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinMonthBill
 import com.xah.common.logic.state.NetworkUiState
 
@@ -59,7 +57,7 @@ import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.container.cardNormalColor
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.screen.card.count.drawLineChart
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
@@ -81,7 +79,6 @@ private fun withoutMonthBills(originalList : List<HuiXinMonthBill>) : List<HuiXi
 }
 
 
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {

@@ -20,7 +20,6 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 
 //fun loadImage(
 //    url: String,

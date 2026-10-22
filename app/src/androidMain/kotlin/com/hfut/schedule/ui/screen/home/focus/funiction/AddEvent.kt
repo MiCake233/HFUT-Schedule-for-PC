@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.BackEventCompat
@@ -161,7 +160,7 @@ import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.ui.util.layout.measureDpSize
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.component.status.CustomSingleChoiceRow
@@ -187,7 +186,6 @@ import java.time.ZoneId
 import java.util.UUID
 import kotlin.coroutines.cancellation.CancellationException
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun AddEventFloatButton(
@@ -435,7 +433,6 @@ private fun SharedTransitionScope.ButtonUI(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 private fun SharedTransitionScope.SurfaceUI(

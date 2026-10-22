@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,8 +18,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -40,7 +40,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginWeb( card : Boolean, vm : NetWorkViewModel, hazeState: HazeState) {
-    val maxFlow by DataStoreManager.maxFlow.collectAsState(initial = MyApplication.DEFAULT_MAX_FREE_FLOW)
+    val maxFlow by DataStoreManager.maxFlow.collectAsState(initial = AppConst.DEFAULT_MAX_FREE_FLOW)
     val floatingController = LocalFloatingController.current
     var showPercent by remember { mutableStateOf(true) }
 

@@ -1,6 +1,6 @@
 package com.hfut.schedule.logic.network.repo
 
-import androidx.lifecycle.MutableLiveData
+import com.hfut.schedule.logic.util.state.MutableLiveData
 
 import com.google.gson.JsonObject
 import com.hfut.schedule.network.api.model.response.dto.SchoolNetInfo

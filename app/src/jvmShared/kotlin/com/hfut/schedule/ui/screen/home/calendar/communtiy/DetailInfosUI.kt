@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.communtiy
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +26,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.community.CommunityCourseDetail
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuTextbook
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuCourseSearchResponse
@@ -60,7 +58,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {

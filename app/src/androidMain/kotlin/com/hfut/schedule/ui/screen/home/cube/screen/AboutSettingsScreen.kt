@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.screen
 
+import com.hfut.schedule.logic.model.AppConst
+
 
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.Color
@@ -43,7 +45,6 @@ import androidx.core.graphics.createBitmap
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.sys.ClipBoardHelper
 import com.hfut.schedule.logic.util.sys.ShareTo
@@ -209,7 +210,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                         headlineContent = { Text(text = stringResource(Strings.about_settings_tips_title)) },
                         supportingContent = { Text(text = stringResource(
                             Strings.about_settings_tips_description,
-                            MyApplication.APP_NAME
+                            AppConst.APP_NAME
                         ))},
                         leadingContent = {
                             Icon(
@@ -278,7 +279,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                         Text("从Gitee下载最新版本的apk安装包")
                     },
                     leadingContent = { Icon(painterResource(Drawables.cloud_download), contentDescription = "Localized description",) },
-                    modifier = Modifier.clickable{ Starter.startWebUrlOuter(context,Constant.GITEE_UPDATE_URL + "releases/tag/Android") }
+                    modifier = Modifier.clickable{ Starter.startWebUrlOuter(Constant.GITEE_UPDATE_URL + "releases/tag/Android") }
                 )
                 PaddingHorizontalDivider()
                 GithubDownloadUI()

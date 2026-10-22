@@ -7,9 +7,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.logic.util.sys.Starter.refreshLogin
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.nav.destination.SelectCoursesDestination
@@ -24,7 +23,6 @@ fun SelectCourse(
     ifSaved : Boolean,
 ) {
     val navController = LocalNavController.current
-    val context = LocalContext.current
 
     TransplantListItem(
         headlineContent = { ScrollText(text = SelectCoursesDestination.title.asString()) },

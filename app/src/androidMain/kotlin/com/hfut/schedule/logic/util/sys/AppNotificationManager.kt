@@ -18,7 +18,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.other.AppVersion
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager.getPassedMinutesInRange
 import com.hfut.schedule.ui.screen.home.calendar.common.simplifyPlace

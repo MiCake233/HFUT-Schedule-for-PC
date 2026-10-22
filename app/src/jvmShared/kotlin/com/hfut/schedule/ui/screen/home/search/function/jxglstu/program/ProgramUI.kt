@@ -34,14 +34,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 import com.google.gson.reflect.TypeToken
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.JxglstuProgramPlanCourse
 import com.hfut.schedule.network.api.model.response.json.jxglstu.program.competition.JxglstuProgramSimpleCompletionResponse
 import com.hfut.schedule.logic.model.dto.JxglstuProgramItemDto
@@ -492,7 +490,6 @@ fun ProgramChildrenUI(entity : JxglstuProgramResponse?, hazeState : HazeState, v
 
 @Composable
 fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDismissRequest : () -> Unit) {
-    val context = LocalContext.current
     val navController = LocalNavController.current
 
     HazeBottomSheet(

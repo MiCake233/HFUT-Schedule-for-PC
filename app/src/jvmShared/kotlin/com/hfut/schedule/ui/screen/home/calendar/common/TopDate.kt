@@ -38,7 +38,6 @@ import com.hfut.schedule.ui.component.button.calendarSquareBackDrop
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.style.CalendarStyle
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
-import com.kyant.backdrop.Backdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import java.time.LocalDate
 

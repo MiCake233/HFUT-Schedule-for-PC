@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.cube
 
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.annotation.RequiresApi
@@ -47,7 +46,6 @@ import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication.Companion.context
 import com.hfut.schedule.network.api.model.response.json.gitee.GiteeReleaseResponse
 import com.xah.common.logic.state.NetworkUiState
@@ -84,7 +82,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.bsdiffs.model.Patch
 import com.xah.bsdiffs.util.BsdiffUpdate
 import com.xah.common.ui.component.text.BottomTip
@@ -102,7 +100,6 @@ import kotlinx.coroutines.launch
 
 /* 本kt文件已完成多语言文案适配 */
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun SettingsItemsUI() {
     val navTopController = LocalNavController.current
@@ -315,7 +312,7 @@ fun GithubDownloadUI() {
         leadingContent = { Icon(painterResource(Drawables.cloud_download),null)},
         modifier = Modifier.clickable {
             scope.launch {
-                Starter.startWebUrlInner(context ,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}/releases/latest")
+                Starter.startWebUrlInner("${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}/releases/latest")
             }
         }
     )
@@ -384,7 +381,7 @@ fun UpdateContents(vm : NetWorkViewModel) {
                                     headlineContent = { Text("v$versionName") },
                                     modifier = Modifier.clickable {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,"${Constant.GITHUB_REPO_URL}/blob/dev/docs/update/${name}",versionName,null,Drawables.github)
+                                            Starter.startWebUrlInner("${Constant.GITHUB_REPO_URL}/blob/dev/docs/update/${name}",versionName,null,Drawables.github)
                                         }
                                     }
                                 )

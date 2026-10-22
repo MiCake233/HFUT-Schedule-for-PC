@@ -1,5 +1,7 @@
 package com.hfut.schedule.receiver.widget.focus
 
+import com.hfut.schedule.logic.util.sys.parseTimeItem
+
 import com.xah.common.ui.res.Drawables
 
 import android.content.Context
@@ -44,7 +46,6 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import com.hfut.schedule.R
 import com.hfut.schedule.activity.MainActivity
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.model.enumeration.BottomBarItems
@@ -67,7 +68,7 @@ import com.hfut.schedule.ui.screen.home.focus.funiction.getTodayUniAppCourse
 import com.hfut.schedule.ui.screen.home.focus.funiction.getTomorrowJxglstuCourse
 import com.hfut.schedule.ui.screen.home.focus.funiction.getTomorrowUniAppCourse
 import com.hfut.schedule.ui.screen.home.focus.funiction.getUniAppCourse
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.getCourseInfoFromCommunity
 import com.hfut.schedule.ui.screen.home.topBarText
 import kotlinx.coroutines.CoroutineScope

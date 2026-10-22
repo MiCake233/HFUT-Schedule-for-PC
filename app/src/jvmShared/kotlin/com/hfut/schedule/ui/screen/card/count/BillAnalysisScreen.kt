@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.card.count
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +37,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinMonthBill
 import com.xah.common.logic.state.NetworkUiState
 
@@ -71,7 +69,6 @@ private const val TAB_DAY = 1
 private const val TAB_MONTH = 2
 private const val TAB_TERM = 3
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillAnalysisScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, pagerState : PagerState,hazeState: HazeState) =

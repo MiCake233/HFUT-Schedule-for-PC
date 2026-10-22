@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.dormitoryScore
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -25,8 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.parse.SemesterParser
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -107,7 +107,7 @@ fun DormitoryScoreScreen(
     }
     LaunchedEffect(Unit) {
         launch {
-            week = if(DateTimeManager.currentWeek in 1..MyApplication.MAX_WEEK) {
+            week = if(DateTimeManager.currentWeek in 1..AppConst.MAX_WEEK) {
                 DateTimeManager.currentWeek.toInt()
             } else {
                 1
@@ -140,7 +140,7 @@ fun DormitoryScoreScreen(
                     currentPage = page,
                     onNextPage = { week = it },
                     onPreviousPage = { week = it },
-                    range = Pair(1, MyApplication.MAX_WEEK),
+                    range = Pair(1, AppConst.MAX_WEEK),
                     resetPage = DateTimeManager.currentWeek.toInt(),
                     text = "第${page}周",
                 )

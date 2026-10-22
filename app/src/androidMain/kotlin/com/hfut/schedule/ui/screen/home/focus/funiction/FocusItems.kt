@@ -36,7 +36,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
 import com.hfut.schedule.logic.database.entity.CustomEventType
@@ -745,13 +744,6 @@ fun TodayUI(vm: NetWorkViewModel) {
     }
 }
 
-fun parseTimeItem(item : Int) : String = item.let {
-    if(it < 10) {
-        "0$it"
-    } else {
-        it.toString()
-    }
-}
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

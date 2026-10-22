@@ -32,10 +32,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.model.ExperimentalNavigationBarApi
@@ -49,7 +48,6 @@ import com.hfut.schedule.ui.style.special.newBottomBarBlur
 import com.hfut.schedule.ui.util.isThemeDark
 import com.hfut.schedule.ui.util.navigation.isCurrentRouteWithoutArgs
 import com.hfut.schedule.ui.util.navigation.navigateForBottomBar
-import com.kyant.backdrop.Backdrop
 import com.sharednav.common.helper.ScreenCornerHelper
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.style.APP_HORIZONTAL_DP

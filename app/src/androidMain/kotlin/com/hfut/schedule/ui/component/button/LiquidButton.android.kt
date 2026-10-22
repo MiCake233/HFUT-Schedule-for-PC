@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.component.button
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.graphics.RuntimeShader
 import android.os.Build
 import androidx.compose.animation.core.Animatable
@@ -55,7 +57,7 @@ import com.hfut.schedule.ui.style.shader.largeStyle
 import com.hfut.schedule.ui.style.special.layerGlass
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.kyant.backdrop.Backdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.kyant.backdrop.drawBackdrop
 import com.kyant.backdrop.effects.blur
 import com.kyant.backdrop.effects.lens
@@ -86,18 +88,16 @@ half4 main(float2 coord) {
     return color * intensity;
 }"""
 
-val BUTTON_PADDING = 6.25.dp
 
-val BUTTON_END_PADDING = APP_HORIZONTAL_DP- CARD_NORMAL_DP-1.dp
 @Composable
-fun LiquidButton(
+actual fun LiquidButton(
     onClick: () -> Unit,
-    backdrop: Backdrop,
-    modifier: Modifier = Modifier,
-    enabled : Boolean = true,
-    isCircle : Boolean = false,
-    innerPadding : Dp = if(!isCircle) 20.dp else 9.5.dp,
-    surfaceColor : Color = MaterialTheme.colorScheme.surfaceContainer,
+    backdrop: PlatformBackdrop,
+    modifier: Modifier ,
+    enabled : Boolean ,
+    isCircle : Boolean ,
+    innerPadding : Dp ,
+    surfaceColor : Color ,
     content: @Composable RowScope.() -> Unit
 ) {
     val surfaceColor = surfaceColor.copy(
@@ -282,11 +282,11 @@ fun LiquidButton(
 }
 
 @Composable
-fun Modifier.containerBackDrop(
-    backdrop: Backdrop,
+actual fun Modifier.containerBackDrop(
+    backdrop: PlatformBackdrop,
     shape: Shape,
-    enabled : Boolean = true,
-    surfaceColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest.copy(if(enabled).3f else .7f),
+    enabled : Boolean ,
+    surfaceColor: Color ,
 ) : Modifier {
     val progressAnimation = remember { Animatable(0f) }
     val offsetAnimation = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
@@ -361,10 +361,10 @@ fun Modifier.containerBackDrop(
 
 
 @Composable
-fun Modifier.containerBackDrop(
+actual fun Modifier.containerBackDrop(
     backdrop: ShaderState,
     shape: Shape,
-    surfaceColor: Color = MaterialTheme.colorScheme.surfaceVariant.copy(.7f),
+    surfaceColor: Color ,
 ) : Modifier {
     val isTransiting = LocalNavControllerSafely.current?.isTransitioning ?: false
 
@@ -385,12 +385,12 @@ fun Modifier.containerBackDrop(
 }
 
 @Composable
-fun LiquidButton(
+actual fun LiquidButton(
     onClick: () -> Unit,
-    backdrop: Backdrop,
-    modifier: Modifier = Modifier,
-    enabled : Boolean = true,
-    isCircle : Boolean = false,
+    backdrop: PlatformBackdrop,
+    modifier: Modifier ,
+    enabled : Boolean ,
+    isCircle : Boolean ,
     shape: Shape,
     content: @Composable () -> Unit
 ) {
@@ -435,19 +435,11 @@ fun LiquidButton(
 //    }
 }
 
-@Composable
-fun NoPadding(content: @Composable () -> Unit) {
-    CompositionLocalProvider(
-        LocalMinimumInteractiveComponentSize provides 0.dp
-    ) {
-        content()
-    }
-}
 
 @Composable
-fun Modifier.bottomBarBackDrop(
-    backdrop: Backdrop,
-    shape : RoundedCornerShape = CircleShape,
+actual fun Modifier.bottomBarBackDrop(
+    backdrop: PlatformBackdrop,
+    shape : RoundedCornerShape ,
 ) : Modifier {
     val color = MaterialTheme.colorScheme.surfaceVariant.copy(.25f)
     val isTransiting = LocalNavControllerSafely.current?.isTransitioning ?: false
@@ -472,19 +464,16 @@ fun Modifier.bottomBarBackDrop(
 }
 
 
-enum class CalendarSquareBackDropSource {
-    BUTTON,BOTTOM,SQUARE,CONTAINER
-}
 
 @Composable
-fun Modifier.calendarSquareBackDrop(
-    backdrop: Backdrop,
+actual fun Modifier.calendarSquareBackDrop(
+    backdrop: PlatformBackdrop,
     source : CalendarSquareBackDropSource,
-    shape: Shape = CircleShape,
-    overlayColor : Color = MaterialTheme.colorScheme.surface,
+    shape: Shape ,
+    overlayColor : Color ,
 ) : Modifier {
-    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = MyApplication.CALENDAR_SQUARE_ALPHA)
-    val customBackgroundBlur by DataStoreManager.customCalendarSquareBlur.collectAsState(initial = MyApplication.CALENDAR_SQUARE_BLUR)
+    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)
+    val customBackgroundBlur by DataStoreManager.customCalendarSquareBlur.collectAsState(initial = AppConst.CALENDAR_SQUARE_BLUR)
     val color = overlayColor.copy(customBackgroundAlpha)
     val isTransiting = LocalNavControllerSafely.current?.isTransitioning ?: false
 
@@ -520,3 +509,11 @@ fun Modifier.calendarSquareBackDrop(
         }
     )
 }
+
+
+// ---- expect/actual 桥接 ----
+actual typealias PlatformBackdrop = com.kyant.backdrop.Backdrop
+
+@androidx.compose.runtime.Composable
+actual fun rememberLayerBackdrop(): PlatformBackdrop =
+    com.kyant.backdrop.backdrops.rememberLayerBackdrop()

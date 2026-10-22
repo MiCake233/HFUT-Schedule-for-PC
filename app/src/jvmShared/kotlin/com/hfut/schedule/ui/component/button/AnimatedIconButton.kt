@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.hfut.schedule.R
-import com.kyant.backdrop.Backdrop
 
 @Composable
 fun AnimatedExpandIconButton(

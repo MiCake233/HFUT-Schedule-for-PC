@@ -10,11 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.container.TransplantListItem
@@ -24,14 +21,13 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Alumni() {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     TransplantListItem(
         headlineContent = { Text(text = "校友平台") },
         leadingContent = { Icon(painter = painterResource(id = Drawables.local_library), contentDescription = EMPTY_STRING) },
         modifier = Modifier.clickable {
             scope.launch {
-                Starter.startWebUrlInner(context,Constant.ALUMNI_URL,"校友平台", icon = Drawables.local_library)
+                Starter.startWebUrlInner(Constant.ALUMNI_URL,"校友平台", icon = Drawables.local_library)
             }
         }
     )

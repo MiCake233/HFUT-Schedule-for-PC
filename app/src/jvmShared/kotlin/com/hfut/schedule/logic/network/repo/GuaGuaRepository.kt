@@ -1,6 +1,6 @@
 package com.hfut.schedule.logic.network.repo
 
-import androidx.lifecycle.MutableLiveData
+import com.hfut.schedule.logic.util.state.MutableLiveData
 
 import com.hfut.schedule.network.api.model.response.json.guagua.GuaGuaLoginResponse
 import com.hfut.schedule.network.api.model.response.json.guagua.GuaGuaBillResponse

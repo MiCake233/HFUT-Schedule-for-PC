@@ -52,7 +52,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.WebURLType
 import com.hfut.schedule.logic.database.entity.WebUrlDTO
@@ -89,7 +88,7 @@ import com.hfut.schedule.ui.screen.home.search.function.other.life.HuoZaiFeiXuan
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.getPureUrl
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.isEmptyOrBlank
@@ -120,15 +119,6 @@ fun WebUI() {
     )
 }
 
-fun isValidWebUrl(url: String, strict : Boolean = false): Boolean {
-    val checkUrl = if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        if(strict) {
-            return false
-        }
-        "http://$url"
-    } else url
-    return Patterns.WEB_URL.matcher(checkUrl).matches()
-}
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
@@ -286,9 +276,7 @@ fun WebNavigationScreen(
                                     enabled = isValidWebUrl(input),
                                     onClick = {
                                         scope.launch {
-                                            Starter.startWebUrlInner(
-                                                context,
-                                                url = input,
+                                            Starter.startWebUrlInner(url = input,
                                                 title = getPureUrl(input),
                                                 cookie = inputCookies.let { if(it.isEmptyOrBlank()) null else it }
                                             )

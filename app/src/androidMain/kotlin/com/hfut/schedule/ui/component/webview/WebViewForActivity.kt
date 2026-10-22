@@ -2,7 +2,6 @@ package com.hfut.schedule.ui.component.webview
 
 import com.xah.common.ui.res.Drawables
 
-import android.annotation.SuppressLint
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -23,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.util.WebViewBackHandler
@@ -48,7 +46,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebViewScreenForActivity(
     url: String,

@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.my.notification
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,12 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.logic.util.sys.showToast
@@ -64,11 +61,9 @@ suspend fun calculatedReadNotificationCount() : Int {
 private fun handleReadNotifications(string : String) = string.split(",").mapNotNull { it.toIntOrNull() }.toSet()
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("SuspiciousIndentation")
 @Composable
 fun NotificationItems() {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val list = remember { getNotifications() }
     val readNotifications by DataStoreManager.readNotifications.collectAsState(initial = EMPTY_STRING)
     val readIds = remember(readNotifications) { handleReadNotifications(readNotifications) }
@@ -94,7 +89,7 @@ fun NotificationItems() {
             val clickAction = {
                 scope.launch {
                     item.url?.let {
-                        Starter.startWebUrlInner(context,it,item.title, icon = NotificationsDestination.icon)
+                        Starter.startWebUrlInner(it,item.title, icon = NotificationsDestination.icon)
                     } ?: showToast("暂无点击操作")
                 }
             }

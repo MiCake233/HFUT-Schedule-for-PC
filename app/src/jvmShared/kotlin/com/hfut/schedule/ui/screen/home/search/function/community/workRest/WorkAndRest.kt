@@ -22,10 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.network.MyApiParse.getMy
 
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -51,7 +49,7 @@ import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.getF
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 
 
@@ -204,7 +202,6 @@ fun TimeTableScreen(
         }
     }
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val backdrop = rememberLayerBackdrop()
 
@@ -226,7 +223,7 @@ fun TimeTableScreen(
                                 if(url == null) {
                                     showToast("正在从云端获取数据")
                                 } else {
-                                    Starter.startWebUrlInner(context,url!!,"校历", icon = Drawables.schedule)
+                                    Starter.startWebUrlInner(url!!,"校历", icon = Drawables.schedule)
                                     showToast("即将打开网页链接,可自行下载或保存图片")
                                 }
                             }

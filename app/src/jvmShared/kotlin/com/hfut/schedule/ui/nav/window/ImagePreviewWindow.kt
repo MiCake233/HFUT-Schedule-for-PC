@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.nav.window
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.Image
@@ -111,7 +110,6 @@ private fun ZoomableImage(
 
     var displayDialog by remember { mutableStateOf(false) }
     val hazeState = rememberHazeBlur()
-    val activity = LocalActivity.current
 
     if(displayDialog) {
         LittleDialog(

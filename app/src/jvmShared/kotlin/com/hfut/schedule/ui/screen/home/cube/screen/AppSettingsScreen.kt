@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.screen
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
@@ -39,10 +40,8 @@ import com.xah.common.ui.res.stringOf
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.model.enumeration.Language
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.parse.SemesterParser.getSemesterWithoutSuspend
 import com.hfut.schedule.logic.util.parse.SemesterParser.parseSemester
 import com.hfut.schedule.logic.util.parse.SemesterParser.reverseGetSemester
@@ -86,8 +85,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
-    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
-    val context = LocalContext.current
+    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
     val scope = rememberCoroutineScope()
     val navTopController = LocalNavController.current
 
@@ -103,7 +101,7 @@ fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
         val enableIgnoreUnjoinedGradeItems by DataStoreManager.enableIgnoreUnjoinedGradeItems.collectAsState(false)
 
         val scope = rememberCoroutineScope()
-        val maxFlow by DataStoreManager.maxFlow.collectAsState(initial = MyApplication.DEFAULT_MAX_FREE_FLOW)
+        val maxFlow by DataStoreManager.maxFlow.collectAsState(initial = AppConst.DEFAULT_MAX_FREE_FLOW)
         var freeFeevalue by remember { mutableFloatStateOf(maxFlow.toFloat()) }
         LaunchedEffect(maxFlow) {
             freeFeevalue = maxFlow.toFloat()
@@ -137,7 +135,7 @@ fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
                 TransplantListItem(
                     headlineContent = { Text(text = stringResource(Strings.app_settings_predictive_back_gesture_title)) },
                     supportingContent = {
-                        if(AppVersion.CAN_PREDICTIVE) {
+                        if(AppInfo.CAN_PREDICTIVE) {
                             Text(text = stringResource(Strings.app_settings_predictive_back_gesture_description_supported))
                         } else {
                             Text(text = stringResource(Strings.app_settings_predictive_back_gesture_description_unsupported))
@@ -145,10 +143,10 @@ fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
                     },
                     leadingContent = { Icon(painterResource(Drawables.swipe_left), contentDescription = "Localized description",) },
                     trailingContent = {
-                        Switch(enabled = AppVersion.CAN_PREDICTIVE,checked = enablePredictive, onCheckedChange = { scope.launch { DataStoreManager.savePredict(!enablePredictive) }})
+                        Switch(enabled = AppInfo.CAN_PREDICTIVE,checked = enablePredictive, onCheckedChange = { scope.launch { DataStoreManager.savePredict(!enablePredictive) }})
                     },
                     modifier = Modifier.clickable {
-                        if(AppVersion.CAN_PREDICTIVE) {
+                        if(AppInfo.CAN_PREDICTIVE) {
                             scope.launch { DataStoreManager.savePredict(!enablePredictive) }
                         }
                     }
@@ -336,7 +334,7 @@ fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
                         Text(
                             stringResource(
                                 Strings.app_settings_free_flow_of_school_net_of_xc_campus_description,
-                                MyApplication.DEFAULT_MAX_FREE_FLOW
+                                AppConst.DEFAULT_MAX_FREE_FLOW
                             ))
                     },
                     leadingContent = {
@@ -464,7 +462,7 @@ fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
                         colors = MaterialTheme.colorScheme.surface,
                         headlineContent = { Text(text = stringResource(Strings.app_settings_live_update_title)) },
                         supportingContent = {
-                            if(AppVersion.CAN_LIVE_UPDATE) {
+                            if(AppInfo.CAN_LIVE_UPDATE) {
                                 Text(text = stringResource(Strings.app_settings_live_update_description_supported))
                             } else {
                                 Text(text = stringResource(Strings.app_settings_live_update_description_unsupported))
@@ -592,7 +590,6 @@ fun CalendarSettingsUI() {
     val enableMergeSquare by DataStoreManager.enableMergeSquare.collectAsState(initial = false)
     val enableCalendarShowTeacher by DataStoreManager.enableCalendarShowTeacher.collectAsState(initial = ShowTeacherConfig.ONLY_MULTI.code)
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val defaultStartDate = remember { getDefaultStartTerm() }
     val termStartDate by DataStoreManager.termStartDate.collectAsState(initial = defaultStartDate)

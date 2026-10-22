@@ -1,7 +1,7 @@
 package com.hfut.schedule.logic.network.repo
 
 import androidx.compose.runtime.snapshots.SnapshotStateMap
-import androidx.lifecycle.MutableLiveData
+import com.hfut.schedule.logic.util.state.MutableLiveData
 
 import com.google.gson.reflect.TypeToken
 import com.hfut.schedule.logic.model.supabase.SupabaseEventEntity
@@ -24,7 +24,7 @@ import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString
 import com.hfut.schedule.network.api.impl.SupabaseServiceCreator
 import com.hfut.schedule.network.api.repo.SupabaseRepositoryInf
 import com.hfut.schedule.network.core.GsonInstance
-import com.hfut.schedule.ui.screen.supabase.login.getSchoolEmail
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getSchoolEmail
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

@@ -10,7 +10,7 @@ import com.hfut.schedule.logic.util.sys.DateTimeBean
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
 import com.hfut.schedule.logic.util.sys.fromUTC
 import com.hfut.schedule.logic.util.sys.toUTC
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.EventCampus
 import com.xah.common.logic.util.LogUtil
 

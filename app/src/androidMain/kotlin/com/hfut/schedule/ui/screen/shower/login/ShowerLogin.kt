@@ -41,7 +41,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.guagua.GuaGuaLoginData
 import com.hfut.schedule.network.api.model.response.json.guagua.GuaGuaLoginResponse
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager

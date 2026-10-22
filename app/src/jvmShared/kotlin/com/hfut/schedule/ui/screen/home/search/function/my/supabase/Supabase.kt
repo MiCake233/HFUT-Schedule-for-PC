@@ -6,13 +6,11 @@ import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.nav.destination.SupabaseDestination
@@ -27,7 +25,6 @@ fun Supabase() {
 //    val refreshToken by DataStoreManager.supabaseRefreshToken.collectAsState(initial = EMPTY_STRING)
 //    val scope = rememberCoroutineScope()
 //    var loading by remember { mutableStateOf(false) }
-    val context = LocalContext.current
     val navController = LocalNavController.current
 
     TransplantListItem(

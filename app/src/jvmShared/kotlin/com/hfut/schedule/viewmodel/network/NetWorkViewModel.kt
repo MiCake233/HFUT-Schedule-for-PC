@@ -1,7 +1,7 @@
 package com.hfut.schedule.viewmodel.network
 
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.lifecycle.MutableLiveData
+import com.hfut.schedule.logic.util.state.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
 import com.hfut.schedule.network.api.model.request.admission.AdmissionType

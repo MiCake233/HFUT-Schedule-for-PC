@@ -37,7 +37,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.request.admission.AdmissionType
 import com.hfut.schedule.network.api.model.response.json.admission.AdmissionDetailBean
 import com.hfut.schedule.network.api.model.response.json.admission.Admission

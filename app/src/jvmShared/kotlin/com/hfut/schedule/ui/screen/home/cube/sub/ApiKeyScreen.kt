@@ -24,8 +24,7 @@ import androidx.compose.ui.draw.scale
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.container.CustomCard
@@ -43,7 +42,7 @@ fun ApiKeyScreen(
     innerPadding : PaddingValues,
 //    navController: NavHostController
 ) {
-//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+//    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
 //    var scale by remember { mutableFloatStateOf(1f) }
 //
 //    TransitionBackHandler(navController,enablePredictive) {

@@ -1,14 +1,14 @@
 package com.hfut.schedule.logic.model.supabase
 
 import com.google.gson.annotations.SerializedName
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 
 data class SupabaseUserTrackRequest(
     @SerializedName("user_name")
     val username : String = getPersonInfo().getNameFinally(),
     @SerializedName("system_version")
-    val systemVersion : Int = AppVersion.sdkInt,
+    val systemVersion : Int = AppInfo.sdkInt,
     @SerializedName("student_id")
     val studentID : String = getPersonInfo().getStudentIdFinally() ?: "空",
     @SerializedName("campus")
@@ -16,9 +16,9 @@ data class SupabaseUserTrackRequest(
     @SerializedName("department")
     val department : String = getPersonInfo().department ?: "空",
     @SerializedName("app_version_name")
-    val appVersionName : String = AppVersion.getVersionName(),
+    val appVersionName : String = AppInfo.getVersionName(),
     @SerializedName("app_version_code")
-    val appVersionCode : Int = AppVersion.getVersionCode(),
+    val appVersionCode : Int = AppInfo.getVersionCode(),
     @SerializedName("device_name")
-    val deviceName : String = AppVersion.deviceName
+    val deviceName : String = AppInfo.deviceName
 )

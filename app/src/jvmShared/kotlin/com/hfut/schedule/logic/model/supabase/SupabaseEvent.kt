@@ -7,7 +7,7 @@ import com.hfut.schedule.logic.util.sys.DateTime
 import com.hfut.schedule.logic.util.sys.DateTimeBean
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.EventCampus
-import com.hfut.schedule.ui.screen.supabase.login.getSchoolEmail
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getSchoolEmail
 import com.xah.common.logic.model.CampusRegion
 
 // 实体类 接收数据库

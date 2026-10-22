@@ -24,7 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -39,12 +39,12 @@ import com.hfut.schedule.ui.component.network.UrlImage
 import com.hfut.schedule.ui.nav.destination.ClassmatesDestination
 
 import com.hfut.schedule.ui.screen.home.getWxAuth
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 
 import com.xah.common.ui.component.text.BottomTip
 import com.xah.common.ui.style.APP_HORIZONTAL_DP

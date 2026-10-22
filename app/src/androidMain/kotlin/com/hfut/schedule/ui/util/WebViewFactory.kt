@@ -61,7 +61,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.get
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.WebURLType
 import com.hfut.schedule.logic.database.entity.WebUrlDTO
@@ -245,7 +244,7 @@ fun WebViewTools(
         painterResource(id = Drawables.rotate_right), contentDescription = EMPTY_STRING) }
 
     IconButton(onClick = {
-        on = { Starter.startWebUrlOuter(context,it) }
+        on = { Starter.startWebUrlOuter(it) }
         showBottomSheet = true
     }) { Icon(
         painterResource(id = Drawables.net), contentDescription = EMPTY_STRING) }
@@ -582,13 +581,6 @@ fun isThemeDark() : Boolean {
     }
 }
 
-fun getPureUrl(url : String): String {
-    return if(url.startsWith("file://")) {
-        "本地"
-    } else {
-        url.substringAfter("://").substringBefore("/")
-    }
-}
 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -708,7 +700,7 @@ fun sharedOverrideUrlLoading(
     val url = request?.url.toString()
 
     if (url.contains("download")) { // 识别下载链接
-        Starter.startWebUrlOuter(context,url)
+        Starter.startWebUrlOuter(url)
         return true // 拦截 WebView 处理
     }
 

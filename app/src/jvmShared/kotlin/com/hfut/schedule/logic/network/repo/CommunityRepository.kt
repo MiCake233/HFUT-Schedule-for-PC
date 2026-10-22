@@ -1,7 +1,8 @@
 package com.hfut.schedule.logic.network.repo
 
+import com.hfut.schedule.logic.model.AppConst
 
-import com.hfut.schedule.application.MyApplication
+
 import com.hfut.schedule.network.api.model.request.community.CommunityLibraryContent
 import com.hfut.schedule.network.api.model.response.json.community.CommunityApplyFriendResponse
 import com.hfut.schedule.network.api.model.response.json.community.CommunityApplyingFriendRecord
@@ -472,7 +473,7 @@ object CommunityRepository : CommunityRepositoryInf {
     ) : List<WeekScore> = withContext(Dispatchers.IO) {
         val scores = mutableListOf<WeekScore>()
 
-        for (week in 1..MyApplication.MAX_WEEK) {
+        for (week in 1..AppConst.MAX_WEEK) {
             currentCoroutineContext().ensureActive()
 
             try {

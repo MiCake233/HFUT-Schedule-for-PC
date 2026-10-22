@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.fix.about
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -37,15 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.logic.util.other.AppVersion
-import com.hfut.schedule.logic.util.other.AppVersion.getSignatureInfo
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter
@@ -121,7 +119,6 @@ fun About(vm : NetWorkViewModel) {
             vm.getUserCount()
         }
     }
-    val context = LocalContext.current
     var starsNum by remember { mutableStateOf<String?>(null) }
     val uiState by vm.githubStarsData.state.collectAsState()
     LaunchedEffect(uiState) {
@@ -163,7 +160,7 @@ fun About(vm : NetWorkViewModel) {
                     TransplantListItem(
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}")
+                                Starter.startWebUrlInner("${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}")
                             }
                         },
                         headlineContent = {
@@ -187,7 +184,7 @@ fun About(vm : NetWorkViewModel) {
                         },
                         overlineContent = { Text("贡献者(按时间顺序)") },
                         headlineContent = {
-                            Text(MyApplication.contributors.map { it.key }.drop(1).joinToString(", "))
+                            Text(AppConst.contributors.map { it.key }.drop(1).joinToString(", "))
                         },
                     )
                     PaddingHorizontalDivider()
@@ -195,7 +192,7 @@ fun About(vm : NetWorkViewModel) {
                         modifier = Modifier.padding(APP_HORIZONTAL_DP)
                     ) {
                         DevelopersAvatars(
-                            MyApplication.contributors.map {
+                            AppConst.contributors.map {
                                it.value
                             }
                         )
@@ -235,7 +232,7 @@ fun About(vm : NetWorkViewModel) {
                     Row(
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context,"${Constant.GITHUB_REPO_URL}/blob/dev/docs/Chart.md","统计报表",null,Drawables.github)
+                                Starter.startWebUrlInner("${Constant.GITHUB_REPO_URL}/blob/dev/docs/Chart.md","统计报表",null,Drawables.github)
                             }
                         }
                     ) {
@@ -268,7 +265,7 @@ fun About(vm : NetWorkViewModel) {
                         TransplantListItem(
                             modifier = Modifier.weight(.5f).clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
+                                    Starter.startWebUrlInner("${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
                                 }
                             },
                             headlineContent = {
@@ -300,7 +297,7 @@ fun About(vm : NetWorkViewModel) {
                         TransplantListItem(
                             modifier = Modifier.weight(.5f).clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
+                                    Starter.startWebUrlInner("${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
                                 }
                             },
                             headlineContent = {
@@ -333,7 +330,7 @@ fun About(vm : NetWorkViewModel) {
                 LargeButton(
                     onClick = {
                         scope.launch {
-                            Starter.startWebUrlInner(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
+                            Starter.startWebUrlInner("${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
                         }
                     },
                     text = "Github",
@@ -341,9 +338,9 @@ fun About(vm : NetWorkViewModel) {
                     modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP, vertical = CARD_NORMAL_DP*2)
                 )
             }
-            val signatureInfo = remember { MyApplication.context.getSignatureInfo() }
+            val signatureInfo = remember { com.hfut.schedule.logic.platform.platformSignature() }
             signatureInfo?.let { info ->
-                val isValid = AppVersion.isSignatureValid
+                val isValid = AppInfo.isSignatureValid
                 DividerTextExpandedWith("开发者签名") {
                     CardListItem(
                         headlineContent = {
@@ -411,14 +408,14 @@ fun About(vm : NetWorkViewModel) {
                             } else {
                                 Icon(
                                     painterResource(
-                                        if(AppVersion.isDebug) {
+                                        if(AppInfo.isDebug) {
                                             Drawables.construction
                                         } else {
                                             Drawables.help
                                         }
                                     ),
                                     null,
-                                    tint = if(AppVersion.isDebug) {
+                                    tint = if(AppInfo.isDebug) {
                                         LocalContentColor.current
                                     } else {
                                         warnColor()
@@ -437,7 +434,7 @@ fun About(vm : NetWorkViewModel) {
                                 headlineContent = { Text(openSourceProjects[index].name) },
                                 supportingContent = { Text(openSourceProjects[index].description) },
                                 modifier = Modifier.weight(.5f).clickable{
-                                    openSourceProjects[index].url?.let { Starter.startWebUrlOuter(context,it) }
+                                    openSourceProjects[index].url?.let { Starter.startWebUrlOuter(it) }
                                 }
                             )
                             if(index+1 < openSourceProjects.size)
@@ -445,7 +442,7 @@ fun About(vm : NetWorkViewModel) {
                                     headlineContent = { Text(openSourceProjects[index+1].name) },
                                     supportingContent = { Text(openSourceProjects[index+1].description) },
                                     modifier = Modifier.weight(.5f).clickable {
-                                        openSourceProjects[index+1].url?.let { Starter.startWebUrlOuter(context,it) }
+                                        openSourceProjects[index+1].url?.let { Starter.startWebUrlOuter(it) }
                                     }
                                 )
                         }
@@ -468,7 +465,7 @@ fun About(vm : NetWorkViewModel) {
                         scope.launch {
                             DataStoreManager.saveEnableUse(false)
                             showToast("已退出APP")
-                            MyApplication.exitAppSafely()
+                            com.hfut.schedule.logic.platform.AppCapabilities.exitApplication()
                         }
                     },
                     modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP, vertical = CARD_NORMAL_DP*2),

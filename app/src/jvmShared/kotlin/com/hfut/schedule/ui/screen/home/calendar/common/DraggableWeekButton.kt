@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.common
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -49,8 +51,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.CalendarSquareBackDropSource
 import com.hfut.schedule.ui.component.button.calendarSquareBackDrop
@@ -58,7 +58,6 @@ import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.ShareTwoContainer2D
 import com.hfut.schedule.ui.nav.window.TimeTablePreviewWindow
 import com.sharednav.common.helper.NoneRoundShape
-import com.kyant.backdrop.Backdrop
 import com.xah.container.component.base.sharedContainer
 import com.xah.container.model.ContainerFilledStrategy
 
@@ -111,7 +110,7 @@ fun DraggableWeekButton(
     }
 
     val hasBackground = shaderState != null
-    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = MyApplication.CALENDAR_SQUARE_ALPHA)
+    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)
 
     Box(
         modifier = modifier

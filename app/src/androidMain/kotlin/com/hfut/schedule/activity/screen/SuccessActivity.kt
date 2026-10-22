@@ -1,6 +1,5 @@
 package com.hfut.schedule.activity.screen
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.runtime.Composable
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
 @Deprecated("为KMP适配计划的开始做铺垫，即将被合入至SharedNav统一管理")
 class SuccessActivity : BaseActivity() {
     @OptIn(ExperimentalSharedTransitionApi::class)
-    @SuppressLint("NewApi")
     @Composable
     override fun UI() {
         MainHost(
@@ -29,7 +27,6 @@ class SuccessActivity : BaseActivity() {
         )
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.apply {

@@ -1,7 +1,7 @@
 package com.hfut.schedule.ui.screen.supabase.login
 
-import android.annotation.SuppressLint
-import androidx.activity.compose.LocalActivity
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -47,8 +47,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -66,7 +64,6 @@ import kotlinx.coroutines.launch
 private const val TAB_LOGIN = 0
 private const val TAB_REG = 1
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SupabaseLoginScreen(vm : NetWorkViewModel) {
@@ -81,7 +78,7 @@ fun SupabaseLoginScreen(vm : NetWorkViewModel) {
 
     var isReg by remember { mutableStateOf(false) }
 
-    val username by remember { mutableStateOf(getPersonInfo().getStudentIdFinally() + MyApplication.EMAIL) }
+    val username by remember { mutableStateOf(getPersonInfo().getStudentIdFinally() + AppConst.EMAIL) }
     var password by remember { mutableStateOf(prefs.getString("SupabasePsk",EMPTY_STRING) ?: EMPTY_STRING) }
     var password2 by remember { mutableStateOf(EMPTY_STRING) }
 
@@ -106,7 +103,7 @@ fun SupabaseLoginScreen(vm : NetWorkViewModel) {
                 colors = topAppBarColors(containerColor = Color.Transparent, titleContentColor = MaterialTheme.colorScheme.primary),
                 title = {
                     Text(
-                        text = "${MyApplication.APP_NAME}信息平台" , modifier = Modifier.padding(start = 10.dp)
+                        text = "${AppConst.APP_NAME}信息平台" , modifier = Modifier.padding(start = 10.dp)
                     )
                 },
                 navigationIcon  = {

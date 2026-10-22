@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.supabase.home
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.animation.AnimatedVisibility
@@ -50,7 +49,6 @@ import androidx.compose.ui.graphics.TransformOrigin
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
 import com.hfut.schedule.logic.database.entity.CustomEventType
@@ -88,7 +86,6 @@ private const val TAB_LEFT = 0
 private const val TAB_RIGHT = 1
 
 @OptIn(ExperimentalMaterialApi::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SupabaseHomeScreen(vm: NetWorkViewModel, sortType: SortType, sortReversed : Boolean, innerPadding : PaddingValues, pagerState : PagerState) {
     var refreshing by remember { mutableStateOf(true) }

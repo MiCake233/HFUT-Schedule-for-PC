@@ -48,13 +48,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -77,7 +75,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -104,7 +102,6 @@ fun BusScreen(
     var endInput by remember { mutableStateOf(EMPTY_STRING) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val backdrop = rememberLayerBackdrop()
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     Scaffold (
@@ -124,7 +121,7 @@ fun BusScreen(
                         LiquidButton(
                             onClick = {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context, Constant.HFUT_URL + "xcxx.htm")
+                                    Starter.startWebUrlInner(Constant.HFUT_URL + "xcxx.htm")
                                 }
                             },
                             backdrop = backdrop,
@@ -361,7 +358,6 @@ fun BusScreenV2(
     var endInput by remember { mutableStateOf(EMPTY_STRING) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val backdrop = rememberLayerBackdrop()
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var busDate by remember { mutableStateOf<String?>(null) }
     var busDates by remember { mutableStateOf(setOf<String>()) }
@@ -409,7 +405,7 @@ fun BusScreenV2(
                             LiquidButton(
                                 onClick = {
                                     scope.launch {
-                                        Starter.startWebUrlInner(context, Constant.HFUT_URL + "xcxx.htm")
+                                        Starter.startWebUrlInner(Constant.HFUT_URL + "xcxx.htm")
                                     }
                                 },
                                 backdrop = backdrop,

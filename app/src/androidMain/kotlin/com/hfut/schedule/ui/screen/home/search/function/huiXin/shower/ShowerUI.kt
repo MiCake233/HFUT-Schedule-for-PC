@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.Observer
 
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -303,7 +302,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                     FilledTonalButton(
                         onClick = {
                             scope.launch {
-                                Starter.startWebUrlInner(context,url = getUrl(XUANCHENG_TAB), title = "慧新易校")
+                                Starter.startWebUrlInner(url = getUrl(XUANCHENG_TAB), title = "慧新易校")
                             }
                         }
                     ) {
@@ -342,7 +341,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                             headlineContent = { Text("官方充值查询入口") },
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,url = getUrl(HEFEI_TAB), title = "慧新易校")
+                                    Starter.startWebUrlInner(url = getUrl(HEFEI_TAB), title = "慧新易校")
                                 }
                             },
                             trailingContent = {

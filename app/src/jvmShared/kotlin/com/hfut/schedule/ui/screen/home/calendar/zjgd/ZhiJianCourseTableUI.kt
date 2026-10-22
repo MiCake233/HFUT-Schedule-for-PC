@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.zjgd
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -54,8 +56,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -90,7 +90,6 @@ import com.hfut.schedule.ui.style.CalendarStyle
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.ui.style.special.calendarSquareGlass
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.Backdrop
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.shader.state.ShaderState
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -134,7 +133,7 @@ fun ZhiJianCourseTableUI(
 
     val weekSwap = remember(currentWeek,today) { object : TimeTableWeekSwap {
         override fun backToCurrentWeek() {
-            if(DateTimeManager.currentWeek !in 1..MyApplication.MAX_WEEK) {
+            if(DateTimeManager.currentWeek !in 1..AppConst.MAX_WEEK) {
                 if(termStartDate == null) {
                     return
                 }
@@ -150,7 +149,7 @@ fun ZhiJianCourseTableUI(
             if(currentWeek == i) {
                 return
             }
-            if (i in 1..MyApplication.MAX_WEEK) {
+            if (i in 1..AppConst.MAX_WEEK) {
                 val day = 7L*(i - currentWeek)
                 onDateChange(today.plusDays(day))
                 currentWeek = i
@@ -159,7 +158,7 @@ fun ZhiJianCourseTableUI(
         }
 
         override fun nextWeek() {
-            if (currentWeek < MyApplication.MAX_WEEK) {
+            if (currentWeek < AppConst.MAX_WEEK) {
                 onDateChange(today.plusDays(7))
                 currentWeek++
             }
@@ -223,10 +222,10 @@ fun ZhiJianCourseTableUI(
 
     var findNewCourse by remember { mutableStateOf(false) }
 
-    val height by DataStoreManager.calendarSquareHeight.collectAsState(initial = MyApplication.CALENDAR_SQUARE_HEIGHT)
+    val height by DataStoreManager.calendarSquareHeight.collectAsState(initial = AppConst.CALENDAR_SQUARE_HEIGHT)
     val calendarSquareHeight = height * 2
     val calendarSquareTextSize by DataStoreManager.calendarSquareTextSize.collectAsState(initial = 1f)
-    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = MyApplication.CALENDAR_SQUARE_TEXT_PADDING)
+    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = AppConst.CALENDAR_SQUARE_TEXT_PADDING)
 
     val textSize = (if(!showAll) 12.5.sp else 11.sp) * calendarSquareTextSize
     val lineHeight = textSize * calendarSquareTextPadding

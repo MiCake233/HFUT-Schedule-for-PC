@@ -5,7 +5,6 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.Drawables
 
 import androidx.compose.runtime.Composable
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.html.JxglstuGrade
 import com.hfut.schedule.ui.screen.grade.grade.jxglstu.GradeDetailScreen
 import com.hfut.schedule.ui.nav.destination.base.NavDestination

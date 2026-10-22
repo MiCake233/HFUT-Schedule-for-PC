@@ -1,26 +1,23 @@
 package com.hfut.schedule.logic.util.storage.kv
 
+import com.hfut.schedule.logic.model.AppConst
+
 import com.xah.common.ui.res.Strings
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.hfut.schedule.logic.platform.AppCapabilities
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.model.enumeration.Language
 import com.hfut.schedule.logic.util.helper.getCampusRegion
-import com.hfut.schedule.logic.util.ocr.TesseractUtils.isExistModule
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.parse.SemesterParser
-import com.hfut.schedule.logic.util.shortcut.AppShortcutManager
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
 import com.hfut.schedule.ui.screen.home.calendar.multi.CourseType
 import com.hfut.schedule.ui.screen.home.cube.sub.getJxglstuDefaultPassword
@@ -72,11 +69,11 @@ object DataStoreManager : IDataStore {
     /* 用法
     val XXX by DataStoreManager.XXX.collectAsState(initial = 默认值)
      */
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "DataStore")
-    private val dataStore = MyApplication.context.dataStore
+    // 跨平台：不再依赖 android Context，用显式文件路径创建 DataStore
+    private val dataStore: DataStore<Preferences> by lazy { createPlatformDataStore("DataStore") }
 
     val SEARCH_DEFAULT_STR = GlobalUiStateHolder.funcDefault.map { it.id }.joinToString(",")
-    val SHORTCUT_DEFAULT_STR = AppShortcutManager.getStorageStr()
+    val SHORTCUT_DEFAULT_STR = AppCapabilities.shortcutStorageStr()
 
     private const val EMPTY_STRING = com.xah.common.logic.util.EMPTY_STRING
 
@@ -149,7 +146,7 @@ object DataStoreManager : IDataStore {
     private val AUTO_TERM_VALUE = intPreferencesKey("auto_term_value")
     private val COURSE_BOOK = stringPreferencesKey("course_book")
     private val WEB_VIEW_DARK = booleanPreferencesKey("web_view_dark")
-    private val PREDICTIVE = booleanPreferencesKey(if(AppVersion.sdkInt == 33) "predictive_v2" else "predictive")
+    private val PREDICTIVE = booleanPreferencesKey(if(AppInfo.sdkInt == 33) "predictive_v2" else "predictive")
     private val INFINITE_WHEEL_PICKER = booleanPreferencesKey("infinite")
     private val WX_AUTH = stringPreferencesKey("wx_auth")
     private val CUSTOM_COLOR = longPreferencesKey("custom_color")
@@ -328,7 +325,7 @@ object DataStoreManager : IDataStore {
     val colorMode = getFlow(COLOR_MODE,ColorMode.AUTO.code)
     val containerFilledStrategy = getFlow(CONTAINER_FILLED_STRATEGY, SharedContainerFilledStrategy.DEFAULT.code)
     val defaultTransitionEffect = getFlow(DEFAULT_TRANSITION_EFFECT, SharedNavEffect.DEFAULT.code)
-    val enableMotionBlur = getFlow(MOTION_BLUR, AppVersion.CAN_MOTION_BLUR)
+    val enableMotionBlur = getFlow(MOTION_BLUR, AppInfo.CAN_MOTION_BLUR)
     val enableHazeBlur = getFlow(HAZE_BLUR, true)
     val transitionLevel = getFlow(TRANSITION, EffectLevel.LOW.levelNum)
     val supabaseJwt = getFlow(SUPABASE_JWT,EMPTY_STRING)
@@ -346,7 +343,7 @@ object DataStoreManager : IDataStore {
     val webVpnCookies = getFlow(WEBVPN_COOKIE,EMPTY_STRING)
     val enableAutoTerm = getFlow(AUTO_TERM,true)
     val enableNavSplashScreen = getFlow(NAV_SPLASH_SCREEN,false)
-    val enablePredictive = getFlow(PREDICTIVE, AppVersion.CAN_PREDICTIVE)
+    val enablePredictive = getFlow(PREDICTIVE, AppInfo.CAN_PREDICTIVE)
     val enableForceWebViewDark = getFlow(WEB_VIEW_DARK,true)
     val courseBookJson = getFlow(COURSE_BOOK,EMPTY_STRING)
     val wxAuth = getFlow(WX_AUTH,EMPTY_STRING)
@@ -356,11 +353,11 @@ object DataStoreManager : IDataStore {
     val unjoinedGradeItems = getFlow(UNJOINED_GRADE_ITEMS, EMPTY_STRING)
     val customColor = getFlow(CUSTOM_COLOR,-1)
     val customBackground = getFlow(CUSTOM_BACKGROUND,EMPTY_STRING)
-    val customCalendarSquareAlpha = getFlow(CUSTOM_CALENDAR_SQUARE_ALPHA,MyApplication.CALENDAR_SQUARE_ALPHA)
-    val customCalendarSquareBlur = getFlow(CUSTOM_CALENDAR_SQUARE_BLUR,MyApplication.CALENDAR_SQUARE_BLUR)
+    val customCalendarSquareAlpha = getFlow(CUSTOM_CALENDAR_SQUARE_ALPHA,AppConst.CALENDAR_SQUARE_ALPHA)
+    val customCalendarSquareBlur = getFlow(CUSTOM_CALENDAR_SQUARE_BLUR,AppConst.CALENDAR_SQUARE_BLUR)
     val customColorStyle = getFlow(CUSTOM_COLOR_STYLE, ColorStyle.DEFAULT.code)
     val customTermValue: Flow<Int> =  dataStore.data.map { it[AUTO_TERM_VALUE] ?: SemesterParser.getSemester() }
-    val maxFlow = getFlow(MAX_FLOW, MyApplication.DEFAULT_MAX_FREE_FLOW)
+    val maxFlow = getFlow(MAX_FLOW, AppConst.DEFAULT_MAX_FREE_FLOW)
     val showBottomBarLabel = getFlow(SHOW_BOTTOM_BAR_LABEL,true)
     val enableCameraDynamicRecord = getFlow(CAMERA_DYNAMIC_RECORD,false)
     val useDoubleExtension = getFlow(USE_DOUBLE_EXTENSION,false)
@@ -369,17 +366,17 @@ object DataStoreManager : IDataStore {
     val enableCalendarShowTeacher = getFlow(CALENDAR_SHOW_TEACHER,ShowTeacherConfig.ONLY_MULTI.code)
     val sharedNavSpeedRadio = getFlow(SHARED_NAV_SPEED_RADIO,1f)
     val drawerOffset = getFlow(DRAWER_OFFSET,0f)
-    val enableLiquidGlass = getFlow(LIQUID_GLASS, AppVersion.CAN_SHADER)
+    val enableLiquidGlass = getFlow(LIQUID_GLASS, AppInfo.CAN_SHADER)
     val enableQuadraticCornerLerp = getFlow(QUADRATIC_CORNER_LERP, false)
     val hefeiElectricFee = getFlow(HEFEI_ELECTRIC_FEE,"0.0")
     val useHefeiElectric = getFlow(USE_HEFEI_ELECTRIC, getCampusRegion() == CampusRegion.HEFEI)
 //    val enableShowOutOfDateEvent = getFlow(SHOW_OUT_OF_DATE_EVENT, false)
-    val calendarSquareHeight = getFlow(CALENDAR_SQUARE_HEIGHT, MyApplication.CALENDAR_SQUARE_HEIGHT)
+    val calendarSquareHeight = getFlow(CALENDAR_SQUARE_HEIGHT, AppConst.CALENDAR_SQUARE_HEIGHT)
     val calendarSquareTextSize = getFlow(CALENDAR_SQUARE_TEXT_SIZE, 1f)
     val focusWidgetTextSize = getFlow(FOCUS_WIDGET_TEXT_SIZE, 1f)
     val screenCorner = getFlow(SCREEN_CORNER, -1f)
     val language = getFlow(LANGUAGE, Language.AUTO.code)
-    val calendarSquareTextPadding = getFlow(CALENDAR_SQUARE_TEXT_PADDING, MyApplication.CALENDAR_SQUARE_TEXT_PADDING)
+    val calendarSquareTextPadding = getFlow(CALENDAR_SQUARE_TEXT_PADDING, AppConst.CALENDAR_SQUARE_TEXT_PADDING)
     val xwxPassword = getFlow(XWX_PASSWORD, EMPTY_STRING)
     val jxglstuPassword = getFlow(JXGLSTU_PASSWORD, getJxglstuDefaultPassword() ?: EMPTY_STRING)
     val schoolNetPassword = getFlow(SCHOOL_NET_PASSWORD, EMPTY_STRING)
@@ -388,7 +385,7 @@ object DataStoreManager : IDataStore {
     val defaultCalendar = getFlow(DEFAULT_CALENDAR, CourseType.JXGLSTU.code)
     val enableLiveCourseReminder = getFlow(LIVE_COURSE_REMINDER, false)
     val liveCourseReminderMinutes = getFlow(LIVE_COURSE_REMINDER_MINUTES, 20)
-    val enableOcrCaptcha = getFlow(OCR_CAPTCHA, isExistModule())
+    val enableOcrCaptcha = getFlow(OCR_CAPTCHA, AppCapabilities.isOcrModelAvailable())
     val enableShowOverdueFocus = getFlow(SHOW_OVERDUE_FOCUS, false)
     val enableUserTrack = getFlow(USER_TRACK, true)
     val termStartDate = getFlow(TERM_START_DATE, getDefaultStartTerm())

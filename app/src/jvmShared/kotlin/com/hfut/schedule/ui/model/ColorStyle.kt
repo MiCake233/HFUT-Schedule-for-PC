@@ -2,7 +2,6 @@ package com.hfut.schedule.ui.model
 
 import com.xah.common.ui.res.Strings
 
-import com.hfut.schedule.R
 import com.materialkolor.PaletteStyle
 import com.xah.common.ui.model.text.UiText
 import com.xah.common.ui.util.res

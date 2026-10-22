@@ -2,7 +2,6 @@ package com.hfut.schedule.ui.screen.home.calendar.timetable.logic
 
 import com.xah.common.ui.res.Drawables
 
-import com.hfut.schedule.R
 
 enum class TimeTableType(
     val description: String,

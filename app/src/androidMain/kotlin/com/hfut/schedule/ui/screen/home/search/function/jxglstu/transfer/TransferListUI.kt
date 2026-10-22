@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer
 
-import android.annotation.SuppressLint
 import android.widget.Space
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.expandVertically
@@ -58,7 +57,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -96,7 +94,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.safeDiv
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -700,7 +698,6 @@ private fun TransferUI(
     }
 }
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 private fun TransferStatusUI(vm : NetWorkViewModel, batchId: String, id: Int, phoneNumber : String) {
     val refreshNetwork : suspend () -> Unit = {

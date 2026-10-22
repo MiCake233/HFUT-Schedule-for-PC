@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.multi
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.community.CommunityFriend
 import com.hfut.schedule.network.api.model.response.json.community.CommunityFriendResponse
 import com.xah.common.logic.state.NetworkUiState
@@ -129,7 +127,6 @@ fun AddCourseUI(vm: NetWorkViewModel) {
 //    }
 }
 
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FriendsSetting(vm : NetWorkViewModel) {

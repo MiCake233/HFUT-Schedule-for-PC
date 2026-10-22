@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.survey
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.parse.SemesterParser
 import com.hfut.schedule.network.api.model.response.json.jxglstu.survey.JxglstuSurveyLesson
 import com.xah.common.logic.state.NetworkUiState
@@ -107,7 +105,6 @@ fun SurveyUI(vm : NetWorkViewModel, hazeState: HazeState,refresh : Boolean,inner
         }
     }
 }
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CourseSurveyListUI(
@@ -244,7 +241,6 @@ private fun CourseSurveyListUI(
 }
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TeacherSurveyListUI(data : JxglstuSurveyLesson, vm : NetWorkViewModel, hazeState: HazeState, scope: CoroutineScope, refresh : suspend () -> Unit) {

@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.component.button
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -40,7 +39,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
@@ -48,7 +46,6 @@ import com.hfut.schedule.ui.component.text.DIVIDER_TEXT_VERTICAL_PADDING
 import com.hfut.schedule.ui.nav.destination.ControlCenterDestination
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.nav.effect.ControlCenterTransitionEffect
-import com.kyant.backdrop.Backdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.navigation.model.action.LaunchMode
 import com.xah.navigation.util.LocalNavController
@@ -59,7 +56,6 @@ import kotlinx.coroutines.launch
 fun TopBarNavigationIcon(
     tint : Color = MaterialTheme.colorScheme.primary
 ) {
-    val activity = LocalActivity.current
     val navController = LocalNavController.current
     val scope = rememberCoroutineScope()
     val queue = navController.stack.reversed()
@@ -250,7 +246,6 @@ fun TopBarNavigationIcon(
 fun LiquidTopBarNavigateIcon(
     backdrop: Backdrop,
 ) {
-    val activity = LocalActivity.current
     val navController = LocalNavController.current
     val canPop = navController.canPop()
     LiquidButton (

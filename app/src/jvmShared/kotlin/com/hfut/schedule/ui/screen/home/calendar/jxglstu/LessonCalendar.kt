@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.jxglstu
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -43,7 +45,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuLesson
 import com.hfut.schedule.logic.network.repo.JxglstuRepository
 import com.hfut.schedule.logic.util.parse.SemesterParser
@@ -72,7 +73,6 @@ import com.hfut.schedule.ui.style.CalendarStyle
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.ui.style.special.calendarSquareGlass
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.Backdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.shader.state.ShaderState
@@ -185,11 +185,11 @@ fun JxglstuCourseTableSearch(
     backGroundHaze : Backdrop? = null,
     onSwapShowAll : (Boolean) -> Unit
 ) {
-    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = MyApplication.CALENDAR_SQUARE_ALPHA)
-    val height by DataStoreManager.calendarSquareHeight.collectAsState(initial = MyApplication.CALENDAR_SQUARE_HEIGHT)
+    val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)
+    val height by DataStoreManager.calendarSquareHeight.collectAsState(initial = AppConst.CALENDAR_SQUARE_HEIGHT)
     val calendarSquareHeight = height * 2
     val calendarSquareTextSize by DataStoreManager.calendarSquareTextSize.collectAsState(initial = 1f)
-    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = MyApplication.CALENDAR_SQUARE_TEXT_PADDING)
+    val calendarSquareTextPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = AppConst.CALENDAR_SQUARE_TEXT_PADDING)
 
     val textSize = (if(!showAll) 12.5.sp else 11.sp) * calendarSquareTextSize
     val lineHeight = textSize * calendarSquareTextPadding
@@ -224,7 +224,7 @@ fun JxglstuCourseTableSearch(
 
     val weekSwap = remember(currentWeek,today) { object : TimeTableWeekSwap {
         override fun backToCurrentWeek() {
-            if(DateTimeManager.currentWeek !in 1..MyApplication.MAX_WEEK) {
+            if(DateTimeManager.currentWeek !in 1..AppConst.MAX_WEEK) {
                 if(termStartDate == null) {
                     return
                 }
@@ -240,7 +240,7 @@ fun JxglstuCourseTableSearch(
             if(currentWeek == i) {
                 return
             }
-            if (i in 1..MyApplication.MAX_WEEK) {
+            if (i in 1..AppConst.MAX_WEEK) {
                 val day = 7L*(i - currentWeek)
                 today?.let { onDateChange?.let { it1 -> it1(it.plusDays(day)) } }
                 currentWeek = i
@@ -249,7 +249,7 @@ fun JxglstuCourseTableSearch(
         }
 
         override fun nextWeek() {
-            if (currentWeek < MyApplication.MAX_WEEK) {
+            if (currentWeek < AppConst.MAX_WEEK) {
                 onDateChange?.let { today?.let { it1 -> it(it1.plusDays(7)) } }
                 currentWeek++
             }
@@ -551,9 +551,9 @@ fun JxglstuCourseTableSearch(
             detectHorizontalDragGestures(
                 onDragEnd = {
                     // 手指松开后根据累积的水平拖动量决定
-                    if (totalDragX > MyApplication.SWIPE) { // 阈值
+                    if (totalDragX > AppConst.SWIPE) { // 阈值
                         weekSwap.previousWeek()
-                    } else if (totalDragX < -MyApplication.SWIPE) {
+                    } else if (totalDragX < -AppConst.SWIPE) {
                         weekSwap.nextWeek()
                     }
                     totalDragX = 0f // 重置

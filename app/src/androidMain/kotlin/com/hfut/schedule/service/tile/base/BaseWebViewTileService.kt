@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.service.quicksettings.TileService
 import android.widget.Toast
-import com.hfut.schedule.R
 import com.hfut.schedule.activity.util.WebViewActivity
 import com.hfut.schedule.logic.util.sys.Starter.startActivitySafely
 import com.hfut.schedule.ui.util.getPureUrl

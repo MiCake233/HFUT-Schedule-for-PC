@@ -35,8 +35,7 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.work.Data
-import com.hfut.schedule.R
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.file.killAppUnSafely
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
@@ -122,7 +121,7 @@ fun UseAgreementScreen() {
                                 onClick = {
                                     scope.launch {
                                         async {
-                                            launch { SharedPrefs.saveString("versionName", AppVersion.getVersionName()) }
+                                            launch { SharedPrefs.saveString("versionName", AppInfo.getVersionName()) }
                                             launch { DataStoreManager.saveEnableUse(true) }
                                         }.await()
                                         navController.backToHome()

@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.component.input
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,7 +42,6 @@ private const val height = 120
 /**
  * 通用滚轮组件
  */
-@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T> WheelPicker(

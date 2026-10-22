@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.storage.file
 
+import com.hfut.schedule.logic.model.AppConst
+
 import android.app.Activity
 import android.content.Context
 import android.os.Environment
@@ -23,7 +25,7 @@ suspend fun backupData(
     activity: Activity,
     context: Context
 ): Boolean = withContext(Dispatchers.IO)  {
-    val fileName = "${MyApplication.APP_NAME}_备份_${System.currentTimeMillis()}.zip"
+    val fileName = "${AppConst.APP_NAME}_备份_${System.currentTimeMillis()}.zip"
 
     return@withContext try {
         // ---- Android 6–9（旧版）使用外部存储目录，需要权限 ----

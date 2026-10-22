@@ -33,7 +33,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.util.WebVpnConvertor
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.ClipBoardHelper
@@ -56,14 +55,14 @@ import com.hfut.schedule.ui.component.input.CustomTextField
 import com.hfut.schedule.ui.component.screen.pager.CustomTabRow
 import com.hfut.schedule.ui.nav.destination.WebVpnDestination
 
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.ui.util.getPureUrl
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
@@ -236,7 +235,7 @@ fun WebVpnScreen(
                                                         CardBottomButton("打开") {
                                                             scope.launch {
                                                                 if(webVpn) {
-                                                                    Starter.startWebUrlInner(context,it, cookie = cookies)
+                                                                    Starter.startWebUrlInner(it, cookie = cookies)
                                                                 } else {
                                                                     showToast("先以外地访问模式登录")
                                                                     Starter.refreshLogin(context)
@@ -334,7 +333,7 @@ fun WebVpnScreen(
                                                         },
                                                         CardBottomButton("打开") {
                                                             scope.launch {
-                                                                Starter.startWebUrlInner(context,it)
+                                                                Starter.startWebUrlInner(it)
                                                             }
                                                         },
                                                         CardBottomButton("清除", errorColor = true) {

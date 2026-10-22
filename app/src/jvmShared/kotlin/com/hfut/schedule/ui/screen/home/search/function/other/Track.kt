@@ -43,7 +43,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,7 +51,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.github.GithubIssueResponse
 import com.hfut.schedule.network.api.model.response.json.github.GithubIssueLabelDto
 import com.xah.common.logic.state.NetworkUiState
@@ -78,7 +76,7 @@ import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
@@ -106,7 +104,6 @@ fun Track() {
 
 @Composable
 private fun ContributeButtons() {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     Row(modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP)) {
         LargeButton(
@@ -117,9 +114,7 @@ private fun ContributeButtons() {
             contentColor = Color.White,
             onClick = {
                 scope.launch {
-                    Starter.startWebUrlOuter(
-                        context,
-                        Constant.GITHUB_REPO_URL + "/issues",
+                    Starter.startWebUrlOuter(Constant.GITHUB_REPO_URL + "/issues",
                     )
                 }
             }
@@ -144,7 +139,6 @@ fun TrackScreen(
     val hazeState = rememberHazeBlur()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val backdrop = rememberLayerBackdrop()
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var page by remember { mutableIntStateOf(1) }
     val refreshNetwork : suspend () -> Unit =  {
@@ -253,7 +247,7 @@ fun TrackScreen(
                                 color = cardNormalColor(),
                                 modifier = Modifier.clickable {
                                     scope.launch {
-                                        Starter.startWebUrlInner(context,item.url,tag)
+                                        Starter.startWebUrlInner(item.url,tag)
                                     }
                                 },
                             ) {

@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.person
 
-import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.util.Base64
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -40,7 +39,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -78,7 +76,7 @@ import com.hfut.schedule.ui.style.special.coverBlur
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 
 import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.component.status.LoadingScreen
@@ -170,7 +168,6 @@ fun PersonScreen(
     }
 //    }
 }
-@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
     ExperimentalSharedTransitionApi::class
 )
@@ -377,7 +374,7 @@ private fun PersonItems(
                                 FilledTonalIconButton(
                                     onClick = {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,Drawables.lock_reset)
+                                            Starter.startWebUrlInner(Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,Drawables.lock_reset)
                                         }
                                     }
                                 ) {
@@ -712,42 +709,6 @@ private fun PersonItems(
     }
 }
 
-data class PersonInfo(val name : String?,
-                      val studentId: String?,
-                      val chineseID : String?,
-                      val className : String?,
-                      val major : String?,
-                      val department : String?,
-                      val campus : String?,
-                      val educationLevel : String?,
-                      val home: String?,
-                      val status : String?,
-                      val program : String?,
-                      val startDate : String?,
-                      val endDate : String?,
-                      val majorDirection : String?,
-                      val studyTime : String?,
-                      val gender: String?,
-                      val politicalStatus: String?, // 政治面貌
-                      val email: String?,
-                      val phone: String?,
-                      val mobile: String?,
-                      val address: String?,
-                      val postalCode: String? // 邮编
-
-) {
-    fun getStudentIdFinally(): String? {
-        return this.studentId ?: prefs.getString("Username",null)
-    }
-    fun getNameFinally(): String {
-        return this.name ?: prefs.getString("Username",null) ?: "游客"
-    }
-
-    /**
-     * 是否是游客，登陆成功之后回保存学号，没登陆成功过就是游客
-     */
-    fun isAnonymous() = getStudentIdFinally() == null
-}
 
 
 fun getPersonInfo() : PersonInfo {

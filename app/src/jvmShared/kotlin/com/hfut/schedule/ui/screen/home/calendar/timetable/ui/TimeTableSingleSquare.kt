@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.timetable.ui
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -22,7 +24,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.DEFAULT_END_TIME
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.DEFAULT_START_TIME
@@ -83,7 +84,7 @@ fun TimetableSingleSquare(
     innerPadding : PaddingValues,
     startTime: Float = parseTimeToFloat(DEFAULT_START_TIME),
     endTime : Float = parseTimeToFloat(DEFAULT_END_TIME),
-    hourHeight: Dp = MyApplication.CALENDAR_SQUARE_HEIGHT.dp,
+    hourHeight: Dp = AppConst.CALENDAR_SQUARE_HEIGHT.dp,
     showAll: Boolean = true,
     showLine : Boolean = false,
     zipTime : List<Pair<Float, Float>> = listOf(

@@ -1,9 +1,10 @@
 package com.hfut.schedule.logic.util.sys.datetime
 
+import com.hfut.schedule.logic.model.AppConst
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.DateTimeBean
 import com.xah.common.logic.util.LogUtil
@@ -40,7 +41,7 @@ object DateTimeManager {
         LogUtil.debug("result=$currentWeek firstWeekStartJxglstu=$firstWeekStartJxglstu currentDate=$Date_yyyy_MM_dd")
     }
 
-    fun isInVacation() : Boolean = currentWeek !in 1..MyApplication.MAX_WEEK
+    fun isInVacation() : Boolean = currentWeek !in 1..AppConst.MAX_WEEK
 
 
     // 解析

@@ -7,13 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
-import com.hfut.schedule.application.MyApplication
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.container.TransplantListItem
@@ -26,7 +23,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun XueXin() {
-    val context = LocalContext.current
     val icon = remember { Drawables.school }
     val title = stringResource(Strings.navigation_label_chsi)
     val scope = rememberCoroutineScope()
@@ -38,9 +34,7 @@ fun XueXin() {
         },
         modifier = Modifier.clickable {
             scope.launch {
-                Starter.startWebUrlInner(
-                    context,
-                    url = Constant.XUE_XIN_URL,
+                Starter.startWebUrlInner(url = Constant.XUE_XIN_URL,
                     title = title,
                     icon = icon,
                 )

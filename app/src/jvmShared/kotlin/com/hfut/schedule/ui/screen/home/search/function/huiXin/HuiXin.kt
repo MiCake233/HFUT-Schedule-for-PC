@@ -9,15 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.hfut.schedule.R
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.Starter
@@ -31,7 +28,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HuiXin() {
-    val context = LocalContext.current
     val icon = remember { Drawables.corporate_fare }
     val title = stringResource(Strings.navigation_label_hui_xin)
     val url = remember { getHuiXinURL() }
@@ -46,7 +42,7 @@ fun HuiXin() {
                 onClick = {
                     scope.launch {
                         val url = Constant.HUI_XIN_URL + "plat/pay" + "?synjones-auth=" + prefs.getString("auth","")
-                        Starter.startWebUrlInner(context, url,"付款码",icon = Drawables.barcode)
+                        Starter.startWebUrlInner(url,"付款码",icon = Drawables.barcode)
                     }
                 },
                 modifier = Modifier.size(30.dp)
@@ -57,9 +53,7 @@ fun HuiXin() {
         },
         modifier = Modifier.clickable {
             scope.launch {
-                Starter.startWebUrlInner(
-                    context,
-                    url = url,
+                Starter.startWebUrlInner(url = url,
                     title = title,
                     icon = icon,
                 )

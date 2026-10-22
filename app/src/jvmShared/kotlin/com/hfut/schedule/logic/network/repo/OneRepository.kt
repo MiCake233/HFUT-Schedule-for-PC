@@ -20,7 +20,7 @@ import com.hfut.schedule.network.api.repo.OneRepositoryInf
 import com.hfut.schedule.network.api.util.CryptoUtil
 import com.hfut.schedule.network.core.GsonInstance
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
-import com.hfut.schedule.ui.screen.supabase.login.getSchoolEmail
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getSchoolEmail
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.LogUtil
 import okhttp3.ResponseBody

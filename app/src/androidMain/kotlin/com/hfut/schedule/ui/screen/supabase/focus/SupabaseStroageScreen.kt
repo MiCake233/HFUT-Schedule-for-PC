@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
 import com.hfut.schedule.logic.database.entity.CustomEventType
@@ -38,7 +37,7 @@ import com.hfut.schedule.ui.component.container.CardListItem
   
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.screen.home.focus.funiction.openOperation
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.remove
 import com.xah.common.ui.style.align.ColumnVertical

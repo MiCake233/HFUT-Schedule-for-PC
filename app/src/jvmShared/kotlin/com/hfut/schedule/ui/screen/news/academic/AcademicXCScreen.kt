@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.network.api.model.response.html.news.AcademicNewsXuanChengType
@@ -29,7 +28,7 @@ import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.network.CommonNetworkScreen
 import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButton
 import com.hfut.schedule.ui.component.screen.pager.PageController
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.getWebVpnCookie
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.logic.state.NetworkUiState
@@ -49,7 +48,6 @@ fun AcademicXCScreen(innerPadding : PaddingValues,vm : NetWorkViewModel,pagerSta
     val cookies by produceState<String?>(initialValue = null) {
         value = getWebVpnCookie()
     }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     LaunchedEffect(page,pagerState.currentPage) {
         refreshNetwork()
@@ -77,9 +75,7 @@ fun AcademicXCScreen(innerPadding : PaddingValues,vm : NetWorkViewModel,pagerSta
                                     } else {
                                         Constant.XC_ACADEMIC_URL + item.link
                                     }
-                                    Starter.startWebUrlInner(
-                                        context,
-                                        link,
+                                    Starter.startWebUrlInner(link,
                                         item.title,
                                         cookie = cookies
                                     )

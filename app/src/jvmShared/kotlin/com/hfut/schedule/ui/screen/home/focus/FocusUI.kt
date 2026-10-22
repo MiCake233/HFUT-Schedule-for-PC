@@ -1,7 +1,5 @@
 package com.hfut.schedule.ui.screen.home.focus
 
-import android.annotation.SuppressLint
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -34,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
 import com.hfut.schedule.logic.database.entity.CustomEventType
@@ -67,7 +64,7 @@ import com.hfut.schedule.ui.screen.home.focus.funiction.getTodayUniAppCourse
 import com.hfut.schedule.ui.screen.home.focus.funiction.getTomorrowJxglstuCourse
 import com.hfut.schedule.ui.screen.home.focus.funiction.getTomorrowUniAppCourse
 import com.hfut.schedule.ui.screen.home.focus.funiction.getUniAppCourse
-import com.hfut.schedule.ui.screen.home.focus.funiction.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.hfut.schedule.ui.screen.home.initNetworkRefresh
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.exam.JxglstuExamUI
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.exam.getExamFromCache
@@ -95,7 +92,6 @@ suspend fun getTodayEvents() {
 
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun TodayScreen(
@@ -105,7 +101,6 @@ fun TodayScreen(
     state: PagerState,
     hazeState: HazeState,
 ) {
-    val activity = LocalActivity.current
     val scope = rememberCoroutineScope()
     val scrollState = rememberLazyListState()
 

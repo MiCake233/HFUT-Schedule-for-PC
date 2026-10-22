@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.survey
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,7 +28,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 import com.google.gson.JsonObject
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.enumeration.PostMode
 import com.hfut.schedule.network.api.model.request.jxglstu.JxglstuSurveyPostRequest
 import com.hfut.schedule.network.api.model.response.json.jxglstu.survey.JxglstuSurveyQuestionsResponse
@@ -203,7 +201,6 @@ private fun SurveyList(
     }
 }
 
-@SuppressLint("SuspiciousIndentation")
 suspend fun postSurvey(
     vm : NetWorkViewModel,
     mode : PostMode,

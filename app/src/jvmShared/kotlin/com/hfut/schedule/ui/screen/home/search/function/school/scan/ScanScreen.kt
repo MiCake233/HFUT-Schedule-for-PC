@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.scan
 
 
-import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,12 +31,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.core.net.toUri
-import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.other.parseQRCode
 import com.hfut.schedule.logic.util.parse.isWifiContent
@@ -58,10 +55,10 @@ import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.ShareTwoContainer2D
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.screen.home.getWxAuth
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
@@ -79,8 +76,6 @@ fun ScanScreen(
     val navController = LocalNavController.current
     val color = MaterialTheme.colorScheme.surface
     var resultText by remember { mutableStateOf(EMPTY_STRING) }
-    val context = LocalContext.current
-    val activity = LocalActivity.current
     val showTip = resultText.isEmptyOrBlank()
     val scope = rememberCoroutineScope()
     val pickMultipleMedia = rememberLauncherForActivityResult(
@@ -228,7 +223,7 @@ fun ScanScreen(
                                         },
                                         CardBottomButton("打开链接",isValidWebUrl(resultText)) {
                                             scope.launch {
-                                                Starter.startWebUrlInner(context,resultText)
+                                                Starter.startWebUrlInner(resultText)
                                             }
                                         },
                                         CardBottomButton("隐藏") {

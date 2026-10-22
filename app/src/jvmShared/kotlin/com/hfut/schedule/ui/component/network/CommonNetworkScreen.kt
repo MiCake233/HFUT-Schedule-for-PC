@@ -18,8 +18,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.dev.ExceptionHelper.getKeyStackTraceDesc
 import com.hfut.schedule.network.core.StatusCode
 import com.hfut.schedule.logic.util.network.state.LISTEN_ERROR_CODE
@@ -59,7 +57,6 @@ fun CommonNetworkScreen(
             }
         }
     }
-    val context = LocalContext.current
 
     when (uiState) {
         // 准备状态UI 例如手动搜索时第一次什么也不显示

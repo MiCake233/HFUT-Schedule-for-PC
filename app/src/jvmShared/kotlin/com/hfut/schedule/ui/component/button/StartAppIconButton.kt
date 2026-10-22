@@ -15,13 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
-import com.kyant.backdrop.Backdrop
 
 
 
@@ -31,7 +29,6 @@ fun StartAppIconButton(
     app : Starter.AppPackages,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     LiquidButton  (
         isCircle = true,
         backdrop = backdrop,

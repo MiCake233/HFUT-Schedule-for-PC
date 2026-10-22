@@ -1,7 +1,8 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb
 
+import com.hfut.schedule.logic.model.AppConst
 
-import android.annotation.SuppressLint
+
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
@@ -48,7 +49,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -113,13 +113,12 @@ fun LoginWebScaUI(vm : NetWorkViewModel) {
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
 fun LoginWebUI(vm : NetWorkViewModel) {
     val auth = remember { prefs.getString("auth", EMPTY_STRING) }
     val zjgdUrl = remember { Constant.HUI_XIN_URL + "charge-app/?name=pays&appsourse=ydfwpt&id=${HuiXinFeeType.NET_XUANCHENG.code}&name=pays&paymentUrl=${Constant.HUI_XIN_URL}plat&token=" + auth }
-    val maxFlow by DataStoreManager.maxFlow.collectAsState(initial = MyApplication.DEFAULT_MAX_FREE_FLOW)
+    val maxFlow by DataStoreManager.maxFlow.collectAsState(initial = AppConst.DEFAULT_MAX_FREE_FLOW)
 
     // 支付用的变量
     var showDialog2 by remember { mutableStateOf(false) }
@@ -367,7 +366,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                     shape = MaterialTheme.shapes.medium,
                     onClick = {
                         scope.launch {
-                            Starter.startWebUrlInner(context,"https://www.bing.cn/")
+                            Starter.startWebUrlInner("https://www.bing.cn/")
                         }
                     }
                 ) {
@@ -394,7 +393,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                             onClick = {
                                 scope.launch {
                                     showToast("暂未开发，出现一些问题需要调研")
-//                                    Starter.startWebUrlInner(context,url = "http://172.31.243.228/")
+//                                    Starter.startWebUrlInner(url = "http://172.31.243.228/")
                                 }
                             },
                         ) {
@@ -414,7 +413,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                         FilledTonalButton(
                             onClick = {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,url = zjgdUrl, title = "慧新易校")
+                                    Starter.startWebUrlInner(url = zjgdUrl, title = "慧新易校")
                                 }
                             },
                         ) {

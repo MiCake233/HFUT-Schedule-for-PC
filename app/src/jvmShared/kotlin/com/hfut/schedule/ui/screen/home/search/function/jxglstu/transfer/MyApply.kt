@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -352,7 +351,6 @@ fun MyApply(vm: NetWorkViewModel, batchId : String, indexs : Int) {
 }
 
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 private fun TransferCancelStatusUI(vm : NetWorkViewModel, batchId: String, id: Int) {
     val uiState by vm.cancelTransferResponse.state.collectAsState()

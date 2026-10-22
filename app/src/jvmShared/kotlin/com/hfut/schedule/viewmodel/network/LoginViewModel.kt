@@ -1,6 +1,6 @@
 package com.hfut.schedule.viewmodel.network
 
-import androidx.lifecycle.MutableLiveData
+import com.hfut.schedule.logic.util.state.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hfut.schedule.logic.model.enumeration.CasLoginType
 import com.hfut.schedule.network.api.model.response.json.cas.CasGetFlavorSessionDto
