@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse.SelectCourseScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object SelectCoursesDestination : NavDestination() {
     override val key = "select_courses"
-    override val title = res(R.string.navigation_label_select_courses)
-    override val icon = R.drawable.ads_click
+    override val title = res(Strings.navigation_label_select_courses)
+    override val icon = Drawables.ads_click
 
     @Composable
     override fun Content() {

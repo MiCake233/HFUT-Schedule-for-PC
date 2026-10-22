@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,7 +17,7 @@ import com.xah.navigation.util.LocalNavDependencies
 object SettingsAboutDeveloperDestination : NavDestination() {
     override val key: String = "settings_about_developer"
     override val title: UiText = text("关于")
-    override val icon = R.drawable.info
+    override val icon = Drawables.info
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.shower
 
+import com.xah.common.ui.res.Drawables
+
 import android.annotation.SuppressLint
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
@@ -40,13 +42,13 @@ import dev.chrisbanes.haze.rememberHazeState
 
 private val items = listOf(
     NavigationBarItemData(
-        ShowerBarItems.HOME.name,"开始", R.drawable.bathtub,R.drawable.bathtub_filled
+        ShowerBarItems.HOME.name,"开始", Drawables.bathtub,Drawables.bathtub_filled
     ),
     NavigationBarItemData(
-        ShowerBarItems.BILLS.name,"账单", R.drawable.receipt_long,  R.drawable.receipt_long_filled
+        ShowerBarItems.BILLS.name,"账单", Drawables.receipt_long,  Drawables.receipt_long_filled
     ),
     NavigationBarItemData(
-        ShowerBarItems.FUNCTION.name,"选项", R.drawable.deployed_code,R.drawable.deployed_code_filled
+        ShowerBarItems.FUNCTION.name,"选项", Drawables.deployed_code,Drawables.deployed_code_filled
     )
 )
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

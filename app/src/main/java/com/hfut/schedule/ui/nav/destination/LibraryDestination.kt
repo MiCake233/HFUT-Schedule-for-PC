@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.community.library.LibraryScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object LibraryDestination : NavDestination() {
     override val key = "library"
-    override val title = res(R.string.navigation_label_library)
-    override val icon = R.drawable.book_5
+    override val title = res(Strings.navigation_label_library)
+    override val icon = Drawables.book_5
 
     @Composable
     override fun Content() {

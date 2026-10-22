@@ -11,8 +11,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.hfut.schedule.application.MyApplication
@@ -33,8 +35,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun LePaoYun() {
     val context = LocalContext.current
-    val icon = remember { R.drawable.sports_volleyball }
-    val title = stringResource(R.string.navigation_label_physical_fitness_test)
+    val icon = remember { Drawables.sports_volleyball }
+    val title = stringResource(Strings.navigation_label_physical_fitness_test)
     val scope = rememberCoroutineScope()
     TransplantListItem(
         headlineContent = { ScrollText(text = title) },
@@ -47,7 +49,7 @@ fun LePaoYun() {
                 onClick = {
                     Starter.startAppLaunch(Starter.AppPackages.LE_PAO, context)
                 },
-            ) { Icon( painterResource(R.drawable.directions_run), contentDescription = null, modifier = Modifier.size(20.dp)) }
+            ) { Icon( painterResource(Drawables.directions_run), contentDescription = null, modifier = Modifier.size(20.dp)) }
         },
         modifier = Modifier.clickable {
             scope.launch {

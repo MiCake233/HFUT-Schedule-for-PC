@@ -23,7 +23,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -52,7 +53,7 @@ fun UrlImage(
     enableClick : Boolean = true,
     shape: CornerBasedShape = NoneRoundShape,
     contentScale: ContentScale = ContentScale.Crop, // 决定是否裁剪
-    placeholder: Painter = painterResource(R.drawable.ic_launcher_background),
+    placeholder: Painter = painterResource(Drawables.ic_launcher_background),
     colorFilter: ColorFilter? = null,
     awaitTransition: Boolean = true,
 ) {
@@ -170,7 +171,7 @@ fun UrlImage(
             )
         } ?:
         Image(
-            painterResource(R.drawable.ic_launcher_background),
+            painterResource(Drawables.ic_launcher_background),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -210,7 +211,7 @@ fun UrlImageNoCrop(
         )
     } ?:
     Image(
-        painterResource(R.drawable.ic_launcher_background),
+        painterResource(Drawables.ic_launcher_background),
         contentDescription = null,
         modifier = modifier,
         contentScale = ContentScale.Fit
@@ -246,7 +247,7 @@ fun UrlImageWithAutoOcr(
             }
         } ?:
         Image(
-            painterResource(R.drawable.ic_launcher_background),
+            painterResource(Drawables.ic_launcher_background),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop

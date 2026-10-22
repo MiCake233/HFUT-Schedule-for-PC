@@ -1,5 +1,10 @@
 package com.hfut.schedule.ui.screen.home.search
 
+import com.xah.common.ui.model.text.asStringNow
+
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringOf
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -36,7 +41,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -211,56 +217,56 @@ fun SearchScreen(
     var funcMaps by remember(vm, ifSaved, navController, hazeState) {
         mutableStateOf(
             listOf(
-                SearchAppBean(1,"${context.getString(R.string.navigation_label_hui_xin)} 校园卡 账单 充值 缴费 ${context.getString(R.string.navigation_label_school_card)}" , { SchoolCardItem( false) }, isHigh = true, route = SchoolCardDestination.key),
-                SearchAppBean(2,"${ScanQrCodeDestination.title.asString(context)} 扫码 指尖工大 CAS统一认证登录", { Scan() }, ScanQrCodeDestination.key,isHigh = true),
-                SearchAppBean(3,"${context.getString(R.string.navigation_label_dormitory_electricity_bill)} 缴费 ${context.getString(R.string.navigation_label_hui_xin)}" , { Electric(vm, false, hazeState) },isHigh = true),
-                SearchAppBean(4,"${context.getString(R.string.navigation_label_hui_xin)} ${context.getString(R.string.navigation_label_school_net)} 缴费" , { LoginWeb( false, vm,hazeState) }, SchoolNetWindow.KEY,isHigh = true),
-                SearchAppBean(5,"${context.getString(R.string.navigation_label_school_email)} 校园邮箱" , { Mail(vm,hazeState) }),
-                SearchAppBean(6,"${ExamDestination.TITLE.asString(context)}安排 教务处考试安排 ${context.getString(R.string.navigation_label_exam_news)}" , { Exam() }, ExamDestination(null).key),
-                SearchAppBean(7,"${GradeDestination.TITLE.asString(context)}", { Grade(vm,ifSaved) }, GradeDestination(ifSaved).key),
-                SearchAppBean(8,"${FailRateDestination.title.asString(context)}", { FailRate() }, FailRateDestination.key),
-                SearchAppBean(9,"${TermCoursesDestination.TITLE.asString(context)} 教材 课本", { CourseTotal(ifSaved) }, TermCoursesDestination(ifSaved,"SEARCH").key),
-                SearchAppBean(10,"${PersonInfoDestination.title.asString(context)}", { PersonUI() }, PersonInfoDestination.key),
-                SearchAppBean(11,"${WebFolderDestination.title.asString(context)} 实验室 ${context.getString(R.string.navigation_label_hui_xin)}", { WebUI() }, WebFolderDestination.key),
-                SearchAppBean(12,"${context.getString(R.string.navigation_label_shower)} 洗澡 呱呱物联 ${context.getString(R.string.navigation_label_notification_box)} 缴费", { Shower(vm,hazeState) }),
-                SearchAppBean(13,"${SelectCoursesDestination.title.asString(context)}", { SelectCourse(ifSaved) }, SelectCoursesDestination.key),
-                SearchAppBean(14,"${DormitoryDestination.title.asString(context)} 寝室卫生评分 寝室卫生分数", { DormitoryScoreXuanCheng() }, DormitoryDestination.key),
-                SearchAppBean(15,"${NotificationsDestination.title.asString(context)} ${context.getString(R.string.navigation_label_notifications)} 收纳", { NotificationsCenter() }, NotificationsDestination.key),
-                SearchAppBean(16,"${SurveyDestination.TITLE.asString(context)} 教师评教 教师教评", { Survey(ifSaved) }, SurveyDestination(ifSaved).key),
-                SearchAppBean(17,"${NewsDestination.title.asString(context)} 新闻 教务处", { News() }, NewsDestination.key),
-                SearchAppBean(18,"${ProgramDestination.TITLE.asString(context)}完成情况", { Program(ifSaved) }, ProgramDestination(ifSaved).key),
-                SearchAppBean(19,"${LibraryDestination.title.asString(context)} 座位预约 ${context.getString(R.string.navigation_label_library_borrowed)}", { LibraryItem() }, LibraryDestination.key),
-                SearchAppBean(20,"${BusDestination.title.asString(context)}", { SchoolBus() }, BusDestination.key),
-                SearchAppBean(21,"${context.getString(R.string.navigation_label_repair)} 维修 后勤", { Repair() }, RepairWindow.key),
+                SearchAppBean(1,"${stringOf(Strings.navigation_label_hui_xin)} 校园卡 账单 充值 缴费 ${stringOf(Strings.navigation_label_school_card)}" , { SchoolCardItem( false) }, isHigh = true, route = SchoolCardDestination.key),
+                SearchAppBean(2,"${ScanQrCodeDestination.title.asStringNow()} 扫码 指尖工大 CAS统一认证登录", { Scan() }, ScanQrCodeDestination.key,isHigh = true),
+                SearchAppBean(3,"${stringOf(Strings.navigation_label_dormitory_electricity_bill)} 缴费 ${stringOf(Strings.navigation_label_hui_xin)}" , { Electric(vm, false, hazeState) },isHigh = true),
+                SearchAppBean(4,"${stringOf(Strings.navigation_label_hui_xin)} ${stringOf(Strings.navigation_label_school_net)} 缴费" , { LoginWeb( false, vm,hazeState) }, SchoolNetWindow.KEY,isHigh = true),
+                SearchAppBean(5,"${stringOf(Strings.navigation_label_school_email)} 校园邮箱" , { Mail(vm,hazeState) }),
+                SearchAppBean(6,"${ExamDestination.TITLE.asStringNow()}安排 教务处考试安排 ${stringOf(Strings.navigation_label_exam_news)}" , { Exam() }, ExamDestination(null).key),
+                SearchAppBean(7,"${GradeDestination.TITLE.asStringNow()}", { Grade(vm,ifSaved) }, GradeDestination(ifSaved).key),
+                SearchAppBean(8,"${FailRateDestination.title.asStringNow()}", { FailRate() }, FailRateDestination.key),
+                SearchAppBean(9,"${TermCoursesDestination.TITLE.asStringNow()} 教材 课本", { CourseTotal(ifSaved) }, TermCoursesDestination(ifSaved,"SEARCH").key),
+                SearchAppBean(10,"${PersonInfoDestination.title.asStringNow()}", { PersonUI() }, PersonInfoDestination.key),
+                SearchAppBean(11,"${WebFolderDestination.title.asStringNow()} 实验室 ${stringOf(Strings.navigation_label_hui_xin)}", { WebUI() }, WebFolderDestination.key),
+                SearchAppBean(12,"${stringOf(Strings.navigation_label_shower)} 洗澡 呱呱物联 ${stringOf(Strings.navigation_label_notification_box)} 缴费", { Shower(vm,hazeState) }),
+                SearchAppBean(13,"${SelectCoursesDestination.title.asStringNow()}", { SelectCourse(ifSaved) }, SelectCoursesDestination.key),
+                SearchAppBean(14,"${DormitoryDestination.title.asStringNow()} 寝室卫生评分 寝室卫生分数", { DormitoryScoreXuanCheng() }, DormitoryDestination.key),
+                SearchAppBean(15,"${NotificationsDestination.title.asStringNow()} ${stringOf(Strings.navigation_label_notifications)} 收纳", { NotificationsCenter() }, NotificationsDestination.key),
+                SearchAppBean(16,"${SurveyDestination.TITLE.asStringNow()} 教师评教 教师教评", { Survey(ifSaved) }, SurveyDestination(ifSaved).key),
+                SearchAppBean(17,"${NewsDestination.title.asStringNow()} 新闻 教务处", { News() }, NewsDestination.key),
+                SearchAppBean(18,"${ProgramDestination.TITLE.asStringNow()}完成情况", { Program(ifSaved) }, ProgramDestination(ifSaved).key),
+                SearchAppBean(19,"${LibraryDestination.title.asStringNow()} 座位预约 ${stringOf(Strings.navigation_label_library_borrowed)}", { LibraryItem() }, LibraryDestination.key),
+                SearchAppBean(20,"${BusDestination.title.asStringNow()}", { SchoolBus() }, BusDestination.key),
+                SearchAppBean(21,"${stringOf(Strings.navigation_label_repair)} 维修 后勤", { Repair() }, RepairWindow.key),
 //                SearchAppBean(22,"${AppNavRoute.NextCourse.label}", { NextCourse(ifSaved,navController ) },AppNavRoute.NextCourse.receiveRoute()),
-                SearchAppBean(23,"饮水机 ${context.getString(R.string.navigation_label_hot_water)}机 趣智校园", { HotWater() }),
-                SearchAppBean(24,"${ClassroomDestination.TITLE.asString(context)} 空教室", { Classroom() }, ClassroomDestination().key),
-                SearchAppBean(25,"体育 云运动 乐跑 校园跑 ${context.getString(R.string.navigation_label_physical_fitness_test)} 体育测试 体检", { LePaoYun() }, WebViewDestination.getKey(Constant.PE_HOME_URL)),
-                SearchAppBean(26,"${WorkAndRestDestination.TITLE.asString(context)} 校历", { WorkAndRest() }, WorkAndRestDestination(null).key),
-                SearchAppBean(27,"${context.getString(R.string.navigation_label_chsi)}", { XueXin() }, WebViewDestination.getKey(Constant.XUE_XIN_URL)),
-                SearchAppBean(28,"${LifeDestination.title.asString(context)} 校园 天气 新生 楼层导向 地图 ${TermReportDestination.title.asString(context)} 学期总结 成绩 消费 图书馆 借阅 统计 报表", { Life() }, LifeDestination.key),
-                SearchAppBean(29,"${TransferMajorDestination.title.asString(context)}", { Transfer(ifSaved) }, TransferMajorDestination.key),
-                SearchAppBean(30,"${CourseSearchDestination.title.asString(context)} 全校开课 课程", { CoursesSearch(ifSaved) }, CourseSearchDestination.key),
-                SearchAppBean(31,"${TeacherSearchDestination.title.asString(context)} 老师检索", { TeacherSearch() }, TeacherSearchDestination.key),
-                SearchAppBean(32,"${FeeDestination.title.asString(context)} 费用 欠缴学费", { Pay() }, FeeDestination.key),
+                SearchAppBean(23,"饮水机 ${stringOf(Strings.navigation_label_hot_water)}机 趣智校园", { HotWater() }),
+                SearchAppBean(24,"${ClassroomDestination.TITLE.asStringNow()} 空教室", { Classroom() }, ClassroomDestination().key),
+                SearchAppBean(25,"体育 云运动 乐跑 校园跑 ${stringOf(Strings.navigation_label_physical_fitness_test)} 体育测试 体检", { LePaoYun() }, WebViewDestination.getKey(Constant.PE_HOME_URL)),
+                SearchAppBean(26,"${WorkAndRestDestination.TITLE.asStringNow()} 校历", { WorkAndRest() }, WorkAndRestDestination(null).key),
+                SearchAppBean(27,"${stringOf(Strings.navigation_label_chsi)}", { XueXin() }, WebViewDestination.getKey(Constant.XUE_XIN_URL)),
+                SearchAppBean(28,"${LifeDestination.title.asStringNow()} 校园 天气 新生 楼层导向 地图 ${TermReportDestination.title.asStringNow()} 学期总结 成绩 消费 图书馆 借阅 统计 报表", { Life() }, LifeDestination.key),
+                SearchAppBean(29,"${TransferMajorDestination.title.asStringNow()}", { Transfer(ifSaved) }, TransferMajorDestination.key),
+                SearchAppBean(30,"${CourseSearchDestination.title.asStringNow()} 全校开课 课程", { CoursesSearch(ifSaved) }, CourseSearchDestination.key),
+                SearchAppBean(31,"${TeacherSearchDestination.title.asStringNow()} 老师检索", { TeacherSearch() }, TeacherSearchDestination.key),
+                SearchAppBean(32,"${FeeDestination.title.asStringNow()} 费用 欠缴学费", { Pay() }, FeeDestination.key),
 //                SearchAppBean(33,"实习", { Practice(ifSaved) }),
-                SearchAppBean(34,"${AlumniDestination.title.asString(context)} 校友 毕业", { Alumni() }, AlumniDestination.key),
-                SearchAppBean(35,"${StuTodayCampusDestination.title.asString(context)} 学工系统 学工平台 请假 助学金 奖学金 贫困 寝室 心理 日常", { ToadyCampus() }, StuTodayCampusDestination.key),
-                SearchAppBean(36,"${context.getString(R.string.navigation_label_ietp)} 大学生创新创业系统", { IETP() }, WebViewDestination.getKey(Constant.IETP_URL)),
-                SearchAppBean(37,"${WorkDestination.title.asString(context)} 实习 春招 双选 秋招", { Work() }, WorkDestination.key),
-                SearchAppBean(38,"${HolidayDestination.title.asString(context)} 国家法定节假日 假期 节日 调休", { Holiday() }, HolidayDestination.key),
-                SearchAppBean(39,"${context.getString(R.string.navigation_label_supabase)} 信息共建 日程 网课 网址导航", { Supabase() }, SupabaseDestination.key),
-                SearchAppBean(40,"${context.getString(R.string.navigation_label_laundry)} 洗鞋机 烘干机 ${context.getString(R.string.navigation_label_hui_xin)} ${context.getString(R.string.navigation_label_washing)} 缴费", { Washing(hazeState) }),
-                SearchAppBean(41,"${AdmissionDestination.title.asString(context)} 历年分数线 招生计划", { Admission() }, AdmissionDestination.key),
-                SearchAppBean(42,"${WebVpnDestination.title.asString(context)} 外地访问 内网", { WebVpn() }, WebVpnDestination.key),
-                SearchAppBean(43,"${OfficeHallDestination.title.asString(context)}", { OfficeHall() }, OfficeHallDestination.key),
-                SearchAppBean(44,"${context.getString(R.string.navigation_label_hui_xin)} ${context.getString(R.string.navigation_label_hui_xin)} 校园卡 账单 充值 缴费 合肥" , { HuiXin() }, WebViewDestination.getKey(getHuiXinURL())),
-                SearchAppBean(45,"${SecondClassDestination.title.asString(context)}", { SecondClass() }, SecondClassDestination.key),
-                SearchAppBean(46,"${CommunityAppointmentDestination.title.asString(context)} 场地预约 座位预约 宿舍自习室预约 智慧社区平台", { Appointment() }, CommunityAppointmentDestination.key),
-                SearchAppBean(47,"AI 人工智能 ${context.getString(R.string.navigation_label_ai)}", { AI() }, AiDestination.key),
-                SearchAppBean(48,"事务跟踪 事务追踪 issue 反馈 开发 ${context.getString(R.string.navigation_label_track)}", { Track() }, TrackDestination.key),
-                SearchAppBean(49,"拼多多 淘宝 快递 取件码 包裹 ${context.getString(R.string.navigation_label_express)}", { Express() },ExpressWindow.key),
-                SearchAppBean(50,"${context.getString(R.string.navigation_label_feedback)} 反馈 建议", { Feedback() }, FeedbackWindow.key),
+                SearchAppBean(34,"${AlumniDestination.title.asStringNow()} 校友 毕业", { Alumni() }, AlumniDestination.key),
+                SearchAppBean(35,"${StuTodayCampusDestination.title.asStringNow()} 学工系统 学工平台 请假 助学金 奖学金 贫困 寝室 心理 日常", { ToadyCampus() }, StuTodayCampusDestination.key),
+                SearchAppBean(36,"${stringOf(Strings.navigation_label_ietp)} 大学生创新创业系统", { IETP() }, WebViewDestination.getKey(Constant.IETP_URL)),
+                SearchAppBean(37,"${WorkDestination.title.asStringNow()} 实习 春招 双选 秋招", { Work() }, WorkDestination.key),
+                SearchAppBean(38,"${HolidayDestination.title.asStringNow()} 国家法定节假日 假期 节日 调休", { Holiday() }, HolidayDestination.key),
+                SearchAppBean(39,"${stringOf(Strings.navigation_label_supabase)} 信息共建 日程 网课 网址导航", { Supabase() }, SupabaseDestination.key),
+                SearchAppBean(40,"${stringOf(Strings.navigation_label_laundry)} 洗鞋机 烘干机 ${stringOf(Strings.navigation_label_hui_xin)} ${stringOf(Strings.navigation_label_washing)} 缴费", { Washing(hazeState) }),
+                SearchAppBean(41,"${AdmissionDestination.title.asStringNow()} 历年分数线 招生计划", { Admission() }, AdmissionDestination.key),
+                SearchAppBean(42,"${WebVpnDestination.title.asStringNow()} 外地访问 内网", { WebVpn() }, WebVpnDestination.key),
+                SearchAppBean(43,"${OfficeHallDestination.title.asStringNow()}", { OfficeHall() }, OfficeHallDestination.key),
+                SearchAppBean(44,"${stringOf(Strings.navigation_label_hui_xin)} ${stringOf(Strings.navigation_label_hui_xin)} 校园卡 账单 充值 缴费 合肥" , { HuiXin() }, WebViewDestination.getKey(getHuiXinURL())),
+                SearchAppBean(45,"${SecondClassDestination.title.asStringNow()}", { SecondClass() }, SecondClassDestination.key),
+                SearchAppBean(46,"${CommunityAppointmentDestination.title.asStringNow()} 场地预约 座位预约 宿舍自习室预约 智慧社区平台", { Appointment() }, CommunityAppointmentDestination.key),
+                SearchAppBean(47,"AI 人工智能 ${stringOf(Strings.navigation_label_ai)}", { AI() }, AiDestination.key),
+                SearchAppBean(48,"事务跟踪 事务追踪 issue 反馈 开发 ${stringOf(Strings.navigation_label_track)}", { Track() }, TrackDestination.key),
+                SearchAppBean(49,"拼多多 淘宝 快递 取件码 包裹 ${stringOf(Strings.navigation_label_express)}", { Express() },ExpressWindow.key),
+                SearchAppBean(50,"${stringOf(Strings.navigation_label_feedback)} 反馈 建议", { Feedback() }, FeedbackWindow.key),
             )
         )
     }
@@ -360,7 +366,7 @@ fun SearchFuncs(
                 IconButton(onClick = {
                     onShow(false)
                 }) {
-                    Icon(painterResource(R.drawable.search),null)
+                    Icon(painterResource(Drawables.search),null)
                 }
             },
         )

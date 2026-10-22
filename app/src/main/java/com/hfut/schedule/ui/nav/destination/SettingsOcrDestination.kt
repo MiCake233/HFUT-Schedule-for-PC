@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -31,7 +33,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsOcrDestination : NavDestination() {
     override val key: String = "settings_ocr"
     override val title: UiText = text("图片验证码自动填充")
-    override val icon = R.drawable.center_focus_strong
+    override val icon = Drawables.center_focus_strong
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

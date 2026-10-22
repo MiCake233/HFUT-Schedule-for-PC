@@ -54,7 +54,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
@@ -235,41 +236,41 @@ fun WebViewTools(
     if(webView?.canGoBack() == true) {
         IconButton(onClick = {
             webView.goBack()
-        }) { Icon(painterResource(R.drawable.arrow_back), contentDescription = EMPTY_STRING) }
+        }) { Icon(painterResource(Drawables.arrow_back), contentDescription = EMPTY_STRING) }
     } else {
-        IconButton(onClick = onExit) { Icon(painterResource(R.drawable.close), contentDescription = EMPTY_STRING) }
+        IconButton(onClick = onExit) { Icon(painterResource(Drawables.close), contentDescription = EMPTY_STRING) }
     }
 
     IconButton(onClick = { webView?.reload() }) { Icon(
-        painterResource(id = R.drawable.rotate_right), contentDescription = EMPTY_STRING) }
+        painterResource(id = Drawables.rotate_right), contentDescription = EMPTY_STRING) }
 
     IconButton(onClick = {
         on = { Starter.startWebUrlOuter(context,it) }
         showBottomSheet = true
     }) { Icon(
-        painterResource(id = R.drawable.net), contentDescription = EMPTY_STRING) }
+        painterResource(id = Drawables.net), contentDescription = EMPTY_STRING) }
 
     IconButton(onClick = {
         onSearch()
-    }) { Icon(painterResource(id = R.drawable.search), contentDescription = EMPTY_STRING) }
+    }) { Icon(painterResource(id = Drawables.search), contentDescription = EMPTY_STRING) }
 
     IconButton(onClick = {
         on = {}
         operationFavorite = true
         showBottomSheet = true
     }) { Icon(
-        painterResource(id = if(isExist) R.drawable.star_filled else  R.drawable.star ), contentDescription = EMPTY_STRING) }
+        painterResource(id = if(isExist) Drawables.star_filled else  Drawables.star ), contentDescription = EMPTY_STRING) }
     IconButton(onClick = {
         on = { ClipBoardHelper.copy(it) }
         showBottomSheet = true
     }) { Icon(
-        painterResource(id = R.drawable.copy_all), contentDescription = EMPTY_STRING) }
+        painterResource(id = Drawables.copy_all), contentDescription = EMPTY_STRING) }
 
     IconButton(onClick = {
         on = { ShareTo.shareString(currentUrl) }
         showBottomSheet = true
     }) { Icon(
-        painterResource(id = R.drawable.ios_share), contentDescription = EMPTY_STRING) }
+        painterResource(id = Drawables.ios_share), contentDescription = EMPTY_STRING) }
 
     onExtend()
 }
@@ -313,7 +314,7 @@ fun WebViewTopBar(
                                 onClick = { onVisible(true) }
                             ) {
                                 Icon(
-                                    painterResource(R.drawable.more_vert),
+                                    painterResource(Drawables.more_vert),
                                     null,
                                     tint = topBarTitleColor
                                 )
@@ -349,7 +350,7 @@ fun WebViewTopBar(
                             input = input,
                             leadingIcon = {
                                 Icon(
-                                    painterResource(R.drawable.search),
+                                    painterResource(Drawables.search),
                                     null,
                                     tint = topBarTitleColor
                                 )
@@ -374,7 +375,7 @@ fun WebViewTopBar(
                                         colors = IconButtonDefaults.iconButtonColors(contentColor = topBarTitleColor)
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.keyboard_arrow_left),
+                                            painterResource(Drawables.keyboard_arrow_left),
                                             null,
                                         )
                                     }
@@ -386,7 +387,7 @@ fun WebViewTopBar(
                                         colors = IconButtonDefaults.iconButtonColors(contentColor = topBarTitleColor)
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.keyboard_arrow_right),
+                                            painterResource(Drawables.keyboard_arrow_right),
                                             null,
                                         )
                                     }
@@ -467,7 +468,7 @@ fun WebViewContent(
             ) {
                 tools()
                 IconButton(onClick = { onVisible(false) }) { Icon(
-                    painterResource(id = R.drawable.visibility_off), contentDescription = EMPTY_STRING) }
+                    painterResource(id = Drawables.visibility_off), contentDescription = EMPTY_STRING) }
             }
         }
         if(loading) {
@@ -605,9 +606,9 @@ fun WebViewBackIcon(
         }
     }
     val cIcon = if(webView?.canGoBack() == true) {
-        painterResource(R.drawable.arrow_back)
+        painterResource(Drawables.arrow_back)
     } else {
-        painterResource(R.drawable.close)
+        painterResource(Drawables.close)
     }
     val button = @Composable { content  : @Composable () -> Unit ->
         Box(

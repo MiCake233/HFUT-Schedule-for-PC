@@ -38,7 +38,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
@@ -115,7 +116,7 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
         InnerPaddingHeight(innerPadding,true)
         CardListItem(
             headlineContent = { Text(text = "打开开关则会在APP冷启动或刷新时自动获取数据,并显示在聚焦首页第一张卡片内") },
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.info), contentDescription = EMPTY_STRING,)},
+            leadingContent = { Icon(painter = painterResource(id = Drawables.info), contentDescription = EMPTY_STRING,)},
             color = MaterialTheme.colorScheme.surface
         )
 
@@ -123,7 +124,7 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 TransplantListItem(
                     headlineContent = { Text(text = "一卡通")} ,
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.credit_card), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.credit_card), contentDescription = EMPTY_STRING)},
                     trailingContent = {
                         Row {
                             Switch(
@@ -133,7 +134,7 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
                                         DataStoreManager.saveEnableFocusSchoolCardAddButton(!enableShowFocusSchoolCardAddButton)
                                     }
                                 },
-                                thumbContent = { Icon(painter = painterResource(id = R.drawable.add), contentDescription = EMPTY_STRING)}
+                                thumbContent = { Icon(painter = painterResource(id = Drawables.add), contentDescription = EMPTY_STRING)}
                             )
                             Spacer(modifier = Modifier.width(10.dp))
                             Switch(
@@ -150,7 +151,7 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text(text = "寝室电费")} ,
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.flash_on), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.flash_on), contentDescription = EMPTY_STRING)},
                     supportingContent = {
                         Row( ) {
                             FilterChip(
@@ -184,7 +185,7 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text(text = "校园网")} ,
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.net), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.net), contentDescription = EMPTY_STRING)},
                     trailingContent = {
                         Switch(
                             checked = enableShowFocusSchoolNet,
@@ -200,7 +201,7 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
                 TransplantListItem(
                     headlineContent = { Text(text = "聚焦通知")} ,
                     supportingContent = { Text(text = "明日早八,临近课程,催还图书,临近考试")},
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.sentiment_very_satisfied), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.sentiment_very_satisfied), contentDescription = EMPTY_STRING)},
                     trailingContent = {
                         Switch(
                             checked = enableShowFocusToday,
@@ -215,20 +216,20 @@ fun FocusCardSettings(innerPadding : PaddingValues) {
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text(text = "气象预警")} ,
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.warning), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.warning), contentDescription = EMPTY_STRING)},
                     trailingContent = { Switch(checked = enableShowFocusWeatherWarn, onCheckedChange = { scope.launch { DataStoreManager.saveFocusShowWeatherWarn(!enableShowFocusWeatherWarn) } })}
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text(text = "调休提示")} ,
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.beach_access), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.beach_access), contentDescription = EMPTY_STRING)},
                     trailingContent = { Switch(checked = true, onCheckedChange = { }, enabled = false)}
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text(text = "成绩单")} ,
                     supportingContent = { Text(text = "检查是否出现新的成绩")},
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.article), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.article), contentDescription = EMPTY_STRING)},
                 )
                 CustomSingleChoiceRow<GradeAutoCheckMode>(
                     selected = enableShowFocusGrade,
@@ -316,7 +317,7 @@ fun FocusCard(
                                 overlineContent = { Text("成绩单")},
                                 leadingContent = {
                                     Icon(
-                                        painterResource(id = R.drawable.article),
+                                        painterResource(id = Drawables.article),
                                         contentDescription = EMPTY_STRING,
                                     )
                                 },
@@ -355,7 +356,7 @@ fun FocusCard(
                                         color = cardNormalColor(),
                                         headlineContent = { Text(title) },
                                         overlineContent = { Text(typeName)},
-                                        leadingContent = { Icon(painterResource(R.drawable.temp_preferences_eco),null)},
+                                        leadingContent = { Icon(painterResource(Drawables.temp_preferences_eco),null)},
                                         modifier = Modifier.clickable {
                                             navController.push(LifeDestination)
                                         },
@@ -477,7 +478,7 @@ fun Special(
             TransplantListItem(
                 headlineContent = { ScrollText(text = "节假日休息" ) },
                 overlineContent = { ScrollText(text = "已隐藏今日课程") },
-                leadingContent = { Icon(painter = painterResource(R.drawable.beach_access) , contentDescription = EMPTY_STRING)},
+                leadingContent = { Icon(painter = painterResource(Drawables.beach_access) , contentDescription = EMPTY_STRING)},
             )
         }
     }
@@ -493,7 +494,7 @@ fun Special(
             }) {
             val d = targetDate?.substringAfter("-","")
             TransplantListItem(
-                leadingContent = { Icon(painter = painterResource(R.drawable.swap_vert) , contentDescription = EMPTY_STRING)},
+                leadingContent = { Icon(painter = painterResource(Drawables.swap_vert) , contentDescription = EMPTY_STRING)},
                 headlineContent = { ScrollText(text = "上${ d ?: "--" }课程" ) },
                 overlineContent = { ScrollText(text = "今天有调休上课") },
             )
@@ -510,7 +511,7 @@ fun Special(
             }) {
             val d = targetDate?.substringAfter("-",EMPTY_STRING)
             TransplantListItem(
-                leadingContent = { Icon(painter = painterResource(R.drawable.exposure_plus_1) , contentDescription = EMPTY_STRING)},
+                leadingContent = { Icon(painter = painterResource(Drawables.exposure_plus_1) , contentDescription = EMPTY_STRING)},
                 headlineContent = { ScrollText(text = "上${d ?: "--" }课程" ) },
                 overlineContent = { ScrollText(text = "明天有调休上课") },
             )
@@ -584,12 +585,12 @@ fun ChangeCourseUI(
             if(defaultCalendar == CourseType.COMMUNITY.code)
                 CardListItem(
                     headlineContent = { Text("目前默认数据源被设置为智慧社区，若需使调休功能生效，请在设置日期后，前往 选项-应用行为-默认课程表 切换为非智慧社区")},
-                    leadingContent = { Icon(painterResource(R.drawable.info),null)}
+                    leadingContent = { Icon(painterResource(Drawables.info),null)}
                 )
             else
                 CardListItem(
                     headlineContent = { Text("设置完成后聚焦首页将会显示为设置日期的课程安排")},
-                    leadingContent = { Icon(painterResource(R.drawable.info),null)}
+                    leadingContent = { Icon(painterResource(Drawables.info),null)}
                 )
             CardListItem(
                 headlineContent = { Text("查询学校调休安排")},

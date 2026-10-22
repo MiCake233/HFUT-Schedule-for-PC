@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.school.scan.ScanScreen
@@ -20,13 +23,13 @@ import com.xah.common.ui.util.res
 
 object ScanQrCodeDestination : NavDestination() {
     override val key = "scan_qr_code"
-    override val title = res(R.string.navigation_label_scan_qr_code)
-    override val icon = R.drawable.qr_code_scanner
+    override val title = res(Strings.navigation_label_scan_qr_code)
+    override val icon = Drawables.qr_code_scanner
     override val enforcePlaceHolder = true
     override val PlaceHolder = @Composable {
         Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
             Icon(
-                painterResource(R.drawable.monochrome_photos),
+                painterResource(Drawables.monochrome_photos),
                 null,
                 modifier = Modifier.size(100.dp).align(Alignment.Center),
                 tint = Color.White

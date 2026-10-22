@@ -23,7 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.button.LiquidButton
@@ -101,7 +102,7 @@ object GradeRemarkWindow: FloatingWindow() {
                             backdrop = rememberLayerBackdrop(),
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.close),null)
+                            Icon(painterResource(Drawables.close),null)
                         }
                     }
                 }

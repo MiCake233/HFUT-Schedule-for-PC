@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
@@ -14,9 +18,9 @@ data class HaiLeWashingDetailDestination(
     val item: HaiLeNearPositionBean
 ) : NavDestination() {
     override val key = "washing_detail_${item.id}"
-    override val title = res(R.string.navigation_label_washing_detail)
+    override val title = res(Strings.navigation_label_washing_detail)
     override val description = item.name
-    override val icon = R.drawable.near_me
+    override val icon = Drawables.near_me
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

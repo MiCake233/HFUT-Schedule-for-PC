@@ -29,7 +29,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -170,9 +171,9 @@ private fun ExamItems(item : Int,status : Boolean) {
                         overlineContent = { Text(text = st?.substring(5,st.length - 3) + "~" + get?.substring(11,get.length-3)) },
                         supportingContent = { getExam()[item].place?.let { Text(text = it) } },
                         leadingContent = {
-                            if(status) Icon(painterResource(R.drawable.draw), contentDescription = "Localized description",)
-                            else if(examDate.toInt() >= todayDate.toInt()) Icon(painterResource(R.drawable.schedule), contentDescription = "Localized description",)
-                            else Icon(painterResource(R.drawable.check), contentDescription = "Localized description",)
+                            if(status) Icon(painterResource(Drawables.draw), contentDescription = "Localized description",)
+                            else if(examDate.toInt() >= todayDate.toInt()) Icon(painterResource(Drawables.schedule), contentDescription = "Localized description",)
+                            else Icon(painterResource(Drawables.check), contentDescription = "Localized description",)
                         },
                         trailingContent = {
                             if(examDate.toInt() < todayDate.toInt()) Text(text = "已结束")
@@ -229,8 +230,8 @@ fun JxglstuExamUI(item : JxglstuExam, status : Boolean) {
             supportingContent = { place?.let { Text(text = it,textDecoration = if(isFinished) TextDecoration.LineThrough else TextDecoration.None) } },
             leadingContent = {
                 if(!isFinished)
-                    Icon(painterResource(R.drawable.schedule), contentDescription = "Localized description",)
-                else Icon(painterResource(R.drawable.check), contentDescription = "Localized description",)
+                    Icon(painterResource(Drawables.schedule), contentDescription = "Localized description",)
+                else Icon(painterResource(Drawables.check), contentDescription = "Localized description",)
             },
             trailingContent = {
                 if(isFinished) Text(text = "已结束")
@@ -258,11 +259,11 @@ fun JxglstuExamUI(item : JxglstuExam, status : Boolean) {
                     supportingContent = { Text(text = "$place") },
                     leadingContent = {
 //                                if("$month-$day" == DateTimeManager.Date_MM_dd) {
-//                                    Icon(painterResource(R.drawable.warning), contentDescription = "Localized description",)
+//                                    Icon(painterResource(Drawables.warning), contentDescription = "Localized description",)
 //                                } else {
 //
 //                                }
-                        Icon(painterResource(R.drawable.draw), contentDescription = "Localized description",)
+                        Icon(painterResource(Drawables.draw), contentDescription = "Localized description",)
                     },
                     shape = NoneRoundShape,
                     cardModifier = Modifier.sharedContainer(
@@ -306,7 +307,7 @@ fun JxglstuExamUI(item : JxglstuExam, status : Boolean) {
                                             }
                                         }
                                     }) {
-                                    Icon(painter = painterResource(id = R.drawable.event_upcoming), contentDescription = EMPTY_STRING)
+                                    Icon(painter = painterResource(id = Drawables.event_upcoming), contentDescription = EMPTY_STRING)
                                 }
                                 Text("${DateTimeManager.daysBetween(time.substringBefore(" "))}天")
                             }

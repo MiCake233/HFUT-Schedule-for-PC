@@ -1,6 +1,5 @@
 package com.hfut.schedule.viewmodel.network
 
-import android.graphics.Bitmap
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -633,7 +632,7 @@ class NetWorkViewModel() : ViewModel() {
     val xwxFunctionsResp = UiStateHolder<List<XiaoWuXingFunction>>()
     suspend fun getXwxFunctions(schoolCode : Long, username : String, token : String) = XiaoWuXingRepository.getFunctions(schoolCode,username,token,xwxFunctionsResp)
 
-    val xwxDocPreviewResp = UiStateHolder<Bitmap>()
+    val xwxDocPreviewResp = UiStateHolder<ByteArray>()
     suspend fun getXwxDocPreview(schoolCode : Long, username : String, filePropertyType : Int, fileProperty : String, token : String) = XiaoWuXingRepository.getDocPreview(schoolCode, username, filePropertyType, fileProperty, token, xwxDocPreviewResp)
 
     var loginGuaGuaResp = UiStateHolder<GuaGuaLoginResponse>()

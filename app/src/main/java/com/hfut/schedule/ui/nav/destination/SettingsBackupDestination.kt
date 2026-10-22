@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsBackupDestination : NavDestination() {
     override val key: String = "settings_backup"
     override val title: UiText = text("备份与恢复")
-    override val icon = R.drawable.database
+    override val icon = Drawables.database
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

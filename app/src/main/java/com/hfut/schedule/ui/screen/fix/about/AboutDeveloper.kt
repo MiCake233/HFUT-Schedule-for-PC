@@ -38,7 +38,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -176,7 +177,7 @@ fun About(vm : NetWorkViewModel) {
                                     Starter.emailMe(context)
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.mail),null)
+                                Icon(painterResource(Drawables.mail),null)
                             }
                         },
                     )
@@ -234,7 +235,7 @@ fun About(vm : NetWorkViewModel) {
                     Row(
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context,"${Constant.GITHUB_REPO_URL}/blob/dev/docs/Chart.md","统计报表",null,R.drawable.github)
+                                Starter.startWebUrlInner(context,"${Constant.GITHUB_REPO_URL}/blob/dev/docs/Chart.md","统计报表",null,Drawables.github)
                             }
                         }
                     ) {
@@ -244,7 +245,7 @@ fun About(vm : NetWorkViewModel) {
                                 Text("${(todayVisitCount as? NetworkUiState.Success)?.data ?: "--"}")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.leaderboard),null)
+                                Icon(painterResource(Drawables.leaderboard),null)
                             },
                             overlineContent = {
                                 Text("日流量")
@@ -256,7 +257,7 @@ fun About(vm : NetWorkViewModel) {
                                 Text("${(userCount as? NetworkUiState.Success)?.data ?: "--"}")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.group),null)
+                                Icon(painterResource(Drawables.group),null)
                             },
                             overlineContent = {
                                 Text("用户量")
@@ -274,7 +275,7 @@ fun About(vm : NetWorkViewModel) {
                                 Text(starsNum ?: "--")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.kid_star),null)
+                                Icon(painterResource(Drawables.kid_star),null)
                             },
                             overlineContent = {
                                 Text("Star")
@@ -288,7 +289,7 @@ fun About(vm : NetWorkViewModel) {
                                 Text("--")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.target),null)
+                                Icon(painterResource(Drawables.target),null)
                             },
                             overlineContent = {
                                 Text("Issue")
@@ -306,7 +307,7 @@ fun About(vm : NetWorkViewModel) {
                                 Text("--")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.commit),null)
+                                Icon(painterResource(Drawables.commit),null)
                             },
                             overlineContent = {
                                 Text("Commit")
@@ -320,7 +321,7 @@ fun About(vm : NetWorkViewModel) {
                                 Text("--")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.sell),null)
+                                Icon(painterResource(Drawables.sell),null)
                             },
                             overlineContent = {
                                 Text("发行版")
@@ -336,7 +337,7 @@ fun About(vm : NetWorkViewModel) {
                         }
                     },
                     text = "Github",
-                    icon = R.drawable.github,
+                    icon = Drawables.github,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP, vertical = CARD_NORMAL_DP*2)
                 )
             }
@@ -403,7 +404,7 @@ fun About(vm : NetWorkViewModel) {
                         leadingContent = {
                             if(isValid) {
                                 Icon(
-                                    painterResource(R.drawable.verified),
+                                    painterResource(Drawables.verified),
                                     null,
                                     tint = greenColor()
                                 )
@@ -411,9 +412,9 @@ fun About(vm : NetWorkViewModel) {
                                 Icon(
                                     painterResource(
                                         if(AppVersion.isDebug) {
-                                            R.drawable.construction
+                                            Drawables.construction
                                         } else {
-                                            R.drawable.help
+                                            Drawables.help
                                         }
                                     ),
                                     null,
@@ -474,7 +475,7 @@ fun About(vm : NetWorkViewModel) {
                     containerColor = MaterialTheme.colorScheme.errorContainer,
                     contentColor = MaterialTheme.colorScheme.error,
                     text = "撤销同意",
-                    icon = R.drawable.undo
+                    icon = Drawables.undo
                 )
             }
 

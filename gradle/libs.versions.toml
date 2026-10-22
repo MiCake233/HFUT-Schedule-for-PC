@@ -67,9 +67,9 @@ ksp = "2.3.12"
 test = "8.9.3"
 webkit = "1.14.0"
 accompanistPermissions = "0.34.0"
-composeMultiplatform = "1.12.2"
-# CMP 1.12.2 对应的 JetBrains Material3（基于 Jetpack material3 1.5.0-alpha22）
-jbMaterial3 = "1.12.0-alpha03"
+composeMultiplatform = "1.11.1"
+# CMP 1.11.1 对应的 JetBrains Material3（基于 Jetpack material3 1.5.0-alpha17）
+jbMaterial3 = "1.11.0-alpha07"
 # KMP 版 lifecycle（供桌面端与后续 KMP 化使用）
 lifecycleKmp = "2.11.0"
 androidx-testExt = "1.3.0"

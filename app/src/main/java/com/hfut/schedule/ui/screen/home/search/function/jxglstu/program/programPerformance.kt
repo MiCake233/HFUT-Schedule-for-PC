@@ -34,7 +34,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 import com.hfut.schedule.R
@@ -416,7 +417,7 @@ fun ProgramCompetitionDetailScreen(
                                             controller.push(window)
                                         },
                                     ) {
-                                        Icon(painterResource(R.drawable.info),null)
+                                        Icon(painterResource(Drawables.info),null)
                                     }
                                 }
                             }
@@ -449,7 +450,7 @@ fun ProgramCompetitionDetailScreen(
                                         // TODO
                                     }) {
                                     Icon(
-                                        painter = painterResource(R.drawable.search),
+                                        painter = painterResource(Drawables.search),
                                         contentDescription = "description"
                                     )
                                 }
@@ -573,7 +574,7 @@ private fun PerformanceInfo(
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(type?.icon() ?: R.drawable.help),
+                                            painterResource(type?.icon() ?: Drawables.help),
                                             null,
                                             tint = (
                                                     if(type == JxglstuProgramCompetitionType.FAILED) MaterialTheme.colorScheme.error
@@ -593,7 +594,7 @@ private fun PerformanceInfo(
                                     TransplantListItem(
                                         headlineContent = { Text(remark) },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.info),null)
+                                            Icon(painterResource(Drawables.info),null)
                                         }
                                     )
                                 }
@@ -646,7 +647,7 @@ private fun PerformanceInfo(
                             },
                             leadingContent = {
                                 Icon(
-                                    painterResource(type?.icon() ?: R.drawable.help),
+                                    painterResource(type?.icon() ?: Drawables.help),
                                     null,
                                     tint = (
                                             if(type == JxglstuProgramCompetitionType.FAILED) MaterialTheme.colorScheme.error
@@ -701,7 +702,7 @@ fun ProgramInfoItem(item : JxglstuProgramCompetitionCourse) {
                 headlineContent = { Text(text = item.code) },
                 overlineContent = { ScrollText(text = "代号") },
                 leadingContent = {
-                    Icon(painterResource(id = R.drawable.tag), contentDescription = null)
+                    Icon(painterResource(id = Drawables.tag), contentDescription = null)
                 },
                 modifier = Modifier.weight(.5f)
             )
@@ -710,7 +711,7 @@ fun ProgramInfoItem(item : JxglstuProgramCompetitionCourse) {
                 overlineContent = { Text(text = "学分") },
                 modifier = Modifier.weight(.5f),
                 leadingContent = {
-                    Icon(painterResource(id = R.drawable.filter_vintage), contentDescription = null)
+                    Icon(painterResource(id = Drawables.filter_vintage), contentDescription = null)
                 },
             )
         }
@@ -726,7 +727,7 @@ fun ProgramInfoItem(item : JxglstuProgramCompetitionCourse) {
                 },
                 overlineContent = { Text(text = "成绩") },
                 leadingContent = {
-                    Icon(painterResource(id = R.drawable.article), contentDescription = null)
+                    Icon(painterResource(id = Drawables.article), contentDescription = null)
                 }
             )
         }
@@ -735,10 +736,10 @@ fun ProgramInfoItem(item : JxglstuProgramCompetitionCourse) {
 
 
 private fun JxglstuProgramCompetitionType.icon() = when(this) {
-    JxglstuProgramCompetitionType.PASSED -> R.drawable.star_filled
-    JxglstuProgramCompetitionType.TAKING -> R.drawable.star_half
-    JxglstuProgramCompetitionType.UNREPAIRED -> R.drawable.star
-    JxglstuProgramCompetitionType.FAILED -> R.drawable.star
+    JxglstuProgramCompetitionType.PASSED -> Drawables.star_filled
+    JxglstuProgramCompetitionType.TAKING -> Drawables.star_half
+    JxglstuProgramCompetitionType.UNREPAIRED -> Drawables.star
+    JxglstuProgramCompetitionType.FAILED -> Drawables.star
 }
 
 private fun getProgramCompetitionType(description : String)  : JxglstuProgramCompetitionType? = JxglstuProgramCompetitionType.entries.find { it.name == description }

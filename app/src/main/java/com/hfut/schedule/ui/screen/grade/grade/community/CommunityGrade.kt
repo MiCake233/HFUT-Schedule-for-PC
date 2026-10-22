@@ -28,7 +28,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -55,7 +56,7 @@ private fun TotalGrade(vm : NetWorkViewModel) {
         CardListItem(
             headlineContent = {  Text("绩点(GPA)  $gpa") },
             supportingContent = { Text("班级排名: $classRanking   专业排名: $majorRanking") },
-            leadingContent = { Icon(painterResource(R.drawable.flag), contentDescription = "Localized description",) },
+            leadingContent = { Icon(painterResource(Drawables.flag), contentDescription = "Localized description",) },
             color = MaterialTheme.colorScheme.secondaryContainer,
         )
     }
@@ -137,7 +138,7 @@ fun GradeItemUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                     scope.launch { refreshNetwork() }
                 },
                 label = { Text(text = "搜索") },
-                leadingIcon = { Icon(painter = painterResource(R.drawable.search), contentDescription = "description") }
+                leadingIcon = { Icon(painter = painterResource(Drawables.search), contentDescription = "description") }
             )
         }
 
@@ -158,9 +159,9 @@ fun GradeItemUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                                 Icon(
                                     painterResource(
                                         if(item.passed) {
-                                            R.drawable.check_circle
+                                            Drawables.check_circle
                                         } else {
-                                            R.drawable.error
+                                            Drawables.error
                                         }
                                     ),
                                     tint = if(item.passed) {

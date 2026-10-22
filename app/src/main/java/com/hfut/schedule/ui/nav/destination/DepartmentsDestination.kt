@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,8 +31,8 @@ import dev.chrisbanes.haze.hazeSource
 
 object DepartmentsDestination : NavDestination() {
     override val key = "all_department"
-    override val title = res(R.string.navigation_label_departments)
-    override val icon = R.drawable.school
+    override val title = res(Strings.navigation_label_departments)
+    override val icon = Drawables.school
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

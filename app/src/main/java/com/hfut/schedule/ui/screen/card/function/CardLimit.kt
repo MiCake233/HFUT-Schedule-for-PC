@@ -16,7 +16,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.google.gson.JsonObject
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
@@ -89,13 +90,13 @@ fun CardLimit(vm : NetWorkViewModel) {
             CardListItem(
                 headlineContent = { Text("此接口即使修改也无效，不用改了")},
                 leadingContent = {
-                    Icon(painterResource(R.drawable.info),null)
+                    Icon(painterResource(Drawables.info),null)
                 }
             )
             CustomCard(color = cardNormalColor()) {
                 TransplantListItem(
                     headlineContent = { Text(text = "自主转账限额 ￥${limit}")},
-                    leadingContent = { Icon(painterResource(id = R.drawable.do_not_disturb_on), contentDescription =EMPTY_STRING) }
+                    leadingContent = { Icon(painterResource(id = Drawables.do_not_disturb_on), contentDescription =EMPTY_STRING) }
                 )
                 PaddingHorizontalDivider()
 
@@ -124,7 +125,7 @@ fun CardLimit(vm : NetWorkViewModel) {
             CustomCard (color = cardNormalColor()){
                 TransplantListItem(
                     headlineContent = { Text(text = "自主转账金额 ￥${amt}")},
-                    leadingContent = { Icon(painterResource(id = R.drawable.do_not_disturb_on), contentDescription = EMPTY_STRING) }
+                    leadingContent = { Icon(painterResource(id = Drawables.do_not_disturb_on), contentDescription = EMPTY_STRING) }
                 )
                 PaddingHorizontalDivider()
 

@@ -7,13 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.xah.common.ui.component.text.ScrollText
 import kotlinx.coroutines.launch
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.ui.nav.window.ExpressWindow
 import com.xah.floating.util.LocalFloatingController
 
@@ -22,9 +24,9 @@ import com.xah.floating.util.LocalFloatingController
 fun Express() {
     val floatController = LocalFloatingController.current
     TransplantListItem(
-        headlineContent = { ScrollText(text = stringResource(R.string.navigation_label_express)) },
+        headlineContent = { ScrollText(text = stringResource(Strings.navigation_label_express)) },
         leadingContent = {
-            Icon(painterResource(R.drawable.package_2), contentDescription = null)
+            Icon(painterResource(Drawables.package_2), contentDescription = null)
 
         },
         modifier = Modifier.clickable {

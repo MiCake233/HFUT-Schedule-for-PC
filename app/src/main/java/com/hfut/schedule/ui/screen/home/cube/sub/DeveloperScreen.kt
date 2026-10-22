@@ -25,7 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
@@ -124,14 +125,14 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                                 showEditDialog = true
                             }
                         ) {
-                            Icon(painterResource(R.drawable.edit),null)
+                            Icon(painterResource(Drawables.edit),null)
                         }
                     },
                     modifier = Modifier.clickable {
                         ClipBoardHelper.copy(cookie)
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.cookie),null)
+                        Icon(painterResource(Drawables.cookie),null)
                     }
                 )
                 PaddingHorizontalDivider()
@@ -149,14 +150,14 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                                     showEditDialog = true
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.edit),null)
+                                Icon(painterResource(Drawables.edit),null)
                             }
                         },
                         modifier = Modifier.clickable {
                             ClipBoardHelper.copy(it)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.cookie),null)
+                            Icon(painterResource(Drawables.cookie),null)
                         }
                     )
                     PaddingHorizontalDivider()
@@ -170,7 +171,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                         ClipBoardHelper.copy(cookieWebVpn)
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.cookie),null)
+                        Icon(painterResource(Drawables.cookie),null)
                     },
                 )
                 cookieCommunity?.let {
@@ -184,7 +185,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                             ClipBoardHelper.copy(it)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.cookie),null)
+                            Icon(painterResource(Drawables.cookie),null)
                         },
                     )
                 }
@@ -199,7 +200,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                             ClipBoardHelper.copy(it)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.cookie),null)
+                            Icon(painterResource(Drawables.cookie),null)
                         },
                     )
                 }
@@ -213,7 +214,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                         ClipBoardHelper.copy(wxAuth)
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.cookie),null)
+                        Icon(painterResource(Drawables.cookie),null)
                     },
                 )
                 cookieCAS?.let {
@@ -227,7 +228,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                             ClipBoardHelper.copy(it)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.cookie),null)
+                            Icon(painterResource(Drawables.cookie),null)
                         },
                     )
                 }
@@ -247,7 +248,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                             ClipBoardHelper.copy(data)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.tag),null)
+                            Icon(painterResource(Drawables.tag),null)
                         }
                     )
                 }
@@ -263,7 +264,7 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
                             ClipBoardHelper.copy(data)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.tag),null)
+                            Icon(painterResource(Drawables.tag),null)
                         }
                     )
                 }

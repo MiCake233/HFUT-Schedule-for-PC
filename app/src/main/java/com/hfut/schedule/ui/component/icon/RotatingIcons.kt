@@ -24,7 +24,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.util.EMPTY_STRING
@@ -55,7 +56,7 @@ fun RotatingIcon(icon: Int, animation: DurationBasedAnimationSpec<Float> = tween
 }
 
 @Composable
-fun LoadingIcon() = RotatingIcon(R.drawable.progress_activity)
+fun LoadingIcon() = RotatingIcon(Drawables.progress_activity)
 
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

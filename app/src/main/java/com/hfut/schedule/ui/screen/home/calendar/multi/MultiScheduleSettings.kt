@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.calendar.multi
 
+import com.xah.common.ui.res.Strings
+
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -37,7 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
@@ -79,11 +82,11 @@ import java.io.File
 
 
 enum class CourseType(override val code : Int,override val label: UiText): BaseChoice {
-    JXGLSTU(0, res(R.string.app_settings_default_calendar_choice_jxglstu)),
-    COMMUNITY(1,res(R.string.app_settings_default_calendar_choice_community)),
-    UNI_APP(2,res(R.string.app_settings_default_calendar_choice_uni_app)),
-    ZHI_JIAN(3,res(R.string.app_settings_default_calendar_choice_zhi_jian)),
-    JXGLSTU2(4,res(R.string.app_settings_default_calendar_choice_jxglstu_2)),
+    JXGLSTU(0, res(Strings.app_settings_default_calendar_choice_jxglstu)),
+    COMMUNITY(1,res(Strings.app_settings_default_calendar_choice_community)),
+    UNI_APP(2,res(Strings.app_settings_default_calendar_choice_uni_app)),
+    ZHI_JIAN(3,res(Strings.app_settings_default_calendar_choice_zhi_jian)),
+    JXGLSTU2(4,res(Strings.app_settings_default_calendar_choice_jxglstu_2)),
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
@@ -144,7 +147,7 @@ fun MultiScheduleSettings(
         HazeBottomSheetTopBar("多课表", isPaddingStatusBar = false) {
             Row {
                 FilledTonalIconButton(onClick = { showBottomSheet_add = true }) {
-                    Icon(painterResource(id = R.drawable.add), contentDescription = EMPTY_STRING)
+                    Icon(painterResource(id = Drawables.add), contentDescription = EMPTY_STRING)
                 }
             }
         }
@@ -233,7 +236,7 @@ fun MultiScheduleSettings(
                     colors = normalColor
                 ) {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        Icon(painterResource(id = R.drawable.add), contentDescription = EMPTY_STRING,modifier = Modifier.align(Alignment.Center))
+                        Icon(painterResource(id = Drawables.add), contentDescription = EMPTY_STRING,modifier = Modifier.align(Alignment.Center))
                     }
                 }
             }
@@ -246,7 +249,7 @@ fun MultiScheduleSettings(
                     headlineContent = { Text(text = "课程表配置") },
                     supportingContent = {  Text("切换学期、切换默认课程表等配置") },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.approval), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.approval), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable {
                         onDismissed()
@@ -258,7 +261,7 @@ fun MultiScheduleSettings(
                     headlineContent = { Text(text = "外观调整") },
                     supportingContent = {  Text("调整课程表方格外观、背景等") },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.format_paint), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.format_paint), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable {
                         onDismissed()
@@ -271,7 +274,7 @@ fun MultiScheduleSettings(
                         headlineContent = { Text(text = "导出教务课表") },
                         supportingContent = {  Text("以文件导出教务课表") },
                         leadingContent = {
-                            Icon(painterResource(id = R.drawable.ios_share), contentDescription = EMPTY_STRING)
+                            Icon(painterResource(id = Drawables.ios_share), contentDescription = EMPTY_STRING)
                         },
                         modifier = Modifier.clickable {
                             scope.launch {
@@ -287,7 +290,7 @@ fun MultiScheduleSettings(
                     headlineContent = { Text(text = if(d) "刷新教务课表" else "刷新课程表") },
                     supportingContent = { Text(if(d) "教务登录会失效,无法自动刷新" else "回到聚焦,等待转圈完成即完成刷新") },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.rotate_right), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.rotate_right), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable {
                         if(d)
@@ -303,7 +306,7 @@ fun MultiScheduleSettings(
                         supportingContent = { Text("将教务课表以日程写入到日历中") },
                         headlineContent = { Text(text = "上课提醒") },
                         leadingContent = {
-                            Icon(painterResource(id = R.drawable.calendar_add_on), contentDescription = EMPTY_STRING)
+                            Icon(painterResource(id = Drawables.calendar_add_on), contentDescription = EMPTY_STRING)
                         },
                         modifier = Modifier.clickable {
                             showBottomSheet_loading = true
@@ -315,7 +318,7 @@ fun MultiScheduleSettings(
 //                    TransplantListItem(
 //                        headlineContent = { Text(text = "恢复默认状态") },
 //                        leadingContent = {
-//                            Icon(painterResource(id = R.drawable.delete), contentDescription = EMPTY_STRING)
+//                            Icon(painterResource(id = Drawables.delete), contentDescription = EMPTY_STRING)
 //                        },
 //                        modifier = Modifier.clickable {
 //                            showDialog_Del = true
@@ -376,7 +379,7 @@ private fun EventUI() {
                             }
                         }
                     ) {
-                        Icon(painterResource(R.drawable.add),null)
+                        Icon(painterResource(Drawables.add),null)
                     }
                     time.let {
                         if(it >= 5) {
@@ -391,13 +394,13 @@ private fun EventUI() {
                                     }
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.remove),null)
+                                Icon(painterResource(Drawables.remove),null)
                             }
                         }
                     }
                 }
             },
-            leadingContent = { Icon(painterResource(R.drawable.schedule),null) },
+            leadingContent = { Icon(painterResource(Drawables.schedule),null) },
             modifier = Modifier.clickable {
                 scope.launch {
                     DataStoreManager.saveLiveCourseReminderMinutes(20)
@@ -417,7 +420,7 @@ private fun EventUI() {
                     supportingContent = {
                         Text("使用上方提醒时间，上课前${time}min弹出并显示教室；低版本降级为普通通知")
                     },
-                    leadingContent = { Icon(painterResource(R.drawable.notifications), null) },
+                    leadingContent = { Icon(painterResource(Drawables.notifications), null) },
                     modifier = Modifier.clickable {
                         activity?.let { checkAndRequestNotificationPermission(it) }
                         scope.launch {
@@ -444,7 +447,7 @@ private fun EventUI() {
                     supportingContent = {
                         Text("课表或提醒时间变化后重新调度后台提醒")
                     },
-                    leadingContent = { Icon(painterResource(R.drawable.rotate_right), null) },
+                    leadingContent = { Icon(painterResource(Drawables.rotate_right), null) },
                     modifier = Modifier.clickable {
                         scope.launch {
                             CourseLiveUpdateScheduler.cancelAll(context)
@@ -465,7 +468,7 @@ private fun EventUI() {
                 supportingContent = {
                     Text("将目前的教务课表写入到日程")
                 },
-                leadingContent = { Icon(painterResource(R.drawable.event_upcoming),null) },
+                leadingContent = { Icon(painterResource(Drawables.event_upcoming),null) },
                 modifier = Modifier.clickable {
                     activity?.let {
                         scope.launch {
@@ -484,7 +487,7 @@ private fun EventUI() {
                 supportingContent = {
                     Text("清空导入的日程")
                 },
-                leadingContent = { Icon(painterResource(R.drawable.event_busy),null) },
+                leadingContent = { Icon(painterResource(Drawables.event_busy),null) },
                 modifier = Modifier.clickable {
                     activity?.let {
                         scope.launch {
@@ -502,7 +505,7 @@ private fun EventUI() {
                 supportingContent = {
                     Text("将目前的教务课表写入到日程ics文件")
                 },
-                leadingContent = { Icon(painterResource(R.drawable.attach_file),null) },
+                leadingContent = { Icon(painterResource(Drawables.attach_file),null) },
                 modifier = Modifier.clickable {
                     showToast("正在开发")
                 }

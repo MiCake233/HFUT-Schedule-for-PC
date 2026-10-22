@@ -33,7 +33,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
@@ -232,7 +233,7 @@ fun AdmissionRegionScreen(
                                                 TransplantListItem(
                                                     headlineContent = { Text(it.toString()) },
                                                     overlineContent = { Text("最低分") },
-                                                    leadingContent = { Icon(painterResource(R.drawable.arrow_downward),null)},
+                                                    leadingContent = { Icon(painterResource(Drawables.arrow_downward),null)},
                                                     modifier = Modifier.weight(.5f)
                                                 )
                                             }
@@ -240,7 +241,7 @@ fun AdmissionRegionScreen(
                                                 TransplantListItem(
                                                     headlineContent = { Text(it.toString()) },
                                                     overlineContent = { Text("最高分") },
-                                                    leadingContent = { Icon(painterResource(R.drawable.arrow_upward),null)},
+                                                    leadingContent = { Icon(painterResource(Drawables.arrow_upward),null)},
                                                     modifier = Modifier.weight(.5f)
                                                 )
                                             }
@@ -250,7 +251,7 @@ fun AdmissionRegionScreen(
                                                 TransplantListItem(
                                                     headlineContent = { Text(it.toString()) },
                                                     overlineContent = { Text("平均分") },
-                                                    leadingContent = { Icon(painterResource(R.drawable.filter_vintage),null)},
+                                                    leadingContent = { Icon(painterResource(Drawables.filter_vintage),null)},
                                                     modifier = Modifier.weight(.5f)
                                                 )
                                             }
@@ -258,7 +259,7 @@ fun AdmissionRegionScreen(
                                                 TransplantListItem(
                                                     headlineContent = { Text(it.toString()) },
                                                     overlineContent = { Text("控制线") },
-                                                    leadingContent = { Icon(painterResource(R.drawable.stat_minus_2),null)},
+                                                    leadingContent = { Icon(painterResource(Drawables.stat_minus_2),null)},
                                                     modifier = Modifier.weight(.5f)
                                                 )
                                             }
@@ -280,7 +281,7 @@ fun AdmissionRegionScreen(
                                                 TransplantListItem(
                                                     headlineContent = { Text(it.toString()) },
                                                     overlineContent = { Text("最低分") },
-                                                    leadingContent = { Icon(painterResource(R.drawable.arrow_downward),null)},
+                                                    leadingContent = { Icon(painterResource(Drawables.arrow_downward),null)},
                                                     modifier = Modifier.weight(.5f)
                                                 )
                                             }
@@ -288,7 +289,7 @@ fun AdmissionRegionScreen(
                                                 TransplantListItem(
                                                     headlineContent = { Text(it.toString()) },
                                                     overlineContent = { Text("最高分") },
-                                                    leadingContent = { Icon(painterResource(R.drawable.arrow_upward),null)},
+                                                    leadingContent = { Icon(painterResource(Drawables.arrow_upward),null)},
                                                     modifier = Modifier.weight(.5f)
                                                 )
                                             }

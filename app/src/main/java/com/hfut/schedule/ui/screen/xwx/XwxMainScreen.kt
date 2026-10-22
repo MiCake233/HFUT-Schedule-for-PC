@@ -40,7 +40,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -167,7 +168,7 @@ fun XwxLoginScreen(
                         Text("提示")
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.info),null)
+                        Icon(painterResource(Drawables.info),null)
                     },
                     supportingContent = {
                         Text("校务行有时候登陆不进去并非是软件Bug，是平台本身有时候就会封网，可以稍后再试")
@@ -254,7 +255,7 @@ private fun LoginUI(
                         singleLine = true,
                         leadingIcon = {
                             Icon(
-                                painterResource(R.drawable.search),
+                                painterResource(Drawables.search),
                                 contentDescription = "Localized description"
                             )
                         }
@@ -320,12 +321,12 @@ private fun LoginUI(
                     singleLine = true,
                     shape = MaterialTheme.shapes.medium,
                     colors = textFiledTransplant(),
-                    leadingIcon = { Icon( painterResource(R.drawable.person), contentDescription = "Localized description") },
+                    leadingIcon = { Icon( painterResource(Drawables.person), contentDescription = "Localized description") },
                     trailingIcon = {
                         IconButton(onClick = {
                             username = EMPTY_STRING
                             password = EMPTY_STRING
-                        }) { Icon(painter = painterResource(R.drawable.close), contentDescription = "description") }
+                        }) { Icon(painter = painterResource(Drawables.close), contentDescription = "description") }
                     }
                 )
             }
@@ -345,12 +346,12 @@ private fun LoginUI(
                     visualTransformation = if (hidden) PasswordVisualTransformation()
                     else VisualTransformation.None,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    leadingIcon = { Icon(painterResource(R.drawable.key), contentDescription = "Localized description") },
+                    leadingIcon = { Icon(painterResource(Drawables.key), contentDescription = "Localized description") },
                     trailingIcon = {
                         IconButton(onClick = { hidden = !hidden }) {
                             val icon =
-                                if (hidden) painterResource(R.drawable.visibility_off)
-                                else painterResource(R.drawable.visibility)
+                                if (hidden) painterResource(Drawables.visibility_off)
+                                else painterResource(Drawables.visibility)
                             val description =
                                 if (hidden) "展示密码"
                                 else "隐藏密码"

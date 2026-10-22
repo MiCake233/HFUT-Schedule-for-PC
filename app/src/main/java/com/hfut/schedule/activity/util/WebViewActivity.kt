@@ -1,5 +1,7 @@
 package com.hfut.schedule.activity.util
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,7 +21,7 @@ class WebViewActivity : ComponentActivity() {
         val url = intent.getStringExtra("url") ?: return
         val title = intent.getStringExtra("title") ?: getPureUrl(url)
         val cookies = intent.getStringExtra("cookies")
-        val icon = intent.getIntExtra("icon",R.drawable.net)
+        val icon = intent.getIntExtra("icon",Drawables.net)
 
 
         setContent {

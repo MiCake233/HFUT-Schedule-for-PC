@@ -33,7 +33,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.xah.common.logic.model.Campus
 import com.hfut.schedule.logic.util.helper.getCampus
@@ -190,7 +191,7 @@ fun HaiLeWashingScreen(
                                                 ) },
                                             overlineContent = { Text(address) },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.near_me),null)
+                                                Icon(painterResource(Drawables.near_me),null)
                                             },
                                             trailingContent = {
                                                 Text(if(enableReserve)"可预约 $reserveNum/$idleCount" else "设备数 $idleCount")
@@ -322,9 +323,9 @@ fun HaiLeDetailScreen(
                                                 } else {
                                                     Icon(painterResource(
                                                         when(type) {
-                                                            HaiLeType.SHOES_WASHER -> R.drawable.steps
-                                                            HaiLeType.CLOTHES_DRYER -> R.drawable.cool_to_dry
-                                                            HaiLeType.WASHING_MACHINE -> R.drawable.laundry
+                                                            HaiLeType.SHOES_WASHER -> Drawables.steps
+                                                            HaiLeType.CLOTHES_DRYER -> Drawables.cool_to_dry
+                                                            HaiLeType.WASHING_MACHINE -> Drawables.laundry
                                                         }
                                                     ),null)
                                                 }

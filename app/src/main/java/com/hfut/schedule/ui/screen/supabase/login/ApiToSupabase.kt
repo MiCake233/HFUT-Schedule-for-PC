@@ -15,7 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -72,7 +73,7 @@ fun ApiToSupabase(vm : NetWorkViewModel) {
         },
         colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
     ) {
-        Icon(painterResource(id = R.drawable.cloud), contentDescription = EMPTY_STRING)
+        Icon(painterResource(id = Drawables.cloud), contentDescription = EMPTY_STRING)
 //        BadgedBox(
 //            badge = {
 //                if (showBadge) Badge()

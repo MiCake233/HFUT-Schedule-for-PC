@@ -9,7 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.ui.component.container.CardListItem
@@ -33,7 +34,7 @@ fun LabUI() {
             for(item in list) {
                 CardListItem(
                     headlineContent = { Text(text = item.title) },
-                    leadingContent = { Icon(painterResource(R.drawable.net), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.net), contentDescription = "Localized description",) },
                     modifier = Modifier.clickable {
                         scope.launch {
                             Starter.startWebUrlInner(context ,item.info,item.title, icon= WebFolderDestination.icon)

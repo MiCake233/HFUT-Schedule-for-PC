@@ -10,8 +10,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.container.TransplantListItem
@@ -31,7 +32,7 @@ fun Scan() {
 
     TransplantListItem(
         headlineContent = { ScrollText(text = ScanQrCodeDestination.title.asString()) },
-        overlineContent = { ScrollText(stringResource(R.string.navigation_label_scan_qr_code_description))},
+        overlineContent = { ScrollText(stringResource(Strings.navigation_label_scan_qr_code_description))},
         leadingContent = {
             Icon(painterResource(ScanQrCodeDestination.icon), contentDescription = null)
         },

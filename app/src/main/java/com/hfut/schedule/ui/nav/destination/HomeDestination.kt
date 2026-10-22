@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -19,8 +23,8 @@ data class HomeDestination(
     val subStartDestination: BottomBarItems? = null
 ) : NavDestination() {
     override val key: String = KEY
-    override val title: UiText = res(R.string.navigation_label_home)
-    override val icon = R.drawable.home
+    override val title: UiText = res(Strings.navigation_label_home)
+    override val icon = Drawables.home
 
 
     companion object {

@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.model.choice
 
+import com.xah.common.ui.res.Strings
+
 import com.hfut.schedule.R
 import com.xah.common.ui.model.BaseChoice
 import com.xah.common.ui.model.text.UiText
@@ -9,7 +11,7 @@ enum class ColorMode(
     override val label: UiText,
     override val code: Int
 ) : BaseChoice {
-    LIGHT(res(R.string.appearance_settings_choice_theme_light),1),
-    DARK(res(R.string.appearance_settings_choice_theme_dark),2),
-    AUTO(res(R.string.appearance_settings_choice_theme_auto),0)
+    LIGHT(res(Strings.appearance_settings_choice_theme_light),1),
+    DARK(res(Strings.appearance_settings_choice_theme_dark),2),
+    AUTO(res(Strings.appearance_settings_choice_theme_auto),0)
 }

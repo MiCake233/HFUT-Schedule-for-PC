@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,8 +41,8 @@ data class CourseDetailDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_course_detail)
-        val ICON = R.drawable.category
+        val TITLE = res(Strings.navigation_label_course_detail)
+        val ICON = Drawables.category
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

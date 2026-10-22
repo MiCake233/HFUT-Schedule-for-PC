@@ -43,7 +43,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -270,7 +271,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                         onClick = {payNumber = payNumber.replaceFirst(".$".toRegex(), EMPTY_STRING)},
                         modifier = Modifier.padding(horizontal = 5.dp)
                     ) {
-                        Icon(painter = painterResource(R.drawable.backspace), contentDescription = "description")
+                        Icon(painter = painterResource(Drawables.backspace), contentDescription = "description")
                     }
 
                     FilledTonalIconButton(
@@ -281,7 +282,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                         },
                         modifier = Modifier.padding(horizontal = 5.dp)
                     ) {
-                        Icon(painterResource(R.drawable.check), contentDescription = "description")
+                        Icon(painterResource(Drawables.check), contentDescription = "description")
                     }
 
                     FilledTonalButton(
@@ -336,7 +337,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                             }
                         },
                         text = textLogin,
-                        icon = R.drawable.login
+                        icon = Drawables.login
                     )
                     Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
                     LargeButton(
@@ -350,7 +351,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                             }
                         },
                         text = textLogout,
-                        icon = R.drawable.logout,
+                        icon = Drawables.logout,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -387,7 +388,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                 refreshFlow()
                             },
                         ) {
-                            Icon(painterResource(R.drawable.rotate_right),null)
+                            Icon(painterResource(Drawables.rotate_right),null)
                         }
                         FilledTonalButton(
                             onClick = {
@@ -408,7 +409,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                 refreshFlow()
                             },
                         ) {
-                            Icon(painterResource(R.drawable.rotate_right),null)
+                            Icon(painterResource(Drawables.rotate_right),null)
                         }
                         FilledTonalButton(
                             onClick = {
@@ -436,7 +437,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                     Text("如您修改了校园网默认密码，请录入新的密码")
                                 },
                                 leadingContent = {
-                                    Icon(painter = painterResource(id = R.drawable.lock), contentDescription = EMPTY_STRING)
+                                    Icon(painter = painterResource(id = Drawables.lock), contentDescription = EMPTY_STRING)
                                 },
                                 modifier = Modifier.clickable {
                                     windowToDestination(
@@ -465,13 +466,13 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { Text(text = "余额 ￥${fee}") },
                                 overlineContent = { Text("1GiB / ￥1") },
-                                leadingContent = { Icon(painter = painterResource(id = R.drawable.paid), contentDescription = EMPTY_STRING)},
+                                leadingContent = { Icon(painter = painterResource(id = Drawables.paid), contentDescription = EMPTY_STRING)},
                                 modifier = Modifier.weight(.5f)
                             )
                             TransplantListItem(
                                 overlineContent = { Text(text = "月免费 ${maxFlow}GiB") },
                                 headlineContent = { Text(text = "已用 $percent%", fontWeight = FontWeight.Bold)},
-                                leadingContent = { Icon(painterResource(R.drawable.percent), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.percent), contentDescription = "Localized description",) },
                                 modifier = Modifier.weight(.5f)
                             )
                         }
@@ -496,7 +497,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                     Text("如您修改了一卡通默认密码，请录入新的密码")
                                 },
                                 leadingContent = {
-                                    Icon(painter = painterResource(id = R.drawable.lock), contentDescription = EMPTY_STRING)
+                                    Icon(painter = painterResource(id = Drawables.lock), contentDescription = EMPTY_STRING)
                                 },
                                 modifier = Modifier.clickable {
                                     windowToDestination(
@@ -514,7 +515,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                     Text(text = "假期不限额度与时间，其余时间限额月${maxFlow}GiB，且熄灯期间禁用")
                                 },
                                 leadingContent = {
-                                    Icon(painter = painterResource(id = R.drawable.paid), contentDescription = EMPTY_STRING)
+                                    Icon(painter = painterResource(id = Drawables.paid), contentDescription = EMPTY_STRING)
                                 }
                             )
                         }

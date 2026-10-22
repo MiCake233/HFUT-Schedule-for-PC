@@ -54,7 +54,8 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.shortcut.AppShortcutManager
@@ -152,7 +153,7 @@ fun ShortcutSortScreen() {
                             showDialog = true
                         }
                     ) {
-                        Icon(painterResource(R.drawable.rotate_right),null)
+                        Icon(painterResource(Drawables.rotate_right),null)
                     }
                     Spacer(Modifier.width(APP_HORIZONTAL_DP/5))
                     if(!inEdit) {
@@ -204,7 +205,7 @@ fun ShortcutSortScreen() {
                             Text(item.longLabel.asString(), modifier = Modifier.alpha(alpha))
                         },
                         leadingContent = {
-                            if(item.icon == R.drawable.pdd_icon || item.icon == R.drawable.taobao_icon) {
+                            if(item.icon == Drawables.pdd_icon || item.icon == Drawables.taobao_icon) {
                                 Image(
                                     painterResource(item.icon),
                                     null,

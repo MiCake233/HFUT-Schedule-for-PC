@@ -31,7 +31,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -141,7 +142,7 @@ private fun ScheduleItemUI(listItem: GithubIoSchedule, isFuture : Boolean, activ
         overlineContent = {Text(text = time)},
         supportingContent = { Text(text = info)},
         leadingContent = {
-            Icon(painterResource(R.drawable.calendar), contentDescription = "Localized description",)
+            Icon(painterResource(Drawables.calendar), contentDescription = "Localized description",)
         },
         modifier = Modifier.clickable {},
         trailingContent = {
@@ -161,7 +162,7 @@ private fun ScheduleItemUI(listItem: GithubIoSchedule, isFuture : Boolean, activ
                         }
                     }
                 ) {
-                    Icon( painterResource(R.drawable.event_upcoming),
+                    Icon( painterResource(Drawables.event_upcoming),
                         contentDescription = "Localized description",)
                 }
         }
@@ -202,7 +203,7 @@ fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Acti
                             supportingContent = { Text(text = info)},
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.timer),
+                                    painterResource(Drawables.timer),
                                     contentDescription = "Localized description",
                                 )
                             },
@@ -222,7 +223,7 @@ fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Acti
 
                                     }
                                 ) {
-                                    Icon( painterResource(R.drawable.event_upcoming),
+                                    Icon( painterResource(Drawables.event_upcoming),
                                         contentDescription = "Localized description",)
                                 }
                             },
@@ -237,7 +238,7 @@ fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Acti
                             supportingContent = { Text(text = info)},
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.timer),
+                                    painterResource(Drawables.timer),
                                     contentDescription = "Localized description",
                                 )
                             },
@@ -289,7 +290,7 @@ fun CommunityTodayCourseItem(list : CommunityCourseDetail, timeNow : String) {
                 when(state) {
                     NOT_STARTED -> {
                         Icon(
-                            painterResource(R.drawable.schedule),
+                            painterResource(Drawables.schedule),
                             contentDescription = "Localized description",
                         )
                     }
@@ -298,7 +299,7 @@ fun CommunityTodayCourseItem(list : CommunityCourseDetail, timeNow : String) {
                     }
                     ENDED -> {
                         Icon(
-                            painterResource(R.drawable.check),
+                            painterResource(Drawables.check),
                             contentDescription = "Localized description",
                         )
                     }
@@ -356,7 +357,7 @@ fun CommunityTomorrowCourseItem(list: CommunityCourseDetail) {
         headlineContent = { Text(text = list.name) },
         overlineContent = {Text(text = list.classTime)},
         supportingContent = { list.place?.let { Text(text = it) } },
-        leadingContent = { Icon(painterResource(R.drawable.exposure_plus_1), contentDescription = "Localized description") },
+        leadingContent = { Icon(painterResource(Drawables.exposure_plus_1), contentDescription = "Localized description") },
         modifier = Modifier.clickable {
             showBottomSheet = true
         },
@@ -497,7 +498,7 @@ fun CustomItemUI(
                     }
                 ) {
                     Icon(
-                        painterResource(if(item.type == CustomEventType.SCHEDULE) R.drawable.calendar else R.drawable.timer),
+                        painterResource(if(item.type == CustomEventType.SCHEDULE) Drawables.calendar else Drawables.timer),
                         contentDescription = "Localized description",
                         tint = if(isOutOfDate) LocalContentColor.current.copy(.5f) else LocalContentColor.current
                     )
@@ -514,7 +515,7 @@ fun CustomItemUI(
                             id = item.id
                             showDialog = true
                         }
-                    ) { Icon(painterResource(R.drawable.delete), null) }
+                    ) { Icon(painterResource(Drawables.delete), null) }
                 } else {
                     if(isFuture) {
                         FilledTonalIconButton(
@@ -530,7 +531,7 @@ fun CustomItemUI(
                                     )
                                 }
                             }
-                        ) { Icon(painterResource(R.drawable.event_upcoming), null) }
+                        ) { Icon(painterResource(Drawables.event_upcoming), null) }
                     } else {
                         if(item.type == CustomEventType.NET_COURSE) {
                             val deadTime = item.dateTime.end.toLocalDateTime()
@@ -592,14 +593,14 @@ fun TodayUI(vm: NetWorkViewModel) {
                 TransplantListItem(
                     headlineContent = { ScrollText(text = "节假日休息" ) },
                     overlineContent = { ScrollText(text = "明天") },
-                    leadingContent = { Icon(painter = painterResource(R.drawable.sentiment_very_satisfied) , contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(Drawables.sentiment_very_satisfied) , contentDescription = EMPTY_STRING)},
                 )
             }
             isSpecificWorkDayTomorrow() -> {
                 TransplantListItem(
                     headlineContent = { ScrollText(text = "调休非休息" ) },
                     overlineContent = { ScrollText(text = "明天") },
-                    leadingContent = { Icon(painter = painterResource(R.drawable.work) , contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(Drawables.work) , contentDescription = EMPTY_STRING)},
 //                    colors = MaterialTheme.colorScheme.errorContainer
                 )
             }
@@ -633,25 +634,25 @@ fun TodayUI(vm: NetWorkViewModel) {
                 }
                 val result = when {
                     time == null -> {
-                        Pair("无课", R.drawable.sentiment_very_satisfied)
+                        Pair("无课", Drawables.sentiment_very_satisfied)
                     }
                     time == 8 -> {
-                        Pair("有早八",R.drawable.sentiment_sad)
+                        Pair("有早八",Drawables.sentiment_sad)
                     }
                     time == 9 -> {
-                        Pair("有早九",R.drawable.sentiment_sad)
+                        Pair("有早九",Drawables.sentiment_sad)
                     }
                     time == 10 -> {
-                        Pair("有早十",R.drawable.sentiment_dissatisfied)
+                        Pair("有早十",Drawables.sentiment_dissatisfied)
                     }
                     time == 11 -> {
-                        Pair("有早十",R.drawable.sentiment_dissatisfied)
+                        Pair("有早十",Drawables.sentiment_dissatisfied)
                     }
                     time!! >= 14 -> {
-                        Pair("睡懒觉",R.drawable.sentiment_very_satisfied)
+                        Pair("睡懒觉",Drawables.sentiment_very_satisfied)
                     }
                     else -> {
-                        Pair("未知",R.drawable.sentiment_very_satisfied)
+                        Pair("未知",Drawables.sentiment_very_satisfied)
                     }
                 }
 
@@ -695,7 +696,7 @@ fun TodayUI(vm: NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { ScrollText(text = it, color = MaterialTheme.colorScheme.error) },
                                 overlineContent = { ScrollText(text = "${place?.simplifyPlace()} $startTime", color = MaterialTheme.colorScheme.error) },
-                                leadingContent = { Icon(painter = painterResource(R.drawable.draw), contentDescription = EMPTY_STRING, tint = MaterialTheme.colorScheme.error)},
+                                leadingContent = { Icon(painter = painterResource(Drawables.draw), contentDescription = EMPTY_STRING, tint = MaterialTheme.colorScheme.error)},
                                 modifier = Modifier
                                     .background(cardNormalColor())
                                     .zIndex(4f)
@@ -707,7 +708,7 @@ fun TodayUI(vm: NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { ScrollText(text = it) },
                                 overlineContent = { ScrollText(text =  place?.simplifyPlace() + " " +  startTime) },
-                                leadingContent = { Icon(painter = painterResource(R.drawable.schedule), contentDescription = EMPTY_STRING)},
+                                leadingContent = { Icon(painter = painterResource(Drawables.schedule), contentDescription = EMPTY_STRING)},
                                 modifier = Modifier
                                     .background(cardNormalColor())
                                     .zIndex(3f)
@@ -719,7 +720,7 @@ fun TodayUI(vm: NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { ScrollText(text = it) },
                                 overlineContent = { ScrollText(text =  returnTime.toString()) },
-                                leadingContent = { Icon(painter = painterResource(R.drawable.book_5), contentDescription = EMPTY_STRING)},
+                                leadingContent = { Icon(painter = painterResource(Drawables.book_5), contentDescription = EMPTY_STRING)},
                                 modifier = Modifier
                                     .background(cardNormalColor())
                                     .zIndex(2f)
@@ -731,7 +732,7 @@ fun TodayUI(vm: NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { ScrollText(text = it) },
                                 overlineContent = { ScrollText(text =  startTime.toString()) },
-                                leadingContent = { Icon(painter = painterResource(R.drawable.person_play), contentDescription = EMPTY_STRING)},
+                                leadingContent = { Icon(painter = painterResource(Drawables.person_play), contentDescription = EMPTY_STRING)},
                                 modifier = Modifier
                                     .background(cardNormalColor())
                                     .zIndex(1f)
@@ -784,7 +785,7 @@ fun JxglstuTodayCourseItem(
                 when(state) {
                     NOT_STARTED -> {
                         Icon(
-                            painterResource(R.drawable.schedule),
+                            painterResource(Drawables.schedule),
                             contentDescription = "Localized description",
                         )
                     }
@@ -793,7 +794,7 @@ fun JxglstuTodayCourseItem(
                     }
                     ENDED -> {
                         Icon(
-                            painterResource(R.drawable.check),
+                            painterResource(Drawables.check),
                             contentDescription = "Localized description",
                         )
                     }
@@ -848,7 +849,7 @@ fun JxglstuTomorrowCourseItem(
         overlineContent = {Text(text = "$startTime-$endTime")},
         supportingContent = { item.place?.let { Text(text = it) } },
         cardModifier = Modifier.sharedContainer(dest.key, MaterialTheme.shapes.medium,cardNormalColor()),
-        leadingContent = { Icon(painterResource(R.drawable.exposure_plus_1), contentDescription = "Localized description") },
+        leadingContent = { Icon(painterResource(Drawables.exposure_plus_1), contentDescription = "Localized description") },
         modifier = Modifier.clickable { navController.push(dest) },
         shape = NoneRoundShape,
         color = cardNormalColor(),

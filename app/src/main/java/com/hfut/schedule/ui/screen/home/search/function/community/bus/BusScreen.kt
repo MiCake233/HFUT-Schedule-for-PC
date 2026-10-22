@@ -49,7 +49,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -130,7 +131,7 @@ fun BusScreen(
                             isCircle = true,
                             modifier = Modifier.padding(end = BUTTON_END_PADDING)
                         ) {
-                            Icon(painterResource(R.drawable.net),null)
+                            Icon(painterResource(Drawables.net),null)
                         }
                     }
                 )
@@ -218,7 +219,7 @@ fun BusScreen(
                                         Text(count.toString() + "辆")
                                     },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.schedule),null)
+                                        Icon(painterResource(Drawables.schedule),null)
                                     },
                                 )
                                 Column(
@@ -414,7 +415,7 @@ fun BusScreenV2(
                                 backdrop = backdrop,
                                 isCircle = true,
                             ) {
-                                Icon(painterResource(R.drawable.net),null)
+                                Icon(painterResource(Drawables.net),null)
                             }
                         }
                     }
@@ -514,7 +515,7 @@ fun BusScreenV2(
                                         Text(count.toString() + "辆")
                                     },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.schedule),null)
+                                        Icon(painterResource(Drawables.schedule),null)
                                     },
                                 )
                                 Column(

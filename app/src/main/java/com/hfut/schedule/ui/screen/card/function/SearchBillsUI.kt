@@ -28,7 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
@@ -135,7 +136,7 @@ fun SearchBillsUI(vm : NetWorkViewModel) {
                                 scope.launch { refreshNetwork() }
                             }) {
                             Icon(
-                                painter = painterResource(R.drawable.search),
+                                painter = painterResource(Drawables.search),
                                 contentDescription = "description"
                             )
                         }

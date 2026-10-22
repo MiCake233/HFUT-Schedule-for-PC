@@ -48,7 +48,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.hfut.schedule.R
@@ -244,7 +245,7 @@ fun WebNavigationScreen(
                 elevation =  FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp),
                 onClick = { showBottomSheet_Add = true }
             ) {
-                Icon(painterResource(R.drawable.add),null)
+                Icon(painterResource(Drawables.add),null)
             }
         }
     ) { innerPadding ->
@@ -276,7 +277,7 @@ fun WebNavigationScreen(
                                     },
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.qr_code_2),
+                                        painterResource(Drawables.qr_code_2),
                                         null,
                                         tint = if(qrPainter == null) LocalContentColor.current else MaterialTheme.colorScheme.primary
                                     )
@@ -294,7 +295,7 @@ fun WebNavigationScreen(
                                         }
                                     },
                                 ) {
-                                    Icon(painterResource(R.drawable.arrow_forward),null)
+                                    Icon(painterResource(Drawables.arrow_forward),null)
                                 }
                             }
                         },

@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,7 @@ import com.xah.common.ui.util.text
 object SettingsTipsDestination : NavDestination() {
     override val key: String = "settings_tips"
     override val title: UiText = text("使用提示")
-    override val icon = R.drawable.lightbulb
+    override val icon = Drawables.lightbulb
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

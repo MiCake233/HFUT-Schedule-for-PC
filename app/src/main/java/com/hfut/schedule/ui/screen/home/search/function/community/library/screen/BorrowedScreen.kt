@@ -28,7 +28,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -162,7 +163,7 @@ private fun BorrowUI(
                                 overlineContent = { Text("总计")},
                                 headlineContent = { Text("${totalCount}本")},
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.filter_vintage),null)
+                                    Icon(painterResource(Drawables.filter_vintage),null)
                                 },
                                 modifier = Modifier.weight(.5f)
                             )
@@ -170,7 +171,7 @@ private fun BorrowUI(
                                 overlineContent = { Text("已归还")},
                                 headlineContent = { Text("${returnedCount}本")},
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.check_circle),null)
+                                    Icon(painterResource(Drawables.check_circle),null)
                                 },
                                 modifier = Modifier.weight(.5f)
                             )
@@ -180,7 +181,7 @@ private fun BorrowUI(
                                 overlineContent = { Text("借阅中") },
                                 headlineContent = { Text("${borrowingCount}本") },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.book_5), null)
+                                    Icon(painterResource(Drawables.book_5), null)
                                 },
                                 modifier = Modifier.weight(.5f)
                             )
@@ -188,7 +189,7 @@ private fun BorrowUI(
                                 overlineContent = { Text("逾期待还") },
                                 headlineContent = { Text("${overdueCount}本") },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.schedule), null,)
+                                    Icon(painterResource(Drawables.schedule), null,)
                                 },
                                 modifier = Modifier.weight(.5f)
                             )
@@ -232,13 +233,13 @@ private fun BorrowUI(
                                             LoadingIcon()
                                         }
                                         BorrowedStatus.RETURNED -> {
-                                            Icon(painterResource(R.drawable.check_circle), null)
+                                            Icon(painterResource(Drawables.check_circle), null)
                                         }
                                         BorrowedStatus.OVERDUE -> {
                                             LoadingIcon()
                                         }
                                         else -> {
-                                            Icon(painterResource(R.drawable.book_5),null)
+                                            Icon(painterResource(Drawables.book_5),null)
                                         }
                                     }
                                 },
@@ -267,7 +268,7 @@ private fun BorrowUI(
                                     overlineContent = { Text("ISBN $isbn\n索书号 $callNo") },
                                     supportingContent = { Text(authors) },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.person), null)
+                                        Icon(painterResource(Drawables.person), null)
                                     },
                                 )
                                 PaddingHorizontalDivider()
@@ -277,7 +278,7 @@ private fun BorrowUI(
                                     },
                                     supportingContent = { Text(detail.digest) },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.info), null)
+                                        Icon(painterResource(Drawables.info), null)
                                     },
                                 )
                                 val list = detail.keywords.split("/").filterKeyword()

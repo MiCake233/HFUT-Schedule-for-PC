@@ -30,7 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.showDevelopingToast
@@ -160,7 +161,7 @@ data class TimeTableSquareWindow(
                                                 Text("地点", color = contentColor)
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.near_me),null, tint = contentColor)
+                                                Icon(painterResource(Drawables.near_me),null, tint = contentColor)
                                             },
                                             trailingContent = {
                                                 if(it.contains("新安") || it.contains("敬亭")) {
@@ -172,7 +173,7 @@ data class TimeTableSquareWindow(
                                                             showDevelopingToast()
                                                         }
                                                     ) {
-                                                        Icon(painterResource(R.drawable.directions_alt),null)
+                                                        Icon(painterResource(Drawables.directions_alt),null)
                                                     }
                                                 }
                                             }
@@ -189,7 +190,7 @@ data class TimeTableSquareWindow(
                                             },
                                             leadingContent = {
                                                 Icon(
-                                                    painterResource(R.drawable.schedule),
+                                                    painterResource(Drawables.schedule),
                                                     null,
                                                     tint = contentColor
                                                 )
@@ -206,7 +207,7 @@ data class TimeTableSquareWindow(
                                                 },
                                                 leadingContent = {
                                                     Icon(
-                                                        painterResource(R.drawable.person),
+                                                        painterResource(Drawables.person),
                                                         null,
                                                         tint = contentColor
                                                     )
@@ -223,7 +224,7 @@ data class TimeTableSquareWindow(
                                                 Text("班级", color = contentColor)
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.group),null, tint = contentColor)
+                                                Icon(painterResource(Drawables.group),null, tint = contentColor)
                                             }
                                         )
                                     }
@@ -252,7 +253,7 @@ data class TimeTableSquareWindow(
                             backdrop = rememberLayerBackdrop(),
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.close),null)
+                            Icon(painterResource(Drawables.close),null)
                         }
                     }
                 }

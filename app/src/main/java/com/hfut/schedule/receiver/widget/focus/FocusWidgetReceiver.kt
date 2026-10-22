@@ -1,5 +1,7 @@
 package com.hfut.schedule.receiver.widget.focus
 
+import com.xah.common.ui.res.Drawables
+
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -326,7 +328,7 @@ class FocusWidget : GlanceAppWidget() {
                                                 overlineText = item.classTime,
                                                 leadingContent = {
                                                     Image(
-                                                        provider = ImageProvider(if (isDarkTheme) R.drawable.exposure_plus_1 else R.drawable.exposure_plus_1_widget),
+                                                        provider = ImageProvider(if (isDarkTheme) Drawables.exposure_plus_1 else Drawables.exposure_plus_1_widget),
                                                         contentDescription = null
                                                     )
                                                 },
@@ -358,15 +360,15 @@ class FocusWidget : GlanceAppWidget() {
                                                         provider = ImageProvider(
                                                             when (state) {
                                                                 NOT_STARTED -> {
-                                                                    if (isDarkTheme) R.drawable.schedule else R.drawable.schedule_widget
+                                                                    if (isDarkTheme) Drawables.schedule else Drawables.schedule_widget
                                                                 }
 
                                                                 ONGOING -> {
-                                                                    if (isDarkTheme) R.drawable.progress_activity else R.drawable.progress_activity_widget
+                                                                    if (isDarkTheme) Drawables.progress_activity else Drawables.progress_activity_widget
                                                                 }
 
                                                                 ENDED -> {
-                                                                    if (isDarkTheme) R.drawable.check else R.drawable.check_widget
+                                                                    if (isDarkTheme) Drawables.check else Drawables.check_widget
                                                                 }
                                                             }
                                                         ), contentDescription = null
@@ -398,7 +400,7 @@ class FocusWidget : GlanceAppWidget() {
                                                 overlineText = "$startTime-$endTime",
                                                 leadingContent = {
                                                     Image(
-                                                        provider = ImageProvider(if (isDarkTheme) R.drawable.exposure_plus_1 else R.drawable.exposure_plus_1_widget),
+                                                        provider = ImageProvider(if (isDarkTheme) Drawables.exposure_plus_1 else Drawables.exposure_plus_1_widget),
                                                         contentDescription = null
                                                     )
                                                 },
@@ -430,15 +432,15 @@ class FocusWidget : GlanceAppWidget() {
                                                         provider = ImageProvider(
                                                             when (state) {
                                                                 NOT_STARTED -> {
-                                                                    if (isDarkTheme) R.drawable.schedule else R.drawable.schedule_widget
+                                                                    if (isDarkTheme) Drawables.schedule else Drawables.schedule_widget
                                                                 }
 
                                                                 ONGOING -> {
-                                                                    if (isDarkTheme) R.drawable.progress_activity else R.drawable.progress_activity_widget
+                                                                    if (isDarkTheme) Drawables.progress_activity else Drawables.progress_activity_widget
                                                                 }
 
                                                                 ENDED -> {
-                                                                    if (isDarkTheme) R.drawable.check else R.drawable.check_widget
+                                                                    if (isDarkTheme) Drawables.check else Drawables.check_widget
                                                                 }
                                                             }
                                                         ), contentDescription = null

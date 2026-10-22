@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,8 +38,8 @@ data class TeacherSearchApiDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_teacher_search)
-        val ICON = R.drawable.group_search
+        val TITLE = res(Strings.navigation_label_teacher_search)
+        val ICON = Drawables.group_search
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

@@ -34,8 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.createBitmap
 import com.google.zxing.BarcodeFormat
@@ -142,7 +144,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
 
         val navTopController = LocalNavController.current
 
-        DividerTextExpandedWith(stringResource(R.string.about_settings_about_half_title)) {
+        DividerTextExpandedWith(stringResource(Strings.about_settings_about_half_title)) {
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 SharedContainer(
                     key = VersionInfoDestination.key,
@@ -155,11 +157,11 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
                         headlineContent = { Text(text = VersionInfoDestination.title.asString()) },
-                        supportingContent = { Text(text = stringResource(R.string.about_settings_version_info_description))},
+                        supportingContent = { Text(text = stringResource(Strings.about_settings_version_info_description))},
                         modifier = Modifier.clickable {
                             navTopController.push(VersionInfoDestination)
                         },
-                        leadingContent = { Icon(painter = painterResource(id = R.drawable.sdk), contentDescription = EMPTY_STRING)}
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.sdk), contentDescription = EMPTY_STRING)}
                     )
                 }
 
@@ -171,8 +173,8 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                 ) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.about_settings_about_title)) },
-                        supportingContent = { Text(text = stringResource(R.string.about_settings_about_description))},
+                        headlineContent = { Text(text = stringResource(Strings.about_settings_about_title)) },
+                        supportingContent = { Text(text = stringResource(Strings.about_settings_about_description))},
                         modifier = Modifier.combinedClickable(
                             onClick = {
                                 navTopController.push(SettingsAboutDeveloperDestination)
@@ -181,16 +183,16 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                                 //长按彩蛋
                                 showBottomSheet_icon = true
                             }),
-                        leadingContent = { Icon(painter = painterResource(id = R.drawable.info), contentDescription = EMPTY_STRING)}
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.info), contentDescription = EMPTY_STRING)}
                     )
                 }
 
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.about_settings_feedback_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.about_settings_feedback_description))},
+                    headlineContent = { Text(text = stringResource(Strings.about_settings_feedback_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.about_settings_feedback_description))},
                     leadingContent = {
-                        Icon(painterResource(R.drawable.alternate_email), contentDescription = "Localized description")
+                        Icon(painterResource(Drawables.alternate_email), contentDescription = "Localized description")
                     },
                     modifier = Modifier.clickable {
                         Starter.emailMe(context)
@@ -204,14 +206,14 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                 ) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.about_settings_tips_title)) },
+                        headlineContent = { Text(text = stringResource(Strings.about_settings_tips_title)) },
                         supportingContent = { Text(text = stringResource(
-                            R.string.about_settings_tips_description,
+                            Strings.about_settings_tips_description,
                             MyApplication.APP_NAME
                         ))},
                         leadingContent = {
                             Icon(
-                                painterResource(R.drawable.lightbulb),
+                                painterResource(Drawables.lightbulb),
                                 contentDescription = "Localized description",
                             )
                         },
@@ -222,11 +224,11 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                 }
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.about_settings_promote_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.about_settings_promote_description))},
+                    headlineContent = { Text(text = stringResource(Strings.about_settings_promote_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.about_settings_promote_description))},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.ios_share),
+                            painterResource(Drawables.ios_share),
                             contentDescription = "Localized description",
                         )
                     },
@@ -238,7 +240,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                         onDoubleClick = {
                             ClipBoardHelper.copy(Constant.GITEE_UPDATE_URL + "releases/tag/Android",
                                 context.getString(
-                                    R.string.about_settings_toast_promote
+                                    Strings.about_settings_toast_promote
                                 ))
                         }
                     )
@@ -255,18 +257,18 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                 ) {
                     TransplantListItem(
                         colors = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.about_settings_different_supported_title)) },
-                        supportingContent = { Text(text = stringResource(R.string.about_settings_different_supported_description))},
+                        headlineContent = { Text(text = stringResource(Strings.about_settings_different_supported_title)) },
+                        supportingContent = { Text(text = stringResource(Strings.about_settings_different_supported_description))},
                         modifier = Modifier.clickable {
                             navTopController.push(SettingsAvailableDestination)
                         },
-                        leadingContent = { Icon(painter = painterResource(id = R.drawable.support), contentDescription = EMPTY_STRING)}
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.support), contentDescription = EMPTY_STRING)}
                     )
                 }
                  */
             }
         }
-        DividerTextExpandedWith(stringResource(R.string.about_settings_fix_half_title)) {
+        DividerTextExpandedWith(stringResource(Strings.about_settings_fix_half_title)) {
             CustomCard(
                 color = MaterialTheme.colorScheme.surface
             ) {
@@ -275,7 +277,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                     supportingContent = {
                         Text("从Gitee下载最新版本的apk安装包")
                     },
-                    leadingContent = { Icon(painterResource(R.drawable.cloud_download), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.cloud_download), contentDescription = "Localized description",) },
                     modifier = Modifier.clickable{ Starter.startWebUrlOuter(context,Constant.GITEE_UPDATE_URL + "releases/tag/Android") }
                 )
                 PaddingHorizontalDivider()
@@ -293,12 +295,12 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                 ) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.about_settings_developer_title)) },
-                        supportingContent = { Text(text = stringResource(R.string.about_settings_developer_description))},
+                        headlineContent = { Text(text = stringResource(Strings.about_settings_developer_title)) },
+                        supportingContent = { Text(text = stringResource(Strings.about_settings_developer_description))},
                         modifier = Modifier.clickable {
                             navTopController.push(SettingsDeveloperDestination)
                         },
-                        leadingContent = { Icon(painter = painterResource(id = R.drawable.code), contentDescription = EMPTY_STRING)}
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.code), contentDescription = EMPTY_STRING)}
                     )
                 }
             }

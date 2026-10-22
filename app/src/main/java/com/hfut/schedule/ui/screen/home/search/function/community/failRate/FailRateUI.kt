@@ -17,7 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.community.CommunityCourseFailRate
 import com.xah.common.logic.state.NetworkUiState
@@ -108,7 +109,7 @@ fun FailRateDetailScreen(
                 headlineContent = {  Text("平均分 ${dataItem.avgScore}") },
                 supportingContent = { Text("人数: 挂科 ${dataItem.failCount} | 总 ${dataItem.totalCount}") },
                 overlineContent = { Text(text = "${dataItem.termYear}年 第${dataItem.termPeriod}学期")},
-                leadingContent = { Icon(painterResource(R.drawable.article), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.article), contentDescription = "Localized description",) },
                 trailingContent = { Text("挂科率 ${String.format("%.2f", rate)} %") },
             )
         }

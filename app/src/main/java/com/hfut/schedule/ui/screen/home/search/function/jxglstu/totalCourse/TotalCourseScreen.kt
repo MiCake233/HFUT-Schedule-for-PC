@@ -4,7 +4,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuLesson
 
@@ -20,7 +21,7 @@ fun TermFirstlyInfo(list: List<JxglstuLesson>) {
         overlineContent = { Text(text = info.startDate + " ~ " + info.endDate)},
         headlineContent = {  ScrollText(info.nameZh) },
         leadingContent = { Icon(
-            painterResource(R.drawable.category),
+            painterResource(Drawables.category),
             contentDescription = "Localized description",
         ) },
         color = MaterialTheme.colorScheme.secondaryContainer,

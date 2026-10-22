@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.community.appointment.AppointmentScreen
@@ -8,8 +12,8 @@ import com.xah.common.ui.util.res
 
 object CommunityAppointmentDestination : NavDestination() {
     override val key = "community_appointment"
-    override val title = res(R.string.navigation_label_community_appointment)
-    override val icon = R.drawable.table_restaurant
+    override val title = res(Strings.navigation_label_community_appointment)
+    override val icon = Drawables.table_restaurant
 
     @Composable
     override fun Content() {

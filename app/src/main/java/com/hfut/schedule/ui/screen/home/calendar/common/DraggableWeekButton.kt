@@ -44,7 +44,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -218,7 +219,7 @@ fun DraggableWeekButton(
 
                             // 左箭头（展开时显示）
                             Icon(
-                                painterResource(R.drawable.arrow_back),
+                                painterResource(Drawables.arrow_back),
                                 contentDescription = null,
                                 tint = if(shaderState == null) contentColor else IconButtonDefaults.iconButtonColors().contentColor,
                                 modifier = Modifier
@@ -234,7 +235,7 @@ fun DraggableWeekButton(
 
                             // 右箭头（展开时显示）
                             Icon(
-                                painterResource(R.drawable.arrow_forward),
+                                painterResource(Drawables.arrow_forward),
                                 contentDescription = null,
                                 tint = if(shaderState == null) contentColor else IconButtonDefaults.iconButtonColors().contentColor,
                                 modifier = Modifier

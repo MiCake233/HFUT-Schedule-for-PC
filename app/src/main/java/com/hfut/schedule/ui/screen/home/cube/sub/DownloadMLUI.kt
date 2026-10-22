@@ -28,7 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.ocr.TesseractUtils
 import com.hfut.schedule.logic.util.ocr.TesseractUtils.isExistModule
@@ -121,7 +122,7 @@ fun DownloadMLUI(innerPadding : PaddingValues) {
                                             AppDownloadManager.downloadMl()
                                         }
                                     ) {
-                                        Icon(painterResource(R.drawable.download),null)
+                                        Icon(painterResource(Drawables.download),null)
                                     }
                                     FilledTonalButton(
                                         onClick = {
@@ -139,7 +140,7 @@ fun DownloadMLUI(innerPadding : PaddingValues) {
                             }
 
                         } else {
-                            Icon(painterResource(R.drawable.check), null)
+                            Icon(painterResource(Drawables.check), null)
                         }
                     },
                     modifier = Modifier.combinedClickable(

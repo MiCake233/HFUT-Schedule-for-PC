@@ -13,8 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.R
@@ -36,8 +38,8 @@ fun Repair() {
     val floatController = LocalFloatingController.current
 
     TransplantListItem(
-        headlineContent = { ScrollText(text = stringResource(R.string.navigation_label_repair)) },
-        leadingContent = { Icon(painter = painterResource(id = R.drawable.build), contentDescription = EMPTY_STRING) },
+        headlineContent = { ScrollText(text = stringResource(Strings.navigation_label_repair)) },
+        leadingContent = { Icon(painter = painterResource(id = Drawables.build), contentDescription = EMPTY_STRING) },
         modifier = Modifier.clickable {
             floatController.push(RepairWindow)
         }

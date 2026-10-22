@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsAiApiKeyDestination : NavDestination() {
     override val key: String = "settings_ai_api_key"
     override val title: UiText = text("设置: 大模型")
-    override val icon = R.drawable.wand_stars
+    override val icon = Drawables.wand_stars
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

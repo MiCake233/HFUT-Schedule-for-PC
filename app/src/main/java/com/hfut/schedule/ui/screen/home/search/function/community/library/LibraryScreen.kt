@@ -44,7 +44,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -121,14 +122,14 @@ private val items = listOf(
     NavigationBarItemData(
         LibraryBarItems.MINE.name,
         "我",
-        R.drawable.person,
-        R.drawable.person_filled,
+        Drawables.person,
+        Drawables.person_filled,
     ),
     NavigationBarItemData(
         LibraryBarItems.SEARCH.name,
         "搜索",
-        R.drawable.search,
-        R.drawable.search_filled,
+        Drawables.search,
+        Drawables.search_filled,
     )
 )
 
@@ -218,7 +219,7 @@ fun LibraryScreen(
                                         }
                                     }
                                 }) {
-                                Icon(painter = painterResource(R.drawable.search), contentDescription = "description")
+                                Icon(painter = painterResource(Drawables.search), contentDescription = "description")
                             }
                         },
                     ) {
@@ -352,7 +353,7 @@ private fun SearchScreenCommunity(
                             supportingContent = {Text(text = "${item.year}  ${item.publisher}" ) },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.person),
+                                    painterResource(Drawables.person),
                                     contentDescription = "Localized description",
                                 )
                             }
@@ -392,7 +393,7 @@ private fun DetailBookUI(vm: NetWorkViewModel, callNo : String) {
                             Text(item.place)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.near_me),null)
+                            Icon(painterResource(Drawables.near_me),null)
                         },
                         trailingContent = {
                             Text(status)
@@ -499,7 +500,7 @@ fun LibraryMineUI(
                             overlineContent = { Text("借阅") },
                             headlineContent = { Text("${response.borrowCount}本") },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.book_5),null)
+                                Icon(painterResource(Drawables.book_5),null)
                             },
                             modifier = Modifier
                                 .weight(0.5f)
@@ -514,7 +515,7 @@ fun LibraryMineUI(
                                 overlineContent = { Text(latestReturnedData.libraryDetail.detail.title, overflow = TextOverflow.Ellipsis, maxLines = 1) },
                                 headlineContent = { ScrollText("${latestReturnedData.returnTime?.substringBefore(" ")}") },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.send_money),null)
+                                    Icon(painterResource(Drawables.send_money),null)
                                 },
                                 modifier = Modifier
                                     .weight(0.5f)
@@ -529,7 +530,7 @@ fun LibraryMineUI(
                                 overlineContent = { Text("预约") },
                                 headlineContent = { Text("${response.reserveCount}本") },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.schedule),null)
+                                    Icon(painterResource(Drawables.schedule),null)
                                 },
                                 modifier = Modifier
                                     .weight(0.5f)
@@ -546,7 +547,7 @@ fun LibraryMineUI(
                             overlineContent = { Text("收藏") },
                             headlineContent = { Text("${response.collectCount}条") },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.bookmark),null)
+                                Icon(painterResource(Drawables.bookmark),null)
                             },
                             modifier = Modifier
                                 .weight(0.5f)
@@ -560,7 +561,7 @@ fun LibraryMineUI(
                             overlineContent = { Text("书架") },
                             headlineContent = { Text("${response.bookShelfCount}本") },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.newsstand),null)
+                                Icon(painterResource(Drawables.newsstand),null)
                             },
                             modifier = Modifier
                                 .weight(0.5f)
@@ -584,7 +585,7 @@ fun LibraryMineUI(
                             Text("搜索")
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.search),null)
+                            Icon(painterResource(Drawables.search),null)
                         },
                         modifier = Modifier.clickable {
                             libraryNavController.navigateForBottomBar(LibraryBarItems.SEARCH.name)
@@ -600,7 +601,7 @@ fun LibraryMineUI(
                         },
                         color = MaterialTheme.colorScheme.surface,
                         leadingContent = {
-                            Icon(painterResource(R.drawable.globe_book),null)
+                            Icon(painterResource(Drawables.globe_book),null)
                         },
                         modifier = Modifier
                             .clickable {
@@ -609,7 +610,7 @@ fun LibraryMineUI(
                                         context,
                                         url = Constant.NEW_LIBRARY_URL,
                                         title = "图书馆",
-                                        icon = R.drawable.globe_book,
+                                        icon = Drawables.globe_book,
                                     )
                                 }
                             }
@@ -623,7 +624,7 @@ fun LibraryMineUI(
                             Text("旧图书馆官网(需校园网)")
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.net),null)
+                            Icon(painterResource(Drawables.net),null)
                         },
                         color = MaterialTheme.colorScheme.surface,
                         modifier = Modifier
@@ -633,7 +634,7 @@ fun LibraryMineUI(
                                         context,
                                         url = Constant.OLD_LIBRARY_URL,
                                         title = "图书馆",
-                                        icon = R.drawable.net,
+                                        icon = Drawables.net,
                                     )
                                 }
                             }
@@ -647,7 +648,7 @@ fun LibraryMineUI(
                             Text("合肥校区(需校园网)")
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.table_restaurant),null)
+                            Icon(painterResource(Drawables.table_restaurant),null)
                         },
                         color = MaterialTheme.colorScheme.surface,
                         modifier = Modifier
@@ -657,7 +658,7 @@ fun LibraryMineUI(
                                         context,
                                         url = seatUrl,
                                         title = "座位预约",
-                                        icon = R.drawable.table_restaurant
+                                        icon = Drawables.table_restaurant
                                     )
                                 }
                             }
@@ -671,7 +672,7 @@ fun LibraryMineUI(
                             Text("合肥&宣城校区(需校园网)(应前往图书馆线下预约)")
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.meeting_room),null)
+                            Icon(painterResource(Drawables.meeting_room),null)
                         },
                         color = MaterialTheme.colorScheme.surface,
                         modifier = Modifier
@@ -681,7 +682,7 @@ fun LibraryMineUI(
                                         context,
                                         url = Constant.MEETING_ROOM_URL,
                                         title = "研讨间预约",
-                                        icon = R.drawable.meeting_room
+                                        icon = Drawables.meeting_room
                                     )
                                 }
                             }
@@ -733,7 +734,7 @@ private fun SearchScreenLibrary(
                                 Text(item.`in`)
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.near_me),null)
+                                Icon(painterResource(Drawables.near_me),null)
                             },
                             supportingContent = {
                                 Text("索书号 ${item.cp}")
@@ -779,7 +780,7 @@ private fun SearchScreenLibrary(
                                     Text("ISBN ${item.isbn}")
                                 },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.book_5),null)
+                                    Icon(painterResource(Drawables.book_5),null)
                                 }
                             )
                             PaddingHorizontalDivider()
@@ -791,7 +792,7 @@ private fun SearchScreenLibrary(
                                     Text("${item.year}" + (item.publishers?.let { " $it" } ?: EMPTY_STRING))
                                 },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.person),null)
+                                    Icon(painterResource(Drawables.person),null)
                                 }
                             )
                             PaddingHorizontalDivider()
@@ -803,7 +804,7 @@ private fun SearchScreenLibrary(
                                     item.abstract?.removeHtmlTags()?.let { Text(it) }
                                 },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.info),null)
+                                    Icon(painterResource(Drawables.info),null)
                                 }
                             )
                             BottomTextButtonGroup(listOf(

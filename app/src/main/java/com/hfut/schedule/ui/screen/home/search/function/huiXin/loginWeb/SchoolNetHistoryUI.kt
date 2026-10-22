@@ -21,7 +21,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -111,7 +112,7 @@ fun SchoolNetHistoryUsage(vm: NetWorkViewModel) {
                 },
                 modifier = Modifier.weight(1/3f)
             ) {
-                Icon(painterResource(R.drawable.keyboard_arrow_left),null)
+                Icon(painterResource(Drawables.keyboard_arrow_left),null)
             }
             Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
             FilledTonalButton(
@@ -135,7 +136,7 @@ fun SchoolNetHistoryUsage(vm: NetWorkViewModel) {
                 },
                 modifier = Modifier.weight(1/3f)
             ) {
-                Icon(painterResource(R.drawable.keyboard_arrow_right),null)
+                Icon(painterResource(Drawables.keyboard_arrow_right),null)
             }
         }
         CommonNetworkScreen(
@@ -168,7 +169,7 @@ private fun MonthPayContent(result: SchoolNetMonthPayResult) {
                 headlineContent = { Text(formatFlow(result.summary.flowMb)) },
                 overlineContent = { Text("总流量") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.net), contentDescription = null)
+                    Icon(painterResource(Drawables.net), contentDescription = null)
                 }
             )
             PaddingHorizontalDivider()
@@ -176,7 +177,7 @@ private fun MonthPayContent(result: SchoolNetMonthPayResult) {
                 headlineContent = { Text(formatDuration(result.summary.durationMinutes)) },
                 overlineContent = { Text("总时长") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.schedule), contentDescription = null)
+                    Icon(painterResource(Drawables.schedule), contentDescription = null)
                 }
             )
             PaddingHorizontalDivider()
@@ -184,7 +185,7 @@ private fun MonthPayContent(result: SchoolNetMonthPayResult) {
                 headlineContent = { Text("￥${result.summary.baseFee.roundOffString(2)}") },
                 overlineContent = { Text("基本月租") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.paid), contentDescription = null)
+                    Icon(painterResource(Drawables.paid), contentDescription = null)
                 }
             )
             PaddingHorizontalDivider()
@@ -192,7 +193,7 @@ private fun MonthPayContent(result: SchoolNetMonthPayResult) {
                 headlineContent = { Text("￥${result.summary.usageFee.roundOffString(2)}") },
                 overlineContent = { Text("时长/流量计费") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.paid), contentDescription = null)
+                    Icon(painterResource(Drawables.paid), contentDescription = null)
                 }
             )
         }

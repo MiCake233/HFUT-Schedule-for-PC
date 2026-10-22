@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsHuiXinPasswordDestination : NavDestination() {
     override val key: String = "settings_hui_xin_password"
     override val title: UiText = text("一卡通密码")
-    override val icon = R.drawable.lock
+    override val icon = Drawables.lock
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

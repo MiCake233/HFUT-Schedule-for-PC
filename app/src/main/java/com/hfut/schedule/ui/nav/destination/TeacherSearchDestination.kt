@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.school.teacherSearch.TeacherSearchScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object TeacherSearchDestination : NavDestination() {
     override val key = "teacher_search"
-    override val title = res(R.string.navigation_label_teacher_search)
-    override val icon = R.drawable.group_search
+    override val title = res(Strings.navigation_label_teacher_search)
+    override val icon = Drawables.group_search
 
     @Composable
     override fun Content() {

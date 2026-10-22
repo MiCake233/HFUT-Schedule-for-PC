@@ -23,7 +23,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
 import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
@@ -126,7 +127,7 @@ fun BackupScreen(
                         Text("文件名将以'${MyApplication.APP_NAME}备份_时间戳.zip'写出")
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.save),null)
+                        Icon(painterResource(Drawables.save),null)
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
@@ -154,7 +155,7 @@ fun BackupScreen(
                         Text("请务必选择本App备份导出的文件，并且原数据将会丢失！")
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.settings_backup_restore),null)
+                        Icon(painterResource(Drawables.settings_backup_restore),null)
                     },
                     modifier = Modifier.clickable {
                         filePickerLauncher.launch(arrayOf("*/*"))
@@ -167,7 +168,7 @@ fun BackupScreen(
                         Text("导入开发者预设的数据源，以方便游客体验更多功能")
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.download),null)
+                        Icon(painterResource(Drawables.download),null)
                     },
                     modifier = Modifier.clickable {
                         scope.launch {

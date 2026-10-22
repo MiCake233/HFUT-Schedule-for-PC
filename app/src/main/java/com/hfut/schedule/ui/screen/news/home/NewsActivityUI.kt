@@ -41,7 +41,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -91,13 +92,13 @@ import org.json.JSONArray
 
 private val items = listOf(
     NavigationBarItemData(
-        NewsBarItems.News.name,"通知公告", R.drawable.star,R.drawable.star_filled
+        NewsBarItems.News.name,"通知公告", Drawables.star,Drawables.star_filled
     ),
     NavigationBarItemData(
-        NewsBarItems.Academic.name,"教务处", R.drawable.star_half,R.drawable.star_filled
+        NewsBarItems.Academic.name,"教务处", Drawables.star_half,Drawables.star_filled
     ),
     NavigationBarItemData(
-        NewsBarItems.School.name,"各级学院", R.drawable.school,R.drawable.school_filled
+        NewsBarItems.School.name,"各级学院", Drawables.school,Drawables.school_filled
     )
 )
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -187,7 +188,7 @@ fun NewsScreen(
                                 IconButton(
                                     onClick = {}) {
                                     Icon(
-                                        painter = painterResource(R.drawable.search),
+                                        painter = painterResource(Drawables.search),
                                         contentDescription = "description"
                                     )
                                 }
@@ -323,7 +324,7 @@ fun TotalNewsScreen(
                         leadingContent = { Text(text = (item + 1).toString()) },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context,listItem.link,listItem.title, icon = R.drawable.stream, cookie = cookies)
+                                Starter.startWebUrlInner(context,listItem.link,listItem.title, icon = Drawables.stream, cookie = cookies)
                             }
                         },
                     )

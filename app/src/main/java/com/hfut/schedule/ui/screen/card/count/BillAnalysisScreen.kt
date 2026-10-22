@@ -34,7 +34,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -306,7 +307,7 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                                 Text("尚未消费", fontWeight = FontWeight.Bold)
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.send_money),null)
+                                Icon(painterResource(Drawables.send_money),null)
                             },
                             trailingContent = {
                                 Button(
@@ -338,11 +339,11 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                                 Icon(
                                     painterResource(
                                         if(difference < 0) {
-                                            R.drawable.arrow_upward
+                                            Drawables.arrow_upward
                                         } else if(difference > 0) {
-                                            R.drawable.arrow_downward
+                                            Drawables.arrow_downward
                                         } else {
-                                            R.drawable.send_money
+                                            Drawables.send_money
                                         }
                                     ),
                                     null,
@@ -376,7 +377,7 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                                 Text("￥${dailyAvg.roundOffString(2)}")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.filter_vintage),null)
+                                Icon(painterResource(Drawables.filter_vintage),null)
                             },
                             modifier = Modifier.weight(.5f)
                         )
@@ -388,7 +389,7 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                                 Text("￥${day.predictData.predict.roundOffString(2)}")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.azm),null)
+                                Icon(painterResource(Drawables.azm),null)
                             },
                             modifier = Modifier.weight(.5f)
                         )
@@ -405,7 +406,7 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                             Text("￥${monthList.first().second.roundOffString(2)}", fontWeight = FontWeight.Bold)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.send_money),null)
+                            Icon(painterResource(Drawables.send_money),null)
                         },
                         trailingContent = {
                             Button(
@@ -427,7 +428,7 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                                 Text("￥${monthAvg.roundOffString(2)}")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.filter_vintage),null)
+                                Icon(painterResource(Drawables.filter_vintage),null)
                             },
                             modifier = Modifier.weight(.5f)
                         )
@@ -439,7 +440,7 @@ private fun PredictedScreen(vm: NetWorkViewModel,innerPadding: PaddingValues,pag
                                 Text("￥${month.predictData.predict.roundOffString(2)}")
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.azm),null)
+                                Icon(painterResource(Drawables.azm),null)
                             },
                             modifier = Modifier.weight(.5f)
                         )

@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -15,7 +17,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.LiquidButton
@@ -35,8 +38,8 @@ import dev.chrisbanes.haze.hazeSource
 
 object SettingsAppearanceDestination : NavDestination() {
     override val key: String = "settings_appearance"
-    override val title: UiText = res(R.string.navigation_label_settings_appearance)
-    override val icon = R.drawable.format_paint
+    override val title: UiText = res(Strings.navigation_label_settings_appearance)
+    override val icon = Drawables.format_paint
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +72,7 @@ object SettingsAppearanceDestination : NavDestination() {
                             modifier = Modifier.padding(end = BUTTON_END_PADDING)
                         ) {
                             Icon(
-                                painterResource(R.drawable.search),
+                                painterResource(Drawables.search),
                                 null
                             )
                         }

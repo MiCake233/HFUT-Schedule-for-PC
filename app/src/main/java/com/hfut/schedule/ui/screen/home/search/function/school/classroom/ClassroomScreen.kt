@@ -63,7 +63,8 @@ import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -156,10 +157,10 @@ private enum class ClassroomBarItems(val page : Int) {
 
 private val items = listOf(
     NavigationBarItemData(
-        ClassroomBarItems.EMPTY_CLASSROOM.name,"空教室", R.drawable.meeting_room, R.drawable.meeting_room_filled
+        ClassroomBarItems.EMPTY_CLASSROOM.name,"空教室", Drawables.meeting_room, Drawables.meeting_room_filled
     ),
     NavigationBarItemData(
-        ClassroomBarItems.CLASSROOM_LESSONS.name,"教室课程表", R.drawable.calendar, R.drawable.calendar_month_filled
+        ClassroomBarItems.CLASSROOM_LESSONS.name,"教室课程表", Drawables.calendar, Drawables.calendar_month_filled
     ),
 )
 
@@ -232,7 +233,7 @@ fun ClassroomScreen(
                                 ) {
                                     Icon(
                                         painterResource(
-                                            if(showFilterBox) R.drawable.filter_alt_filled else R.drawable.filter_alt
+                                            if(showFilterBox) Drawables.filter_alt_filled else Drawables.filter_alt
                                         ),
                                         null,
                                     )
@@ -357,7 +358,7 @@ fun ClassroomScreen(
                                     }
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.search),null)
+                                Icon(painterResource(Drawables.search),null)
                             }
                         }
                     ) { input = it }
@@ -511,10 +512,10 @@ private fun EmptyClassroomScreen(
                                             val timeState = remember(square,currentTime) { DateTimeManager.getTimeStateReal(square.startTimeString,square.endTimeString) }
                                             CircleProgressIcon(timeState.second, animate = false)
                                         } else {
-                                            Icon(painterResource(R.drawable.lasso_select),null)
+                                            Icon(painterResource(Drawables.lasso_select),null)
                                         }
                                     } else {
-                                        Icon(painterResource(R.drawable.meeting_room),null)
+                                        Icon(painterResource(Drawables.meeting_room),null)
                                     }
                                 },
                                 trailingContent = {
@@ -840,7 +841,7 @@ private fun SearchClassroomScreen(
                         CardListItem(
                             shape = NoneRoundShape,
                             leadingContent = {
-                                Icon(painterResource(R.drawable.meeting_room),null)
+                                Icon(painterResource(Drawables.meeting_room),null)
                             },
                             headlineContent = { Text(item.nameZh) },
                             overlineContent = { Text("${item.building.campus.nameZh} ${item.building.nameZh}")},

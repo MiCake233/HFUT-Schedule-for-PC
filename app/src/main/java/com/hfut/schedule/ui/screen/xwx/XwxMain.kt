@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.xwx
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.os.Environment
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
@@ -34,13 +33,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.model.dto.XiaoWuXingLoginInfoDto
+import com.hfut.schedule.logic.util.other.decodeImageBitmap
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.logic.util.sys.PermissionSet
@@ -179,8 +180,9 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
 
                 }
             ) {
-                val bitmap = (previewUiState as NetworkUiState.Success).data
-                val imageBitmap = remember(bitmap) { bitmap.asImageBitmap() }
+                val bytes = (previewUiState as NetworkUiState.Success).data
+                // 数据层现在只给图片字节，解码下沉到 UI 层（桌面端另有一套实现）
+                val imageBitmap = remember(bytes) { decodeImageBitmap(bytes) ?: ImageBitmap(1, 1) }
                 val window = remember(imageBitmap) { ImagePreviewWindow(imageBitmap) }
                 DividerTextExpandedWith("预览") {
                     Box(
@@ -216,7 +218,7 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
                                 floatingController.push(window)
                             },
                             text = "查看",
-                            icon = R.drawable.image_search,
+                            icon = Drawables.image_search,
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier
@@ -229,11 +231,11 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
                                 scope.launch {
                                     // 保存图片
                                     activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
-                                    saveImageToFile(bitmap)
+                                    saveImageToFile(bytes)
                                 }
                             },
                             text = "保存",
-                            icon = R.drawable.save,
+                            icon = Drawables.save,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1/2f)
@@ -258,7 +260,7 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
                             }
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.net),null)
+                            Icon(painterResource(Drawables.net),null)
                         }
                     )
                     PaddingHorizontalDivider()
@@ -274,7 +276,7 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
                             )
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.rotate_right),null)
+                            Icon(painterResource(Drawables.rotate_right),null)
                         }
                     )
                 }
@@ -286,7 +288,7 @@ fun XwxMainScreen(vm: NetWorkViewModel) {
 }
 
 suspend fun saveImageToFile(
-    bitmap: Bitmap
+    bytes: ByteArray
 ) {
     withContext(Dispatchers.IO) {
         try {
@@ -295,16 +297,23 @@ suspend fun saveImageToFile(
             if (!picturesDir.exists()) {
                 picturesDir.mkdirs()
             }
-            val file = File(picturesDir, "${UUID.randomUUID()}.jpg")
-            val outputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream) // 保存为 PNG 格式
-            outputStream.flush()
-            outputStream.close()
+            val file = File(picturesDir, "${UUID.randomUUID()}.png")
+            // 校务行返回的本身就是编码好的图片字节，直接落盘
+            file.writeBytes(bytes)
             showToast("保存完成至${file.absoluteFile}")
         } catch (e: Exception) {
             LogUtil.error(e)
             showToast("保存失败")
         }
     }
+}
+
+/** 兼容旧调用：把 Android Bitmap 编码为 PNG 字节后走同一条落盘逻辑 */
+suspend fun saveImageToFile(
+    bitmap: android.graphics.Bitmap
+) {
+    val bos = java.io.ByteArrayOutputStream()
+    bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, bos)
+    saveImageToFile(bos.toByteArray())
 }
 

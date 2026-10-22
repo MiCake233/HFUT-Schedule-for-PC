@@ -41,7 +41,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -247,7 +248,7 @@ fun DetailItems(
                     headlineContent = { lessons.courseType.nameZh.let { Text(it) } },
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.kid_star),
+                            painterResource(Drawables.kid_star),
                             contentDescription = "Localized description",
                         )
                     },
@@ -261,7 +262,7 @@ fun DetailItems(
                         headlineContent = { ScrollText(it) },
                         leadingContent = {
                             Icon(
-                                painterResource(R.drawable.calendar),
+                                painterResource(Drawables.calendar),
                                 contentDescription = "Localized description",
                             )
                         },
@@ -286,7 +287,7 @@ fun DetailItems(
                         headlineContent = { Text(it.toString() + "人") },
                         leadingContent = {
                             Icon(
-                                painterResource(R.drawable.group),
+                                painterResource(Drawables.group),
                                 contentDescription = "Localized description",
                             )
                         },
@@ -308,7 +309,7 @@ fun DetailItems(
                         headlineContent = { Text(it.toString()) },
                         leadingContent = {
                             Icon(
-                                painterResource(R.drawable.filter_vintage),
+                                painterResource(Drawables.filter_vintage),
                                 contentDescription = "Localized description",
                             )
                         },
@@ -344,7 +345,7 @@ fun DetailItems(
                                 },
                                 leadingContent = {
                                     Icon(
-                                        painterResource(R.drawable.person),
+                                        painterResource(Drawables.person),
                                         contentDescription = "Localized description",
                                     )
                                 },
@@ -370,7 +371,7 @@ fun DetailItems(
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.person),
+                                            painterResource(Drawables.person),
                                             contentDescription = "Localized description",
                                         )
                                     },
@@ -410,7 +411,7 @@ fun DetailItems(
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.person),
+                                            painterResource(Drawables.person),
                                             contentDescription = "Localized description",
                                         )
                                     },
@@ -435,7 +436,7 @@ fun DetailItems(
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.info),
+                                            painterResource(Drawables.info),
                                             contentDescription = "Localized description",
                                         )
                                     },
@@ -470,7 +471,7 @@ fun DetailItems(
                     headlineContent = { Text(lessons.examMode.nameZh) },
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.draw),
+                            painterResource(Drawables.draw),
                             contentDescription = "Localized description",
                         )
                     },
@@ -489,7 +490,7 @@ fun DetailItems(
 
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.tag),
+                            painterResource(Drawables.tag),
                             contentDescription = "Localized description",
                         )
                     },
@@ -507,7 +508,7 @@ fun DetailItems(
                 headlineContent = { Text(lessons.semester.nameZh) },
                 leadingContent = {
                     Icon(
-                        painterResource(R.drawable.approval),
+                        painterResource(Drawables.approval),
                         contentDescription = "Localized description",
                     )
                 },
@@ -521,7 +522,7 @@ fun DetailItems(
                     headlineContent = { Text(it) },
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.sensor_door),
+                            painterResource(Drawables.sensor_door),
                             contentDescription = "Localized description",
                         )
                     },
@@ -558,7 +559,7 @@ fun DetailItems(
                         },
                         leadingContent = {
                             Icon(
-                                painterResource(R.drawable.book_5),
+                                painterResource(Drawables.book_5),
                                 contentDescription = "Localized description",
                             )
                         },
@@ -584,7 +585,7 @@ fun DetailItems(
                     color = MaterialTheme.colorScheme.surface,
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.schedule),
+                            painterResource(Drawables.schedule),
                             contentDescription = "Localized description",
                         )
                     },
@@ -603,7 +604,7 @@ fun DetailItems(
                     headlineContent = { Text(it) },
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.info),
+                            painterResource(Drawables.info),
                             contentDescription = "Localized description",
                         )
                     },
@@ -626,7 +627,7 @@ fun DetailItems(
                             headlineContent = { Text("其他教学班开课查询") },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.search),
+                                    painterResource(Drawables.search),
                                     contentDescription = "Localized description",
                                 )
                             },
@@ -653,7 +654,7 @@ fun DetailItems(
                             headlineContent = { Text("教室状态查询") },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.meeting_room),
+                                    painterResource(Drawables.meeting_room),
                                     contentDescription = "Localized description",
                                 )
                             },
@@ -746,7 +747,7 @@ fun ClassmatesScreen(
                         .containerBackDrop(backdrop, MaterialTheme.shapes.medium),
                     input = input,
                     leadingIcon = {
-                        Icon(painterResource(R.drawable.search),null)
+                        Icon(painterResource(Drawables.search),null)
                     },
                     label = { Text("搜索 学号、班级、姓名") }
                 ) { input = it }

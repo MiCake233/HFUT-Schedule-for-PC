@@ -23,7 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -60,13 +61,13 @@ import kotlinx.coroutines.launch
 
 private val items = listOf(
     NavigationBarItemData(
-        CardBarItems.HOME.name,"卡包", R.drawable.credit_card,  R.drawable.credit_card_filled
+        CardBarItems.HOME.name,"卡包", Drawables.credit_card,  Drawables.credit_card_filled
     ),
     NavigationBarItemData(
-        CardBarItems.BILLS.name,"账单", R.drawable.receipt_long, R.drawable.receipt_long_filled
+        CardBarItems.BILLS.name,"账单", Drawables.receipt_long, Drawables.receipt_long_filled
     ),
     NavigationBarItemData(
-        CardBarItems.COUNT.name,"统计",R.drawable.leaderboard,R.drawable.leaderboard_filled
+        CardBarItems.COUNT.name,"统计",Drawables.leaderboard,Drawables.leaderboard_filled
     )
 )
 //private fun BillItem(vm : NetWorkViewModel) :List<records> {
@@ -146,7 +147,7 @@ fun CardUI(vm : NetWorkViewModel) {
                                     backdrop = backdrop,
                                     isCircle = true,
                                 ) {
-                                    Icon(painterResource(R.drawable.search),null)
+                                    Icon(painterResource(Drawables.search),null)
                                 }
                                 Spacer(Modifier.width(BUTTON_PADDING))
                                 LiquidButton(

@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.util.ExceptionScreen
@@ -15,8 +19,8 @@ data class ExceptionDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_exception)
-        val ICON =  R.drawable.error
+        val TITLE = res(Strings.navigation_label_exception)
+        val ICON =  Drawables.error
     }
 
     @Composable

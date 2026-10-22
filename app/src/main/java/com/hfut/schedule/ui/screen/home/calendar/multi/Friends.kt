@@ -29,7 +29,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.community.CommunityFriend
@@ -104,7 +105,7 @@ fun AddCourseUI(vm: NetWorkViewModel) {
 //                Text(text = "通过本应用分享课表会生成文本文件，他人接收文件并以本应用打开方式即可导入")
 //            },
 //            leadingContent = {
-//                Icon(painterResource(id = R.drawable.attach_file), contentDescription = EMPTY_STRING)
+//                Icon(painterResource(id = Drawables.attach_file), contentDescription = EMPTY_STRING)
 //            },
 //            modifier = Modifier.clickable {
 //                showToast("请在外部应用选择文件以本应用打开")
@@ -119,7 +120,7 @@ fun AddCourseUI(vm: NetWorkViewModel) {
                 Text(text = "输入学号,发送申请,对方同意后即可查看对方课表")
             },
             leadingContent = {
-                Icon(painterResource(id = R.drawable.group), contentDescription = EMPTY_STRING)
+                Icon(painterResource(id = Drawables.group), contentDescription = EMPTY_STRING)
             },
             modifier = Modifier.clickable {
                 showBottomSheet = true
@@ -175,7 +176,7 @@ fun FriendsSetting(vm : NetWorkViewModel) {
                                 }
                             }
                         }) {
-                        Icon(painter = painterResource(R.drawable.person_add), contentDescription = "description")
+                        Icon(painter = painterResource(Drawables.person_add), contentDescription = "description")
                     }
                 },
                 shape = MaterialTheme.shapes.medium,
@@ -192,13 +193,13 @@ fun FriendsSetting(vm : NetWorkViewModel) {
             for(i in friendList.indices) {
                 CardListItem(
                     headlineContent = { friendList[i]?.let { Text(text = it.name) } },
-                    leadingContent = { Icon(painterResource(id = R.drawable.person), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painterResource(id = Drawables.person), contentDescription = EMPTY_STRING)},
                     overlineContent = { friendList[i]?.let { Text(text = it.studentId) }},
                     trailingContent = {
                         FilledTonalIconButton(onClick = {
                             showToast("正在开发")
                         }) {
-                            Icon(painterResource(id = R.drawable.delete), contentDescription = EMPTY_STRING)
+                            Icon(painterResource(id = Drawables.delete), contentDescription = EMPTY_STRING)
                         }
                     }
                 )
@@ -213,7 +214,7 @@ fun FriendsSetting(vm : NetWorkViewModel) {
                 for(i in applyList.indices) {
                     CardListItem(
                         headlineContent = { applyList[i]?.let { ScrollText(text = it.name) } },
-                        leadingContent = { Icon(painterResource(id = R.drawable.person_add), contentDescription = EMPTY_STRING)},
+                        leadingContent = { Icon(painterResource(id = Drawables.person_add), contentDescription = EMPTY_STRING)},
                         overlineContent = { applyList[i]?.let { Text(text = it.studentId) } },
                         trailingContent = {
                             Row(modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP)) {

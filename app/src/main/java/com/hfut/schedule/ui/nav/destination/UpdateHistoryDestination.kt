@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
@@ -11,7 +13,7 @@ import com.xah.navigation.util.LocalNavDependencies
 object UpdateHistoryDestination : NavDestination() {
     override val key = "update_history"
     override val title = text("历史更新日志")
-    override val icon = R.drawable.update
+    override val icon = Drawables.update
 
     @Composable
     override fun Content() {

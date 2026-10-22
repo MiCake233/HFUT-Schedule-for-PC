@@ -17,7 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
@@ -35,7 +36,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsDeepLinkDestination : NavDestination() {
     override val key: String = "settings_deeplink"
     override val title: UiText = text("深度链接")
-    override val icon = R.drawable.link_2
+    override val icon = Drawables.link_2
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +72,7 @@ object SettingsDeepLinkDestination : NavDestination() {
                         CardListItem(
                             headlineContent = { Text(item.host)},
                             leadingContent = {
-                                Icon(painterResource(R.drawable.link_2),null)
+                                Icon(painterResource(Drawables.link_2),null)
                             }
                         )
                     }

@@ -17,7 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
@@ -64,7 +65,7 @@ fun Grade(
                     }
                 }) {
                     Icon(
-                        painterResource(id = R.drawable.article),
+                        painterResource(id = Drawables.article),
                         contentDescription = EMPTY_STRING,
                     )
                 }
@@ -83,7 +84,7 @@ fun Grade(
                 },
             ) {
                 Icon(
-                    painterResource(R.drawable.attach_file), contentDescription = "Localized description",
+                    painterResource(Drawables.attach_file), contentDescription = "Localized description",
                     Modifier.size(21.dp)
                 )
             }

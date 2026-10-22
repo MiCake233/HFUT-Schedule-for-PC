@@ -25,7 +25,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.network.repo.JxglstuRepository.parseJxglstuGrade
 import com.hfut.schedule.logic.network.repo.UniAppRepository
@@ -106,7 +107,7 @@ fun AverageGradeScreen(
                             backdrop = backDrop,
                             isCircle = true,
                         ) {
-                            Icon(painterResource(R.drawable.keyboard_arrow_left),null)
+                            Icon(painterResource(Drawables.keyboard_arrow_left),null)
                         }
                         Spacer(Modifier.width(BUTTON_PADDING))
                         LiquidButton(
@@ -127,7 +128,7 @@ fun AverageGradeScreen(
                             backdrop = backDrop,
                             isCircle = true,
                         ) {
-                            Icon(painterResource(R.drawable.keyboard_arrow_right),null)
+                            Icon(painterResource(Drawables.keyboard_arrow_right),null)
                         }
                     }
                 }
@@ -282,7 +283,7 @@ fun AverageGradeScreen(
                                             Text(item.lessonCode)
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.article),null)
+                                            Icon(painterResource(Drawables.article),null)
                                         }
                                     )
                                 }
@@ -406,7 +407,7 @@ fun AverageGradeScreen(
                                             Text(item.lessonCode)
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.article),null)
+                                            Icon(painterResource(Drawables.article),null)
                                         }
                                     )
                                 }

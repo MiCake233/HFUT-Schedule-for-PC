@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.school.classroom.ClassroomScreen
@@ -17,8 +21,8 @@ data class ClassroomDestination(
 
     companion object {
         const val KEY = "classroom"
-        val TITLE = res(R.string.navigation_label_classroom)
-        val ICON = R.drawable.meeting_room
+        val TITLE = res(Strings.navigation_label_classroom)
+        val ICON = Drawables.meeting_room
     }
 
     @Composable

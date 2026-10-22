@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -32,7 +34,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsDeveloperDestination : NavDestination() {
     override val key: String = "settings_developer"
     override val title: UiText = text("开发者选项")
-    override val icon = R.drawable.code
+    override val icon = Drawables.code
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

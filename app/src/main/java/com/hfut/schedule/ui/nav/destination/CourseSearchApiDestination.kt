@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,7 +21,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
@@ -54,8 +57,8 @@ data class CourseSearchApiDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_course_search)
-        val ICON = R.drawable.search
+        val TITLE = res(Strings.navigation_label_course_search)
+        val ICON = Drawables.search
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -110,7 +113,7 @@ data class CourseSearchApiDestination(
                                 enabled = enabled
                             ) {
                                 Icon(
-                                    painterResource(R.drawable.calendar),
+                                    painterResource(Drawables.calendar),
                                     null,
                                 )
                             }

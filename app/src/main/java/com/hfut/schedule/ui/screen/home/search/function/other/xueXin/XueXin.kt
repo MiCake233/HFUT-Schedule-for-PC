@@ -8,8 +8,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
@@ -25,8 +27,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun XueXin() {
     val context = LocalContext.current
-    val icon = remember { R.drawable.school }
-    val title = stringResource(R.string.navigation_label_chsi)
+    val icon = remember { Drawables.school }
+    val title = stringResource(Strings.navigation_label_chsi)
     val scope = rememberCoroutineScope()
     TransplantListItem(
         headlineContent = { ScrollText(text = title) },

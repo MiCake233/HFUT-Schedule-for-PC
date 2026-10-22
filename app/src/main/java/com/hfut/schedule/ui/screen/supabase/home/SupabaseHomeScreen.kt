@@ -47,7 +47,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
@@ -182,7 +183,7 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
                 CustomTextField(
                     input = input,
                     label = { Text("搜索") },
-                    leadingIcon = { Icon(painterResource(R.drawable.search),null)}
+                    leadingIcon = { Icon(painterResource(Drawables.search),null)}
                 ) { input = it }
                 Spacer(Modifier.height(CARD_NORMAL_DP))
             }
@@ -234,7 +235,7 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
                                         }
                                     ) {
                                         if(downloaded) {
-                                            Icon(painter = painterResource(id = R.drawable.check), contentDescription = null)
+                                            Icon(painter = painterResource(id = Drawables.check), contentDescription = null)
                                         } else {
                                             Text("覆盖")
                                         }
@@ -272,7 +273,7 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
                                             }
                                         }
                                     ) {
-                                        Icon(painter = painterResource(id = if(downloaded) R.drawable.check else R.drawable.download), contentDescription = null)
+                                        Icon(painter = painterResource(id = if(downloaded) Drawables.check else Drawables.download), contentDescription = null)
 //                                BadgedBox(
 //                                    badge = {
 //                                        if (count.isNotEmpty() || count.isNotBlank())
@@ -283,7 +284,7 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
 //                                                Text(text = count)
 //                                            }
 //                                    }
-//                                ) { Icon(painter = painterResource(id = if(downloaded) R.drawable.check else R.drawable.download), contentDescription = null) }
+//                                ) { Icon(painter = painterResource(id = if(downloaded) Drawables.check else Drawables.download), contentDescription = null) }
                                     }
                                 }
                             },
@@ -300,8 +301,8 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
                                 ) {
                                     Icon(painterResource(
                                         when(item.type) {
-                                            CustomEventType.SCHEDULE -> R.drawable.calendar
-                                            CustomEventType.NET_COURSE -> R.drawable.net
+                                            CustomEventType.SCHEDULE -> Drawables.calendar
+                                            CustomEventType.NET_COURSE -> Drawables.net
                                         }
                                     ),null)
                                 }
@@ -332,7 +333,7 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
                                                 item.contributorId.substring(8,10)
                                     ) },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.person),null)
+                                        Icon(painterResource(Drawables.person),null)
                                     },
                                 )
 
@@ -348,7 +349,7 @@ private fun SupabaseScheduleUI(vm: NetWorkViewModel,sortType : SortType,sortReve
                                         Text(t)
                                     },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.target),null)
+                                        Icon(painterResource(Drawables.target),null)
                                     },
                                 )
                             }

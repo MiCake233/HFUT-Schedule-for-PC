@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.grade
 
+import com.xah.common.ui.model.text.asStringNow
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -34,7 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
@@ -102,7 +105,7 @@ fun GradeScreen(
         snapshotFlow { scrollBehavior.state.collapsedFraction }
             .collect { collapsedFraction -> isNavigationIconVisible = collapsedFraction < 0.5f }
     }
-        var buttonText by rememberSaveable { mutableStateOf<String>(AverageGradeDestination.TITLE.asString(context)) }
+        var buttonText by rememberSaveable { mutableStateOf<String>(AverageGradeDestination.TITLE.asStringNow()) }
 
     val navController = LocalNavController.current
     val floatingController = LocalFloatingController.current
@@ -129,7 +132,7 @@ fun GradeScreen(
                                 isCircle = true,
                                 backdrop = backDrop
                             ) {
-                                Icon(painter = painterResource(id = R.drawable.info),null)
+                                Icon(painter = painterResource(id = Drawables.info),null)
                             }
                             if(gradeOriginList[pageState.currentPage] != GradeDataOrigin.COMMUNITY) {
                                 Spacer(Modifier.width(BUTTON_PADDING))
@@ -142,8 +145,8 @@ fun GradeScreen(
                                 ) {
                                     Icon(
                                         painterResource(
-                                            if(!displayCompactly) R.drawable.horizontal_split
-                                            else R.drawable.reorder
+                                            if(!displayCompactly) Drawables.horizontal_split
+                                            else Drawables.reorder
                                         ),
                                         null
                                     )
@@ -182,7 +185,7 @@ fun GradeScreen(
                             IconButton(
                                 onClick = {}) {
                                 Icon(
-                                    painter = painterResource(R.drawable.search),
+                                    painter = painterResource(Drawables.search),
                                     contentDescription = "description"
                                 )
                             }

@@ -32,7 +32,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
@@ -363,9 +364,9 @@ fun TodayScreen(
                                             Icon(
                                                 painterResource(
                                                     if(enableShowOutOfDateEvent) {
-                                                        R.drawable.visibility
+                                                        Drawables.visibility
                                                     } else {
-                                                        R.drawable.visibility_off
+                                                        Drawables.visibility_off
                                                     }
                                                 ),
                                                 null,

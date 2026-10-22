@@ -21,7 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.Starter
@@ -78,12 +79,12 @@ fun CardRow(vm : NetWorkViewModel, hazeState: HazeState) {
                     .weight(.5f)
                     .clickable { Starter.startAppUrl(context,Constant.ALIPAY_CARD_URL) },
                 overlineContent = { ScrollText(text = "待圈存 ￥${cardValue?.settle ?: settle}") },
-                leadingContent = { Icon(painterResource(R.drawable.account_balance_wallet), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.account_balance_wallet), contentDescription = "Localized description",) },
             )
             TransplantListItem(
                 headlineContent = { ScrollText(text = "￥${str}") },
                 overlineContent = { Text(text = " 今日消费") },
-                leadingContent = { Icon(painterResource(R.drawable.send_money), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.send_money), contentDescription = "Localized description",) },
                 modifier = Modifier
                     .clickable { showBottomSheet = true }
                     .weight(.5f)

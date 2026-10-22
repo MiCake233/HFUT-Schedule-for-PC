@@ -16,7 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,7 +71,7 @@ fun Support(innerPadding : PaddingValues) {
             CardListItem(
                 headlineContent = { Text("${MyApplication.APP_NAME}致力于为每个用户提供平等的服务，但由于不同手机厂商对Android系统的定制，以及Android版本的不同，导致最终效果往往不同，但以下的特性均不影响APP的功能") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.info),null)
+                    Icon(painterResource(Drawables.info),null)
                 }
             )
         }
@@ -90,8 +91,8 @@ private fun SupportChip(title: String,isSupported : Boolean?) = AssistChip(
     label = { Text(title) },
     leadingIcon = {
         when(isSupported) {
-            true -> Icon(painterResource(R.drawable.check),null)
-            false -> Icon(painterResource(R.drawable.close),null, tint = MaterialTheme.colorScheme.error)
+            true -> Icon(painterResource(Drawables.check),null)
+            false -> Icon(painterResource(Drawables.close),null, tint = MaterialTheme.colorScheme.error)
             null -> Text("未知")
         }
     }
@@ -145,7 +146,7 @@ private fun SupportItem(item : SupportItemBean) {
                     CardBottomButton(item.android),
                     CardBottomButton("预览效果",item.url != null) {
                         scope.launch {
-                            item.url?.let { Starter.startWebUrlInner(context,it,"Github", icon = R.drawable.github) }
+                            item.url?.let { Starter.startWebUrlInner(context,it,"Github", icon = Drawables.github) }
                         }
                     }
                 )

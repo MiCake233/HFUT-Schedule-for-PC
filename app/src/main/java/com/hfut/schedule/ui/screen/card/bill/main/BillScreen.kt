@@ -29,7 +29,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
@@ -181,7 +182,7 @@ fun BillsInfo( bills :  HuiXinBillRecord) {
                 headlineContent = { Text( bills.resume.substringAfter("-")) },
                 leadingContent = {
                     Icon(
-                        painter = painterResource(id = R.drawable.credit_card),
+                        painter = painterResource(id = Drawables.credit_card),
                         contentDescription = "Localized description",
                     )
                 },
@@ -191,7 +192,7 @@ fun BillsInfo( bills :  HuiXinBillRecord) {
                 headlineContent = { Text( "交易 "+ bills.jndatetimeStr+ "\n入账 " + bills.effectdateStr ) },
                 leadingContent = {
                     Icon(
-                        painterResource(id = R.drawable.schedule),
+                        painterResource(id = Drawables.schedule),
                         contentDescription = "Localized description",
                     )
                 },
@@ -201,7 +202,7 @@ fun BillsInfo( bills :  HuiXinBillRecord) {
                 headlineContent = { Text( processTranamt(bills)) },
                 leadingContent = {
                     Icon(
-                        painterResource(id = R.drawable.paid),
+                        painterResource(id = Drawables.paid),
                         contentDescription = "Localized description",
                     )
                 },
@@ -211,7 +212,7 @@ fun BillsInfo( bills :  HuiXinBillRecord) {
                 headlineContent = { Text(bills.orderId) },
                 leadingContent = {
                     Icon(
-                        painterResource(id = R.drawable.tag),
+                        painterResource(id = Drawables.tag),
                         contentDescription = "Localized description",
                     )
                 },

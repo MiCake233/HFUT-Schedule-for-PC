@@ -42,8 +42,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication.Companion.context
@@ -117,7 +119,7 @@ fun SettingsItemsUI() {
         color = MaterialTheme.colorScheme.surface,
         headlineContent = { Text(text = "搜索设置项") },
         leadingContent = {
-            Icon(painter = painterResource(id = R.drawable.search),contentDescription = null )
+            Icon(painter = painterResource(id = Drawables.search),contentDescription = null )
         },
         modifier = Modifier.clickable {
             navTopController.push(SettingsSearchDestination)
@@ -137,10 +139,10 @@ fun SettingsItemsUI() {
         ) {
             TransplantListItem(
                 color = MaterialTheme.colorScheme.surface,
-                headlineContent = { Text(text = stringResource(R.string.appearance_settings_title)) },
-                supportingContent = { Text(text = stringResource(R.string.appearance_settings_description))},
+                headlineContent = { Text(text = stringResource(Strings.appearance_settings_title)) },
+                supportingContent = { Text(text = stringResource(Strings.appearance_settings_description))},
                 leadingContent = {
-                    Icon(painter = painterResource(id = R.drawable.format_paint), contentDescription =EMPTY_STRING )
+                    Icon(painter = painterResource(id = Drawables.format_paint), contentDescription =EMPTY_STRING )
                 },
                 modifier = Modifier.clickable { navTopController.push(SettingsAppearanceDestination)  }
             )
@@ -153,10 +155,10 @@ fun SettingsItemsUI() {
         ) {
             TransplantListItem(
                 color = MaterialTheme.colorScheme.surface,
-                headlineContent = { Text(text = stringResource(R.string.app_settings_title)) },
-                supportingContent = { Text(text = stringResource(R.string.app_settings_description))},
+                headlineContent = { Text(text = stringResource(Strings.app_settings_title)) },
+                supportingContent = { Text(text = stringResource(Strings.app_settings_description))},
                 leadingContent = {
-                    Icon(painter = painterResource(id = R.drawable.joystick), contentDescription = EMPTY_STRING )
+                    Icon(painter = painterResource(id = Drawables.joystick), contentDescription = EMPTY_STRING )
                 },
                 modifier = Modifier.clickable {
                     navTopController.push(SettingsConfigurationDestination)
@@ -171,10 +173,10 @@ fun SettingsItemsUI() {
         ) {
             TransplantListItem(
                 color = MaterialTheme.colorScheme.surface,
-                headlineContent = { Text(text = stringResource(R.string.network_settings_title)) },
-                supportingContent = { Text(text = stringResource(R.string.network_settings_description))},
+                headlineContent = { Text(text = stringResource(Strings.network_settings_title)) },
+                supportingContent = { Text(text = stringResource(Strings.network_settings_description))},
                 leadingContent = {
-                    Icon(painter = painterResource(id = R.drawable.net), contentDescription =EMPTY_STRING )
+                    Icon(painter = painterResource(id = Drawables.net), contentDescription =EMPTY_STRING )
                 },
                 modifier = Modifier.clickable {
                     navTopController.push(SettingsNetworkDestination)
@@ -192,10 +194,10 @@ fun SettingsItemsUI() {
         ) {
             TransplantListItem(
                 color = MaterialTheme.colorScheme.surface,
-                headlineContent = { Text(text = stringResource(R.string.about_settings_title)) },
-                supportingContent = { Text(text = stringResource(R.string.about_settings_description))},
+                headlineContent = { Text(text = stringResource(Strings.about_settings_title)) },
+                supportingContent = { Text(text = stringResource(Strings.about_settings_description))},
                 leadingContent = {
-                    Icon(painter = painterResource(id = R.drawable.partner_exchange), contentDescription = EMPTY_STRING,modifier = Modifier
+                    Icon(painter = painterResource(id = Drawables.partner_exchange), contentDescription = EMPTY_STRING,modifier = Modifier
                         .size(22.dp)
                         .padding(start = 1.dp) )
                 },
@@ -242,7 +244,7 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
         LazyColumn {
             item { InnerPaddingHeight(innerPaddings,true) }
             item {
-                DividerTextExpandedWith(text = stringResource(R.string.settings_person_info_half_title)) {
+                DividerTextExpandedWith(text = stringResource(Strings.settings_person_info_half_title)) {
                     PersonPart()
                 }
             }
@@ -252,7 +254,7 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
             item {
                 if (showUpdate) {
                     val canUseUpdate = AppVersion.getSplitType() ==  AppVersion.SplitType.ARM64
-                    DividerTextExpandedWith(text = stringResource(R.string.settings_update_half_title)) {
+                    DividerTextExpandedWith(text = stringResource(Strings.settings_update_half_title)) {
                         UpdateUI(vm,update)
                         if(canUseUpdate) {
                             val activity = LocalActivity.current
@@ -270,7 +272,7 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
                                 PaddingHorizontalDivider(isDashed = true)
                                 PatchUpdateUI(patchItem!!,vm,update)
                             } else if(!AppVersion.isDev) {
-                                BottomTip(stringResource(R.string.settings_update_tips_none_patch))
+                                BottomTip(stringResource(Strings.settings_update_tips_none_patch))
                                 // 清理
                                 if(!hasCleaned) {
                                     hasCleaned = BsdiffUpdate.deleteCache(context)
@@ -278,18 +280,18 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
                             }
                         }
                         if(!canUseUpdate) {
-                            BottomTip(stringResource(R.string.settings_update_tips_different_architectures))
+                            BottomTip(stringResource(Strings.settings_update_tips_different_architectures))
                         }
                     }
                 }
             }
             item {
-                DividerTextExpandedWith(text = stringResource(R.string.settings_always_display_half_title)) {
+                DividerTextExpandedWith(text = stringResource(Strings.settings_always_display_half_title)) {
                     AlwaysItem(update)
                 }
             }
             item {
-                DividerTextExpandedWith(text = stringResource(R.string.settings_half_title)) {
+                DividerTextExpandedWith(text = stringResource(Strings.settings_half_title)) {
                     SettingsItemsUI()
                 }
             }
@@ -305,12 +307,12 @@ fun GithubDownloadUI() {
     val context = LocalContext.current
     TransplantListItem(
         headlineContent = {
-            Text(stringResource(R.string.settings_about_update_by_github_title))
+            Text(stringResource(Strings.settings_about_update_by_github_title))
         },
         supportingContent = {
-            Text(stringResource(R.string.settings_about_update_by_github_description))
+            Text(stringResource(Strings.settings_about_update_by_github_description))
         },
-        leadingContent = { Icon(painterResource(R.drawable.cloud_download),null)},
+        leadingContent = { Icon(painterResource(Drawables.cloud_download),null)},
         modifier = Modifier.clickable {
             scope.launch {
                 Starter.startWebUrlInner(context ,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}/releases/latest")
@@ -382,7 +384,7 @@ fun UpdateContents(vm : NetWorkViewModel) {
                                     headlineContent = { Text("v$versionName") },
                                     modifier = Modifier.clickable {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,"${Constant.GITHUB_REPO_URL}/blob/dev/docs/update/${name}",versionName,null,R.drawable.github)
+                                            Starter.startWebUrlInner(context,"${Constant.GITHUB_REPO_URL}/blob/dev/docs/update/${name}",versionName,null,Drawables.github)
                                         }
                                     }
                                 )
@@ -410,9 +412,9 @@ fun AlwaysItem(update : GiteeReleaseResponse?) {
         color = MaterialTheme.colorScheme.surface,
     ) {
         TransplantListItem(
-            headlineContent = { Text(text = stringResource(R.string.network_settings_refresh_login_title)) },
-            supportingContent = { Text(text = stringResource(R.string.network_settings_refresh_login_description)) },
-            leadingContent = { Icon(painterResource(R.drawable.rotate_right), contentDescription = "Localized description",) },
+            headlineContent = { Text(text = stringResource(Strings.network_settings_refresh_login_title)) },
+            supportingContent = { Text(text = stringResource(Strings.network_settings_refresh_login_description)) },
+            leadingContent = { Icon(painterResource(Drawables.rotate_right), contentDescription = "Localized description",) },
             modifier = Modifier.clickable { refreshLogin(context) },
         )
         if (show) {
@@ -428,8 +430,8 @@ fun AlwaysItem(update : GiteeReleaseResponse?) {
                 TransplantListItem(
                     color = MaterialTheme.colorScheme.surface,
                     headlineContent = { Text(text = VersionInfoDestination.title.asString()) },
-                    supportingContent = { Text(text = if(isPreview) stringResource(R.string.settings_version_info_description_preview) else stringResource(
-                        R.string.settings_version_info_description, currentVersion
+                    supportingContent = { Text(text = if(isPreview) stringResource(Strings.settings_version_info_description_preview) else stringResource(
+                        Strings.settings_version_info_description, currentVersion
                     )) },
                     leadingContent = {
                         Icon(

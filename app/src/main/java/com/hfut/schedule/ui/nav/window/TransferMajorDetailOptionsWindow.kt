@@ -17,7 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.logic.util.sys.showDevelopingToast
@@ -69,13 +70,13 @@ data class TransferMajorDetailOptionsWindow(
                             },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.mode_heat), null
+                                    painterResource(Drawables.mode_heat), null
                                 )
                             },
                             trailingContent = {
                                 if(sortByHot) {
                                     Icon(
-                                        painterResource(R.drawable.check), null
+                                        painterResource(Drawables.check), null
                                     )
                                 }
                             },
@@ -91,7 +92,7 @@ data class TransferMajorDetailOptionsWindow(
                             },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.stream), null
+                                    painterResource(Drawables.stream), null
                                 )
                             },
                             modifier = Modifier.clickable {
@@ -110,7 +111,7 @@ data class TransferMajorDetailOptionsWindow(
                             },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.ios_share), null
+                                    painterResource(Drawables.ios_share), null
                                 )
                             },
                             modifier = Modifier.clickable {

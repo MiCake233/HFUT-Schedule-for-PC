@@ -17,7 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.screen.fix.fix.FixUI
@@ -51,7 +52,7 @@ fun Fix(vm : NetWorkViewModel) {
                         IconButton(onClick = {
                             context?.finish()
                         }) {
-                            Icon(painterResource(R.drawable.arrow_back), contentDescription = EMPTY_STRING, tint = MaterialTheme.colorScheme.primary)
+                            Icon(painterResource(Drawables.arrow_back), contentDescription = EMPTY_STRING, tint = MaterialTheme.colorScheme.primary)
                         }
                     }
                 )

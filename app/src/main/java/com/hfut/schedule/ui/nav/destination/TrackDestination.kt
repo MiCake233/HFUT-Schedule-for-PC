@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.other.TrackScreen
@@ -10,8 +14,8 @@ import com.xah.navigation.util.LocalNavDependencies
 
 object TrackDestination : NavDestination() {
     override val key = "track"
-    override val title = res(R.string.navigation_label_track)
-    override val icon = R.drawable.target
+    override val title = res(Strings.navigation_label_track)
+    override val icon = Drawables.target
 
     @Composable
     override fun Content() {

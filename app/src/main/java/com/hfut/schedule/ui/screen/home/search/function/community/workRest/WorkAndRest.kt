@@ -23,7 +23,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.network.MyApiParse.getMy
 
@@ -225,7 +226,7 @@ fun TimeTableScreen(
                                 if(url == null) {
                                     showToast("正在从云端获取数据")
                                 } else {
-                                    Starter.startWebUrlInner(context,url!!,"校历", icon = R.drawable.schedule)
+                                    Starter.startWebUrlInner(context,url!!,"校历", icon = Drawables.schedule)
                                     showToast("即将打开网页链接,可自行下载或保存图片")
                                 }
                             }

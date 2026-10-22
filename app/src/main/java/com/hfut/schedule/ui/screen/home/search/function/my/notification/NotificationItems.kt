@@ -22,7 +22,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import com.hfut.schedule.R
@@ -116,8 +117,8 @@ fun NotificationItems() {
                         leadingContent = {
                             Icon(
                                 painter = painterResource(id =
-                                    if(read) R.drawable.check
-                                    else R.drawable.notifications_unread
+                                    if(read) Drawables.check
+                                    else Drawables.notifications_unread
                                 ),
                                 contentDescription = EMPTY_STRING
                             )

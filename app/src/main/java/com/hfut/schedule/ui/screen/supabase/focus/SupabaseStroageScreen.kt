@@ -21,7 +21,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
@@ -70,7 +71,7 @@ fun SupabaseStorageScreen(innerPadding : PaddingValues,hazeState : HazeState) {
             CustomTextField(
                 input = input,
                 label = { Text("搜索") },
-                leadingIcon = { Icon(painterResource(R.drawable.search),null)}
+                leadingIcon = { Icon(painterResource(Drawables.search),null)}
             ) { input = it }
             Spacer(Modifier.height(CARD_NORMAL_DP))
         }
@@ -130,7 +131,7 @@ private fun CustomItemUI(item: CustomEventDTO,activity: Activity,hazeState: Haze
         supportingContent = { description?.let { Text(text = it,textDecoration = if(isOutOfDate) TextDecoration.LineThrough else TextDecoration.None) } },
         leadingContent = {
             Icon(
-                painterResource(if(item.type == CustomEventType.SCHEDULE) R.drawable.calendar else R.drawable.net),
+                painterResource(if(item.type == CustomEventType.SCHEDULE) Drawables.calendar else Drawables.net),
                 contentDescription = "Localized description",
             )
         },
@@ -142,7 +143,7 @@ private fun CustomItemUI(item: CustomEventDTO,activity: Activity,hazeState: Haze
                             id = item.id
                             showDialog = true
                         }
-                    ) { Icon(painterResource(R.drawable.delete), null) }
+                    ) { Icon(painterResource(Drawables.delete), null) }
                 } else {
                     FilledTonalIconButton(
                         onClick = {
@@ -158,7 +159,7 @@ private fun CustomItemUI(item: CustomEventDTO,activity: Activity,hazeState: Haze
                             }
 
                         }
-                    ) { Icon(painterResource(R.drawable.event_upcoming), null) }
+                    ) { Icon(painterResource(Drawables.event_upcoming), null) }
                 }
             }
         },

@@ -24,8 +24,10 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -88,7 +90,7 @@ fun NetworkSettingsScreen(
         }
 
 
-        DividerTextExpandedWith(stringResource(R.string.network_settings_config_half_title)) {
+        DividerTextExpandedWith(stringResource(Strings.network_settings_config_half_title)) {
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 SharedContainer(
                     key = SettingsHuiXinPasswordDestination.key,
@@ -100,9 +102,9 @@ fun NetworkSettingsScreen(
                 ) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.network_settings_school_card_password_title)) },
-                        supportingContent = { Text(text = stringResource(R.string.network_settings_school_card_password_description)) },
-                        leadingContent = { Icon(painterResource(R.drawable.lock), contentDescription = "Localized description",) },
+                        headlineContent = { Text(text = stringResource(Strings.network_settings_school_card_password_title)) },
+                        supportingContent = { Text(text = stringResource(Strings.network_settings_school_card_password_description)) },
+                        leadingContent = { Icon(painterResource(Drawables.lock), contentDescription = "Localized description",) },
                         modifier = Modifier.clickable {
                             navTopController.push(SettingsHuiXinPasswordDestination)
                         }
@@ -116,9 +118,9 @@ fun NetworkSettingsScreen(
                 ) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.network_settings_jxglstu_password_title)) },
-                        supportingContent = { Text(text = stringResource(R.string.network_settings_jxglstu_password_description)) },
-                        leadingContent = { Icon(painterResource(R.drawable.lock), contentDescription = "Localized description",) },
+                        headlineContent = { Text(text = stringResource(Strings.network_settings_jxglstu_password_title)) },
+                        supportingContent = { Text(text = stringResource(Strings.network_settings_jxglstu_password_description)) },
+                        leadingContent = { Icon(painterResource(Drawables.lock), contentDescription = "Localized description",) },
                         modifier = Modifier.clickable {
                             navTopController.push(SettingsJxglstuPasswordDestination)
                         }
@@ -126,9 +128,9 @@ fun NetworkSettingsScreen(
                 }
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.network_settings_auto_refresh_login_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.network_settings_auto_refresh_login_description)) },
-                    leadingContent = { Icon(painterResource(R.drawable.rotate_auto), contentDescription = "Localized description",) },
+                    headlineContent = { Text(text = stringResource(Strings.network_settings_auto_refresh_login_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.network_settings_auto_refresh_login_description)) },
+                    leadingContent = { Icon(painterResource(Drawables.rotate_auto), contentDescription = "Localized description",) },
                     trailingContent = { Switch(checked = false, enabled = false, onCheckedChange = { showDevelopingToast() })},
                     modifier = Modifier.clickable { showDevelopingToast() }
                 )
@@ -143,12 +145,12 @@ fun NetworkSettingsScreen(
                 ) {
                     TransplantListItem(
                         color = MaterialTheme.colorScheme.surface,
-                        headlineContent = { Text(text = stringResource(R.string.network_settings_ai_title)) },
+                        headlineContent = { Text(text = stringResource(Strings.network_settings_ai_title)) },
                         supportingContent = {
-                            Text(text = stringResource(R.string.network_settings_ai_description))
+                            Text(text = stringResource(Strings.network_settings_ai_description))
                         },
                         leadingContent = { Icon(
-                            painterResource(R.drawable.wand_stars),
+                            painterResource(Drawables.wand_stars),
                             contentDescription = "Localized description"
                         ) },
                         modifier = Modifier.clickable {
@@ -159,12 +161,12 @@ fun NetworkSettingsScreen(
             }
         }
 
-        DividerTextExpandedWith(stringResource(R.string.network_settings_others_half_title)) {
+        DividerTextExpandedWith(stringResource(Strings.network_settings_others_half_title)) {
             CustomCard(color = MaterialTheme.colorScheme.surface){
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.network_settings_update_data_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.network_settings_update_data_description)) },
-                    leadingContent = { Icon(painterResource(R.drawable.cloud_upload), contentDescription = "Localized description",) },
+                    headlineContent = { Text(text = stringResource(Strings.network_settings_update_data_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.network_settings_update_data_description)) },
+                    leadingContent = { Icon(painterResource(Drawables.cloud_upload), contentDescription = "Localized description",) },
                     trailingContent = { Switch(
                         checked = enableUserTrack,
                         onCheckedChange = {
@@ -181,9 +183,9 @@ fun NetworkSettingsScreen(
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.network_settings_refresh_login_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.network_settings_refresh_login_description)) },
-                    leadingContent = { Icon(painterResource(R.drawable.rotate_right), contentDescription = "Localized description",) },
+                    headlineContent = { Text(text = stringResource(Strings.network_settings_refresh_login_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.network_settings_refresh_login_description)) },
+                    leadingContent = { Icon(painterResource(Drawables.rotate_right), contentDescription = "Localized description",) },
                     modifier = Modifier.clickable {
                         refreshLogin(context)
                     }

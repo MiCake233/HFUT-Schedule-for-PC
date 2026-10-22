@@ -24,7 +24,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -126,7 +127,7 @@ fun TotalCourseScreen(
                     input = input,
                     label = { Text("搜索 学院、课程、代码、类型")},
                     leadingIcon = {
-                        Icon(painterResource(R.drawable.search),null)
+                        Icon(painterResource(Drawables.search),null)
                     }
                 ) { input = it }
                 Spacer(Modifier.height(CARD_NORMAL_DP))

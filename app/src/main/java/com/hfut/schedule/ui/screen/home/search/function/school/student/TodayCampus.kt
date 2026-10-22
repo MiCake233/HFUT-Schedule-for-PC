@@ -35,7 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.stu.TodayCampusApp
@@ -143,7 +144,7 @@ fun StuTodayCampusScreen(
                     colors = textFiledAllTransplant(),
                     input = input,
                     label = { Text("检索功能") },
-                    leadingIcon = { Icon(painterResource(R.drawable.search),null) },
+                    leadingIcon = { Icon(painterResource(Drawables.search),null) },
                 ) {
                     input = it
                 }

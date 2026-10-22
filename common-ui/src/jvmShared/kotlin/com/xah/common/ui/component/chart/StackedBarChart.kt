@@ -1,0 +1,158 @@
+package com.xah.common.ui.component.chart
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CornerBasedShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.xah.common.logic.util.safeDiv
+import com.xah.common.ui.style.APP_HORIZONTAL_DP
+import com.xah.common.ui.style.align.ColumnVertical
+
+data class StackedBarData(
+    val label: String,
+    val value: Float
+)
+
+private val NoneRoundShape = RoundedCornerShape(0.dp)
+
+@Composable
+fun StackedBarChart(
+    data: List<StackedBarData>,
+    modifier: Modifier = Modifier,
+    showLabel: Boolean = true,
+    title: String? = null,
+    baseColor: Color = MaterialTheme.colorScheme.primary,
+    shape : CornerBasedShape = MaterialTheme.shapes.extraSmall,
+    colors: List<Color>? = null,
+    barHeight: Float = 24f,
+) {
+    val positiveData = data.filter { it.value > 0f }
+    if (positiveData.isEmpty()) {
+        return
+    }
+
+
+    val total = positiveData.sumOf { it.value.toDouble() }.toFloat()
+    if (total == 0f) {
+        return
+    }
+
+    val segmentColors = colors ?: remember(baseColor, positiveData.size) {
+        generateStackedColors(baseColor, positiveData.size)
+    }
+
+    ColumnVertical(modifier = modifier.padding(horizontal = APP_HORIZONTAL_DP)) {
+        // 堆叠条形
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(barHeight.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            positiveData.forEachIndexed { index, entry ->
+                val ratio = entry.value safeDiv total
+                Box(
+                    modifier = Modifier
+                        .weight(ratio, fill = true)
+                        .height(barHeight.dp)
+                        .background(
+                            color = segmentColors.getOrElse(index) { baseColor },
+                            shape = RoundedCornerShape(
+                                topStart = if (index == 0) shape.topStart else NoneRoundShape.topStart,
+                                bottomStart = if (index == 0) shape.bottomStart else NoneRoundShape.bottomStart,
+                                topEnd = if (index == positiveData.lastIndex) shape.topEnd else NoneRoundShape.topEnd,
+                                bottomEnd = if (index == positiveData.lastIndex) shape.bottomEnd else NoneRoundShape.bottomEnd,
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (showLabel) {
+                        Text(
+                            text = entry.label,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Clip
+                        )
+                    }
+                }
+            }
+        }
+
+        /* 图例
+        if (showLegend) {
+            Spacer(Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                data.forEachIndexed { index, entry ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.weight(1f, fill = false)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(8.dp)
+                                .background(
+                                    color = segmentColors.getOrElse(index) { baseColor },
+                                    shape = RoundedCornerShape(2.dp)
+                                )
+                        )
+                        Text(
+                            text = entry.label,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f, fill = false)
+                        )
+                    }
+                }
+            }
+        }
+         */
+
+        Spacer(Modifier.height(APP_HORIZONTAL_DP))
+        title?.let { Text(it) }
+    }
+}
+
+private fun generateStackedColors(
+    baseColor: Color,
+    count: Int
+): List<Color> {
+    if (count <= 0) {
+        return emptyList()
+    }
+
+    val minAlpha = 0.35f
+    val maxAlpha = 1f
+
+    return List(count) { index ->
+        val fraction = index.toFloat() safeDiv (count - 1).coerceAtLeast(1)
+        val alpha = maxAlpha - (maxAlpha - minAlpha) * fraction
+        baseColor.copy(alpha = alpha)
+    }
+}

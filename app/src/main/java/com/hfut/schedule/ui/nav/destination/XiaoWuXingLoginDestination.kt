@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
@@ -11,7 +13,7 @@ import com.xah.navigation.util.LocalNavDependencies
 object XiaoWuXingLoginDestination : NavDestination() {
     override val key = "xwx_login"
     override val title = text("校务行-登录")
-    override val icon = R.drawable.login
+    override val icon = Drawables.login
 
     @Composable
     override fun Content() {

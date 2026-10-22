@@ -5,8 +5,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.network.MyApiParse.getSettingInfo
@@ -23,8 +25,8 @@ import com.xah.common.logic.util.isNotEmptyAndBlank
 @Composable
 fun APIIcons(celebration: Boolean) {
     when {
-        celebration -> Icon(painterResource(R.drawable.celebration), contentDescription = "Localized description",)
-        else -> Icon(painterResource(R.drawable.info), contentDescription = "Localized description",)
+        celebration -> Icon(painterResource(Drawables.celebration), contentDescription = "Localized description",)
+        else -> Icon(painterResource(Drawables.info), contentDescription = "Localized description",)
     }
 }
 
@@ -40,7 +42,7 @@ fun MyAPIItem(
         return
     }
 
-    DividerTextExpandedWith(text = stringResource(R.string.settings_important_notice_half_title)) {
+    DividerTextExpandedWith(text = stringResource(Strings.settings_important_notice_half_title)) {
         CustomCard(color = color) {
             if(isBirthday)  {
                 val age = remember { getUserAge() }
@@ -50,7 +52,7 @@ fun MyAPIItem(
                     },
                     supportingContent = { Text("Happy Birthday")},
                     leadingContent = {
-                        Icon(painterResource(R.drawable.cake), contentDescription = "Localized description", tint = warnColor())
+                        Icon(painterResource(Drawables.cake), contentDescription = "Localized description", tint = warnColor())
                     },
                 )
             }

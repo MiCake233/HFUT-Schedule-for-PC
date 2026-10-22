@@ -24,8 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringOf
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.community.CommunityToday
@@ -64,7 +67,7 @@ fun SchoolCardItem(isFromFocus : Boolean) {
 
     LaunchedEffect(cardValue) {
         text = cardValue?.balance ?: prefs.getString("card","00")
-        if(text == "00") { text = context.getString(R.string.navigation_label_school_card_not_login) }
+        if(text == "00") { text = stringOf(Strings.navigation_label_school_card_not_login) }
     }
 
     val showAdd by DataStoreManager.enableShowFocusSchoolCardAddButton.collectAsState(true)
@@ -74,7 +77,7 @@ fun SchoolCardItem(isFromFocus : Boolean) {
         headlineContent = {
             ScrollText(
                 text = "￥$text",
-                color = if (text != null && text != stringResource(R.string.navigation_label_school_card_not_login)) {
+                color = if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
                     if(text!!.length <= 4){
                         MaterialTheme.colorScheme.error
                     } else LocalContentColor.current
@@ -83,12 +86,12 @@ fun SchoolCardItem(isFromFocus : Boolean) {
         },
         overlineContent = {
             ScrollText(
-                if (text != null && text != stringResource(R.string.navigation_label_school_card_not_login)) {
+                if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
                     if(text!!.length <= 4){
-                        stringResource(R.string.navigation_label_school_card_warn)
-                    } else stringResource(R.string.navigation_label_school_card)
-                } else stringResource(R.string.navigation_label_school_card),
-                color = if (text != null && text != stringResource(R.string.navigation_label_school_card_not_login)) {
+                        stringResource(Strings.navigation_label_school_card_warn)
+                    } else stringResource(Strings.navigation_label_school_card)
+                } else stringResource(Strings.navigation_label_school_card),
+                color = if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
                     if(text!!.length <= 4){
                         MaterialTheme.colorScheme.error
                     } else LocalContentColor.current
@@ -97,9 +100,9 @@ fun SchoolCardItem(isFromFocus : Boolean) {
         },
         leadingContent = {
             Icon(
-                painterResource(R.drawable.credit_card),
+                painterResource(Drawables.credit_card),
                 contentDescription = "Localized description",
-                tint = if (text != null && text != stringResource(R.string.navigation_label_school_card_not_login)) {
+                tint = if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
                     if(text!!.length <= 4) {
                         MaterialTheme.colorScheme.error
                     } else {
@@ -111,7 +114,7 @@ fun SchoolCardItem(isFromFocus : Boolean) {
             )
         },
         trailingContent={
-            if (text != null && text != stringResource(R.string.navigation_label_school_card_not_login) && (showAdd || text!!.length <= 4)) {
+            if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login) && (showAdd || text!!.length <= 4)) {
                 FilledTonalIconButton(
                     modifier = Modifier
                         .scale(scale2.value)
@@ -122,7 +125,7 @@ fun SchoolCardItem(isFromFocus : Boolean) {
                     },
                 ) {
                     Icon(
-                        painterResource(R.drawable.add),
+                        painterResource(Drawables.add),
                         contentDescription = "Localized description"
                     )
                 }
@@ -161,7 +164,7 @@ fun TodayInfo(bean : CommunityToday) {
                     headlineContent = { Text(text = it) },
                     overlineContent = { Text(text = "$startTime~$endTime") },
                     supportingContent = { Text(text = place.toString())},
-                    leadingContent = { Icon(painter = painterResource(R.drawable.draw), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(Drawables.draw), contentDescription = EMPTY_STRING)},
                 )
             }
         }
@@ -171,7 +174,7 @@ fun TodayInfo(bean : CommunityToday) {
                     headlineContent = { Text(text = it) },
                     overlineContent = { Text(text = "$startTime~$endTime  $place")},
                     supportingContent = { className?.let { Text(text = it) } },
-                    leadingContent = { Icon(painter = painterResource(R.drawable.calendar), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(Drawables.calendar), contentDescription = EMPTY_STRING)},
                 )
             }
         }
@@ -181,7 +184,7 @@ fun TodayInfo(bean : CommunityToday) {
                     headlineContent = { Text(text = it) },
                     supportingContent = { Text(text = "归还时间 $returnTime") },
                     overlineContent = { Text(text = "借阅于 $outTime\n应还于 $dueTime")},
-                    leadingContent = { Icon(painter = painterResource(R.drawable.book_5), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(Drawables.book_5), contentDescription = EMPTY_STRING)},
                 )
             }
         }
@@ -190,7 +193,7 @@ fun TodayInfo(bean : CommunityToday) {
                 CardListItem(
                     headlineContent = { Text(text = it) },
                     overlineContent = { Text(text = startTime.toString()) },
-                    leadingContent = { Icon(painter = painterResource(R.drawable.schedule), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(Drawables.schedule), contentDescription = EMPTY_STRING)},
                 )
             }
         }

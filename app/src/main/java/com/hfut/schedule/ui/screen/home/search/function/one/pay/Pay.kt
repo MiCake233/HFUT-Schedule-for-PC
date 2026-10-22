@@ -32,7 +32,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -211,7 +212,7 @@ fun PayUI(vm: NetWorkViewModel,hazeState : HazeState) {
                 supportingContent = {
                     Text("提前在中国农业银行卡预存费用,开学后自动扣取")
                 },
-                leadingContent = { Icon(painter = painterResource(id = R.drawable.credit_card), contentDescription = EMPTY_STRING)},
+                leadingContent = { Icon(painter = painterResource(id = Drawables.credit_card), contentDescription = EMPTY_STRING)},
                 modifier = Modifier.clickable{}
             )
             PaddingHorizontalDivider()
@@ -221,7 +222,7 @@ fun PayUI(vm: NetWorkViewModel,hazeState : HazeState) {
                     Text("点击复制链接或扫描二维码，在微信打开并登陆后可支付")
                 },
                 leadingContent = {
-                    Icon(painter = painterResource(id = R.drawable.net), contentDescription = EMPTY_STRING)
+                    Icon(painter = painterResource(id = Drawables.net), contentDescription = EMPTY_STRING)
                 },
                 modifier= Modifier.clickable {
                     ClipBoardHelper.copy(Constant.PAY_FEE_URL)

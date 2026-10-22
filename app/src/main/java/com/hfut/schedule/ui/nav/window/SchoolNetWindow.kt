@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.window
 
+import com.xah.common.ui.res.Strings
+
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -26,7 +28,7 @@ data class SchoolNetWindow(
     }
 
     override val key = KEY
-    override val title = res(R.string.navigation_label_school_net)
+    override val title = res(Strings.navigation_label_school_net)
 
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
     @Composable

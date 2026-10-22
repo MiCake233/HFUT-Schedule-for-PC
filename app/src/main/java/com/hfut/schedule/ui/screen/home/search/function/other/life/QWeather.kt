@@ -38,7 +38,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
@@ -95,7 +96,7 @@ fun HuoZaiFeiXuan() {
             Text("非官方新生指南，转载")
         },
         leadingContent = {
-            StartAppIcon(R.drawable.net)
+            StartAppIcon(Drawables.net)
         },
         modifier = Modifier.clickable {
             scope.launch {
@@ -338,7 +339,7 @@ fun CampusMapScreen(
                             Text(item.building.nameZh)
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.domain),null)
+                            Icon(painterResource(Drawables.domain),null)
                         }
                     )
                     LazyRow(modifier = Modifier.padding(bottom = APP_HORIZONTAL_DP)) {
@@ -417,7 +418,7 @@ fun WeatherScreen(vm: NetWorkViewModel) {
                         headlineContent = { Text(text = data.feelsLike + "℃") },
                         overlineContent = { Text(text = "体感")},
                         leadingContent = {
-                            Icon(painterResource(id = R.drawable.temp_preferences_eco), contentDescription = null)
+                            Icon(painterResource(id = Drawables.temp_preferences_eco), contentDescription = null)
                         },
                         modifier = Modifier
                             .weight(.5f)
@@ -437,7 +438,7 @@ fun WeatherScreen(vm: NetWorkViewModel) {
                         headlineContent = { Text(text = data.windScale + "级" ) },
                         overlineContent = { Text(text = data.windDir)},
                         leadingContent = {
-                            Icon(painterResource(id = R.drawable.air), contentDescription = null)
+                            Icon(painterResource(id = Drawables.air), contentDescription = null)
                         },
                         trailingContent = {
                             OutlinedButton (onClick = {
@@ -450,7 +451,7 @@ fun WeatherScreen(vm: NetWorkViewModel) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(
-                                         painterResource(R.drawable.keyboard_arrow_left),
+                                         painterResource(Drawables.keyboard_arrow_left),
                                         contentDescription = null,
                                         modifier = Modifier.size(24.dp)
                                     )
@@ -459,7 +460,7 @@ fun WeatherScreen(vm: NetWorkViewModel) {
                                         style = MaterialTheme.typography.bodyLarge,
                                     )
                                     Icon(
-                                         painterResource(R.drawable.keyboard_arrow_right),
+                                         painterResource(Drawables.keyboard_arrow_right),
                                         contentDescription = null,
                                         modifier = Modifier.size(24.dp)
                                     )
@@ -483,7 +484,7 @@ fun WeatherScreen(vm: NetWorkViewModel) {
                                     headlineContent = { Text(title) },
                                     supportingContent = { Text(text) },
                                     overlineContent = { Text(typeName) },
-                                    leadingContent = { Icon(painterResource(R.drawable.warning),null)}
+                                    leadingContent = { Icon(painterResource(Drawables.warning),null)}
                                 )
                             }
                         }
@@ -544,10 +545,10 @@ private fun humidityLevel(humidity : Int?) : HumidityLevel = if (humidity != nul
 @Composable
 private fun HumidityIcons(level : HumidityLevel) {
     when(level) {
-        HIGH -> Icon(painterResource(id = R.drawable.humidity_high), contentDescription = null)
-        MID -> Icon(painterResource(id = R.drawable.humidity_mid), contentDescription = null)
-        LOW -> Icon(painterResource(id = R.drawable.humidity_low), contentDescription = null)
-        DEFAULT -> Icon(painterResource(id = R.drawable.water_drop), contentDescription = null)
+        HIGH -> Icon(painterResource(id = Drawables.humidity_high), contentDescription = null)
+        MID -> Icon(painterResource(id = Drawables.humidity_mid), contentDescription = null)
+        LOW -> Icon(painterResource(id = Drawables.humidity_low), contentDescription = null)
+        DEFAULT -> Icon(painterResource(id = Drawables.water_drop), contentDescription = null)
     }
 }
 

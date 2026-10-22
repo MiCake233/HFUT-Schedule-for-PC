@@ -35,7 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -411,7 +412,7 @@ fun ProgramChildrenUI(entity : JxglstuProgramResponse?, hazeState : HazeState, v
                 singleLine = true,
                 trailingIcon = {
                     IconButton(onClick = {}) {
-                        Icon(painter = painterResource(R.drawable.search), contentDescription = "description")
+                        Icon(painter = painterResource(Drawables.search), contentDescription = "description")
                     }
                 },
                 shape = MaterialTheme.shapes.medium,
@@ -479,7 +480,7 @@ fun ProgramChildrenUI(entity : JxglstuProgramResponse?, hazeState : HazeState, v
                         TransplantListItem(
                             headlineContent = { Text(remark) },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.info),null)
+                                Icon(painterResource(Drawables.info),null)
                             }
                         )
                     }
@@ -520,7 +521,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                 TransplantListItem(
                     headlineContent = { Text(type) },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.kid_star),null)
+                        Icon(painterResource(Drawables.kid_star),null)
                     },
                     overlineContent = { Text("类型") },
                     modifier = Modifier.weight(.5f)
@@ -528,7 +529,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                 TransplantListItem(
                     headlineContent = { Text(if(courseInfo.isCompulsory) "必修" else "选修") },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.verified),null)
+                        Icon(painterResource(Drawables.verified),null)
                     },
                     color = if(specially) MaterialTheme.colorScheme.errorContainer else null,
                     overlineContent = { Text("真实选修性") },
@@ -544,7 +545,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                 TransplantListItem(
                     headlineContent = { Text(courseInfo!!.credit.toString()) },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.filter_vintage),null)
+                        Icon(painterResource(Drawables.filter_vintage),null)
                     },
                     overlineContent = { Text("学分") },
 
@@ -554,7 +555,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                     TransplantListItem(
                         headlineContent = { Text(it) },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.tag),null)
+                            Icon(painterResource(Drawables.tag),null)
                         },
                         overlineContent = { Text("课程代码") },
                         modifier = Modifier
@@ -569,7 +570,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                 TransplantListItem(
                     headlineContent = { Text("第" + courseInfo.term +"学期") },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.schedule),null)
+                        Icon(painterResource(Drawables.schedule),null)
                     },
                     overlineContent = { Text("类型") },
 
@@ -578,7 +579,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                 TransplantListItem(
                     headlineContent = { Text("共"+courseInfo.week+"周") },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.calendar),null)
+                        Icon(painterResource(Drawables.calendar),null)
                     },
                     overlineContent = { Text("上课周数") },
 
@@ -599,7 +600,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                 TransplantListItem(
                     headlineContent = { Text(it) },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.info),null)
+                        Icon(painterResource(Drawables.info),null)
                     },
                     overlineContent = { Text("备注") },
                 )

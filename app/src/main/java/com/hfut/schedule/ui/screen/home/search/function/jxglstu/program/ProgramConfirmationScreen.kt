@@ -17,7 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.network.api.model.response.json.jxglstu.JxglstuSelectedCourseConfirmationType
@@ -106,8 +107,8 @@ fun ProgramConfirmationScreen(
                                         Icon(
                                             painterResource(
                                                 when(type) {
-                                                    JxglstuSelectedCourseConfirmationType.NAVER_NOT_PASSED -> R.drawable.error
-                                                    else -> R.drawable.circle
+                                                    JxglstuSelectedCourseConfirmationType.NAVER_NOT_PASSED -> Drawables.error
+                                                    else -> Drawables.circle
                                                 }
                                             ),
                                             null,

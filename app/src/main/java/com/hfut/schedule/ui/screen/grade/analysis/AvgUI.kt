@@ -19,7 +19,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
@@ -56,7 +57,7 @@ fun GradeCountUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
         DividerTextExpandedWith(text = "统计图") {
             CardListItem(
                     headlineContent = { Text("正在开发") },
-                    leadingContent = { Icon(painterResource(R.drawable.info), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.info), contentDescription = "Localized description",) },
                     modifier = Modifier.fillMaxWidth(),
                 )
         }
@@ -90,7 +91,7 @@ fun AvgGrade(vm: NetWorkViewModel) {
                 TransplantListItem(
                     headlineContent = { Text("绩点 ${resultAvg.myAvgGpa}") },
                     supportingContent = { Text("排名 ${resultAvg.majorAvgGpaRanking}") },
-                    leadingContent = { Icon(painterResource(R.drawable.kid_star), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.kid_star), contentDescription = "Localized description",) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
@@ -100,7 +101,7 @@ fun AvgGrade(vm: NetWorkViewModel) {
                 TransplantListItem(
                     headlineContent = { Text("分数 ${resultAvg.myAvgScore}") },
                     supportingContent = { Text("排名 ${resultAvg.majorAvgScoreRanking}") },
-                    leadingContent = { Icon(painterResource(R.drawable.filter_vintage), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.filter_vintage), contentDescription = "Localized description",) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
@@ -114,7 +115,7 @@ fun AvgGrade(vm: NetWorkViewModel) {
                 TransplantListItem(
                     headlineContent = { Text("绩点") },
                     supportingContent = { Text("平均 ${resultAvg.majorAvgGpa}\n最高 (待开发)") },
-                    leadingContent = { Icon(painterResource(R.drawable.kid_star), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.kid_star), contentDescription = "Localized description",) },
                     modifier = Modifier
 
                         .fillMaxWidth()
@@ -125,7 +126,7 @@ fun AvgGrade(vm: NetWorkViewModel) {
                 TransplantListItem(
                     headlineContent = { Text("分数") },
                     supportingContent = { Text("平均 ${resultAvg.majorAvgScore}\n最高 (待开发)") },
-                    leadingContent = { Icon(painterResource(R.drawable.filter_vintage), contentDescription = "Localized description",) },
+                    leadingContent = { Icon(painterResource(Drawables.filter_vintage), contentDescription = "Localized description",) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
@@ -165,7 +166,7 @@ fun AllGrade(vm: NetWorkViewModel) {
                         Row {
                             TransplantListItem(
                                 headlineContent = { Text("绩点 ${item.myAvgGpa}") },
-                                leadingContent = { Icon(painterResource(R.drawable.kid_star), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.kid_star), contentDescription = "Localized description",) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(.5f),
@@ -174,7 +175,7 @@ fun AllGrade(vm: NetWorkViewModel) {
 
                             TransplantListItem(
                                 headlineContent = { Text("分数 ${item.myAvgScore}") },
-                                leadingContent = { Icon(painterResource(R.drawable.filter_vintage), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.filter_vintage), contentDescription = "Localized description",) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(.5f),
@@ -187,7 +188,7 @@ fun AllGrade(vm: NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { Text("绩点(GPA)") },
                                 supportingContent = { Text("平均 ${item.majorAvgGpa}\n最高 ${item.maxAvgGpa}") },
-                                leadingContent = { Icon(painterResource(R.drawable.kid_star), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.kid_star), contentDescription = "Localized description",) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(.5f),
@@ -197,7 +198,7 @@ fun AllGrade(vm: NetWorkViewModel) {
                             TransplantListItem(
                                 headlineContent = { Text("分数") },
                                 supportingContent = { Text("平均 ${item.majorAvgScore}\n最高 ${item.maxAvgScore}") },
-                                leadingContent = { Icon(painterResource(R.drawable.filter_vintage), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.filter_vintage), contentDescription = "Localized description",) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(.5f),

@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.TotalCourseScreen
@@ -18,8 +22,8 @@ data class TermCoursesDestination(
 
     companion object {
         const val KEY = "all_course"
-        val TITLE = res(R.string.navigation_label_term_courses)
-        val ICON = R.drawable.category
+        val TITLE = res(Strings.navigation_label_term_courses)
+        val ICON = Drawables.category
     }
 
     @Composable

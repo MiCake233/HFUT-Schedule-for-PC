@@ -44,7 +44,8 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -148,7 +149,7 @@ fun ControlCenterScreen() {
                                     colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor =  MaterialTheme.colorScheme.errorContainer.copy(.75f))
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.home),
+                                        painterResource(Drawables.home),
                                         null,
                                         tint = MaterialTheme.colorScheme.error,
                                         modifier = Modifier.size(25.5.dp)
@@ -166,7 +167,7 @@ fun ControlCenterScreen() {
                                     }
                                 ),
                             ) {
-                                Icon(painterResource(R.drawable.flash_on),null, tint = contentColor, modifier = Modifier.size(25.5.dp))
+                                Icon(painterResource(Drawables.flash_on),null, tint = contentColor, modifier = Modifier.size(25.5.dp))
                             }
                             IconButton(
                                 onClick = { GlobalUiStateHolder.controllerCenterTab = TAB_SETTINGS },
@@ -178,7 +179,7 @@ fun ControlCenterScreen() {
                                     }
                                 ),
                             ) {
-                                Icon(painterResource(R.drawable.format_paint),null, tint = contentColor)
+                                Icon(painterResource(Drawables.format_paint),null, tint = contentColor)
                             }
                             IconButton(
                                 onClick = { GlobalUiStateHolder.controllerCenterTab = TAB_SEARCH },
@@ -190,7 +191,7 @@ fun ControlCenterScreen() {
                                     }
                                 ),
                             ) {
-                                Icon(painterResource(R.drawable.category_search),null, tint = contentColor)
+                                Icon(painterResource(Drawables.category_search),null, tint = contentColor)
                             }
                             Spacer(Modifier.width(APP_HORIZONTAL_DP-8.dp))
                         }
@@ -202,7 +203,7 @@ fun ControlCenterScreen() {
                                 navController.pop()
                             }
                         ) {
-                            Icon(painterResource(R.drawable.arrow_back),null, tint = contentColor)
+                            Icon(painterResource(Drawables.arrow_back),null, tint = contentColor)
                         }
                     },
                 )
@@ -217,7 +218,7 @@ fun ControlCenterScreen() {
 //                            input = it
 //                        },
 //                        label = { Text("全局搜索") },
-//                        leadingIcon = { Icon(painterResource(R.drawable.search),null) },
+//                        leadingIcon = { Icon(painterResource(Drawables.search),null) },
 //                        singleLine = true,
 //                        shape = MaterialTheme.shapes.medium,
 //                        colors = textFiledTransplant(),
@@ -402,7 +403,7 @@ fun RecentlyStackUI(
                                         }
                                     },
                                 ) {
-                                    Icon(painterResource(R.drawable.delete),null)
+                                    Icon(painterResource(Drawables.delete),null)
                                 }
                             }
                         },
@@ -427,7 +428,7 @@ fun RecentlyStackUI(
             CardListItem(
                 headlineContent = { Text("正在开发") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.history),null)
+                    Icon(painterResource(Drawables.history),null)
                 },
                 modifier = Modifier.clickable {
 

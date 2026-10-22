@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.sys
 
+import com.xah.common.ui.res.Drawables
+
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
@@ -67,7 +69,7 @@ object AppNotificationManager {
         content: String,
         // 点击操作
         intent: PendingIntent? = null,
-        smallIcon: Int = R.drawable.notifications
+        smallIcon: Int = Drawables.notifications
     ) : Int {
         // 检查通道是否创建
         createNotificationChannel(channel)
@@ -110,7 +112,7 @@ object AppNotificationManager {
     private var progressStyle = if(AppVersion.sdkInt >= 36) {
         NotificationCompat.ProgressStyle()
             .setStyledByProgress(false)
-            .setProgressTrackerIcon(IconCompat.createWithResource(MyApplication.context, R.drawable.expand_circle_right))
+            .setProgressTrackerIcon(IconCompat.createWithResource(MyApplication.context, Drawables.expand_circle_right))
             .setProgressSegments(
                 listOf(
                     NotificationCompat.ProgressStyle.Segment(500).setColor(Color.YELLOW),
@@ -128,7 +130,7 @@ object AppNotificationManager {
         getPassedMinutesInRange(startTime,endTime)?.let { progressStyle!!.progress = it*10 } ?: manager.cancel(COURSE_PROGRESS_ID)
 
         val builder = NotificationCompat.Builder(MyApplication.context,AppNotificationChannel.COURSE_PROGRESS.name)
-            .setSmallIcon(R.drawable.notifications)
+            .setSmallIcon(Drawables.notifications)
             .setContentTitle(AppNotificationChannel.COURSE_PROGRESS.title)
             .setContentText(courseName)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -219,7 +221,7 @@ object AppNotificationManager {
     ): Notification {
         return Notification.Builder(MyApplication.context, AppNotificationChannel.COURSE_LIVE_UPDATE.name)
             .setSmallIcon(smallIconRes)
-            .setLargeIcon(Icon.createWithResource(MyApplication.context, R.drawable.hfut_badge))
+            .setLargeIcon(Icon.createWithResource(MyApplication.context, Drawables.hfut_badge))
             .setContentTitle("${eventType}提醒：$courseName")
             .setContentText(contentText)
             .setStyle(Notification.BigTextStyle().bigText("$contentText\n$subText"))
@@ -245,7 +247,7 @@ object AppNotificationManager {
     }
 
     private fun buildCourseLiveSmallIconRes(eventType: String): Int =
-        if (eventType == "考试") R.drawable.draw else R.drawable.schedule
+        if (eventType == "考试") Drawables.draw else Drawables.schedule
 
     private fun buildShortPlaceText(placeText: String): String {
         val compactText = placeText

@@ -24,8 +24,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
@@ -71,9 +73,9 @@ fun Washing(
     }
 
     TransplantListItem(
-        headlineContent = { ScrollText(text = stringResource(R.string.navigation_label_laundry)) },
+        headlineContent = { ScrollText(text = stringResource(Strings.navigation_label_laundry)) },
         leadingContent = {
-            Icon(painterResource(id = R.drawable.local_laundry_service), contentDescription = EMPTY_STRING)
+            Icon(painterResource(id = Drawables.local_laundry_service), contentDescription = EMPTY_STRING)
         },
         trailingContent = {
             SharedContainer(
@@ -90,7 +92,7 @@ fun Washing(
                         },
                     ) {
                         Icon(
-                            painterResource(R.drawable.search),
+                            painterResource(Drawables.search),
                             contentDescription = null,
                             modifier = Modifier.size(20.dp)
                         )
@@ -145,10 +147,10 @@ fun WashingUI() {
                                }
                             },
                             trailingContent = {
-                                Icon(painterResource(R.drawable.arrow_forward),null)
+                                Icon(painterResource(Drawables.arrow_forward),null)
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.search),null)
+                                Icon(painterResource(Drawables.search),null)
                             },
                             color = MaterialTheme.colorScheme.secondaryContainer
                         )

@@ -24,7 +24,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 import com.google.gson.JsonObject
@@ -111,7 +112,7 @@ private fun SurveyList(
     Column (modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP).navigationBarsPadding()) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Icon(
-                painterResource(R.drawable.arrow_upward),
+                painterResource(Drawables.arrow_upward),
                 contentDescription = EMPTY_STRING,
                 Modifier.size(100.dp),
                 tint = MaterialTheme.colorScheme.primary
@@ -128,7 +129,7 @@ private fun SurveyList(
                     IconButton(
                         onClick = { showTextField = false }
                     ) {
-                        Icon(painterResource(R.drawable.close),null)
+                        Icon(painterResource(Drawables.close),null)
                     }
                 },
                 label = {
@@ -146,7 +147,7 @@ private fun SurveyList(
                 text = "自定义留言",
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                icon = R.drawable.edit,
+                icon = Drawables.edit,
             )
         }
         Spacer(Modifier.height(APP_HORIZONTAL_DP/2))
@@ -158,7 +159,7 @@ private fun SurveyList(
                     showDialog = true
                 },
                 text = "中等偏好",
-                icon = R.drawable.thumb_up,
+                icon = Drawables.thumb_up,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
@@ -169,7 +170,7 @@ private fun SurveyList(
                     postMode = PostMode.LOW
                     showDialog = true
                 },
-                icon = R.drawable.thumb_down,
+                icon = Drawables.thumb_down,
                 text = "中等偏差",
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -184,7 +185,7 @@ private fun SurveyList(
                     showDialog = true
                 },
                 text = "好评 100分",
-                icon = R.drawable.thumb_up,
+                icon = Drawables.thumb_up,
             )
             Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
             LargeButton (
@@ -193,7 +194,7 @@ private fun SurveyList(
                     postMode = PostMode.NONE
                     showDialog = true
                 },
-                icon = R.drawable.thumb_down,
+                icon = Drawables.thumb_down,
                 text = "差评 0分",
                 containerColor = MaterialTheme.colorScheme.error
             )

@@ -44,7 +44,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.hfut.schedule.R
@@ -96,7 +97,7 @@ fun ShowerStatusUI(vm : NetWorkViewModel,input : String) {
 
     CommonNetworkScreen(uiState,isFullScreen = false, onReload = refreshNetwork) {
         val response = (uiState as NetworkUiState.Success).data
-        StatusIcon(if(response.contains("成功")) R.drawable.check else R.drawable.close,text(response))
+        StatusIcon(if(response.contains("成功")) Drawables.check else Drawables.close,text(response))
     }
 }
 
@@ -161,14 +162,14 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
                     colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .7f)),
                     modifier = Modifier.align(Alignment.BottomEnd).padding(APP_HORIZONTAL_DP).size(60.dp),
                 ) {
-                    Icon(painterResource(R.drawable.close),null, modifier = Modifier.size(30.dp))
+                    Icon(painterResource(Drawables.close),null, modifier = Modifier.size(30.dp))
                 }
                 FilledTonalIconButton (
                     onClick = { isFull = !isFull },
                     colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .7f)),
                     modifier = Modifier.align(Alignment.BottomStart).padding(APP_HORIZONTAL_DP).size(60.dp),
                 ) {
-                    Icon(painterResource(if(!isFull) R.drawable.expand_content else R.drawable.collapse_content),null, modifier = Modifier.size(30.dp))
+                    Icon(painterResource(if(!isFull) Drawables.expand_content else Drawables.collapse_content),null, modifier = Modifier.size(30.dp))
                 }
 
             }
@@ -281,7 +282,7 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
                             show = true
                         }
                     }) {
-                    Icon(painter = painterResource(R.drawable.qr_code_scanner), contentDescription = "description")
+                    Icon(painter = painterResource(Drawables.qr_code_scanner), contentDescription = "description")
                 }
             },
             shape = MaterialTheme.shapes.medium,
@@ -338,7 +339,7 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
                             }
                         }, label = { Text(text = item.name) }, trailingIcon = {
                             if(editMode)
-                                Icon(painterResource(id = R.drawable.close), contentDescription = EMPTY_STRING)
+                                Icon(painterResource(id = Drawables.close), contentDescription = EMPTY_STRING)
                         })
                     Spacer(modifier = Modifier.width(10.dp))
                 }

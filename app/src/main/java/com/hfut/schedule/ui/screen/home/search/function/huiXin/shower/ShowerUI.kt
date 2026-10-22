@@ -45,7 +45,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.Observer
@@ -222,7 +223,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                         onClick = {payNumber = payNumber.replaceFirst(".$".toRegex(), EMPTY_STRING)},
                         modifier = Modifier.padding(horizontal = 5.dp)
                     ) {
-                        Icon(painter = painterResource(R.drawable.backspace), contentDescription = "description")
+                        Icon(painter = painterResource(Drawables.backspace), contentDescription = "description")
                     }
 
                     FilledTonalIconButton(
@@ -233,7 +234,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                         },
                         modifier = Modifier.padding(horizontal = 5.dp)
                     ) {
-                        Icon(painterResource(R.drawable.check), contentDescription = "description")
+                        Icon(painterResource(Drawables.check), contentDescription = "description")
                     }
 
                     FilledTonalButton(
@@ -261,7 +262,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                 Row {
                     if(showitem4)
                         IconButton(onClick = {phoneNumber = phoneNumber.replaceFirst(".$".toRegex(), EMPTY_STRING)}) {
-                            Icon(painter = painterResource(R.drawable.backspace), contentDescription = "description") }
+                            Icon(painter = painterResource(Drawables.backspace), contentDescription = "description") }
                     FilledTonalIconButton(onClick = {
                         show = false
                         CoroutineScope(Job()).launch {
@@ -297,7 +298,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                 }
                             }
                         }
-                    }) { Icon(painter = painterResource(R.drawable.search), contentDescription = "description") }
+                    }) { Icon(painter = painterResource(Drawables.search), contentDescription = "description") }
 
                     FilledTonalButton(
                         onClick = {
@@ -325,7 +326,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                         getInGuaGua(vm,navController) { loading = it }
                     },
                     trailingContent = {
-                        Icon(painterResource(R.drawable.arrow_forward),null)
+                        Icon(painterResource(Drawables.arrow_forward),null)
                     },
                     color = MaterialTheme.colorScheme.secondaryContainer
                 )
@@ -345,10 +346,10 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                 }
                             },
                             trailingContent = {
-                                Icon(painterResource(R.drawable.arrow_forward),null)
+                                Icon(painterResource(Drawables.arrow_forward),null)
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.search),null)
+                                Icon(painterResource(Drawables.search),null)
                             },
                             color = MaterialTheme.colorScheme.secondaryContainer
                         )
@@ -442,7 +443,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                                 Text("手机号")
                                             },
                                             headlineContent = { Text(text = (if(!show)"1XXXXXXXXXX" else phoneNumber)) },
-                                            leadingContent = { Icon(painter = painterResource(id = R.drawable.call), contentDescription = EMPTY_STRING) }
+                                            leadingContent = { Icon(painter = painterResource(id = Drawables.call), contentDescription = EMPTY_STRING) }
                                         )
                                     }
                                 }

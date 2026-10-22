@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination.base
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +18,7 @@ import com.xah.navigation.model.dest.Destination
 abstract class NavDestination : Destination() {
     abstract val title : UiText
     open val description : String? = null
-    open val icon : Int = R.drawable.texture
+    open val icon : Int = Drawables.texture
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
     override val PlaceHolder = @Composable {
         Box(

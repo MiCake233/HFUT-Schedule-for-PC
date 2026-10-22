@@ -12,8 +12,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.R
 
@@ -55,12 +57,12 @@ fun LoginWeb( card : Boolean, vm : NetWorkViewModel, hazeState: HazeState) {
     val precent = (((flow?.toDoubleOrNull() ?: 0.0) safeDiv (1024 * maxFlow)) * 100).roundOffString(2)
 
     TransplantListItem(
-        headlineContent = { if(!card)ScrollText(text = stringResource(R.string.navigation_label_school_net)) else ScrollText(text =
+        headlineContent = { if(!card)ScrollText(text = stringResource(Strings.navigation_label_school_net)) else ScrollText(text =
             if(showPercent) "${precent}%" else "$str GiB"
         ) },
         overlineContent = { if(!card) ScrollText(text = "${GlobalUiStateHolder.webValue.value?.flow?: memoryWeb} MB") else ScrollText(text = "校园网")},
         leadingContent = { Icon(
-            painterResource(R.drawable.net),
+            painterResource(Drawables.net),
             contentDescription = "Localized description",
         ) },
         color = cardNormalColor(),

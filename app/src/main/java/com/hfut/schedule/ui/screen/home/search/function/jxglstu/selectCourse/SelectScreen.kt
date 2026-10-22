@@ -63,7 +63,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -192,7 +193,7 @@ fun SelectCourseScreen(
                             backdrop = backDrop,
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.event_repeat),null)
+                            Icon(painterResource(Drawables.event_repeat),null)
                         }
                         Spacer(Modifier.width(BUTTON_PADDING))
                         LiquidButton (
@@ -294,7 +295,7 @@ fun SelectCourseDetailScreen(
                                 isCircle = true,
                                 backdrop = backDrop
                             ) {
-                                Icon(painterResource(R.drawable.rotate_right), null)
+                                Icon(painterResource(Drawables.rotate_right), null)
                             }
                             Spacer(Modifier.width(BUTTON_PADDING))
                             NoPadding {
@@ -349,7 +350,7 @@ fun SelectCourseDetailScreen(
                             IconButton(
                                 onClick = {}) {
                                 Icon(
-                                    painter = painterResource(R.drawable.search),
+                                    painter = painterResource(Drawables.search),
                                     contentDescription = "description"
                                 )
                             }
@@ -461,7 +462,7 @@ private fun SelectCourseList(
                                         )
                                     } ?: showToast("必须为数字")
                                 }) {
-                                    Icon(painterResource(R.drawable.arrow_forward),null)
+                                    Icon(painterResource(Drawables.arrow_forward),null)
                                 }
                             },
                             shape = MaterialTheme.shapes.medium,
@@ -508,7 +509,7 @@ private fun SelectCourseList(
                             trailingContent = {
                                 ColumnVertical {
                                     FilledTonalIconButton(onClick = { expand = !expand }) {
-                                        Icon(painter = painterResource(id = if(expand) R.drawable.collapse_content else R.drawable.expand_content), contentDescription = EMPTY_STRING)
+                                        Icon(painter = painterResource(id = if(expand) Drawables.collapse_content else Drawables.expand_content), contentDescription = EMPTY_STRING)
                                     }
                                     Text("代号 $id")
                                 }
@@ -668,7 +669,7 @@ private fun SelectCourseInfo(vm: NetWorkViewModel,courseId : Int, search : Strin
                                 showBottomSheet = true
                             },
                             colors = if(!isFull) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.filledTonalIconButtonColors(MaterialTheme.colorScheme.error.copy(alpha = 0.1f))
-                        ) { Icon(painter = painterResource(id = R.drawable.add_2), contentDescription = EMPTY_STRING) }
+                        ) { Icon(painter = painterResource(id = Drawables.add_2), contentDescription = EMPTY_STRING) }
                         Text("$stdCount/$limit")
                     }
                 },
@@ -718,7 +719,7 @@ fun SelectCourseResultLoad(vm : NetWorkViewModel, courseId : Int, lessonId : Int
         CommonNetworkScreen(uiState, onReload = refreshNetwork, isFullScreen = false) {
             val data = (uiState as NetworkUiState.Success).data
             ColumnVertical(modifier = Modifier.fillMaxWidth()) {
-                Icon( if(data.first) painterResource(R.drawable.check) else painterResource(R.drawable.close), contentDescription = EMPTY_STRING,Modifier.size(100.dp), tint = MaterialTheme.colorScheme.primary)
+                Icon( if(data.first) painterResource(Drawables.check) else painterResource(Drawables.close), contentDescription = EMPTY_STRING,Modifier.size(100.dp), tint = MaterialTheme.colorScheme.primary)
                 Text(text = data.second, color = MaterialTheme.colorScheme.primary)
             }
         }
@@ -789,20 +790,20 @@ private fun CourseInfo(num : Int, lists : List<JxglstuSelectCourseDetailResponse
         TransplantListItem(
             overlineContent = { Text(text = "学分")},
             headlineContent = { Text(text = data.course.credits.toString()) },
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.filter_vintage), contentDescription = EMPTY_STRING)},
+            leadingContent = { Icon(painter = painterResource(id = Drawables.filter_vintage), contentDescription = EMPTY_STRING)},
             modifier = Modifier.weight(.5f)
         )
         TransplantListItem(
             overlineContent = { Text(text = "考试形式")},
             headlineContent = { Text(text = data.examMode.nameZh) },
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.draw), contentDescription = EMPTY_STRING)},
+            leadingContent = { Icon(painter = painterResource(id = Drawables.draw), contentDescription = EMPTY_STRING)},
             modifier = Modifier.weight(.5f)
         )
     }
     Row {
         TransplantListItem(
             headlineContent = { Text(text = data.courseType.nameZh) },
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.kid_star), contentDescription = EMPTY_STRING)},
+            leadingContent = { Icon(painter = painterResource(id = Drawables.kid_star), contentDescription = EMPTY_STRING)},
             modifier = Modifier.weight(.5f)
         )
         TransplantListItem(
@@ -818,7 +819,7 @@ private fun CourseInfo(num : Int, lists : List<JxglstuSelectCourseDetailResponse
     TransplantListItem(
         headlineContent = { Text(text = data.nameZh)},
         overlineContent = { Text("班级")},
-        leadingContent = { Icon(painter = painterResource(id = R.drawable.sensor_door), contentDescription = EMPTY_STRING)},
+        leadingContent = { Icon(painter = painterResource(id = Drawables.sensor_door), contentDescription = EMPTY_STRING)},
         modifier = Modifier.clickable {
             ClipBoardHelper.copy(data.nameZh)
         }
@@ -830,7 +831,7 @@ private fun CourseInfo(num : Int, lists : List<JxglstuSelectCourseDetailResponse
             TransplantListItem(
                 overlineContent = { Text(text = "教师 ${i+1}")},
                 headlineContent = { Text(text = item.nameZh) },
-                leadingContent = { Icon(painter = painterResource(id = R.drawable.person), contentDescription = EMPTY_STRING)},
+                leadingContent = { Icon(painter = painterResource(id = Drawables.person), contentDescription = EMPTY_STRING)},
                 modifier = Modifier
                     .weight(.5f)
                     .clickable {
@@ -843,7 +844,7 @@ private fun CourseInfo(num : Int, lists : List<JxglstuSelectCourseDetailResponse
                 TransplantListItem(
                     overlineContent = { Text(text = "教师 ${i+2}")},
                     headlineContent = { Text(text = item2.nameZh) },
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.person), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.person), contentDescription = EMPTY_STRING)},
                     modifier = Modifier
                         .weight(.5f)
                         .clickable {
@@ -859,7 +860,7 @@ private fun CourseInfo(num : Int, lists : List<JxglstuSelectCourseDetailResponse
         TransplantListItem(
             overlineContent = { Text(text = "代码")},
             headlineContent = { Text(text = data.code) },
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.tag), contentDescription = EMPTY_STRING)},
+            leadingContent = { Icon(painter = painterResource(id = Drawables.tag), contentDescription = EMPTY_STRING)},
             modifier = Modifier.weight(.5f).clickable {
                 ClipBoardHelper.copy(data.code)
             }
@@ -870,7 +871,7 @@ private fun CourseInfo(num : Int, lists : List<JxglstuSelectCourseDetailResponse
             overlineContent = { Text(text = "安排")},
             headlineContent = { Text(text = it)  },
             modifier = Modifier.clickable {},
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.calendar), contentDescription = EMPTY_STRING)}
+            leadingContent = { Icon(painter = painterResource(id = Drawables.calendar), contentDescription = EMPTY_STRING)}
         )
     }
 }
@@ -955,13 +956,13 @@ private fun HaveSelectedCourseLoad(vm: NetWorkViewModel, courseId: Int, hazeStat
                 val names =  lists[item].course.nameZh
                 CardListItem(
                     headlineContent = { Text(text = names)  },
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.category), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.category), contentDescription = EMPTY_STRING)},
                     trailingContent = { FilledTonalIconButton(onClick = {
                         lessonId = lists[item].id
                         name = names
                         showDialog = true
                     }) {
-                        Icon(painterResource(R.drawable.close), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(Drawables.close), contentDescription = EMPTY_STRING)
                     }},
                     modifier = Modifier.clickable {
                         showBottomSheet_info = true

@@ -1,5 +1,9 @@
 package com.hfut.schedule.logic.util.shortcut
 
+import com.xah.common.ui.model.text.asStringNow
+
+import com.xah.common.ui.res.Drawables
+
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
@@ -41,8 +45,8 @@ object AppShortcutManager {
 
     private fun ShortcutConfig.createShortcut(context: Context) : ShortcutInfo {
         return ShortcutInfo.Builder(context, "${this.id}_shortcut")
-            .setShortLabel(this.label.asString(context))
-            .setLongLabel(this.longLabel.asString(context))
+            .setShortLabel(this.label.asStringNow())
+            .setLongLabel(this.longLabel.asStringNow())
             .setIcon(Icon.createWithResource(context, this.icon))
             .setIntent(this.intent)
             .build()
@@ -61,7 +65,7 @@ object AppShortcutManager {
         return ShortcutConfig(
             "card",
             text("校园卡"),
-            R.drawable.credit_card,
+            Drawables.credit_card,
             intent
         )
     }
@@ -79,7 +83,7 @@ object AppShortcutManager {
         return ShortcutConfig(
             "scan",
             text("CAS扫码"),
-            R.drawable.qr_code_scanner,
+            Drawables.qr_code_scanner,
             intent
         )
     }
@@ -95,7 +99,7 @@ object AppShortcutManager {
         return ShortcutConfig(
             "hot_water",
             text("热水"),
-            R.drawable.water_voc,
+            Drawables.water_voc,
             intent,
         )
     }
@@ -105,7 +109,7 @@ object AppShortcutManager {
         return ShortcutConfig(
             "recharge",
             text("校园卡充值"),
-            R.drawable.add_card,
+            Drawables.add_card,
             intent,
         )
     }
@@ -122,7 +126,7 @@ object AppShortcutManager {
         return ShortcutConfig(
             "express_pdd",
             text("快递"),
-            R.drawable.pdd_icon,
+            Drawables.pdd_icon,
             intent,
             text("快递(拼多多)")
         )
@@ -137,7 +141,7 @@ object AppShortcutManager {
         return ShortcutConfig(
             "express_taobao",
             text("快递"),
-            R.drawable.taobao_icon,
+            Drawables.taobao_icon,
             intent,
             text("快递(淘宝)")
         )
@@ -146,7 +150,7 @@ object AppShortcutManager {
     private fun createHuiXinQrCodePayShortcut(): ShortcutConfig {
         val url = Constant.HUI_XIN_URL + "plat/pay?synjones-auth="
         val label = "付款码"
-        val icon = R.drawable.barcode
+        val icon = Drawables.barcode
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setClassName(
                 BuildConfig.APPLICATION_ID,

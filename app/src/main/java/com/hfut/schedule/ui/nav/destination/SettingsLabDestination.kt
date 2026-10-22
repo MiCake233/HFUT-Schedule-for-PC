@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +30,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsLabDestination : NavDestination() {
     override val key: String = "settings_lab"
     override val title: UiText = text("实验室")
-    override val icon = R.drawable.science
+    override val icon = Drawables.science
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

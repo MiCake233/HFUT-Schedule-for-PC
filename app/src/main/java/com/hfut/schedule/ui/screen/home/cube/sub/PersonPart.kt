@@ -26,8 +26,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.parse.roundOffString
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
@@ -63,7 +65,7 @@ fun PersonPart() {
                 )
             ) {
                 TransplantListItem(
-                    leadingContent = { Icon(painter = painterResource(id = R.drawable.person), contentDescription = EMPTY_STRING)},
+                    leadingContent = { Icon(painter = painterResource(id = Drawables.person), contentDescription = EMPTY_STRING)},
                     headlineContent = { Text(text = getPersonInfo().getNameFinally())  },
                     trailingContent = {
                         Row {
@@ -108,11 +110,11 @@ fun PersonPart() {
                         getPersonInfo().getStudentIdFinally()?.let{
                             Row {
                                 TransplantListItem(
-                                    overlineContent = { Text(text = stringResource(R.string.settings_person_info_student_id_description)) },
+                                    overlineContent = { Text(text = stringResource(Strings.settings_person_info_student_id_description)) },
                                     headlineContent = {  ScrollText(text = it)  },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.tag),
+                                            painterResource(Drawables.tag),
                                             contentDescription = "Localized description",
                                         )
                                     },
@@ -138,7 +140,7 @@ fun PersonPart() {
                                     overlineContent = {  Text(text = it)  },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.square_foot),
+                                            painterResource(Drawables.square_foot),
                                             contentDescription = "Localized description",
                                         )
                                     },

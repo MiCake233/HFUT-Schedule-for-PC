@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventScreen
@@ -22,8 +26,8 @@ data class AddEventDestination(
 
     companion object {
         const val KEY = "add_event"
-        val TITLE = res(R.string.navigation_label_add_event)
-        val ICON = R.drawable.add
+        val TITLE = res(Strings.navigation_label_add_event)
+        val ICON = Drawables.add
     }
 
     @Composable

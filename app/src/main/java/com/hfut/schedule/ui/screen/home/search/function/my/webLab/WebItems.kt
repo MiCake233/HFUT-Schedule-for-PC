@@ -9,7 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.sys.Starter
@@ -25,8 +26,8 @@ import com.hfut.schedule.ui.component.container.TransplantListItem
 fun WebItem() {
     data class WebItemData(val url : String,val icon : Int,val title : String,val remark : String? = null)
     val webs = listOf(
-        WebItemData(title = "信息门户", icon = R.drawable.person, url = Constant.ONE_URL),
-        WebItemData(title = "WebVpn", icon = R.drawable.vpn_key, url = Constant.WEBVPN_URL),
+        WebItemData(title = "信息门户", icon = Drawables.person, url = Constant.ONE_URL),
+        WebItemData(title = "WebVpn", icon = Drawables.vpn_key, url = Constant.WEBVPN_URL),
     )
     val context = LocalContext.current
     Column(modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP)) {

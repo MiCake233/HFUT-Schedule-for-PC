@@ -54,7 +54,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.schedule.R
@@ -232,7 +233,7 @@ fun UpdateSuccessScreen() {
                 AnimatedTextCarousel(welcomeTexts)
                 Spacer(Modifier.height(APP_HORIZONTAL_DP))
                 Icon(
-                    painterResource(R.drawable.cached),
+                    painterResource(Drawables.cached),
                     null,
                     modifier = Modifier
                         .size(110.dp)

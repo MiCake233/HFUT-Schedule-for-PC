@@ -30,8 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.dev.CrashHandler
 import com.hfut.schedule.logic.util.dev.ExceptionHelper.getKeyStackTrace
@@ -138,22 +140,22 @@ fun FixUI(
         CustomCard(color = MaterialTheme.colorScheme.surface) {
             TransplantListItem(
                 headlineContent = { Text(text = VersionInfoDestination.title.asString()) },
-                supportingContent = { Text(text = stringResource(R.string.about_settings_version_info_description))},
+                supportingContent = { Text(text = stringResource(Strings.about_settings_version_info_description))},
                 modifier = Modifier.clickable { showBottomSheet_version = true },
-                leadingContent = { Icon(painter = painterResource(id = R.drawable.sdk), contentDescription = EMPTY_STRING)}
+                leadingContent = { Icon(painter = painterResource(id = Drawables.sdk), contentDescription = EMPTY_STRING)}
             )
             PaddingHorizontalDivider()
             BugShare()
             PaddingHorizontalDivider()
             TransplantListItem(
                 headlineContent = { Text(text = "下载最新版本") },
-                leadingContent = { Icon(painterResource(R.drawable.cloud_download), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.cloud_download), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable{ Starter.startWebUrlOuter(context,Constant.GITEE_UPDATE_URL + "releases/tag/Android") }
             )
             PaddingHorizontalDivider()
             TransplantListItem(
                 headlineContent = { Text(text = "刷新登录状态") },
-                leadingContent = { Icon(painterResource(R.drawable.rotate_right), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.rotate_right), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable {
                     refreshLogin(context)
                 }
@@ -161,13 +163,13 @@ fun FixUI(
             PaddingHorizontalDivider()
             TransplantListItem(
                 headlineContent = { Text(text = "联系开发者") },
-                leadingContent = { Icon(painterResource(R.drawable.mail), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.mail), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable{ emailMe(context) }
             )
             PaddingHorizontalDivider()
             TransplantListItem(
                 headlineContent = { Text(text = "Github主页") },
-                leadingContent = { Icon(painterResource(R.drawable.github), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.github), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable{
                     scope.launch {
                         Starter.startWebUrlOuter(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
@@ -177,7 +179,7 @@ fun FixUI(
             PaddingHorizontalDivider()
             TransplantListItem(
                 headlineContent = { Text(text = "备份与恢复") },
-                leadingContent = { Icon(painterResource(R.drawable.mail), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.mail), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable{
                     showBottomSheetBackup = true
                 }
@@ -198,7 +200,7 @@ fun FixUI(
                         }
                     )
                 },
-                leadingContent = { Icon(painterResource(R.drawable.database), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.database), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable {
                     scope.launch {
                         DataStoreManager.saveEnableDataStore(!enableDataStore)
@@ -236,7 +238,7 @@ fun BugShare() {
 //                                    refresh++
 //                                }
 //                            ) {
-//                                Icon(painterResource(R.drawable.refresh), null)
+//                                Icon(painterResource(Drawables.refresh), null)
 //                            }
                             FilledTonalIconButton(
                                 onClick = {
@@ -244,7 +246,7 @@ fun BugShare() {
                                     refresh++
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.delete), null)
+                                Icon(painterResource(Drawables.delete), null)
                             }
                             FilledTonalIconButton(
                                 onClick = {
@@ -264,7 +266,7 @@ fun BugShare() {
                                 if (loading) {
                                     LoadingIcon()
                                 } else {
-                                    Icon(painterResource(R.drawable.save), null)
+                                    Icon(painterResource(Drawables.save), null)
                                 }
                             }
                         }
@@ -314,7 +316,7 @@ fun BugShare() {
                 LoadingIcon()
             } else{
                 Icon(
-                    painter = painterResource(id = R.drawable.slow_motion_video), contentDescription = EMPTY_STRING
+                    painter = painterResource(id = Drawables.slow_motion_video), contentDescription = EMPTY_STRING
                 )
             }
         },
@@ -340,7 +342,7 @@ fun BugShare() {
     TransplantListItem(
         headlineContent = { Text(text = "错误日志") },
         leadingContent = {
-            Icon(painterResource(R.drawable.article), contentDescription = "Localized description",)
+            Icon(painterResource(Drawables.article), contentDescription = "Localized description",)
         },
         modifier = Modifier.clickable {
             showBottomSheet = true

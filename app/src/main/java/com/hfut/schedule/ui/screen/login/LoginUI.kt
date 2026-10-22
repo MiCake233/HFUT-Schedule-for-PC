@@ -65,7 +65,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -318,7 +319,7 @@ fun LoginScreen(
                                     }
                                 ),
                             ) {
-                                Icon(painterResource(R.drawable.login),null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(25.5.dp))
+                                Icon(painterResource(Drawables.login),null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(25.5.dp))
                             }
                             val hasNotice = showTip || showTip2
                             Box() {
@@ -342,7 +343,7 @@ fun LoginScreen(
                                     ),
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.settings),
+                                        painterResource(Drawables.settings),
                                         null,
                                         tint = MaterialTheme.colorScheme.primary
                                     )
@@ -352,7 +353,7 @@ fun LoginScreen(
                             IconButton(onClick = {
                                 Starter.startFix(context)
                             }) {
-                                Icon(painterResource(id = R.drawable.build), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
+                                Icon(painterResource(id = Drawables.build), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
                             }
                         }
                     },
@@ -360,7 +361,7 @@ fun LoginScreen(
                         IconButton(onClick = {
                             activity?.finish()
                         }) {
-                            Icon(painterResource(id = R.drawable.close), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
+                            Icon(painterResource(id = Drawables.close), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
                         }
                     },
                     modifier = Modifier.topBarBlur(hazeState, MaterialTheme.colorScheme.surfaceContainer )
@@ -379,7 +380,7 @@ fun LoginScreen(
                             },
                             text = "回到登录页面",
                             modifier = Modifier.fillMaxWidth().padding(APP_HORIZONTAL_DP).navigationBarsPadding(),
-                            icon = R.drawable.login,
+                            icon = Drawables.login,
                             containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(.9f),
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -404,7 +405,7 @@ fun LoginScreen(
                             },
                             text = text,
                             modifier = Modifier.fillMaxWidth().padding(APP_HORIZONTAL_DP).navigationBarsPadding(),
-                            icon = if(!showTip && !showTip2) R.drawable.settings else R.drawable.notifications,
+                            icon = if(!showTip && !showTip2) Drawables.settings else Drawables.notifications,
                             containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(.9f),
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -463,14 +464,14 @@ fun LoginScreen(
                                     leadingContent = {
                                         when(status.can) {
                                             null -> LoadingIcon()
-                                            true -> Icon(painterResource(R.drawable.check_circle),null)
+                                            true -> Icon(painterResource(Drawables.check_circle),null)
                                             false -> {
                                                 BadgedBox(
                                                     badge = {
                                                         Badge()
                                                     },
                                                     content = {
-                                                        Icon(painterResource(R.drawable.link_off),null)
+                                                        Icon(painterResource(Drawables.link_off),null)
                                                     }
                                                 )
                                             }
@@ -488,7 +489,7 @@ fun LoginScreen(
                                                     Badge()
                                                 },
                                                 content = {
-                                                    Icon(painterResource(R.drawable.check_circle), null)
+                                                    Icon(painterResource(Drawables.check_circle), null)
                                                 }
                                             )
                                         },
@@ -515,7 +516,7 @@ fun LoginScreen(
 //                                    showToast("正在开发")
 //                                },
 //                                leadingContent = {
-//                                    Icon(painterResource(R.drawable.qr_code_2),null)
+//                                    Icon(painterResource(Drawables.qr_code_2),null)
 //                                },
 //                            )
 //                            PaddingHorizontalDivider()
@@ -526,7 +527,7 @@ fun LoginScreen(
 //                                    showToast("正在开发")
 //                                },
 //                                leadingContent = {
-//                                    Icon(painterResource(R.drawable.login),null)
+//                                    Icon(painterResource(Drawables.login),null)
 //                                },
 //                            )
 //                            PaddingHorizontalDivider()
@@ -541,7 +542,7 @@ fun LoginScreen(
                                             }
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.arrow_split),null)
+                                            Icon(painterResource(Drawables.arrow_split),null)
                                         },
                                         trailingContent = {
                                             Switch(checked = GlobalUiStateHolder.excludeJxglstu,onCheckedChange = { ch ->
@@ -558,7 +559,7 @@ fun LoginScreen(
                                 TransplantListItem(
                                     headlineContent = { Text("外地访问(WebVpn)") },
                                     supportingContent = { Text("外地访问支持刷新教务系统和访问内网链接,不受教务封网限制;\n登陆成功后，在 查询中心-WebVpn 可打开全局WebVpn，即可直接登录使用大创系统、图书馆、一些封网的通知公告等内容")},
-                                    leadingContent = { Icon(painterResource(R.drawable.vpn_key),null) },
+                                    leadingContent = { Icon(painterResource(Drawables.vpn_key),null) },
                                     trailingContent = {
                                         Switch(checked = GlobalUiStateHolder.webVpn,onCheckedChange = {
                                             GlobalUiStateHolder.switchWebVpn()
@@ -572,10 +573,10 @@ fun LoginScreen(
                                 TransplantListItem(
                                     headlineContent = { Text("修改密码") },
                                     supportingContent = { Text("修改或重置CAS统一认证密码")},
-                                    leadingContent = { Icon(painterResource(R.drawable.lock_reset),null) },
+                                    leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },
                                     modifier = Modifier.clickable {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,R.drawable.lock_reset)
+                                            Starter.startWebUrlInner(context,Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,Drawables.lock_reset)
                                         }
                                     },
                                 )
@@ -620,8 +621,8 @@ fun LoginScreen(
                                             leadingIcon = {
                                                 Icon(
                                                     painterResource(
-                                                        if(enabled) R.drawable.check
-                                                        else R.drawable.close
+                                                        if(enabled) Drawables.check
+                                                        else Drawables.close
                                                     ),
                                                     null,
                                                 )
@@ -719,7 +720,7 @@ private fun TwoTextField(
                 colors = textFiledTransplant(),
                 leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.person),
+                        painterResource(Drawables.person),
                         contentDescription = "Localized description"
                     )
                 },
@@ -730,7 +731,7 @@ private fun TwoTextField(
                         inputAES = EMPTY_STRING
                     }) {
                         Icon(
-                            painter = painterResource(R.drawable.close),
+                            painter = painterResource(Drawables.close),
                             contentDescription = "description"
                         )
                     }
@@ -752,15 +753,15 @@ private fun TwoTextField(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.key),
+                        painterResource(Drawables.key),
                         contentDescription = "Localized description"
                     )
                 },
                 trailingIcon = {
                     IconButton(onClick = { hidden = !hidden }) {
                         val icon =
-                            if (hidden) painterResource(R.drawable.visibility_off)
-                            else painterResource(R.drawable.visibility)
+                            if (hidden) painterResource(Drawables.visibility_off)
+                            else painterResource(Drawables.visibility)
                         val description =
                             if (hidden) "展示密码"
                             else "隐藏密码"
@@ -793,7 +794,7 @@ private fun TwoTextField(
                                 colors = textFiledTransplant(),
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.password),
+                                        painterResource(Drawables.password),
                                         contentDescription = "Localized description"
                                     )
                                 },
@@ -903,7 +904,7 @@ fun  CheckExistUI(
         headlineContent = { Text("账号查询") },
         supportingContent = { Text("验证账号是否因离校被删除或新生未录入") },
         leadingContent = {
-            Icon(painterResource(R.drawable.person_check),null)
+            Icon(painterResource(Drawables.person_check),null)
         }
     )
     CustomTextField(
@@ -918,7 +919,7 @@ fun  CheckExistUI(
                     }
                 }
             ) {
-                Icon(painterResource(R.drawable.search),null)
+                Icon(painterResource(Drawables.search),null)
             }
         }
     ) { input = it }

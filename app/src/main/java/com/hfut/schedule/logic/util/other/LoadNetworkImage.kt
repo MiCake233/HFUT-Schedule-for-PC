@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.other
 
+import com.xah.common.ui.res.Drawables
+
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -22,7 +24,7 @@ import com.hfut.schedule.R
 
 //fun loadImage(
 //    url: String,
-//    @DrawableRes defaultImageId: Int = R.drawable.ic_launcher_background,
+//    @DrawableRes defaultImageId: Int = Drawables.ic_launcher_background,
 //    cookie: String? = null
 //): MutableState<Bitmap?> {
 //    val bitmapState: MutableState<Bitmap?> = mutableStateOf(null)

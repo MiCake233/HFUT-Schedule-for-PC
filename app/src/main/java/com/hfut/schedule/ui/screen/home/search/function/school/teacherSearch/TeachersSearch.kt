@@ -30,7 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -125,7 +126,7 @@ fun TeacherSearchScreen(
                             onClick = { scope.launch { refreshNetwork() } },
                             modifier = Modifier.padding(end = BUTTON_END_PADDING)
                         ) {
-                            Icon(painterResource(R.drawable.search), contentDescription = EMPTY_STRING)
+                            Icon(painterResource(Drawables.search), contentDescription = EMPTY_STRING)
                         }
                     }
                 )

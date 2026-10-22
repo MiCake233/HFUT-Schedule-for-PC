@@ -27,7 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import com.hfut.schedule.R
@@ -197,7 +198,7 @@ private fun CourseSurveyListUI(
                                     val tName = teacher.person?.nameZh
                                     TransplantListItem(
                                         headlineContent = { tName?.let { Text(text = it, textDecoration = if(isSubmitted) TextDecoration.LineThrough else TextDecoration.None,fontWeight = if (!isSubmitted) FontWeight.Bold else FontWeight.Light) } },
-                                        leadingContent = { Icon(painterResource(if(!isSubmitted)R.drawable.person else R.drawable.check),null) },
+                                        leadingContent = { Icon(painterResource(if(!isSubmitted)Drawables.person else Drawables.check),null) },
                                         modifier = Modifier.weight(.5f).clickable {
                                             if(!isSubmitted) {
                                                 name = tName ?: EMPTY_STRING
@@ -214,7 +215,7 @@ private fun CourseSurveyListUI(
                                         val tName = teacher.person?.nameZh
                                         TransplantListItem(
                                             headlineContent = { tName?.let { Text(text = it,textDecoration = if(isSubmitted) TextDecoration.LineThrough else TextDecoration.None,fontWeight = if (!isSubmitted) FontWeight.Bold else FontWeight.Light) } },
-                                            leadingContent = { Icon(painterResource(if(!isSubmitted)R.drawable.person else R.drawable.check),null) },
+                                            leadingContent = { Icon(painterResource(if(!isSubmitted)Drawables.person else Drawables.check),null) },
                                             modifier = Modifier.weight(.5f).clickable {
                                                 if(!isSubmitted) {
                                                     name = tName ?: EMPTY_STRING
@@ -275,8 +276,8 @@ private fun TeacherSurveyListUI(data : JxglstuSurveyLesson, vm : NetWorkViewMode
                 val tName = listItem.teacher.person?.nameZh
                 CardListItem(
                     headlineContent = { tName?.let { Text(text = it) } },
-                    leadingContent = { Icon(painterResource(R.drawable.person),null) },
-                    trailingContent = { if(!isSubmitted) Icon(painterResource(R.drawable.arrow_forward), contentDescription = EMPTY_STRING) else Text(text = "已评") },
+                    leadingContent = { Icon(painterResource(Drawables.person),null) },
+                    trailingContent = { if(!isSubmitted) Icon(painterResource(Drawables.arrow_forward), contentDescription = EMPTY_STRING) else Text(text = "已评") },
                     modifier = Modifier.clickable {
                         if(!isSubmitted) {
                             name = tName ?: EMPTY_STRING

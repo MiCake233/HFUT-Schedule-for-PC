@@ -21,7 +21,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.other.AppVersion
@@ -64,7 +65,7 @@ fun ApiKeyScreen(
             ) {
                 TransplantListItem(
                     headlineContent = { Text("ApiKey") },
-                    leadingContent = { Icon(painterResource(R.drawable.edit),null) },
+                    leadingContent = { Icon(painterResource(Drawables.edit),null) },
                 )
 
                 CustomTextField(
@@ -80,7 +81,7 @@ fun ApiKeyScreen(
                                 }
                             }
                         ) {
-                            Icon(painterResource(R.drawable.save),null)
+                            Icon(painterResource(Drawables.save),null)
                         }
                     }
                 ) {

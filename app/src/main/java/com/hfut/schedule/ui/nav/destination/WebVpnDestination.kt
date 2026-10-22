@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.WebVpnScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object WebVpnDestination : NavDestination() {
     override val key = "webvpn"
-    override val title = res(R.string.navigation_label_webvpn)
-    override val icon = R.drawable.vpn_key
+    override val title = res(Strings.navigation_label_webvpn)
+    override val icon = Drawables.vpn_key
 
     @Composable
     override fun Content() {

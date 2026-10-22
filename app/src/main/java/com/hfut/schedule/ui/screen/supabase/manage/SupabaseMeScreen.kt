@@ -25,7 +25,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.entity.CustomEventType
@@ -139,7 +140,7 @@ private fun SupabaseMeScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,
             CustomTextField(
                 input = input,
                 label = { Text("搜索") },
-                leadingIcon = { Icon(painterResource(R.drawable.search),null)}
+                leadingIcon = { Icon(painterResource(Drawables.search),null)}
             ) { input = it }
             Spacer(Modifier.height(CARD_NORMAL_DP))
         }
@@ -161,14 +162,14 @@ private fun SupabaseMeScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,
 //                                    showToast("正在开发")
 //                                    showDialogEdit = true
 //                                }
-//                            ) { Icon(painterResource(R.drawable.edit),null) }
+//                            ) { Icon(painterResource(Drawables.edit),null) }
                         ColumnVertical {
                             FilledTonalIconButton(
                                 onClick = {
                                     id = item.id
                                     showDialogDel = true
                                 }
-                            ) { Icon(painterResource(R.drawable.close),null) }
+                            ) { Icon(painterResource(Drawables.close),null) }
                             if(isOutOfDate) {
                                 Text("已过期不可见")
                             }
@@ -179,8 +180,8 @@ private fun SupabaseMeScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,
                     Icon(
                         painterResource(
                             when(item.type) {
-                                CustomEventType.SCHEDULE -> R.drawable.calendar
-                                CustomEventType.NET_COURSE -> R.drawable.net
+                                CustomEventType.SCHEDULE -> Drawables.calendar
+                                CustomEventType.NET_COURSE -> Drawables.net
                             }
                         ),null)
                 }

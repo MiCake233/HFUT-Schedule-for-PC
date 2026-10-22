@@ -30,7 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.util.WebVpnConvertor
@@ -149,7 +150,7 @@ fun WebVpnScreen(
                                                 Text("输入需校园网才可访问的链接(或目前封网的平台),将其转换为WebVpn链接后,在登录WebVpn的前提下,可通过外网访问并直接登录")
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.info),null)
+                                                Icon(painterResource(Drawables.info),null)
                                             },
                                             modifier = Modifier.clickable {
                                                 input = Constant.LIBRARY_SEAT
@@ -161,7 +162,7 @@ fun WebVpnScreen(
                                                 Text("当使用外地访问登录后，可查看通知公告中外网无法查看的内容")
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.stream),null)
+                                                Icon(painterResource(Drawables.stream),null)
                                             },
                                             modifier = Modifier.clickable {
                                             }
@@ -197,7 +198,7 @@ fun WebVpnScreen(
                                             input = input,
                                             trailingIcon = {
                                                 IconButton(onClick = { input = EMPTY_STRING }) {
-                                                    Icon(painterResource(R.drawable.close),null)
+                                                    Icon(painterResource(Drawables.close),null)
                                                 }
                                             },
                                             singleLine = false,
@@ -270,7 +271,7 @@ fun WebVpnScreen(
                                                 Text("输入WebVpn链接，还原为原始链接")
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.info),null)
+                                                Icon(painterResource(Drawables.info),null)
                                             },
                                             modifier = Modifier.clickable {
                                                 input = Constant.LIBRARY_SEAT
@@ -296,7 +297,7 @@ fun WebVpnScreen(
                                             input = input,
                                             trailingIcon = {
                                                 IconButton(onClick = { input = EMPTY_STRING }) {
-                                                    Icon(painterResource(R.drawable.close),null)
+                                                    Icon(painterResource(Drawables.close),null)
                                                 }
                                             },
                                             singleLine = false,
@@ -390,7 +391,7 @@ private fun EnableGlobalWebVpn(
             })
         },
         leadingContent = {
-            Icon(painterResource(R.drawable.multiple_stop),null)
+            Icon(painterResource(Drawables.multiple_stop),null)
         },
         modifier = Modifier.clickable {
             if(webVpn) {

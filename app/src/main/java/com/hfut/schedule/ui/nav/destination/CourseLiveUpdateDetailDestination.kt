@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object CourseLiveUpdateDetailDestination : NavDestination() {
     override val key = "course_live_update_detail"
-    override val title = res(R.string.navigation_label_course_detail)
-    override val icon = R.drawable.category
+    override val title = res(Strings.navigation_label_course_detail)
+    override val icon = Drawables.category
 
     @Composable
     override fun Content() {

@@ -31,7 +31,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.work.Data
 import com.hfut.schedule.R
@@ -92,7 +93,7 @@ fun UseAgreementScreen() {
                     val height = MaterialTheme.typography.headlineMedium.lineHeight.value.dp
                     Row(modifier = Modifier.padding(end = APP_HORIZONTAL_DP)) {
                         Icon(
-                            painterResource(R.drawable.partner_exchange),
+                            painterResource(Drawables.partner_exchange),
                             null,
                             tint = MaterialTheme.colorScheme.primary,
                             modifier =  Modifier

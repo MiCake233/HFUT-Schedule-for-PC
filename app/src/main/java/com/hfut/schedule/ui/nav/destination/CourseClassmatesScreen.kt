@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.ClassmatesScreen
@@ -21,7 +23,7 @@ data class CourseClassmatesScreen(
     companion object {
         const val KEY = "course_classmates"
         const val TITLE = "同班同学"
-        val ICON = R.drawable.group
+        val ICON = Drawables.group
     }
 
     @Composable

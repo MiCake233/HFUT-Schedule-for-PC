@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsFocusWidgetDestination : NavDestination() {
     override val key: String = "settings_focus_widget"
     override val title: UiText = text("聚焦课程小组件")
-    override val icon = R.drawable.widgets
+    override val icon = Drawables.widgets
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

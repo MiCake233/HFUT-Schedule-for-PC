@@ -54,7 +54,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
@@ -237,7 +238,7 @@ fun TransferScreen(
                                     trailingContent = {
                                         ColumnVertical {
                                             FilledTonalIconButton(onClick = { expand = !expand }) {
-                                                Icon(painter = painterResource(id = if(expand) R.drawable.collapse_content else R.drawable.expand_content), contentDescription = EMPTY_STRING)
+                                                Icon(painter = painterResource(id = if(expand) Drawables.collapse_content else Drawables.expand_content), contentDescription = EMPTY_STRING)
                                             }
                                             Text("代号 $batchId")
                                         }
@@ -302,7 +303,7 @@ fun TransferScreen(
                                                             showToast("必须为数字")
                                                         }
                                                     }) {
-                                                        Icon(painterResource(R.drawable.arrow_forward),null)
+                                                        Icon(painterResource(Drawables.arrow_forward),null)
                                                     }
                                                 },
                                                 shape = MaterialTheme.shapes.medium,
@@ -378,7 +379,7 @@ fun TransferDetailScreen(
 //                                isCircle = true,
 //                                backdrop = backDrop
 //                            ) {
-//                                Icon(painterResource(R.drawable.ios_share),null)
+//                                Icon(painterResource(Drawables.ios_share),null)
 //                            }
                             val window = TransferMajorDetailOptionsWindow(sortByHot) {
                                 sortByHot = it
@@ -397,7 +398,7 @@ fun TransferDetailScreen(
                                         shape = NoneRoundShape,
                                         backdrop = backDrop
                                     ) {
-                                        Icon(painterResource(R.drawable.more_vert),null)
+                                        Icon(painterResource(Drawables.more_vert),null)
                                     }
                                 } else {
                                     LiquidButton(
@@ -407,7 +408,7 @@ fun TransferDetailScreen(
                                         isCircle = true,
                                         backdrop = backDrop
                                     ) {
-                                        Icon(painterResource(R.drawable.more_vert),null)
+                                        Icon(painterResource(Drawables.more_vert),null)
                                     }
                                 }
                             }
@@ -435,7 +436,7 @@ fun TransferDetailScreen(
                             IconButton(
                                 onClick = {}) {
                                 Icon(
-                                    painter = painterResource(R.drawable.search),
+                                    painter = painterResource(Drawables.search),
                                     contentDescription = "description"
                                 )
                             }
@@ -541,7 +542,7 @@ private fun TransferUI(
                                     showBottomSheet = true
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.check), null)
+                                Icon(painterResource(Drawables.check), null)
                             }
                         },
                         shape = MaterialTheme.shapes.medium,
@@ -675,7 +676,7 @@ private fun TransferUI(
                                         else
                                             IconButtonDefaults.filledTonalIconButtonColors(MaterialTheme.colorScheme.error.copy(alpha = 0.1f))
                                 ) {
-                                    Icon(painter = painterResource(id = R.drawable.add_2), contentDescription = EMPTY_STRING)
+                                    Icon(painter = painterResource(id = Drawables.add_2), contentDescription = EMPTY_STRING)
                                 }
                                 Text("$count/$limit (${
                                     if(successRate == 1.0) "满" 
@@ -719,6 +720,6 @@ private fun TransferStatusUI(vm : NetWorkViewModel, batchId: String, id: Int, ph
 
     CommonNetworkScreen(uiState, isFullScreen = false , onReload = refreshNetwork) {
         val msg = (uiState as NetworkUiState.Success).data
-        StatusIcon(if(msg == "成功" ) R.drawable.check else R.drawable.close,text(msg))
+        StatusIcon(if(msg == "成功" ) Drawables.check else Drawables.close,text(msg))
     }
 }

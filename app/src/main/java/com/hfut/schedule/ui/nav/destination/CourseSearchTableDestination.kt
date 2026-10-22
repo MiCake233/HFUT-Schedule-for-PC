@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuLesson
@@ -19,8 +23,8 @@ data class CourseSearchTableDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_course_search_table)
-        val ICON = R.drawable.calendar
+        val TITLE = res(Strings.navigation_label_course_search_table)
+        val ICON = Drawables.calendar
     }
 
     @Composable

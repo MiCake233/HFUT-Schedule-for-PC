@@ -21,7 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.lesson.JxglstuLesson
@@ -110,7 +111,7 @@ fun CourseSearchCalendarScreen(
                                 backdrop = backdrop,
                                 modifier = Modifier.padding(end = BUTTON_END_PADDING)
                             ) {
-                                Icon(painter = painterResource(id = if (showAll) R.drawable.collapse_content else R.drawable.expand_content), contentDescription = EMPTY_STRING)
+                                Icon(painter = painterResource(id = if (showAll) Drawables.collapse_content else Drawables.expand_content), contentDescription = EMPTY_STRING)
                             }
                         }
                     }

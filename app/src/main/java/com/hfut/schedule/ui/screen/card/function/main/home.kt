@@ -43,7 +43,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -200,7 +201,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                 CardListItem(
                     headlineContent = { Text(text = "电费") },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.flash_on), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.flash_on), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable { showBottomSheet_ELectric = true }
                 )
@@ -209,7 +210,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                 CardListItem(
                     headlineContent = { Text(text = "网费"  ) },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.net), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.net), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable { showBottomSheet_Web= true }
                 )
@@ -218,7 +219,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                 CardListItem(
                     headlineContent = { Text(text = "洗浴" ) },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.bathtub), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.bathtub), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable { showBottomSheet_Shower = true }
                 )
@@ -226,7 +227,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                 CardListItem(
                     headlineContent = { Text(text = "洗衣机") },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.local_laundry_service), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.local_laundry_service), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable {
                         showToast("前往查询中心")
@@ -236,7 +237,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                 CardListItem(
                     headlineContent = { Text("慧新易校平台") },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.arrow_forward), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(Drawables.arrow_forward), contentDescription = EMPTY_STRING)
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
@@ -375,10 +376,10 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                 trailingContent = {
                                     FilledTonalIconButton(onClick = {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,payUrl,"付款码", icon = R.drawable.barcode)
+                                            Starter.startWebUrlInner(context,payUrl,"付款码", icon = Drawables.barcode)
                                         }
                                     }) {
-                                        Icon(painter = painterResource(id = R.drawable.barcode), contentDescription = EMPTY_STRING)
+                                        Icon(painter = painterResource(id = Drawables.barcode), contentDescription = EMPTY_STRING)
                                     }
                                 }
                             )
@@ -411,7 +412,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                         if (text != null) {
                                             Icon(painter =
                                             painterResource(id =
-                                            if(text != "00" && text!!.toDouble() < 10) R.drawable.add_circle  else if(text == "00") R.drawable.login else R.drawable.check_circle
+                                            if(text != "00" && text!!.toDouble() < 10) Drawables.add_circle  else if(text == "00") Drawables.login else Drawables.check_circle
                                             )  , contentDescription = EMPTY_STRING)
                                         }
                                     })
@@ -421,7 +422,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                         .clickable { showBottomSheet_Toady = true },
                                     headlineContent = { Text(text = "￥$str",fontWeight = FontWeight.Bold) },
                                     overlineContent = { Text(text = "今日支出")},
-                                    leadingContent = { Icon(painter = painterResource(id = R.drawable.send_money), contentDescription = EMPTY_STRING)})
+                                    leadingContent = { Icon(painter = painterResource(id = Drawables.send_money), contentDescription = EMPTY_STRING)})
                             }
                             //  limitRow(vmUI)
                         }
@@ -433,21 +434,21 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "账单") },
                             supportingContent = { Text(text = "按消费先后查看交易记录")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.receipt_long), contentDescription = EMPTY_STRING) },
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.receipt_long), contentDescription = EMPTY_STRING) },
                             modifier = Modifier.clickable { navController.navigateForBottomBar(CardBarItems.BILLS.name) }
                         )
                         PaddingHorizontalDivider()
                         TransplantListItem(
                             headlineContent = { Text(text = "统计") },
                             supportingContent = { Text(text = "按时间段归纳统计消费")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.leaderboard), contentDescription = EMPTY_STRING) },
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.leaderboard), contentDescription = EMPTY_STRING) },
                             modifier = Modifier.clickable { navController.navigateForBottomBar(CardBarItems.COUNT.name) }
                         )
                         PaddingHorizontalDivider()
                         TransplantListItem(
                             headlineContent = { Text(text = "充值") },
                             supportingContent = { Text(text = "跳转至支付宝校园卡页面")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.add_card), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.add_card), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable { Starter.startAppUrl(context,Constant.ALIPAY_CARD_URL) }
                         )
                         PaddingHorizontalDivider()
@@ -460,7 +461,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                 color = MaterialTheme.colorScheme.surface,
                                 headlineContent = { Text(text = "搜索") },
                                 supportingContent = { Text(text = "仅检索流水的标题")},
-                                leadingContent = { Icon(painter = painterResource(id = R.drawable.search), contentDescription = EMPTY_STRING)},
+                                leadingContent = { Icon(painter = painterResource(id = Drawables.search), contentDescription = EMPTY_STRING)},
                                 modifier = Modifier.clickable { navTopController.push(SearchBillsDestination) }
                             )
                         }
@@ -468,10 +469,10 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "状态") },
                             supportingContent = { Text(text = "挂失 解挂")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.pie_chart), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.pie_chart), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardOperation" + "?synjones-auth=" + auth,"挂失 解挂", icon = R.drawable.pie_chart)
+                                    Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardOperation" + "?synjones-auth=" + auth,"挂失 解挂", icon = Drawables.pie_chart)
                                 }
                             }
                         )
@@ -479,10 +480,10 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "付款码") },
                             supportingContent = { Text(text = "在支持扫码的食堂支付机使用以替代实体卡")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.barcode), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.barcode), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,payUrl,"付款码", icon = R.drawable.barcode)
+                                    Starter.startWebUrlInner(context,payUrl,"付款码", icon = Drawables.barcode)
                                 }
                             }
                         )
@@ -490,7 +491,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "生活缴费") },
                             supportingContent = { Text(text = "查询网费、宿舍电费、洗浴使用情况并缴费")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.paid), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.paid), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable { showBottomSheet_Fee = true }
                         )
                         PaddingHorizontalDivider()
@@ -499,10 +500,10 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "修改密码") },
                             supportingContent = { Text(text = "修改一卡通及其校园网的密码，初始密码为身份证后六位(末尾为X则为X的前六位)")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.lock_reset), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.lock_reset), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = R.drawable.lock_reset)
+                                    Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = Drawables.lock_reset)
                                 }
                             }
                         )
@@ -510,10 +511,10 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "慧新易校") },
                             supportingContent = { Text(text = "进入慧新易校平台进行更多操作")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.corporate_fare), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.corporate_fare), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable {
                                 scope.launch {
-                                    Starter.startWebUrlInner(context,urlHuiXin,"慧新易校", icon = R.drawable.corporate_fare)
+                                    Starter.startWebUrlInner(context,urlHuiXin,"慧新易校", icon = Drawables.corporate_fare)
                                 }
                             }
                         )
@@ -521,14 +522,14 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                         TransplantListItem(
                             headlineContent = { Text(text = "限额(接口废弃)") },
                             supportingContent = { Text(text = "超出设置的日额度后需在支付机输入密码")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.block), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.block), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable { showBottomSheet_Settings = true }
                         )
                         PaddingHorizontalDivider()
                         TransplantListItem(
                             headlineContent = { Text(text = "范围支出(接口废弃)") },
                             supportingContent = { Text(text = "手动点选范围查询总消费")},
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.arrow_range), contentDescription = EMPTY_STRING)},
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.arrow_range), contentDescription = EMPTY_STRING)},
                             modifier = Modifier.clickable { showBottomSheet_Range = true }
                         )
                     }
@@ -558,14 +559,14 @@ fun limitRow() {
                 .clickable { },
             headlineContent = { Text(text = "￥${limit}") },
             overlineContent = { Text(text = "自动转账限额")},
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.block), contentDescription = EMPTY_STRING)})
+            leadingContent = { Icon(painter = painterResource(id = Drawables.block), contentDescription = EMPTY_STRING)})
         TransplantListItem(
             modifier = Modifier
                 .weight(.5f)
                 .clickable { },
             headlineContent = { Text(text = "￥${amt}") },
             overlineContent = { Text(text = "自动转账金额")},
-            leadingContent = { Icon(painter = painterResource(id = R.drawable.do_not_disturb_on), contentDescription = EMPTY_STRING)})
+            leadingContent = { Icon(painter = painterResource(id = Drawables.do_not_disturb_on), contentDescription = EMPTY_STRING)})
     }
 }
 
@@ -595,7 +596,7 @@ fun RefreshHuiXin(vm: NetWorkViewModel,showOnCas : Boolean = false) {
             if(loading) {
                 LoadingIcon()
             } else {
-                Icon(painter = painterResource(id = R.drawable.rotate_right), contentDescription = EMPTY_STRING)
+                Icon(painter = painterResource(id = Drawables.rotate_right), contentDescription = EMPTY_STRING)
             }
         },
         modifier = Modifier.clickable {
@@ -619,7 +620,7 @@ fun RefreshUniApp(showOnCas : Boolean = false) {
             if(loading) {
                 LoadingIcon()
             } else {
-                Icon(painter = painterResource(id = R.drawable.rotate_right), contentDescription = EMPTY_STRING)
+                Icon(painter = painterResource(id = Drawables.rotate_right), contentDescription = EMPTY_STRING)
             }
         },
         modifier = Modifier.clickable {

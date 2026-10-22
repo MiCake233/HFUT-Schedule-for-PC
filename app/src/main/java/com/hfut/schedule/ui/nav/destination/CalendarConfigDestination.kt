@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,7 +34,7 @@ import dev.chrisbanes.haze.hazeSource
 object CalendarConfigDestination : NavDestination() {
     override val key = "calendar_config"
     override val title = text("课程表配置")
-    override val icon = R.drawable.calendar
+    override val icon = Drawables.calendar
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

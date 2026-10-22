@@ -23,7 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.state.NetworkUiState
@@ -160,7 +161,7 @@ fun DormitoryScoreScreen(
                                     headlineContent = { Text( data.dormitory + " " + data.room)},
                                     overlineContent = { Text("所在寝室") },
                                     leadingContent = {
-                                        Icon(painterResource(R.drawable.bed),null)
+                                        Icon(painterResource(Drawables.bed),null)
                                     }
                                 )
                                 PaddingHorizontalDivider()
@@ -177,7 +178,7 @@ fun DormitoryScoreScreen(
                                                 },
                                                 overlineContent = { Text("寝室成员") },
                                                 leadingContent = {
-                                                    Icon(painterResource(R.drawable.person),null)
+                                                    Icon(painterResource(Drawables.person),null)
                                                 }
                                             )
                                         }

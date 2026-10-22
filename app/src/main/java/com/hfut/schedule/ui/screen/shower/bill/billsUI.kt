@@ -11,7 +11,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.container.CardListItem
@@ -65,11 +66,11 @@ fun GuaguaBills(innerPadding: PaddingValues, vm: NetWorkViewModel) {
                         Icon(
                             painterResource(id =
                                 if(info.contains("热水")) {
-                                    R.drawable.bathtub
+                                    Drawables.bathtub
                                 } else if(info.contains("充值")) {
-                                    R.drawable.add_circle
+                                    Drawables.add_circle
                                 } else {
-                                    R.drawable.paid
+                                    Drawables.paid
                                 }
                             ), contentDescription = EMPTY_STRING)
                     },

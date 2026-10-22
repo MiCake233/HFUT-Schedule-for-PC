@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse.SelectCourseDetailScreen
@@ -18,8 +22,8 @@ data class SelectCoursesDetailDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_select_courses_detail)
-        val ICON = R.drawable.ads_click
+        val TITLE = res(Strings.navigation_label_select_courses_detail)
+        val ICON = Drawables.ads_click
     }
 
     @Composable

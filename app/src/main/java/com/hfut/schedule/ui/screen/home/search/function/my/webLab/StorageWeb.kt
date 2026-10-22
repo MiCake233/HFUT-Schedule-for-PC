@@ -14,7 +14,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.WebURLEntity
@@ -83,7 +84,7 @@ fun StorageWeb(hazeState : HazeState) {
                     Text("右下角手动添加 或 在打开网页时点击右侧星星按钮")
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.info),null)
+                    Icon(painterResource(Drawables.info),null)
                 }
             )
         } else {
@@ -101,9 +102,9 @@ fun StorageWeb(hazeState : HazeState) {
                                 leadingContent = {
                                     Icon(painterResource(
                                         when(t) {
-                                            WebURLType.ADDED -> R.drawable.add_2
-                                            WebURLType.SUPABASE -> R.drawable.arrow_downward
-                                            WebURLType.COLLECTION -> R.drawable.star_filled
+                                            WebURLType.ADDED -> Drawables.add_2
+                                            WebURLType.SUPABASE -> Drawables.arrow_downward
+                                            WebURLType.COLLECTION -> Drawables.star_filled
                                         }
                                     ),null)
                                 },

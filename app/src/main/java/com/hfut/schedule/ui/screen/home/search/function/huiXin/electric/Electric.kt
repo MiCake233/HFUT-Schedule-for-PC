@@ -15,8 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringOf
+import com.xah.common.ui.res.stringResource
 import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -37,7 +40,7 @@ import dev.chrisbanes.haze.HazeState
 fun Electric(vm : NetWorkViewModel, card : Boolean, hazeState: HazeState) {
     val context = LocalContext.current
     val useHefei by DataStoreManager.useHefeiElectric.collectAsState(initial = getCampusRegion() == CampusRegion.HEFEI)
-    var room by remember { mutableStateOf(context.getString(R.string.navigation_label_dormitory_electricity_bill)) }
+    var room by remember { mutableStateOf(stringOf(Strings.navigation_label_dormitory_electricity_bill)) }
 
     var showBottomSheet by remember { mutableStateOf(false) }
     if(useHefei) {
@@ -53,7 +56,7 @@ fun Electric(vm : NetWorkViewModel, card : Boolean, hazeState: HazeState) {
             "12" -> "空调"
             "21" -> if(buildingNumber.toInt() > 5 )"照明" else "北边"
             "22" -> "空调"
-            else -> stringResource(R.string.navigation_label_dormitory_electricity_bill)
+            else -> stringResource(Strings.navigation_label_dormitory_electricity_bill)
         }
     }
 
@@ -82,7 +85,7 @@ fun Electric(vm : NetWorkViewModel, card : Boolean, hazeState: HazeState) {
     TransplantListItem(
         headlineContent = {
             ScrollText(
-                text = if(!card) stringResource(R.string.navigation_label_dormitory_electricity_bill) else "￥${f}",
+                text = if(!card) stringResource(Strings.navigation_label_dormitory_electricity_bill) else "￥${f}",
                 color = if(showRed) MaterialTheme.colorScheme.error else LocalContentColor.current
             )
         },
@@ -93,7 +96,7 @@ fun Electric(vm : NetWorkViewModel, card : Boolean, hazeState: HazeState) {
             )
         },
         leadingContent = { Icon(
-            painterResource(R.drawable.flash_on),
+            painterResource(Drawables.flash_on),
             contentDescription = "Localized description",
             tint = if(showRed) MaterialTheme.colorScheme.error else LocalContentColor.current
             ) },

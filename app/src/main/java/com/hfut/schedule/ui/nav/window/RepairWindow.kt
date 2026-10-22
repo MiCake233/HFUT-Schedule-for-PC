@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.window
 
+import com.xah.common.ui.res.Strings
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -25,7 +27,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
@@ -50,7 +53,7 @@ object RepairWindow: FloatingWindow() {
 
     override val key = "repair"
 
-    override val title = res(R.string.navigation_label_repair)
+    override val title = res(Strings.navigation_label_repair)
 
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
     @Composable
@@ -97,7 +100,7 @@ object RepairWindow: FloatingWindow() {
                                                 Starter.startWebUrlOuter(context,Constant.REPAIR_URL)
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.net),null)
+                                                Icon(painterResource(Drawables.net),null)
                                             }
                                         )
                                     }
@@ -108,7 +111,7 @@ object RepairWindow: FloatingWindow() {
                                                 Starter.startWebUrlOuter(context,Constant.REPAIR_XC_URL)
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.net),null)
+                                                Icon(painterResource(Drawables.net),null)
                                             }
                                         )
                                     }
@@ -138,7 +141,7 @@ object RepairWindow: FloatingWindow() {
                             backdrop = rememberLayerBackdrop(),
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.close),null)
+                            Icon(painterResource(Drawables.close),null)
                         }
                     }
                 }

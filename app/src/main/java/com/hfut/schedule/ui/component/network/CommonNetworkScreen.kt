@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.component.network
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -106,7 +108,7 @@ fun CommonNetworkScreen(
                         }
                         LISTEN_ERROR_CODE -> {
                             StatusIcon(
-                                R.drawable.arrow_split,
+                                Drawables.arrow_split,
                                 text(e?.message ?: "网络请求顺序出错 请联系开发者")
                             )
 //                            Spacer(Modifier.height(APP_HORIZONTAL_DP *1.5f))
@@ -118,7 +120,7 @@ fun CommonNetworkScreen(
                             }
                         }
                         StatusCode.UNAUTHORIZED.code -> {
-                            StatusIcon(R.drawable.login, text("登录状态失效"), onTextClick = {
+                            StatusIcon(Drawables.login, text("登录状态失效"), onTextClick = {
                                 Starter.refreshLogin(context)
                             })
 //                            Spacer(Modifier.height(APP_HORIZONTAL_DP *1.5f))
@@ -130,7 +132,7 @@ fun CommonNetworkScreen(
                         }
                         StatusCode.FORBIDDEN.code -> {
                             StatusIcon(
-                                R.drawable.lock,
+                                Drawables.lock,
                                 text("禁止操作 可能原因: 密码不正确或无权利进行操作")
                             )
                         }
@@ -139,7 +141,7 @@ fun CommonNetworkScreen(
                         }
                         in StatusCode.INTERNAL_SERVER_ERROR.code..599 -> {
                             StatusIcon(
-                                R.drawable.net,
+                                Drawables.net,
                                 text("500错误 可能的原因: 服务端接口发生变更，对接失败")
                             )
                         }
@@ -148,20 +150,20 @@ fun CommonNetworkScreen(
                             val code = codeInt?.toString() ?: EMPTY_STRING
                             val eMsg = e?.message
                             if(eMsg?.contains("Unable to resolve host",ignoreCase = true) == true || eMsg?.contains("Failed to connect to",ignoreCase = true) == true ||  eMsg?.contains("Connection reset",ignoreCase = true) == true) {
-                                StatusIcon(R.drawable.link_off, text("网络连接失败"), onTextClick = {
+                                StatusIcon(Drawables.link_off, text("网络连接失败"), onTextClick = {
                                     onReload?.let {
                                         scope.launch { it.invoke() }
                                     }
                                 })
                             } else if(eMsg?.contains("10000ms") == true) {
-                                StatusIcon(R.drawable.link_off, text("网络连接超时"), onTextClick = {
+                                StatusIcon(Drawables.link_off, text("网络连接超时"), onTextClick = {
                                     onReload?.let {
                                         scope.launch { it.invoke() }
                                     }
                                 })
                             } else if(eMsg?.contains("The coroutine scope") == true) {
                                 StatusIcon(
-                                    R.drawable.rotate_right,
+                                    Drawables.rotate_right,
                                     text("操作过快,前面的请求尚未完成，尝试回到聚焦页面下拉刷新")
                                 )
                                 refreshUI()

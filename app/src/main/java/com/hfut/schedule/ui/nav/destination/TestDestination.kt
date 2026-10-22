@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -56,7 +58,7 @@ import java.io.File
 object TestDestination : NavDestination() {
     override val key = "test"
     override val title = text("开发者调试页面")
-    override val icon = R.drawable.build
+    override val icon = Drawables.build
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable

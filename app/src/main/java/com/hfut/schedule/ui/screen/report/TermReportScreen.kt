@@ -59,7 +59,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
@@ -214,7 +215,7 @@ private fun WelcomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painterResource(R.drawable.celebration),
+                            painterResource(Drawables.celebration),
                             contentDescription = null,
                             modifier = Modifier.size(30.dp),
                             tint = MaterialTheme.colorScheme.primary
@@ -730,7 +731,7 @@ fun TermReportScreen(vm: NetWorkViewModel) {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(
-                                    painterResource(R.drawable.celebration),
+                                    painterResource(Drawables.celebration),
                                     contentDescription = null,
                                     modifier = Modifier.size(20.dp),
                                     tint = MaterialTheme.colorScheme.primary
@@ -761,7 +762,7 @@ fun TermReportScreen(vm: NetWorkViewModel) {
                                 IconButton(onClick = {
                                     exportSemester = SemesterParser.subSemester(exportSemester)
                                 }) {
-                                    Icon(painterResource(R.drawable.arrow_back), contentDescription = "上一学期")
+                                    Icon(painterResource(Drawables.arrow_back), contentDescription = "上一学期")
                                 }
                                 Text(
                                     text = SemesterParser.parseSemester(exportSemester) ?: "未知学期",
@@ -771,7 +772,7 @@ fun TermReportScreen(vm: NetWorkViewModel) {
                                 IconButton(onClick = {
                                     exportSemester = SemesterParser.plusSemester(exportSemester)
                                 }) {
-                                    Icon(painterResource(R.drawable.arrow_forward), contentDescription = "下一学期")
+                                    Icon(painterResource(Drawables.arrow_forward), contentDescription = "下一学期")
                                 }
                             }
                         }
@@ -933,7 +934,7 @@ fun TermReportScreen(vm: NetWorkViewModel) {
                             modifier = Modifier.padding(end = BUTTON_END_PADDING)
                         ) {
                             Icon(
-                                painterResource(R.drawable.ios_share),
+                                painterResource(Drawables.ios_share),
                                 contentDescription = "导出"
                             )
                         }

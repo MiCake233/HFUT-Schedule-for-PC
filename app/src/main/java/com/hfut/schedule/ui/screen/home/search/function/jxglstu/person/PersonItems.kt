@@ -36,7 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
@@ -145,7 +146,7 @@ fun PersonScreen(
                         isCircle = true,
                         backdrop = backdrop
                     ) {
-                        Icon(painterResource(R.drawable.rotate_right),null)
+                        Icon(painterResource(Drawables.rotate_right),null)
                     }
                 }
             )
@@ -225,7 +226,7 @@ private fun PersonItems(
                     overlineContent = { Text(text ="姓名" )},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.signature),
+                            painterResource(Drawables.signature),
                             contentDescription = "Localized description",
                         )
                     }
@@ -236,7 +237,7 @@ private fun PersonItems(
                     overlineContent = { Text(text ="学号" )},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.tag),
+                            painterResource(Drawables.tag),
                             contentDescription = "Localized description",
                         )
                     },
@@ -250,7 +251,7 @@ private fun PersonItems(
                         .zIndex(1f)
                         .align(Alignment.CenterEnd)
                         .padding(horizontal = APP_HORIZONTAL_DP)) {
-                        Icon(painter = painterResource(id = if(show2)R.drawable.visibility else R.drawable.visibility_off), contentDescription = EMPTY_STRING)
+                        Icon(painter = painterResource(id = if(show2)Drawables.visibility else Drawables.visibility_off), contentDescription = EMPTY_STRING)
                     }
                     Column(modifier = Modifier.coverBlur(!show2)) {
                         TransplantListItem(
@@ -258,7 +259,7 @@ private fun PersonItems(
                             overlineContent = { Text(text = "身份证号")},
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.person),
+                                    painterResource(Drawables.person),
                                     contentDescription = "Localized description",
                                 )
                             },
@@ -287,7 +288,7 @@ private fun PersonItems(
                     overlineContent = { Text(text = "校区")},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.near_me),
+                            painterResource(Drawables.near_me),
                             contentDescription = "Localized description",
                         )
                     },
@@ -312,7 +313,7 @@ private fun PersonItems(
                     supportingContent = { majorDirection?.let { if(it != EMPTY_STRING) Text(text = "方向 $it") else null } },
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.square_foot),
+                            painterResource(Drawables.square_foot),
                             contentDescription = "Localized description",
                         )
                     },
@@ -329,7 +330,7 @@ private fun PersonItems(
                     overlineContent = { Text(text = "班级")},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.sensor_door),
+                            painterResource(Drawables.sensor_door),
                             contentDescription = "Localized description",
                         )
                     },
@@ -352,13 +353,13 @@ private fun PersonItems(
                     headlineContent = { Text(text = "密码") },
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.key),
+                            painterResource(Drawables.key),
                             contentDescription = "Localized description",
                         )
                     },
                     trailingContent = {
                         FilledTonalIconButton(onClick = { show = !show }) {
-                            Icon(painter = painterResource(id = if(show)R.drawable.visibility else R.drawable.visibility_off), contentDescription = EMPTY_STRING)
+                            Icon(painter = painterResource(id = if(show)Drawables.visibility else Drawables.visibility_off), contentDescription = EMPTY_STRING)
                         }
                     }
                 )
@@ -376,11 +377,11 @@ private fun PersonItems(
                                 FilledTonalIconButton(
                                     onClick = {
                                         scope.launch {
-                                            Starter.startWebUrlInner(context,Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,R.drawable.lock_reset)
+                                            Starter.startWebUrlInner(context,Constant.CAS_LOGIN_URL + "cas/forget","忘记密码",null,Drawables.lock_reset)
                                         }
                                     }
                                 ) {
-                                    Icon(painterResource(R.drawable.edit),null)
+                                    Icon(painterResource(Drawables.edit),null)
                                 }
                             },
                         )
@@ -396,7 +397,7 @@ private fun PersonItems(
                                         navController.push(SettingsJxglstuPasswordDestination, effect = JumpTransitionEffectWallpaper())
                                     }
                                 ) {
-                                    Icon(painterResource(R.drawable.edit),null)
+                                    Icon(painterResource(Drawables.edit),null)
                                 }
                             },
                             overlineContent = { Text(text = "教务系统与合工大教务密码")},
@@ -423,7 +424,7 @@ private fun PersonItems(
                                         navController.push(SettingsHuiXinPasswordDestination, effect = JumpTransitionEffectWallpaper())
                                     }
                                 ) {
-                                    Icon(painterResource(R.drawable.edit),null)
+                                    Icon(painterResource(Drawables.edit),null)
                                 }
                             },
                             modifier = Modifier.clickable {
@@ -443,7 +444,7 @@ private fun PersonItems(
                                                 navController.push(SettingsHuiXinPasswordDestination, effect = JumpTransitionEffectWallpaper())
                                             }
                                         ) {
-                                            Icon(painterResource(R.drawable.edit),null)
+                                            Icon(painterResource(Drawables.edit),null)
                                         }
                                     },
                                     modifier = Modifier.clickable {
@@ -465,7 +466,7 @@ private fun PersonItems(
                     overlineContent = { Text(text = "类型")},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.school),
+                            painterResource(Drawables.school),
                             contentDescription = "Localized description",
                         )
                     },
@@ -478,15 +479,15 @@ private fun PersonItems(
                             Icon(
                                 painterResource(
                                     if(it == null) {
-                                        R.drawable.help
+                                        Drawables.help
                                     } else if(it.contains("正常")) {
-                                        R.drawable.check_circle
+                                        Drawables.check_circle
                                     } else if(it.contains("转专业")) {
-                                        R.drawable.compare_arrows
+                                        Drawables.compare_arrows
                                     } else if(it.contains("毕业")) {
-                                        R.drawable.verified
+                                        Drawables.verified
                                     } else {
-                                        R.drawable.help
+                                        Drawables.help
                                     }
                                 ),
                                 contentDescription = "Localized description",
@@ -511,7 +512,7 @@ private fun PersonItems(
                             CircleProgressIcon(percent)
                         } else {
                             Icon(
-                                painterResource(R.drawable.schedule),
+                                painterResource(Drawables.schedule),
                                 contentDescription = "Localized description",
                             )
                         }
@@ -537,7 +538,7 @@ private fun PersonItems(
                     overlineContent = { Text(text = "培养方案")},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.conversion_path),
+                            painterResource(Drawables.conversion_path),
                             contentDescription = "Localized description",
                         )
                     },
@@ -548,7 +549,7 @@ private fun PersonItems(
                     overlineContent = { Text(text = "来源")},
                     leadingContent = {
                         Icon(
-                            painterResource(R.drawable.location_on),
+                            painterResource(Drawables.location_on),
                             contentDescription = "Localized description",
                         )
                     },
@@ -586,7 +587,7 @@ private fun PersonItems(
                         },
                         leadingContent = {
                             Icon(
-                                painterResource(R.drawable.background_replace),
+                                painterResource(Drawables.background_replace),
                                 contentDescription = "Localized description",
                             )
                         },
@@ -610,9 +611,9 @@ private fun PersonItems(
                         leadingContent = {
                             Icon(painterResource(
                                 when(it) {
-                                    "男" -> R.drawable.male
-                                    "女" -> R.drawable.female
-                                    else -> R.drawable.help
+                                    "男" -> Drawables.male
+                                    "女" -> Drawables.female
+                                    else -> Drawables.help
                                 }
                             ),null)
                         },
@@ -623,7 +624,7 @@ private fun PersonItems(
                         headlineContent = { Text(it ?: "--")  },
                         overlineContent = { Text("政治面貌") },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.groups),null)
+                            Icon(painterResource(Drawables.groups),null)
                         },
                     )
                 }
@@ -634,7 +635,7 @@ private fun PersonItems(
                         headlineContent = {  Text(mobile ?: "-----------") },
                         overlineContent = { Text("手机号") },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.call),null)
+                            Icon(painterResource(Drawables.call),null)
                         },
                         modifier = Modifier.clickable {
                             mobile?.let { ClipBoardHelper.copy(it) }
@@ -646,7 +647,7 @@ private fun PersonItems(
                             headlineContent = {  Text(it) },
                             overlineContent = { Text("手机") },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.call),null)
+                                Icon(painterResource(Drawables.call),null)
                             },
                             modifier = Modifier.clickable {
                                 ClipBoardHelper.copy(it)
@@ -658,7 +659,7 @@ private fun PersonItems(
                             headlineContent = { Text(it) },
                             overlineContent = { Text("电话") },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.call),null)
+                                Icon(painterResource(Drawables.call),null)
                             },
                             modifier = Modifier.clickable {
                                 ClipBoardHelper.copy(it)
@@ -672,7 +673,7 @@ private fun PersonItems(
                         headlineContent = {  Text(it ?: "-------------") },
                         overlineContent = { Text("电子邮件") },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.alternate_email),null)
+                            Icon(painterResource(Drawables.alternate_email),null)
                         },
                         modifier = Modifier.clickable {
                             it?.let { str -> ClipBoardHelper.copy(str) }
@@ -684,7 +685,7 @@ private fun PersonItems(
                         headlineContent = {  Text(it ?: "----------------")  },
                         overlineContent = { Text("地址") },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.home),null)
+                            Icon(painterResource(Drawables.home),null)
                         },
                         modifier = Modifier.clickable {
                             it?.let { str -> ClipBoardHelper.copy(str) }
@@ -697,7 +698,7 @@ private fun PersonItems(
                         headlineContent = { Text(it ?: "------") } ,
                         overlineContent = { Text("邮编") },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.mail),null)
+                            Icon(painterResource(Drawables.mail),null)
                         },
                         modifier = Modifier.clickable {
                             it?.let { str -> ClipBoardHelper.copy(str) }

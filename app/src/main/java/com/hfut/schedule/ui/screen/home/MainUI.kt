@@ -95,8 +95,11 @@ import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringOf
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -486,7 +489,7 @@ fun MainScreen(
                                             isCircle = true,
                                         ) {
                                             Icon(
-                                                painterResource(id = R.drawable.edit),
+                                                painterResource(id = Drawables.edit),
                                                 contentDescription = EMPTY_STRING,
                                             )
                                         }
@@ -499,7 +502,7 @@ fun MainScreen(
                                             isCircle = true,
                                         ) {
                                             Icon(
-                                                painterResource(id = R.drawable.search),
+                                                painterResource(id = Drawables.search),
                                                 contentDescription = EMPTY_STRING,
                                             )
                                         }
@@ -539,7 +542,7 @@ fun MainScreen(
                                                 isCircle = true,
                                             ) {
                                                 Icon(
-                                                    painter = painterResource(id = R.drawable.login),
+                                                    painter = painterResource(id = Drawables.login),
                                                     contentDescription = EMPTY_STRING,
                                                 )
                                             }
@@ -569,7 +572,7 @@ fun MainScreen(
                                                backdrop = backdrop
                                            ) {
                                                Icon(
-                                                   painterResource(R.drawable.planner_review),
+                                                   painterResource(Drawables.planner_review),
                                                    null,
                                                    tint = warnColor()
                                                )
@@ -584,7 +587,7 @@ fun MainScreen(
                                            backdrop = backdrop
                                        ) {
                                            Icon(
-                                               painterResource(R.drawable.search),
+                                               painterResource(Drawables.search),
                                                null
                                            )
                                        }
@@ -705,7 +708,7 @@ fun MainScreen(
                                         ) {
                                             Icon(
                                                 tint = iconColor,
-                                                painter = painterResource(id = R.drawable.category),
+                                                painter = painterResource(id = Drawables.category),
                                                 contentDescription = EMPTY_STRING,
                                                 modifier = Modifier
                                                     .padding(CARD_NORMAL_DP * 3)
@@ -728,7 +731,7 @@ fun MainScreen(
                                         color = Color.Transparent
                                     ) {
                                         Icon(
-                                            painter = painterResource(id = R.drawable.tab_inactive),
+                                            painter = painterResource(id = Drawables.tab_inactive),
                                             contentDescription = EMPTY_STRING,
                                             tint = iconColor,
                                             modifier = Modifier.padding(CARD_NORMAL_DP*3)
@@ -825,7 +828,7 @@ fun MainScreen(
                                         isCircle = true
                                     ) {
                                         Icon(
-                                            painter = painterResource(id = R.drawable.tab_inactive),
+                                            painter = painterResource(id = Drawables.tab_inactive),
                                             contentDescription = EMPTY_STRING,
                                         )
                                     }
@@ -1232,8 +1235,8 @@ fun MainScreen(
 
 
 fun topBarText(num : BottomBarItems,context: Context) : String = when(num) {
-    FUNCTIONS -> MyApplication.context.getString(R.string.functions_center_title)
-    SETTINGS -> context.getString(R.string.settings_title)
+    FUNCTIONS -> stringOf(Strings.functions_center_title)
+    SETTINGS -> stringOf(Strings.settings_title)
     else -> {
         val chineseNumber  =
             if(LanguageHelper.isChineseLanguage(context)) {
@@ -1250,7 +1253,7 @@ fun topBarText(num : BottomBarItems,context: Context) : String = when(num) {
                     else -> ""
                 }
             }
-        context.getString(R.string.focus_and_calendar_title, DateTimeManager.Date_MM_dd, DateTimeManager.currentWeek, chineseNumber)
+        stringOf(Strings.focus_and_calendar_title, DateTimeManager.Date_MM_dd, DateTimeManager.currentWeek, chineseNumber)
     }
 }
 
@@ -1374,7 +1377,7 @@ fun SearchEditScreen() {
                             showDialog = true
                         }
                     ) {
-                        Icon(painterResource(R.drawable.rotate_right),null)
+                        Icon(painterResource(Drawables.rotate_right),null)
                     }
                     Spacer(Modifier.width(APP_HORIZONTAL_DP/5))
                     if(!inEdit) {
@@ -1601,8 +1604,8 @@ private fun ZhiJianSearchBar(
                                 leadingContent = {
                                     Icon(painterResource(
                                         if(input == item.studentId)
-                                            R.drawable.check
-                                        else R.drawable.person
+                                            Drawables.check
+                                        else Drawables.person
                                     ),null)
                                 },
                                 overlineContent = {
@@ -1615,7 +1618,7 @@ private fun ZhiJianSearchBar(
                                             showDelDialog = true
                                         }
                                     ) {
-                                        Icon(painterResource(R.drawable.delete),null)
+                                        Icon(painterResource(Drawables.delete),null)
                                     }
                                 },
                                 modifier = Modifier.clickable {
@@ -1658,14 +1661,14 @@ private fun ZhiJianSearchBar(
                 onValueChange = onValueChange,
                 leadingIcon = {
                     if(savedList.isEmpty()) {
-                        Icon(painterResource(R.drawable.person),null)
+                        Icon(painterResource(Drawables.person),null)
                     } else {
                         IconButton(
                             onClick = {
                                 showSelectDialog = true
                             }
                         ) {
-                            Icon(painterResource(R.drawable.swap_vert),null)
+                            Icon(painterResource(Drawables.swap_vert),null)
                         }
                     }
                 },
@@ -1677,7 +1680,7 @@ private fun ZhiJianSearchBar(
                                 showDelDialog = true
                             }
                         ) {
-                            Icon(painterResource(R.drawable.delete),null)
+                            Icon(painterResource(Drawables.delete),null)
                         }
                     } else {
                         IconButton(
@@ -1686,7 +1689,7 @@ private fun ZhiJianSearchBar(
                             },
                             enabled = input.length == 10
                         ) {
-                            Icon(painterResource(R.drawable.save),null)
+                            Icon(painterResource(Drawables.save),null)
                         }
                     }
                 },

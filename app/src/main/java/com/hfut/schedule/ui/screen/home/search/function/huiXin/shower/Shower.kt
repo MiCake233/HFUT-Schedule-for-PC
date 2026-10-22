@@ -13,8 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.icon.LoadingIcon
@@ -48,12 +50,12 @@ fun Shower(vm: NetWorkViewModel, hazeState: HazeState) {
 
 
     TransplantListItem(
-        headlineContent = { ScrollText(text = stringResource(R.string.navigation_label_shower)) },
+        headlineContent = { ScrollText(text = stringResource(Strings.navigation_label_shower)) },
         leadingContent = {
             if(loading) {
                 LoadingIcon()
             } else {
-                Icon(painterResource(id = R.drawable.bathtub), contentDescription = EMPTY_STRING)
+                Icon(painterResource(id = Drawables.bathtub), contentDescription = EMPTY_STRING)
             }
         },
         trailingContent = {
@@ -63,7 +65,7 @@ fun Shower(vm: NetWorkViewModel, hazeState: HazeState) {
                 onClick = {
                     getInGuaGua(vm, navController) { loading = it }
                 },
-            ) { Icon( painterResource(R.drawable.shower), contentDescription = "Localized description",) }
+            ) { Icon( painterResource(Drawables.shower), contentDescription = "Localized description",) }
         },
         modifier = Modifier.clickable {
             showBottomSheet = true

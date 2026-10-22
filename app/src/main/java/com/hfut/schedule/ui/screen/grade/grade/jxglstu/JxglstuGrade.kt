@@ -51,7 +51,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -403,9 +404,9 @@ fun GradeItemJxglstuUI(
                                             Icon(
                                                 painterResource(
                                                     if(isFailed) {
-                                                        R.drawable.error
+                                                        Drawables.error
                                                     } else {
-                                                        R.drawable.check_circle
+                                                        Drawables.check_circle
                                                     }
                                                 ),
                                                 contentDescription = "Localized description",
@@ -700,9 +701,9 @@ fun GradeItemUIUniApp(
                                                 Icon(
                                                     painterResource(
                                                         if(isFailed) {
-                                                            R.drawable.error
+                                                            Drawables.error
                                                         } else {
-                                                            R.drawable.check_circle
+                                                            Drawables.check_circle
                                                         }
                                                     ),
                                                     contentDescription = "Localized description",
@@ -955,7 +956,7 @@ fun GradeDetailScreen(
                             TransplantListItem(
                                 leadingContent = {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.filter_vintage),
+                                        painter = painterResource(id = Drawables.filter_vintage),
                                         contentDescription = EMPTY_STRING
                                     )
                                 },
@@ -971,7 +972,7 @@ fun GradeDetailScreen(
                             )
                             TransplantListItem(
                                 leadingContent = {
-                                    Icon(painter = painterResource(R.drawable.percent), contentDescription = EMPTY_STRING)
+                                    Icon(painter = painterResource(Drawables.percent), contentDescription = EMPTY_STRING)
                                 },
                                 headlineContent = {
                                     ScrollText(
@@ -998,7 +999,7 @@ fun GradeDetailScreen(
                         TransplantListItem(
                             leadingContent = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.tag),
+                                    painter = painterResource(id = Drawables.tag),
                                     contentDescription = EMPTY_STRING
                                 )
                             },
@@ -1020,7 +1021,7 @@ fun GradeDetailScreen(
                                         }
                                     },
                                     leadingContent = {
-                                        Icon(painterResource(if(party) R.drawable.thumb_up else R.drawable.stairs),null)
+                                        Icon(painterResource(if(party) Drawables.thumb_up else Drawables.stairs),null)
                                     },
                                     overlineContent = {
                                         getGradeNextLevel(detail,gpa)?.let { target ->
@@ -1260,8 +1261,8 @@ fun StarGroup(level: Pair<Int, Int>,onParty : (Boolean) -> Unit) {
             for (i in 0 until totalNum) {
                 val isFilled = starStates[i].value
                 val painter = if (isFilled) {
-                    if(i+1 == onNum) R.drawable.family_star else R.drawable.kid_star_filled
-                } else R.drawable.kid_star
+                    if(i+1 == onNum) Drawables.family_star else Drawables.kid_star_filled
+                } else Drawables.kid_star
 
                 val scale = starScales[i].value
                 Icon(
@@ -1286,43 +1287,43 @@ fun GPAStarGroup(score : String,gpa : String,onParty: (Boolean) -> Unit) = getGr
 @Composable
 fun GradeIcons(text : String) {
     if(text.contains("补考")) {
-        Icon(painterResource(R.drawable.draw),null)
+        Icon(painterResource(Drawables.draw),null)
     } else if(text.contains("考试")) {
-        Icon(painterResource(R.drawable.draw),null)
+        Icon(painterResource(Drawables.draw),null)
     } else if(text.contains("报告")) {
-        Icon(painterResource(R.drawable.description),null)
+        Icon(painterResource(Drawables.description),null)
     } else if(text.contains("日记")) {
-        Icon(painterResource(R.drawable.book_5),null)
+        Icon(painterResource(Drawables.book_5),null)
     } else if(text.contains("预习")) {
-        Icon(painterResource(R.drawable.azm),null)
+        Icon(painterResource(Drawables.azm),null)
     } else if(text.contains("操作")) {
-        Icon(painterResource(R.drawable.massage),null)
+        Icon(painterResource(Drawables.massage),null)
     } else if(text.contains("实验")) {
-        Icon(painterResource(R.drawable.body_fat),null)
+        Icon(painterResource(Drawables.body_fat),null)
     } else if(text.contains("作业")) {
-        Icon(painterResource(R.drawable.ink_pen),null)
+        Icon(painterResource(Drawables.ink_pen),null)
     } else if(text.contains("实习")) {
-        Icon(painterResource(R.drawable.work),null)
+        Icon(painterResource(Drawables.work),null)
     } else if(text.contains("测试")) {
-        Icon(painterResource(R.drawable.tactic),null)
+        Icon(painterResource(Drawables.tactic),null)
     } else if(text.contains("平时")) {
-        Icon(painterResource(R.drawable.kid_star),null)
+        Icon(painterResource(Drawables.kid_star),null)
     } else if(text.contains("演讲")) {
-        Icon(painterResource(R.drawable.groups),null)
+        Icon(painterResource(Drawables.groups),null)
     } else if(text.contains("讨论")) {
-        Icon(painterResource(R.drawable.forum),null)
+        Icon(painterResource(Drawables.forum),null)
     } else if(text.contains("口试")) {
-        Icon(painterResource(R.drawable.voice_selection),null)
+        Icon(painterResource(Drawables.voice_selection),null)
     } else if(text.contains("上机")) {
-        Icon(painterResource(R.drawable.desktop_windows),null)
+        Icon(painterResource(Drawables.desktop_windows),null)
     } else if(text.contains("论文")) {
-        Icon(painterResource(R.drawable.newsstand),null)
+        Icon(painterResource(Drawables.newsstand),null)
     } else if(text.contains("验收")) {
-        Icon(painterResource(R.drawable.check_circle),null)
+        Icon(painterResource(Drawables.check_circle),null)
     } else if(text.contains("出勤")) {
-        Icon(painterResource(R.drawable.meeting_room),null)
+        Icon(painterResource(Drawables.meeting_room),null)
     } else {
-        Icon(painterResource(R.drawable.category),null)
+        Icon(painterResource(Drawables.category),null)
     }
 }
 
@@ -1387,11 +1388,11 @@ fun AvgImportance(
                     Icon(
                         painterResource(
                             if(finalGpa > 0) {
-                                R.drawable.arrow_upward
+                                Drawables.arrow_upward
                             } else if(finalGpa < 0) {
-                                R.drawable.arrow_downward
+                                Drawables.arrow_downward
                             } else {
-                                R.drawable.remove
+                                Drawables.remove
                             }
                         ),
                         null
@@ -1420,11 +1421,11 @@ fun AvgImportance(
                     Icon(
                         painterResource(
                             if(finalScore > 0) {
-                                R.drawable.arrow_upward
+                                Drawables.arrow_upward
                             } else if(finalScore < 0) {
-                                R.drawable.arrow_downward
+                                Drawables.arrow_downward
                             } else {
-                                R.drawable.remove
+                                Drawables.remove
                             }
                         ),
                         null

@@ -27,7 +27,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.logic.util.sys.Starter
@@ -137,7 +138,7 @@ fun ExamNotificationsScreen(
                                                 Text("目前宣城校区教务处每周三发布下一周的考试安排，请及时关注")
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.info),null)
+                                                Icon(painterResource(Drawables.info),null)
                                             }
                                         )
                                     }

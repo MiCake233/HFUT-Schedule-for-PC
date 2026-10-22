@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -17,7 +19,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
@@ -40,8 +43,8 @@ import dev.chrisbanes.haze.hazeSource
 
 object SettingsAboutDestination : NavDestination() {
     override val key: String = "settings_about"
-    override val title: UiText = res(R.string.navigation_label_settings_about)
-    override val icon = R.drawable.partner_exchange
+    override val title: UiText = res(Strings.navigation_label_settings_about)
+    override val icon = Drawables.partner_exchange
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +77,7 @@ object SettingsAboutDestination : NavDestination() {
                             modifier = Modifier.padding(end = BUTTON_END_PADDING)
                         ) {
                             Icon(
-                                painterResource(R.drawable.search),
+                                painterResource(Drawables.search),
                                 null
                             )
                         }

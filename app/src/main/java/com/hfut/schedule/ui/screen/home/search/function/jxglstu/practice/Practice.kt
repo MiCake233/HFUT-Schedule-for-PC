@@ -17,7 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.text.BottomSheetTopBar
 import com.hfut.schedule.logic.util.sys.showToast
@@ -30,7 +31,7 @@ import com.xah.common.ui.component.text.ScrollText
 fun Practice(ifSaved : Boolean){
     TransplantListItem(
         headlineContent = { ScrollText(text = "实习") },
-        leadingContent = { Icon(painter = painterResource(id = R.drawable.work), contentDescription = EMPTY_STRING) },
+        leadingContent = { Icon(painter = painterResource(id = Drawables.work), contentDescription = EMPTY_STRING) },
         modifier = Modifier.clickable {
             //if(ifSaved) Login() else
                // showBottomSheet = true

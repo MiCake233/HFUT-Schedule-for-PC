@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,8 +17,8 @@ import com.xah.common.ui.util.res
 
 object SettingsShortcutEditDestination : NavDestination() {
     override val key: String = "settings_shortcut"
-    override val title: UiText = res(R.string.navigation_label_shortcut)
-    override val icon = R.drawable.keyboard_command_key
+    override val title: UiText = res(Strings.navigation_label_shortcut)
+    override val icon = Drawables.keyboard_command_key
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

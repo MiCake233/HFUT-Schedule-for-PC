@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.storage.kv
 
+import com.xah.common.ui.res.Strings
+
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -117,9 +119,9 @@ object DataStoreManager : IDataStore {
     )
 
     enum class ShowTeacherConfig(override val code : Int,override val label: UiText) : BaseChoice {
-        ONLY_MULTI(0,res(R.string.appearance_settings_choice_display_teachers_only_multi)),
-        ALL(1,res(R.string.appearance_settings_choice_display_teachers_all)),
-        NONE(2, res(R.string.appearance_settings_choice_display_teachers_none))
+        ONLY_MULTI(0,res(Strings.appearance_settings_choice_display_teachers_only_multi)),
+        ALL(1,res(Strings.appearance_settings_choice_display_teachers_all)),
+        NONE(2, res(Strings.appearance_settings_choice_display_teachers_none))
     }
 
 

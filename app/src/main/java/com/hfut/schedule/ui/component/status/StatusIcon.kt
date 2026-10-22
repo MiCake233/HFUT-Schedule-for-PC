@@ -14,7 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -25,15 +26,15 @@ import com.xah.common.ui.model.text.UiText
 import com.xah.common.ui.util.text
 
 @Composable
-fun EmptyIcon(text: String = "空") = StatusIcon(R.drawable.upcoming,text(text))
+fun EmptyIcon(text: String = "空") = StatusIcon(Drawables.upcoming,text(text))
 @Composable
-fun DevelopingIcon() = StatusIcon(R.drawable.sdk,text("正在开发"))
+fun DevelopingIcon() = StatusIcon(Drawables.sdk,text("正在开发"))
 @Composable
-fun SuccessfulIcon() = StatusIcon(R.drawable.check,text("成功"))
+fun SuccessfulIcon() = StatusIcon(Drawables.check,text("成功"))
 @Composable
-fun ErrorIcon(string: String) = StatusIcon(R.drawable.close,text(string))
+fun ErrorIcon(string: String) = StatusIcon(Drawables.close,text(string))
 @Composable
-fun PrepareSearchIcon() = StatusIcon(R.drawable.search,text("开始搜索"))
+fun PrepareSearchIcon() = StatusIcon(Drawables.search,text("开始搜索"))
 
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

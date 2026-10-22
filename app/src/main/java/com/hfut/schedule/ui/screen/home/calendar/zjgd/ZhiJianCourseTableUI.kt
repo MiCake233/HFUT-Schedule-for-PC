@@ -48,7 +48,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -662,7 +663,7 @@ fun ZhiJianCourseTableUI(
                     onClick = {
                         weekSwap.previousWeek()
                     },
-                ) { Icon(painterResource(R.drawable.arrow_back), "Add Button") }
+                ) { Icon(painterResource(Drawables.arrow_back), "Add Button") }
             }
             // 中间
             AnimatedVisibility(
@@ -707,7 +708,7 @@ fun ZhiJianCourseTableUI(
                     onClick = {
                         weekSwap.nextWeek()
                     },
-                ) { Icon(painterResource(R.drawable.arrow_forward), "Add Button") }
+                ) { Icon(painterResource(Drawables.arrow_forward), "Add Button") }
             }
         }
     }
@@ -774,7 +775,7 @@ private fun CourseDetail(
                     },
                     overlineContent = { Text("地点") },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.near_me),null)
+                        Icon(painterResource(Drawables.near_me),null)
                     }
                 )
             }
@@ -787,7 +788,7 @@ private fun CourseDetail(
                     navController.push(TeacherSearchApiDestination(course.teacher))
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.person),null)
+                    Icon(painterResource(Drawables.person),null)
                 }
             )
             TransplantListItem(
@@ -798,7 +799,7 @@ private fun CourseDetail(
                 },
                 overlineContent = { Text("时间") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.schedule),null)
+                    Icon(painterResource(Drawables.schedule),null)
                 }
             )
             PaddingHorizontalDivider()
@@ -820,7 +821,7 @@ private fun CourseDetail(
                     ClipBoardHelper.copy(course.code)
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.tag),null)
+                    Icon(painterResource(Drawables.tag),null)
                 }
             )
             TransplantListItem(
@@ -829,7 +830,7 @@ private fun CourseDetail(
                 },
                 overlineContent = { Text("类型") },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.kid_star),null)
+                    Icon(painterResource(Drawables.kid_star),null)
                 }
             )
             TransplantListItem(
@@ -849,7 +850,7 @@ private fun CourseDetail(
                     Text(course.classes)
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.sensor_door),null)
+                    Icon(painterResource(Drawables.sensor_door),null)
                 },
             )
             TransplantListItem(
@@ -872,7 +873,7 @@ private fun CourseDetail(
                 navController.push(CourseSearchApiDestination(null,course.code))
             },
             trailingContent = {
-                Icon(painterResource(R.drawable.arrow_forward),null)
+                Icon(painterResource(Drawables.arrow_forward),null)
             }
         )
         Spacer(Modifier.height(APP_HORIZONTAL_DP).navigationBarsPadding())

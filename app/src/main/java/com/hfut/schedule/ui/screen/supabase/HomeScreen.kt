@@ -26,7 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.compose.NavHost
@@ -63,16 +64,16 @@ import dev.chrisbanes.haze.rememberHazeState
 
 private val items = listOf(
     NavigationBarItemData(
-        SupabaseScreen.HOME.name,"源", R.drawable.cloud,  R.drawable.cloud_filled
+        SupabaseScreen.HOME.name,"源", Drawables.cloud,  Drawables.cloud_filled
     ),
     NavigationBarItemData(
-        SupabaseScreen.ME.name,"已贡献", R.drawable.database,R.drawable.database_filled
+        SupabaseScreen.ME.name,"已贡献", Drawables.database,Drawables.database_filled
     ),
     NavigationBarItemData(
-        SupabaseScreen.STORAGE.name,"已下载", R.drawable.lightbulb,R.drawable.lightbulb_filled
+        SupabaseScreen.STORAGE.name,"已下载", Drawables.lightbulb,Drawables.lightbulb_filled
     ),
     NavigationBarItemData(
-        SupabaseScreen.SETTINGS.name,"选项", R.drawable.deployed_code,R.drawable.deployed_code_filled
+        SupabaseScreen.SETTINGS.name,"选项", Drawables.deployed_code,Drawables.deployed_code_filled
     )
 )
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -119,7 +120,7 @@ fun SupabaseHome(vm : NetWorkViewModel) {
                                     sortReversed = !sortReversed
                                 }) {
                                     Icon(painterResource(
-                                        R.drawable.keyboard_arrow_down
+                                        Drawables.keyboard_arrow_down
                                     ), contentDescription = EMPTY_STRING, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.rotate(
                                         if(sortReversed) {
                                             0f

@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.school.work.WorkScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object WorkDestination : NavDestination() {
     override val key = "work"
-    override val title = res(R.string.navigation_label_work)
-    override val icon = R.drawable.azm
+    override val title = res(Strings.navigation_label_work)
+    override val icon = Drawables.azm
 
     @Composable
     override fun Content() {

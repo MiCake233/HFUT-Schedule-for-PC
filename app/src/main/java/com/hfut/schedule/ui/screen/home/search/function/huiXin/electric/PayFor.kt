@@ -28,7 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -146,7 +147,7 @@ fun PayFor(vm : NetWorkViewModel, payNumber : Float, tipInfo : String, json : St
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Icon(
-            painter = painterResource(R.drawable.send_money),
+            painter = painterResource(Drawables.send_money),
             contentDescription = EMPTY_STRING,
             Modifier.size(100.dp),
             tint = MaterialTheme.colorScheme.primary
@@ -206,7 +207,7 @@ private fun PayStatusUI(vm : NetWorkViewModel, payNumber : Float, json: String, 
 
     CommonNetworkScreen(uiState,isFullScreen = false, onReload = { showToast("禁止刷新") }) {
         val msg = (uiState as NetworkUiState.Success).data
-        StatusIcon(R.drawable.send_money, text(msg))
+        StatusIcon(Drawables.send_money, text(msg))
     }
 }
 

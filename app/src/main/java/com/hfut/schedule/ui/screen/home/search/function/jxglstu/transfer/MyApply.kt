@@ -29,7 +29,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.transfer.JxglstuTransferMajorMyApply
@@ -152,7 +153,7 @@ fun MyApplyListUI(vm: NetWorkViewModel, batchId : String) {
                                     displayWarningDialog = true
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.close),null)
+                                Icon(painterResource(Drawables.close),null)
                             }
                         },
                         modifier = Modifier.clickable {
@@ -253,12 +254,12 @@ fun MyApply(vm: NetWorkViewModel, batchId : String, indexs : Int) {
                             TransplantListItem(
                                 headlineContent = { ScrollText(text = data!!.major.nameZh) },
                                 overlineContent = { ScrollText(text = data!!.department.nameZh) },
-                                leadingContent = { Icon(painterResource(R.drawable.arrow_forward), contentDescription = EMPTY_STRING) },
+                                leadingContent = { Icon(painterResource(Drawables.arrow_forward), contentDescription = EMPTY_STRING) },
                                 modifier = Modifier.weight(.6f)
                             )
                         }
                         TransplantListItem(
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.group), contentDescription = EMPTY_STRING) },
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.group), contentDescription = EMPTY_STRING) },
                             overlineContent = { ScrollText(text = "已申请/计划录取") },
                             headlineContent = { Text(text = "${data!!.applyStdCount} / ${data!!.preparedStdCount}", fontWeight = FontWeight.Bold ) },
                         )
@@ -309,7 +310,7 @@ fun MyApply(vm: NetWorkViewModel, batchId : String, indexs : Int) {
                                 modifier = Modifier.weight(.5f)
                             )
                             TransplantListItem(
-//                                leadingContent = { Icon(painter = painterResource(id = R.drawable.filter_vintage), contentDescription = EMPTY_STRING) },
+//                                leadingContent = { Icon(painter = painterResource(id = Drawables.filter_vintage), contentDescription = EMPTY_STRING) },
                                 overlineContent = { ScrollText(text = "加权均分") },
                                 headlineContent = { Text(text = "${grade.weightAvg.score}" ) },
                                 supportingContent = {
@@ -334,7 +335,7 @@ fun MyApply(vm: NetWorkViewModel, batchId : String, indexs : Int) {
                                 modifier = Modifier.weight(.5f)
                             )
                             TransplantListItem(
-//                                leadingContent = { Icon(painter = painterResource(id = R.drawable.filter_vintage), contentDescription = EMPTY_STRING) },
+//                                leadingContent = { Icon(painter = painterResource(id = Drawables.filter_vintage), contentDescription = EMPTY_STRING) },
                                 overlineContent = { ScrollText(text = "算术均分") },
                                 headlineContent = { Text(text = "${grade.operateAvg.score}") },
                                 supportingContent = {
@@ -371,6 +372,6 @@ private fun TransferCancelStatusUI(vm : NetWorkViewModel, batchId: String, id: I
         val result = (uiState as NetworkUiState.Success).data
         var msg  by remember { mutableStateOf("结果") }
         msg = if(result) "成功"  else "未知错误"
-        StatusIcon(if(msg == "成功") R.drawable.check else R.drawable.close, text(msg))
+        StatusIcon(if(msg == "成功") Drawables.check else Drawables.close, text(msg))
     }
 }

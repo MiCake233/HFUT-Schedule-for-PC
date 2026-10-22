@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.school.dormitoryScore.DormitoryScoreScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object DormitoryDestination : NavDestination() {
     override val key = "dormitory"
-    override val title = res(R.string.navigation_label_dormitory)
-    override val icon = R.drawable.bed
+    override val title = res(Strings.navigation_label_dormitory)
+    override val icon = Drawables.bed
 
     @Composable
     override fun Content() {

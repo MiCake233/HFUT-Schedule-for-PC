@@ -40,7 +40,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinMonthBill
@@ -180,7 +181,7 @@ fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                             TransplantListItem(
                                 headlineContent = { Text(text = "￥${total.roundOffString(2)}") },
                                 overlineContent = { Text(text = "支出总和")},
-                                leadingContent = { Icon(painterResource(R.drawable.toll), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.toll), contentDescription = "Localized description",) },
                                 color = MaterialTheme.colorScheme.secondaryContainer,
                             )
                         }
@@ -191,7 +192,7 @@ fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                             TransplantListItem(
                                 headlineContent = { Text(text = "￥$sumFloat") },
                                 overlineContent = { Text(text = "支出平均")},
-                                leadingContent = { Icon(painterResource(R.drawable.filter_vintage), contentDescription = "Localized description",) },
+                                leadingContent = { Icon(painterResource(Drawables.filter_vintage), contentDescription = "Localized description",) },
                                 color =  MaterialTheme.colorScheme.secondaryContainer,
                             )
                         }
@@ -203,7 +204,7 @@ fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                             TransplantListItem(
                                 overlineContent = { Text(text = filteredList[item].date) },
                                 headlineContent = { Text(text = "￥$balance") },
-                                leadingContent = { Icon(painter = painterResource(id = R.drawable.paid), contentDescription = EMPTY_STRING)}
+                                leadingContent = { Icon(painter = painterResource(id = Drawables.paid), contentDescription = EMPTY_STRING)}
                             )
                         }
                     }
@@ -213,7 +214,7 @@ fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
             }
             ExtendedFloatingActionButton(
                 text = { Text(text = "$year 年 $month 月") },
-                icon = { Icon(painter = painterResource(id = R.drawable.search), contentDescription = EMPTY_STRING) },
+                icon = { Icon(painter = painterResource(id = Drawables.search), contentDescription = EMPTY_STRING) },
                 onClick = { showBottomSheet = true },
                 expanded = shouldShowAddButton,
                 modifier = Modifier
@@ -237,7 +238,7 @@ fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                                 month--
                             else showToast("请切换年份")
                         },
-                    ) { Icon(painterResource(R.drawable.arrow_back), contentDescription = EMPTY_STRING) }
+                    ) { Icon(painterResource(Drawables.arrow_back), contentDescription = EMPTY_STRING) }
                     Spacer(modifier = Modifier.padding(horizontal =APP_HORIZONTAL_DP))
                     FloatingActionButton(
                         onClick = {
@@ -245,7 +246,7 @@ fun MonthBillUI(vm : NetWorkViewModel, innerPadding : PaddingValues) {
                                 month++
                             }
                         },
-                    ) { Icon(painterResource(R.drawable.arrow_forward), contentDescription = EMPTY_STRING)}
+                    ) { Icon(painterResource(Drawables.arrow_forward), contentDescription = EMPTY_STRING)}
                 }
             }
         }

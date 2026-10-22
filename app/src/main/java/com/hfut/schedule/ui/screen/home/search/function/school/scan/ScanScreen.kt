@@ -34,7 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.core.net.toUri
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
@@ -190,17 +191,17 @@ fun ScanScreen(
                                 leadingContent = {
                                     Icon(painterResource(
                                         if(isCas) {
-                                            R.drawable.login
+                                            Drawables.login
                                         } else if(isValidWebUrl(resultText)) {
-                                            R.drawable.net
+                                            Drawables.net
                                         } else if(isWifiContent(resultText)) {
                                             if(parseWifiQrCode(resultText)?.password == null) {
-                                                R.drawable.wifi
+                                                Drawables.wifi
                                             } else{
-                                                R.drawable.wifi_password
+                                                Drawables.wifi_password
                                             }
                                         } else {
-                                            R.drawable.qr_code_2
+                                            Drawables.qr_code_2
                                         }
                                     ),null)
                                 },
@@ -212,7 +213,7 @@ fun ScanScreen(
                                                 containerColor = MaterialTheme.colorScheme.errorContainer
                                             )
                                         ) {
-                                            Icon(painterResource(R.drawable.close), null)
+                                            Icon(painterResource(Drawables.close), null)
                                         }
                                     }
                                 } else null
@@ -280,7 +281,7 @@ fun ScanScreen(
                             backdrop = backdrop,
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.image),null)
+                            Icon(painterResource(Drawables.image),null)
                         }
                     }
                 }

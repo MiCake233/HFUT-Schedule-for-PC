@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.community.workRest.TimeTableScreen
@@ -16,8 +20,8 @@ data class WorkAndRestDestination(
 
     companion object {
         const val KEY = "work_and_rest"
-        val TITLE = res(R.string.navigation_label_work_and_rest)
-        val ICON = R.drawable.schedule
+        val TITLE = res(Strings.navigation_label_work_and_rest)
+        val ICON = Drawables.schedule
     }
 
     @Composable

@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
@@ -10,8 +14,8 @@ import com.xah.navigation.util.LocalNavDependencies
 
 object ProgramConfirmationDestination : NavDestination() {
     override val key = "program_confirmation"
-    override val title = res(R.string.navigation_label_program_confirmation)
-    override val icon = R.drawable.check_circle
+    override val title = res(Strings.navigation_label_program_confirmation)
+    override val icon = Drawables.check_circle
 
     @Composable
     override fun Content() {

@@ -44,7 +44,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -111,7 +112,7 @@ private fun ContributeButtons() {
         LargeButton(
             modifier = Modifier.fillMaxWidth().weight(.5f),
             text = "Github反馈通道",
-            icon = R.drawable.github,
+            icon = Drawables.github,
             containerColor = Color.Black,
             contentColor = Color.White,
             onClick = {
@@ -127,7 +128,7 @@ private fun ContributeButtons() {
         LargeButton(
             modifier = Modifier.fillMaxWidth().weight(.5f),
             text = "邮件反馈通道",
-            icon = R.drawable.mail,
+            icon = Drawables.mail,
             onClick = {
                 Starter.emailMe(context)
             }
@@ -198,8 +199,8 @@ fun TrackScreen(
                                 ) {
                                     Icon(
                                         painterResource(
-                                            if(!displayCompactly) R.drawable.horizontal_split
-                                            else R.drawable.reorder
+                                            if(!displayCompactly) Drawables.horizontal_split
+                                            else Drawables.reorder
                                         ),
                                         null
                                     )
@@ -239,7 +240,7 @@ fun TrackScreen(
                                     Text("通过邮件或Github反馈后会答复并在提案板显示；事务推进有快有慢为正常现象, 以开发者的闲暇情况以及影响用户体验的严重性为准。")
                                 },
                                 leadingContent = {
-                                    Icon(painterResource(R.drawable.info),null)
+                                    Icon(painterResource(Drawables.info),null)
                                 }
                             )
                         }

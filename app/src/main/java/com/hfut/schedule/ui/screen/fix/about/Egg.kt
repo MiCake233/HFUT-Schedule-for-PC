@@ -34,7 +34,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
@@ -66,7 +67,7 @@ fun Egg() {
                                 num++
                             }
                         ) {
-                            Icon(painterResource(R.drawable.add),null)
+                            Icon(painterResource(Drawables.add),null)
                         }
                         if(num >= 2) {
                             FilledTonalIconButton (
@@ -75,7 +76,7 @@ fun Egg() {
 
                                 }
                             ) {
-                                Icon(painterResource(R.drawable.close),null)
+                                Icon(painterResource(Drawables.close),null)
                             }
                         }
                     }
@@ -140,7 +141,7 @@ fun Egg() {
                 InnerPaddingHeight(innerPadding,true)
                 for(i in 0 until num) {
                     RowHorizontal {
-                        DraggableImage(R.drawable.hfut_badge,dampingRatio, stiffness)
+                        DraggableImage(Drawables.hfut_badge,dampingRatio, stiffness)
                         Spacer(Modifier.width(10.dp))
 //                        DraggableImage(R.drawable.hfut_dynamic,dampingRatio, stiffness)
                     }
@@ -148,7 +149,7 @@ fun Egg() {
                 }
                 for(i in 0 until num) {
                     RowHorizontal {
-                        DraggableImage(R.drawable.hfut_building,dampingRatio, stiffness)
+                        DraggableImage(Drawables.hfut_building,dampingRatio, stiffness)
                     }
                     RowHorizontal {
 //                        DraggableImage(R.drawable.buliding_dynamic,dampingRatio, stiffness)

@@ -1,5 +1,7 @@
 package com.hfut.schedule.service.tile.base
 
+import com.xah.common.ui.res.Drawables
+
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -14,7 +16,7 @@ import com.xah.common.logic.util.LogUtil
 open class BaseWebViewTileService(
     private val url : String,
     private val title : String = getPureUrl(url),
-    private val icon : Int = R.drawable.net,
+    private val icon : Int = Drawables.net,
     private val cookies : String? = null,
 ) : TileService() {
     override fun onClick() {

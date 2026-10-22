@@ -35,7 +35,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -105,7 +106,7 @@ fun ShowerLogin(vm : NetWorkViewModel) {
                         IconButton(onClick = {
                             context?.finish()
                         }) {
-                            Icon(painterResource(id = R.drawable.close), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
+                            Icon(painterResource(id = Drawables.close), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
                         }
                     }
                 },
@@ -189,13 +190,13 @@ private fun GuaGuaLoginUI(vm : NetWorkViewModel,username : String,onUsername : (
                 // placeholder = { Text("请输入正确格式")},
                 shape = MaterialTheme.shapes.medium,
                 colors = textFiledTransplant(),
-                leadingIcon = { Icon( painterResource(R.drawable.call), contentDescription = "Localized description") },
+                leadingIcon = { Icon( painterResource(Drawables.call), contentDescription = "Localized description") },
 
                 trailingIcon = {
                     IconButton(onClick = {
                         onUsername(EMPTY_STRING)
                         inputAES = EMPTY_STRING
-                    }) { Icon(painter = painterResource(R.drawable.close), contentDescription = "description") }
+                    }) { Icon(painter = painterResource(Drawables.close), contentDescription = "description") }
                 }
             )
         }
@@ -215,12 +216,12 @@ private fun GuaGuaLoginUI(vm : NetWorkViewModel,username : String,onUsername : (
                 visualTransformation = if (hidden) PasswordVisualTransformation()
                 else VisualTransformation.None,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                leadingIcon = { Icon(painterResource(R.drawable.key), contentDescription = "Localized description") },
+                leadingIcon = { Icon(painterResource(Drawables.key), contentDescription = "Localized description") },
                 trailingIcon = {
                     IconButton(onClick = { hidden = !hidden }) {
                         val icon =
-                            if (hidden) painterResource(R.drawable.visibility_off)
-                            else painterResource(R.drawable.visibility)
+                            if (hidden) painterResource(Drawables.visibility_off)
+                            else painterResource(Drawables.visibility)
                         val description =
                             if (hidden) "展示密码"
                             else "隐藏密码"

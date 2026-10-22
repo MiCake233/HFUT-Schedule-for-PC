@@ -40,7 +40,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -145,7 +146,7 @@ fun SupabaseLoginScreen(vm : NetWorkViewModel) {
                                 singleLine = true,
                                 shape = MaterialTheme.shapes.medium,
                                 colors = textFiledTransplant(),
-                                leadingIcon = { Icon( painterResource(R.drawable.mail), contentDescription = "Localized description") },
+                                leadingIcon = { Icon( painterResource(Drawables.mail), contentDescription = "Localized description") },
                             )
                         }
 
@@ -163,10 +164,10 @@ fun SupabaseLoginScreen(vm : NetWorkViewModel) {
                                 visualTransformation = if (hidden) PasswordVisualTransformation()
                                 else VisualTransformation.None,
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                                leadingIcon = { Icon(painterResource(R.drawable.key), contentDescription = "Localized description") },
+                                leadingIcon = { Icon(painterResource(Drawables.key), contentDescription = "Localized description") },
                                 trailingIcon = {
                                     IconButton(onClick = { hidden = !hidden }) {
-                                        Icon(painter = if (hidden) painterResource(R.drawable.visibility_off) else painterResource(R.drawable.visibility), contentDescription = null)
+                                        Icon(painter = if (hidden) painterResource(Drawables.visibility_off) else painterResource(Drawables.visibility), contentDescription = null)
                                     }
                                 },
                                 shape = MaterialTheme.shapes.medium,
@@ -192,10 +193,10 @@ fun SupabaseLoginScreen(vm : NetWorkViewModel) {
                                     visualTransformation = if (hidden) PasswordVisualTransformation()
                                     else VisualTransformation.None,
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                                    leadingIcon = { Icon(painterResource(R.drawable.key), contentDescription = "Localized description") },
+                                    leadingIcon = { Icon(painterResource(Drawables.key), contentDescription = "Localized description") },
                                     trailingIcon = {
                                         IconButton(onClick = { hidden = !hidden }) {
-                                            Icon(painter = if (hidden) painterResource(R.drawable.visibility_off) else painterResource(R.drawable.visibility), contentDescription = null)
+                                            Icon(painter = if (hidden) painterResource(Drawables.visibility_off) else painterResource(Drawables.visibility), contentDescription = null)
                                         }
                                     },
                                     shape = MaterialTheme.shapes.medium

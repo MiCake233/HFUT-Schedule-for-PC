@@ -21,7 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -147,14 +148,14 @@ private fun VersionInfoCard() {
                     TransplantListItem(
                         // fixme:这里用gradle自动签日期会影响F-Droid构建后校验Smail代码，暂时还是手动标注吧 [issue#50]
                         overlineContent = { ScrollText(text = RELEASE_DATE) },
-                        leadingContent = { Icon(painter = painterResource(id = R.drawable.code), contentDescription = EMPTY_STRING) },
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.code), contentDescription = EMPTY_STRING) },
                         headlineContent = { Text(text = "版本号 ${AppVersion.getVersionCode()}") },
                         modifier = Modifier.weight(.5f)
                     )
                     AppVersion.getSplitType().let {
                         TransplantListItem(
                             overlineContent = { Text(text = if(it == AppVersion.SplitType.COMMON) "全量包" else "架构分包") },
-                            leadingContent = { Icon(painter = painterResource(id = R.drawable.package_2), contentDescription = EMPTY_STRING) },
+                            leadingContent = { Icon(painter = painterResource(id = Drawables.package_2), contentDescription = EMPTY_STRING) },
                             headlineContent = { Text(text = it.description) },
                             modifier = Modifier.weight(.5f)
                         )
@@ -171,22 +172,22 @@ private fun VersionInfoCard() {
 
 private enum class UpdateType(val res : Int) {
     //新增
-    ADD(R.drawable.add_2),
+    ADD(Drawables.add_2),
     //下线
-    DEGREE(R.drawable.delete),
+    DEGREE(Drawables.delete),
     //优化
-    OPTIMIZE(R.drawable.tune),
+    OPTIMIZE(Drawables.tune),
     //修复
-    FIX(R.drawable.build),
+    FIX(Drawables.build),
     //重构
-    RENEW(R.drawable.alt_route),
+    RENEW(Drawables.alt_route),
     //其他
-    OTHER(R.drawable.more_vert),
-    UPDATE(R.drawable.arrow_upward),
+    OTHER(Drawables.more_vert),
+    UPDATE(Drawables.arrow_upward),
     // 回归
-    COME_BACK(R.drawable.rotate_right),
+    COME_BACK(Drawables.rotate_right),
     // 性能
-    PERFORMANCE(R.drawable.flash_on)
+    PERFORMANCE(Drawables.flash_on)
 }
 
 private sealed class To {

@@ -35,7 +35,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -113,7 +114,7 @@ fun TopBarNavigationIcon(
 
                                     trailingContent = {
                                         if(isCurrent) {
-                                            Icon(painterResource(R.drawable.arrow_upward),null, modifier = Modifier.rotate(-90f))
+                                            Icon(painterResource(Drawables.arrow_upward),null, modifier = Modifier.rotate(-90f))
                                         }
                                     },
                                     modifier = Modifier.clickable {
@@ -149,7 +150,7 @@ fun TopBarNavigationIcon(
 //                                .fillMaxWidth()
 //                            ,
 //                            text = "回到首页",
-//                            icon = R.drawable.home
+//                            icon = Drawables.home
 //                        )
 //                    }
                 }
@@ -232,9 +233,9 @@ fun TopBarNavigationIcon(
             Icon(
                 painterResource(
                     if(canPop) {
-                        R.drawable.arrow_back
+                        Drawables.arrow_back
                     } else {
-                        R.drawable.close
+                        Drawables.close
                     }
                 ),
                 contentDescription = null,
@@ -267,9 +268,9 @@ fun LiquidTopBarNavigateIcon(
         Icon(
             painterResource(
                 if(canPop) {
-                    R.drawable.arrow_back
+                    Drawables.arrow_back
                 } else {
-                    R.drawable.close
+                    Drawables.close
                 }
             ),
             contentDescription = null
@@ -293,7 +294,7 @@ fun TopBarNavigationIconForControlCenter(
         colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor =  MaterialTheme.colorScheme.surface.copy(.75f))
     ) {
         Icon(
-            painterResource(R.drawable.arrow_back),
+            painterResource(Drawables.arrow_back),
             null,
             tint = tint,
             modifier = Modifier.size(25.5.dp)

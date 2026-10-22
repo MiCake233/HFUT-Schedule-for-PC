@@ -38,8 +38,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -234,11 +236,11 @@ fun UpdateUI(
 
     CustomCard(color = MaterialTheme.colorScheme.surface) {
         TransplantListItem(
-            headlineContent = { Text(text = if(canDownload) stringResource(R.string.settings_update_title_find_new_version) else stringResource(
-                R.string.settings_update_title_failed
+            headlineContent = { Text(text = if(canDownload) stringResource(Strings.settings_update_title_find_new_version) else stringResource(
+                Strings.settings_update_title_failed
             )) },
             supportingContent = { Text(text = if(canDownload) "${AppVersion.getVersionName()} → ${update?.name}" else stringResource(
-                R.string.settings_update_description, update?.name ?: EMPTY_STRING
+                Strings.settings_update_description, update?.name ?: EMPTY_STRING
             )) },
             leadingContent = {
                 BadgedBox(
@@ -248,7 +250,7 @@ fun UpdateUI(
                         }
                     }
                 )  {
-                    Icon(painterResource(R.drawable.arrow_upward), contentDescription = "Localized description",)
+                    Icon(painterResource(Drawables.arrow_upward), contentDescription = "Localized description",)
                 }
             },
             trailingContent = {
@@ -276,7 +278,7 @@ fun UpdateUI(
             exit = slideOutVertically() + shrinkVertically() + fadeOut() + scaleOut(targetScale = 1.2f)) {
             PaddingHorizontalDivider()
             TransplantListItem(
-                headlineContent = { Text(text = stringResource(R.string.settings_update_detail_title)) },
+                headlineContent = { Text(text = stringResource(Strings.settings_update_detail_title)) },
                 supportingContent = {
                     update?.body?.let { Text(text = it) }
                 },
@@ -300,10 +302,10 @@ fun UpdateUI(
                         },
                         text =
                             stringResource(
-                                R.string.settings_update_button_download,
+                                Strings.settings_update_button_download,
                                 if (uiState is NetworkUiState.Success) {
                                     stringResource(
-                                        R.string.settings_update_button_download_file_size,
+                                        Strings.settings_update_button_download_file_size,
                                         (uiState as NetworkUiState.Success).data.roundOffString(2)
                                     )
                                 } else EMPTY_STRING
@@ -331,8 +333,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1 / 3f),
-                    text = stringResource(R.string.settings_update_button_install),
-                    icon = R.drawable.apk_document,
+                    text = stringResource(Strings.settings_update_button_install),
+                    icon = Drawables.apk_document,
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
@@ -345,8 +347,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1 / 3f),
-                    text = stringResource(R.string.settings_update_button_delete),
-                    icon = R.drawable.delete,
+                    text = stringResource(Strings.settings_update_button_delete),
+                    icon = Drawables.delete,
                     containerColor = MaterialTheme.colorScheme.error,
                     contentColor = MaterialTheme.colorScheme.onError
                 )
@@ -358,8 +360,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1 / 3f),
-                    text = stringResource(R.string.settings_update_button_download_manage),
-                    icon = R.drawable.folder_managed,
+                    text = stringResource(Strings.settings_update_button_download_manage),
+                    icon = Drawables.folder_managed,
                     containerColor = MaterialTheme.colorScheme.secondaryContainer,
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
@@ -383,7 +385,7 @@ fun UpdateUI(
                         .fillMaxWidth()
                         .weight(.5f),
                     text = "${(downloadState as DownloadResult.Progress).progress}%",
-                    icon = R.drawable.apk_install,
+                    icon = Drawables.apk_install,
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
@@ -395,8 +397,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
-                    text = stringResource(R.string.settings_update_button_download_manage),
-                    icon = R.drawable.folder_managed,
+                    text = stringResource(Strings.settings_update_button_download_manage),
+                    icon = Drawables.folder_managed,
                     containerColor = MaterialTheme.colorScheme.secondaryContainer,
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
@@ -416,8 +418,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
-                    text = stringResource(R.string.settings_update_button_install),
-                    icon = R.drawable.apk_document,
+                    text = stringResource(Strings.settings_update_button_install),
+                    icon = Drawables.apk_document,
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
@@ -429,8 +431,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
-                    text = stringResource(R.string.settings_update_button_download_manage),
-                    icon = R.drawable.folder_managed,
+                    text = stringResource(Strings.settings_update_button_download_manage),
+                    icon = Drawables.folder_managed,
                     containerColor = MaterialTheme.colorScheme.secondaryContainer,
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
@@ -450,8 +452,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
-                    text = stringResource(R.string.settings_update_button_failed),
-                    icon = R.drawable.refresh,
+                    text = stringResource(Strings.settings_update_button_failed),
+                    icon = Drawables.refresh,
                     containerColor = MaterialTheme.colorScheme.error,
                     contentColor = MaterialTheme.colorScheme.onError
                 )
@@ -463,8 +465,8 @@ fun UpdateUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(.5f),
-                    text = stringResource(R.string.settings_update_button_download_manage),
-                    icon = R.drawable.folder_managed,
+                    text = stringResource(Strings.settings_update_button_download_manage),
+                    icon = Drawables.folder_managed,
                     containerColor = MaterialTheme.colorScheme.secondaryContainer,
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
@@ -472,14 +474,14 @@ fun UpdateUI(
             Spacer(Modifier.height(CARD_NORMAL_DP))
             CardListItem(
                 headlineContent = {
-                    Text(stringResource(R.string.settings_update_failed_title))
+                    Text(stringResource(Strings.settings_update_failed_title))
                 },
                 color = MaterialTheme.colorScheme.surface,
                 supportingContent = {
                     (downloadState as DownloadResult.Failed).reason?.let { Text(it ) }
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.warning),null)
+                    Icon(painterResource(Drawables.warning),null)
                 },
             )
         }
@@ -510,19 +512,19 @@ fun PatchUpdateUI(
     val context = LocalContext.current
 
     if(loadingPatch) {
-        LoadingUI(stringResource(R.string.settings_update_patch_loading))
+        LoadingUI(stringResource(Strings.settings_update_patch_loading))
     } else {
         Spacer(Modifier.height(CARD_NORMAL_DP))
         CustomCard( color = MaterialTheme.colorScheme.surface) {
             TransplantListItem(
                 headlineContent = { Text(text = stringResource(
-                    R.string.settings_update_merge_patch_title,
-                    patch.newVersion.let { if (it == update?.name) stringResource(R.string.settings_update_patch_title_latest) else (EMPTY_STRING + it) })
+                    Strings.settings_update_merge_patch_title,
+                    patch.newVersion.let { if (it == update?.name) stringResource(Strings.settings_update_patch_title_latest) else (EMPTY_STRING + it) })
                 ) },
                 supportingContent = {
-                    Text(text = stringResource(R.string.settings_update_patch_description))
+                    Text(text = stringResource(Strings.settings_update_patch_description))
                 },
-                leadingContent = { Icon(painterResource(R.drawable.package_2), contentDescription = "Localized description",) },
+                leadingContent = { Icon(painterResource(Drawables.package_2), contentDescription = "Localized description",) },
             )
 
             when (downloadState) {
@@ -543,16 +545,16 @@ fun PatchUpdateUI(
                                 patch.newVersion.let {
                                     if(it != update?.name)
                                         stringResource(
-                                            R.string.settings_update_patch_button_download_to_version,
+                                            Strings.settings_update_patch_button_download_to_version,
                                             it
                                         )
                                     else
-                                        stringResource(R.string.settings_update_patch_button__download_to_latest)
+                                        stringResource(Strings.settings_update_patch_button__download_to_latest)
                                 }
                             }${
                                 if(uiStatePatch is NetworkUiState.Success) {
                                     stringResource(
-                                        R.string.settings_update_button_download_file_size,
+                                        Strings.settings_update_button_download_file_size,
                                         (uiStatePatch as NetworkUiState.Success).data.roundOffString(2)
                                     )
                                 } else EMPTY_STRING  
@@ -585,8 +587,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1 / 3f),
-                        text = stringResource(R.string.settings_update_button_install),
-                        icon = R.drawable.apk_document,
+                        text = stringResource(Strings.settings_update_button_install),
+                        icon = Drawables.apk_document,
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
@@ -599,8 +601,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1 / 3f),
-                        text = stringResource(R.string.settings_update_button_delete),
-                        icon = R.drawable.delete,
+                        text = stringResource(Strings.settings_update_button_delete),
+                        icon = Drawables.delete,
                         containerColor = MaterialTheme.colorScheme.error,
                         contentColor = MaterialTheme.colorScheme.onError
                     )
@@ -612,8 +614,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1 / 3f),
-                        text = stringResource(R.string.settings_update_button_download_manage),
-                        icon = R.drawable.folder_managed,
+                        text = stringResource(Strings.settings_update_button_download_manage),
+                        icon = Drawables.folder_managed,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -635,7 +637,7 @@ fun PatchUpdateUI(
                             .fillMaxWidth()
                             .weight(.5f),
                         text = "${(downloadState as DownloadResult.Progress).progress}%",
-                        icon = R.drawable.apk_install,
+                        icon = Drawables.apk_install,
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
@@ -647,8 +649,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(.5f),
-                        text = stringResource(R.string.settings_update_button_download_manage),
-                        icon = R.drawable.folder_managed,
+                        text = stringResource(Strings.settings_update_button_download_manage),
+                        icon = Drawables.folder_managed,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -674,8 +676,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(.5f),
-                        text = stringResource(R.string.settings_update_button_install),
-                        icon = R.drawable.apk_document,
+                        text = stringResource(Strings.settings_update_button_install),
+                        icon = Drawables.apk_document,
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
@@ -687,8 +689,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(.5f),
-                        text = stringResource(R.string.settings_update_button_download_manage),
-                        icon = R.drawable.folder_managed,
+                        text = stringResource(Strings.settings_update_button_download_manage),
+                        icon = Drawables.folder_managed,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -706,8 +708,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(.5f),
-                        text =  stringResource(R.string.settings_update_button_failed),
-                        icon = R.drawable.refresh,
+                        text =  stringResource(Strings.settings_update_button_failed),
+                        icon = Drawables.refresh,
                         containerColor = MaterialTheme.colorScheme.error,
                         contentColor = MaterialTheme.colorScheme.onError
                     )
@@ -719,8 +721,8 @@ fun PatchUpdateUI(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(.5f),
-                        text = stringResource(R.string.settings_update_button_download_manage),
-                        icon = R.drawable.folder_managed,
+                        text = stringResource(Strings.settings_update_button_download_manage),
+                        icon = Drawables.folder_managed,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -729,14 +731,14 @@ fun PatchUpdateUI(
 
                 CardListItem(
                     headlineContent = {
-                        Text( stringResource(R.string.settings_update_failed_title))
+                        Text( stringResource(Strings.settings_update_failed_title))
                     },
                     color = MaterialTheme.colorScheme.surface,
                     supportingContent = {
                         (downloadState as DownloadResult.Failed).reason?.let { Text(it ) }
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.warning),null)
+                        Icon(painterResource(Drawables.warning),null)
                     },
                 )
             }

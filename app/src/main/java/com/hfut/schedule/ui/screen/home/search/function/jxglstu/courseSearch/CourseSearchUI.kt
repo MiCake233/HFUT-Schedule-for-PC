@@ -41,7 +41,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.parse.SemesterParser
@@ -187,7 +188,7 @@ fun CourseSearchScreen(
                                     backdrop = backdrop,
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.calendar),
+                                        painterResource(Drawables.calendar),
                                         null,
                                     )
                                 }
@@ -285,7 +286,7 @@ fun CourseSearchScreen(
                                                 myClass?.let { className = it }
                                             },
                                         ) {
-                                            Icon(painterResource(R.drawable.person), null)
+                                            Icon(painterResource(Drawables.person), null)
                                         }
                                     } else {
                                         IconButton(
@@ -293,7 +294,7 @@ fun CourseSearchScreen(
                                                 className = EMPTY_STRING
                                             },
                                         ) {
-                                            Icon(painterResource(R.drawable.close), null)
+                                            Icon(painterResource(Drawables.close), null)
                                         }
                                     }
                                 }
@@ -312,7 +313,7 @@ fun CourseSearchScreen(
                             ) {
                                 CenterScreen {
                                     Icon(
-                                        painter = painterResource(R.drawable.search),
+                                        painter = painterResource(Drawables.search),
                                         contentDescription = "description"
                                     )
                                 }
@@ -328,7 +329,7 @@ fun CourseSearchScreen(
 //                                shape = MaterialTheme.shapes.medium
 //                            ) {
 //                                Icon(
-//                                    painter = painterResource(R.drawable.search),
+//                                    painter = painterResource(Drawables.search),
 //                                    contentDescription = "description"
 //                                )
 //                            }

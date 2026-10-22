@@ -24,7 +24,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.schedule.R
@@ -59,7 +60,7 @@ fun LockUI(innerPadding : PaddingValues,hazeState: HazeState) {
             headlineContent = { Text(text = "需要密码") },
             supportingContent = { Text(text = "在调用支付时选择是否需要验证") },
             leadingContent = {
-                Icon(painter = painterResource(id = R.drawable.lock), contentDescription = EMPTY_STRING)
+                Icon(painter = painterResource(id = Drawables.lock), contentDescription = EMPTY_STRING)
             },
             trailingContent = {
                 Switch(checked = pin, onCheckedChange = {_->
@@ -72,7 +73,7 @@ fun LockUI(innerPadding : PaddingValues,hazeState: HazeState) {
                 headlineContent = { Text(text = "生物识别") },
                 supportingContent = { Text(text = "调用指纹传感器以免密码") },
                 leadingContent = {
-                    Icon(painter = painterResource(id = R.drawable.password), contentDescription = EMPTY_STRING)
+                    Icon(painter = painterResource(id = Drawables.password), contentDescription = EMPTY_STRING)
                 },
                 modifier = Modifier.clickable {
                     showToast("正在开发")
@@ -163,7 +164,7 @@ fun KeyBoard(modifier : Modifier = Modifier, onKeyClick: (Int) -> Unit, onBacksp
                 .height(65.dp)
                 ,shape = NoneRoundShape
             ) {
-                Icon(painter = painterResource(id = R.drawable.backspace), contentDescription = EMPTY_STRING, modifier = Modifier.size(30.dp))
+                Icon(painter = painterResource(id = Drawables.backspace), contentDescription = EMPTY_STRING, modifier = Modifier.size(30.dp))
             }
         }
     }
@@ -184,7 +185,7 @@ fun CirclePoint(modifier: Modifier = Modifier, text : String, password : String,
         Spacer(modifier = Modifier.height(10.dp))
         Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
             for(i in 0 until num) {
-                Icon(painter = painterResource(id = if(i < password.length) R.drawable.circle_filled else R.drawable.circle), contentDescription = EMPTY_STRING,modifier = Modifier.padding(7.dp).size(17.dp),tint = MaterialTheme.colorScheme.primary)
+                Icon(painter = painterResource(id = if(i < password.length) Drawables.circle_filled else Drawables.circle), contentDescription = EMPTY_STRING,modifier = Modifier.padding(7.dp).size(17.dp),tint = MaterialTheme.colorScheme.primary)
             }
         }
     }

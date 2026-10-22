@@ -32,7 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.hall.OfficeHallSearchRecord
@@ -129,7 +130,7 @@ fun OfficeHallScreen(
                                 scope.launch { refreshNetwork() }
                             }
                         ) {
-                            Icon(painterResource(R.drawable.search),null)
+                            Icon(painterResource(Drawables.search),null)
                         }
                     }
                 ) { input = it }
@@ -195,7 +196,7 @@ fun OfficeHallScreen(
                                             },
                                             overlineContent = { Text("时间") },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.schedule),null)
+                                                Icon(painterResource(Drawables.schedule),null)
                                             }
                                         )
                                     }
@@ -206,7 +207,7 @@ fun OfficeHallScreen(
                                             },
                                             overlineContent = { Text("地点") },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.near_me),null)
+                                                Icon(painterResource(Drawables.near_me),null)
                                             }
                                         )
                                     }

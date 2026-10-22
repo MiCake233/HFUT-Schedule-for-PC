@@ -98,20 +98,19 @@ object XiaoWuXingRepository : XiaoWuXingRepositoryInf {
         filePropertyType : Int,
         fileProperty : String,
         token : String,
-        holder : UiStateHolder<Bitmap>
+        holder : UiStateHolder<ByteArray>
     ) = launchRequestState(
         holder = holder,
         request = { xwx.getDocPreview(token,XiaoWuXingDocPreviewRequest(schoolCode = schoolCode, userId = username, fileProperty = fileProperty, filePropertyType = filePropertyType)) },
         transformSuccess = { _,json -> parseDocPreview(json) }
     )
     @JvmStatic
-    private fun parseDocPreview(json : String) : Bitmap = try {
+    private fun parseDocPreview(json : String) : ByteArray = try {
         val result = GsonInstance.fromJson(json, XiaoWuXingDocPreviewResponse::class.java)
         if(!isXwxRequestSuccessful(result.code)) {
             throw Exception("登录状态失效")
         }
-        val decodedByteArray = Base64.decode(result.result.imageBase64String.substringAfter("base64,").trimIndent(),Base64.DEFAULT)
-        BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.size)
-        // 转为图片
+        // 直接返回图片字节（PNG/JPEG），由各平台 UI 自行解码，避免在数据层依赖 Android Bitmap
+        Base64.decode(result.result.imageBase64String.substringAfter("base64,").trimIndent(),Base64.DEFAULT)
     } catch (e: Exception) { throw e }
 }

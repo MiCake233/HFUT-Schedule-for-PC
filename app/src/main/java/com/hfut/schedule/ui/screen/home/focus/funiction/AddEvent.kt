@@ -92,7 +92,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -326,7 +327,7 @@ fun AddEventScreen(
                             isCircle = true,
                             backdrop = backDrop
                         ) {
-                            BrushIcon(icon = R.drawable.wand_stars)
+                            BrushIcon(icon = Drawables.wand_stars)
                         }
                         if(!isSupabase) {
                             LiquidButton(
@@ -340,7 +341,7 @@ fun AddEventScreen(
                                 isCircle = true,
                                 backdrop = backDrop
                             ) {
-                                Icon(painterResource(R.drawable.cloud),null)
+                                Icon(painterResource(Drawables.cloud),null)
                             }
                         }
                     } else if(!enableCopy) {
@@ -354,7 +355,7 @@ fun AddEventScreen(
                             isCircle = true,
                             backdrop = backDrop
                         ) {
-                            Icon(painterResource(R.drawable.copy_all),null)
+                            Icon(painterResource(Drawables.copy_all),null)
                         }
                         Spacer(Modifier.width(BUTTON_PADDING))
                         LiquidButton(
@@ -365,7 +366,7 @@ fun AddEventScreen(
                             isCircle = true,
                             backdrop = backDrop,
                         ) {
-                            Icon(painterResource(R.drawable.delete),null, tint = MaterialTheme.colorScheme.error)
+                            Icon(painterResource(Drawables.delete),null, tint = MaterialTheme.colorScheme.error)
                         }
                     }
                 }
@@ -390,7 +391,7 @@ fun AddEventScreen(
                 false -> {
                     CenterScreen {
                         ColumnVertical {
-                            StatusIcon(R.drawable.login,text("未登录或状态失效"))
+                            StatusIcon(Drawables.login,text("未登录或状态失效"))
                             Spacer(Modifier.height(APP_HORIZONTAL_DP))
                             Button(onClick = {
                                 navController.push(SupabaseLoginDestination, effect = JumpTransitionEffectWallpaper())
@@ -430,7 +431,7 @@ private fun SharedTransitionScope.ButtonUI(
                 ),
             elevation =  FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp),
             onClick = { showChange(true) },
-        ) { Icon(painterResource(R.drawable.add), "Add Button") }
+        ) { Icon(painterResource(Drawables.add), "Add Button") }
     }
 }
 
@@ -524,7 +525,7 @@ private fun SharedTransitionScope.SurfaceUI(
                         IconButton(
                             onClick = { showChange(false) }
                         ) {
-                            Icon(painterResource(R.drawable.arrow_back),null,tint = MaterialTheme.colorScheme.primary)
+                            Icon(painterResource(Drawables.arrow_back),null,tint = MaterialTheme.colorScheme.primary)
                         }
                     }
                 )
@@ -552,7 +553,7 @@ private fun SharedTransitionScope.SurfaceUI(
                     true -> {
                         CenterScreen {
                             StatusIcon(
-                                R.drawable.build,
+                                Drawables.build,
                                 text("上传日程功能正改造升级，敬请期待")
                             )
                         }
@@ -562,7 +563,7 @@ private fun SharedTransitionScope.SurfaceUI(
                     false -> {
                         CenterScreen {
                             ColumnVertical {
-                                StatusIcon(R.drawable.login,text("未登录或状态失效"))
+                                StatusIcon(Drawables.login,text("未登录或状态失效"))
                                 Spacer(Modifier.height(APP_HORIZONTAL_DP))
                                 Button(onClick = {
                                     navController.push(SupabaseLoginDestination, effect = JumpTransitionEffectWallpaper())
@@ -663,7 +664,7 @@ fun AddEventUI(
     val classList = remember { mutableStateListOf<String>() }
     var updateLoading by remember { mutableStateOf(false) }
     val typeIcon = @Composable {
-        Icon(painterResource(if(isScheduleType) R.drawable.calendar else R.drawable.timer),null)
+        Icon(painterResource(if(isScheduleType) Drawables.calendar else Drawables.timer),null)
     }
 
     if(showSelectDateDialog)
@@ -963,7 +964,7 @@ fun AddEventUI(
                                     date.second.ifEmpty { "----" } +  (weekInfoStart?.let { " (第${it.first}周 周${numToChinese(it.second)})" } ?: EMPTY_STRING) +" " + timeStr
                                 )
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.schedule),null) }
+                            leadingContent = { Icon(painterResource(Drawables.schedule),null) }
                         )
                         BottomTextButtonGroup(
                             listOf(
@@ -1050,7 +1051,7 @@ fun AddEventUI(
                                 "结束 ${date.second +  (weekInfoEnd?.let { " (第${it.first}周 周${numToChinese(it.second)})" } ?: EMPTY_STRING) +" " + time.second}"
                             )
                         },
-                        leadingContent = { Icon(painterResource(R.drawable.schedule),null) }
+                        leadingContent = { Icon(painterResource(Drawables.schedule),null) }
                     )
                     BottomTextButtonGroup(
                         listOf(
@@ -1151,7 +1152,7 @@ fun AddEventUI(
                             Text("为保证统一规范，必须按 查询中心-个人信息-班级 输入班级名，例如'计算机29-9班’而不是‘计科29-9班’，不添加/清空班级则表示对所有人可见" )
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.target),null)
+                            Icon(painterResource(Drawables.target),null)
                         } ,
                         modifier = Modifier.clickable {
                         }
@@ -1190,7 +1191,7 @@ fun AddEventUI(
                                                     showDelDialog = true
                                                 },
                                                 label = { Text(classList[index]) },
-                                                leadingIcon = if(isEditMode) { { Icon(painterResource(R.drawable.close), null) } } else null
+                                                leadingIcon = if(isEditMode) { { Icon(painterResource(Drawables.close), null) } } else null
                                             )
 
                                             if(index+1 != classList.size) {
@@ -1201,7 +1202,7 @@ fun AddEventUI(
                                                         showDelDialog = true
                                                     },
                                                     label = { Text(classList[index+1]) },
-                                                    leadingIcon = if(isEditMode) { { Icon(painterResource(R.drawable.close), null) } } else null
+                                                    leadingIcon = if(isEditMode) { { Icon(painterResource(Drawables.close), null) } } else null
                                                 )
                                             }
                                         }

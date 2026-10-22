@@ -23,7 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 import com.hfut.schedule.R
@@ -74,7 +75,7 @@ fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {
                             headlineContent = { sheet.place?.let { Text(it) } },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.near_me),
+                                    painterResource(Drawables.near_me),
                                     contentDescription = "Localized description",
                                 )
                             }
@@ -83,7 +84,7 @@ fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {
                             headlineContent = { Text(sheet.classTime ) },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.schedule),
+                                    painterResource(Drawables.schedule),
                                     contentDescription = "Localized description",
                                 )
                             }
@@ -92,7 +93,7 @@ fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {
                             headlineContent = { Text(sheet.teacher) },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.person),
+                                    painterResource(Drawables.person),
                                     contentDescription = "Localized description",
                                 )
                             }
@@ -101,7 +102,7 @@ fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {
                             headlineContent = { Text(sheet.campus ) },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.local_library),
+                                    painterResource(Drawables.local_library),
                                     contentDescription = "Localized description",
                                 )
                             }
@@ -111,7 +112,7 @@ fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {
                             supportingContent = { Text(text = "周数 ${sheet.weekCount.toString().remove("[").remove("]")} ")},
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.calendar),
+                                    painterResource(Drawables.calendar),
                                     contentDescription = "Localized description",
                                 )
                             }
@@ -122,7 +123,7 @@ fun DetailInfos(sheet : CommunityCourseDetail, isFriend : Boolean = false) {
                             headlineContent = { Text( "更多信息") },
                             leadingContent = {
                                 Icon(
-                                    painterResource(R.drawable.arrow_forward),
+                                    painterResource(Drawables.arrow_forward),
                                     contentDescription = "Localized description",
                                 )
                             },

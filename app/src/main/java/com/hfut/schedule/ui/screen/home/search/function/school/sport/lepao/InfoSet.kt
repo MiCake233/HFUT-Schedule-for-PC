@@ -28,7 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.application.MyApplication
@@ -69,7 +70,7 @@ fun InfoSet() {
                                 SharedPrefs.saveString("Yuntoken",inputToken)
                                 Toast.makeText(MyApplication.context,"已保存",Toast.LENGTH_SHORT).show()
                             }
-                        ) { Icon(painterResource(R.drawable.check), contentDescription = EMPTY_STRING) }
+                        ) { Icon(painterResource(Drawables.check), contentDescription = EMPTY_STRING) }
                     }
                 },
             ) { innerPadding ->
@@ -78,7 +79,7 @@ fun InfoSet() {
 //                    MyCustomCard{
                         CardListItem(
                             headlineContent = { Text(text = "请通过抓包获取常用设备的token,多设备登录会带来风险,所以要手动填写")},
-                            leadingContent = { Icon(painterResource(id = R.drawable.info), contentDescription = EMPTY_STRING)}
+                            leadingContent = { Icon(painterResource(id = Drawables.info), contentDescription = EMPTY_STRING)}
                         )
 //                    }
 
@@ -95,7 +96,7 @@ fun InfoSet() {
                             singleLine = true,
                             shape = MaterialTheme.shapes.medium,
                             colors = textFiledTransplant(),
-                            leadingIcon = { Icon( painterResource(R.drawable.key), contentDescription = "Localized description") }
+                            leadingIcon = { Icon( painterResource(Drawables.key), contentDescription = "Localized description") }
                         )
                     }
 

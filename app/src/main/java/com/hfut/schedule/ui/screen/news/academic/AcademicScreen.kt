@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.news.academic
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -108,7 +110,7 @@ fun AcademicTotalScreen(innerPadding : PaddingValues,vm : NetWorkViewModel,pager
                                         context,
                                         link,
                                         item.title,
-                                        icon = R.drawable.stream,
+                                        icon = Drawables.stream,
                                         cookie = cookies
                                     )
                                 }

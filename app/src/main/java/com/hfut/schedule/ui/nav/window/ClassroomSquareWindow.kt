@@ -25,7 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.uniapp.ClassroomOccupiedCause
@@ -104,7 +105,7 @@ data class ClassroomSquareWindow(
                                                     Text("教师",color = contentColor)
                                                 },
                                                 leadingContent = {
-                                                    Icon(painterResource(R.drawable.person),null, tint = contentColor)
+                                                    Icon(painterResource(Drawables.person),null, tint = contentColor)
                                                 }
                                             )
                                         }
@@ -116,7 +117,7 @@ data class ClassroomSquareWindow(
                                                 Text("时间",color = contentColor)
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.schedule),null, tint = contentColor)
+                                                Icon(painterResource(Drawables.schedule),null, tint = contentColor)
                                             }
                                         )
                                         TransplantListItem(
@@ -130,19 +131,19 @@ data class ClassroomSquareWindow(
                                                 Icon(painterResource(
                                                     when(cause) {
                                                         ClassroomOccupiedCause.BORROWED -> {
-                                                            R.drawable.groups
+                                                            Drawables.groups
                                                         }
                                                         ClassroomOccupiedCause.EXAM -> {
-                                                            R.drawable.draw
+                                                            Drawables.draw
                                                         }
                                                         ClassroomOccupiedCause.IN_LESSON -> {
-                                                            R.drawable.calendar
+                                                            Drawables.calendar
                                                         }
                                                         ClassroomOccupiedCause.OCCUPY -> {
-                                                            R.drawable.lock
+                                                            Drawables.lock
                                                         }
                                                         null -> {
-                                                            R.drawable.category
+                                                            Drawables.category
                                                         }
                                                     }
                                                 ),null, tint = contentColor)
@@ -174,7 +175,7 @@ data class ClassroomSquareWindow(
                             backdrop = rememberLayerBackdrop(),
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.close),null)
+                            Icon(painterResource(Drawables.close),null)
                         }
                     }
                 }

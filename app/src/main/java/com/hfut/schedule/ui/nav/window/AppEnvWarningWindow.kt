@@ -27,8 +27,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.other.AppVersion
@@ -96,7 +98,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.database),
+                                            painterResource(Drawables.database),
                                             null,
                                             tint = errorColor()
                                         )
@@ -112,11 +114,11 @@ object AppEnvWarningWindow: FloatingWindow() {
                             if(AppVersion.isDebug) {
                                 CardListItem(
                                     headlineContent = {
-                                        Text(stringResource(R.string.settings_person_info_tag_debug))
+                                        Text(stringResource(Strings.settings_person_info_tag_debug))
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.construction),
+                                            painterResource(Drawables.construction),
                                             null,
                                             tint = warnColor()
                                         )
@@ -125,11 +127,11 @@ object AppEnvWarningWindow: FloatingWindow() {
                             } else if(!AppVersion.isSignatureValid) {
                                 CardListItem(
                                     headlineContent = {
-                                        Text(stringResource(R.string.settings_person_info_tag_sign))
+                                        Text(stringResource(Strings.settings_person_info_tag_sign))
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.signature),
+                                            painterResource(Drawables.signature),
                                             null,
                                             tint = warnColor()
                                         )
@@ -139,11 +141,11 @@ object AppEnvWarningWindow: FloatingWindow() {
                             if(AppVersion.isDev) {
                                 CardListItem(
                                     headlineContent = {
-                                        Text(stringResource(R.string.settings_person_info_tag_preview))
+                                        Text(stringResource(Strings.settings_person_info_tag_preview))
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.logo_dev),
+                                            painterResource(Drawables.logo_dev),
                                             null,
                                             tint = warnColor()
                                         )
@@ -153,11 +155,11 @@ object AppEnvWarningWindow: FloatingWindow() {
                             if(AppVersion.isRunningOnAvd) {
                                 CardListItem(
                                     headlineContent = {
-                                        Text(stringResource(R.string.settings_person_info_tag_avd))
+                                        Text(stringResource(Strings.settings_person_info_tag_avd))
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.adb),
+                                            painterResource(Drawables.adb),
                                             null,
                                             tint = warnColor()
                                         )
@@ -166,11 +168,11 @@ object AppEnvWarningWindow: FloatingWindow() {
                             } else if(AppVersion.isRunningOnWsa) {
                                 CardListItem(
                                     headlineContent = {
-                                        Text(stringResource(R.string.settings_person_info_tag_wsa))
+                                        Text(stringResource(Strings.settings_person_info_tag_wsa))
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.desktop_windows),
+                                            painterResource(Drawables.desktop_windows),
                                             null,
                                             tint = MaterialTheme.colorScheme.primary
                                         )
@@ -180,11 +182,11 @@ object AppEnvWarningWindow: FloatingWindow() {
                             if(DeviceOs.isHarmonyOsNextAndroidCompatible()) {
                                 CardListItem(
                                     headlineContent = {
-                                        Text(stringResource(R.string.settings_person_info_tag_harmony_next))
+                                        Text(stringResource(Strings.settings_person_info_tag_harmony_next))
                                     },
                                     leadingContent = {
                                         Icon(
-                                            painterResource(R.drawable.circle),
+                                            painterResource(Drawables.circle),
                                             null,
                                             tint = MaterialTheme.colorScheme.primary
                                         )
@@ -214,7 +216,7 @@ object AppEnvWarningWindow: FloatingWindow() {
                             backdrop = rememberLayerBackdrop(),
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.close),null)
+                            Icon(painterResource(Drawables.close),null)
                         }
                     }
                 }

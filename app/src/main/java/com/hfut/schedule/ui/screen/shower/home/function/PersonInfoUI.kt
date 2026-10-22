@@ -12,7 +12,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.tranamt
@@ -48,14 +49,14 @@ fun GuaGuaPersonInfoUI(vm: NetWorkViewModel, hazeState: HazeState) {
                     showBottomSheet = true
                 },
             ) {
-                Icon(painterResource(R.drawable.add),null)
+                Icon(painterResource(Drawables.add),null)
             }
         }) {
             Row {
                 TransplantListItem(
                     headlineContent = { Text(text = personInfo.name) },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.person), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.person), contentDescription = EMPTY_STRING)
                     },
                     overlineContent = { Text(text = "姓名") },
                     modifier = Modifier.weight(.4f)
@@ -63,7 +64,7 @@ fun GuaGuaPersonInfoUI(vm: NetWorkViewModel, hazeState: HazeState) {
                 TransplantListItem(
                     headlineContent = { ScrollText(text = personInfo.telPhone) },
                     leadingContent = {
-                        Icon(painterResource(id = R.drawable.call), contentDescription = EMPTY_STRING)
+                        Icon(painterResource(id = Drawables.call), contentDescription = EMPTY_STRING)
                     },
                     overlineContent = { Text(text = "手机号") },
                     modifier = Modifier.weight(.6f)

@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.component.webview
 
+import com.xah.common.ui.res.Drawables
+
 import android.annotation.SuppressLint
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
@@ -52,7 +54,7 @@ fun WebViewScreenForActivity(
     url: String,
     cookies : String? = null,
     title : String = getPureUrl(url),
-    icon : Int = R.drawable.net
+    icon : Int = Drawables.net
 ) {
     var webView by remember { mutableStateOf<WebView?>(null) }
     var visible by remember { mutableStateOf(true) }

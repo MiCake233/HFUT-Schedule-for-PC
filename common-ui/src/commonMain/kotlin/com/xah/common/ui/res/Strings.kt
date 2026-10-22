@@ -3,6 +3,7 @@ package com.xah.common.ui.res
 
 import androidx.compose.runtime.Composable
 import com.xah.common.ui.resources.Res
+import com.xah.common.ui.resources.allStringResources
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource as composeStringResource
 

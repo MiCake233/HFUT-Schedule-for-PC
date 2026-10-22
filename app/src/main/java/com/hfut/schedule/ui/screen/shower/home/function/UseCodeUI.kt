@@ -35,7 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -159,7 +160,7 @@ fun UseCodeUI(vm: NetWorkViewModel, hazeState: HazeState) {
                         FilledTonalIconButton(
                             onClick = { scope.launch { refreshNetwork() } },
                         ) {
-                            Icon(painterResource(R.drawable.rotate_right), null)
+                            Icon(painterResource(Drawables.rotate_right), null)
                         }
                     }
                 )
@@ -226,9 +227,9 @@ fun ReSetUseCodeUI(vm: NetWorkViewModel) {
             CommonNetworkScreen(uiState,isFullScreen = false, onReload = refreshNetwork) {
                 val msg = (uiState as NetworkUiState.Success).data
                 if(msg.contains("成功") == true) {
-                    StatusIcon(R.drawable.check,text("成功修改为 $password"))
+                    StatusIcon(Drawables.check,text("成功修改为 $password"))
                 } else if(msg == "密码错误")  {
-                    StatusIcon(R.drawable.login,text("您从未使用密码登录过 需要重新用密码登录"))
+                    StatusIcon(Drawables.login,text("您从未使用密码登录过 需要重新用密码登录"))
                     Spacer(Modifier.height(10.dp))
                     RowHorizontal {
                         Button(

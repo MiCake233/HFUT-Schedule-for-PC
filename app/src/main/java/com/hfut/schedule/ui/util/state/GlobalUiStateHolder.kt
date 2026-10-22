@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.util.state
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -100,18 +104,18 @@ object GlobalUiStateHolder {
 
     // 用过的ID 不要再用了，比如之前删除的功能ID
     val funcDefault = listOf(
-        SearchAppBeanLite(1, R.string.navigation_label_school_card ,R.drawable.credit_card),
+        SearchAppBeanLite(1, Strings.navigation_label_school_card ,Drawables.credit_card),
         SearchAppBeanLite(2, ScanQrCodeDestination.title.resId, ScanQrCodeDestination.icon),
-        SearchAppBeanLite(3, R.string.navigation_label_dormitory_electricity_bill ,R.drawable.flash_on),
-        SearchAppBeanLite(4, R.string.navigation_label_school_net , R.drawable.net),
-        SearchAppBeanLite(5, R.string.navigation_label_school_email ,R.drawable.mail),
+        SearchAppBeanLite(3, Strings.navigation_label_dormitory_electricity_bill ,Drawables.flash_on),
+        SearchAppBeanLite(4, Strings.navigation_label_school_net , Drawables.net),
+        SearchAppBeanLite(5, Strings.navigation_label_school_email ,Drawables.mail),
         SearchAppBeanLite(6, ExamDestination.TITLE.resId,ExamDestination.ICON),
         SearchAppBeanLite(7, GradeDestination.TITLE.resId,GradeDestination.ICON),
         SearchAppBeanLite(8, FailRateDestination.title.resId, FailRateDestination.icon),
         SearchAppBeanLite(9, TermCoursesDestination.TITLE.resId, TermCoursesDestination.ICON),
         SearchAppBeanLite(10, PersonInfoDestination.title.resId,  PersonInfoDestination.icon),
         SearchAppBeanLite(11, WebFolderDestination.title.resId,WebFolderDestination.icon),
-        SearchAppBeanLite(12, R.string.navigation_label_shower,R.drawable.bathtub),
+        SearchAppBeanLite(12, Strings.navigation_label_shower,Drawables.bathtub),
         SearchAppBeanLite(13, SelectCoursesDestination.title.resId,  SelectCoursesDestination.icon),
         SearchAppBeanLite(14, DormitoryDestination.title.resId, DormitoryDestination.icon),
         SearchAppBeanLite(15, NotificationsDestination.title.resId, NotificationsDestination.icon),
@@ -120,36 +124,36 @@ object GlobalUiStateHolder {
         SearchAppBeanLite(18, ProgramDestination.TITLE.resId, ProgramDestination.ICON),
         SearchAppBeanLite(19, LibraryDestination.title.resId, LibraryDestination.icon),
         SearchAppBeanLite(20, BusDestination.title.resId, BusDestination.icon),
-        SearchAppBeanLite(21, R.string.navigation_label_repair,R.drawable.build),
+        SearchAppBeanLite(21, Strings.navigation_label_repair,Drawables.build),
 //        SearchAppBeanLite(22, NextCourseDestination.title.resId, NextCourseDestination.icon),
-        SearchAppBeanLite(23, R.string.navigation_label_hot_water,R.drawable.water_voc),
+        SearchAppBeanLite(23, Strings.navigation_label_hot_water,Drawables.water_voc),
         SearchAppBeanLite(24, ClassroomDestination.TITLE.resId,ClassroomDestination.ICON),
-        SearchAppBeanLite(25, R.string.navigation_label_physical_fitness_test,R.drawable.sports_volleyball),
+        SearchAppBeanLite(25, Strings.navigation_label_physical_fitness_test,Drawables.sports_volleyball),
         SearchAppBeanLite(26, WorkAndRestDestination.TITLE.resId, WorkAndRestDestination.ICON),
-        SearchAppBeanLite(27, R.string.navigation_label_chsi, R.drawable.school),
+        SearchAppBeanLite(27, Strings.navigation_label_chsi, Drawables.school),
         SearchAppBeanLite(28, LifeDestination.title.resId,LifeDestination.icon),
         SearchAppBeanLite(29, TransferMajorDestination.title.resId,  TransferMajorDestination.icon),
         SearchAppBeanLite(30, CourseSearchDestination.title.resId, CourseSearchDestination.icon),
         SearchAppBeanLite(31, TeacherSearchDestination.title.resId, TeacherSearchDestination.icon),
         SearchAppBeanLite(32, FeeDestination.title.resId,FeeDestination.icon),
-//        SearchAppBeanLite(33,"实习",R.drawable.work),
+//        SearchAppBeanLite(33,"实习",Drawables.work),
         SearchAppBeanLite(34, AlumniDestination.title.resId,AlumniDestination.icon),
         SearchAppBeanLite(35, StuTodayCampusDestination.title.resId,StuTodayCampusDestination.icon),
-        SearchAppBeanLite(36, R.string.navigation_label_ietp,R.drawable.groups),
+        SearchAppBeanLite(36, Strings.navigation_label_ietp,Drawables.groups),
         SearchAppBeanLite(37, WorkDestination.title.resId,WorkDestination.icon),
         SearchAppBeanLite(38, HolidayDestination.title.resId,HolidayDestination.icon),
-        SearchAppBeanLite(39, R.string.navigation_label_supabase,R.drawable.cloud),
-        SearchAppBeanLite(40, R.string.navigation_label_laundry, R.drawable.local_laundry_service),
+        SearchAppBeanLite(39, Strings.navigation_label_supabase,Drawables.cloud),
+        SearchAppBeanLite(40, Strings.navigation_label_laundry, Drawables.local_laundry_service),
         SearchAppBeanLite(41, AdmissionDestination.title.resId,AdmissionDestination.icon),
         SearchAppBeanLite(42, WebVpnDestination.title.resId,  WebVpnDestination.icon),
         SearchAppBeanLite(43, OfficeHallDestination.title.resId,  OfficeHallDestination.icon),
-        SearchAppBeanLite(44, R.string.navigation_label_hui_xin ,R.drawable.corporate_fare),
+        SearchAppBeanLite(44, Strings.navigation_label_hui_xin ,Drawables.corporate_fare),
         SearchAppBeanLite(45, SecondClassDestination.title.resId,SecondClassDestination.icon),
         SearchAppBeanLite(46, CommunityAppointmentDestination.title.resId,CommunityAppointmentDestination.icon),
         SearchAppBeanLite(47, AiDestination.title.resId,AiDestination.icon),
         SearchAppBeanLite(48, TrackDestination.title.resId,TrackDestination.icon),
-        SearchAppBeanLite(49, R.string.navigation_label_express,R.drawable.package_2),
-        SearchAppBeanLite(50, R.string.navigation_label_feedback,R.drawable.voice_selection),
+        SearchAppBeanLite(49, Strings.navigation_label_express,Drawables.package_2),
+        SearchAppBeanLite(50, Strings.navigation_label_feedback,Drawables.voice_selection),
     )
     val funcMaps = funcDefault.toMutableStateList()
 }

@@ -53,7 +53,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -248,7 +249,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                         modifier = Modifier.padding(horizontal = CARD_NORMAL_DP*2)
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.backspace),
+                            painter = painterResource(Drawables.backspace),
                             contentDescription = "description"
                         )
                     }
@@ -261,7 +262,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                         },
                         modifier = Modifier.padding(horizontal = 5.dp)
                     ) {
-                        Icon(painterResource(R.drawable.check), contentDescription = "description")
+                        Icon(painterResource(Drawables.check), contentDescription = "description")
                     }
 
                     FilledTonalButton(
@@ -369,7 +370,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                 Row() {
                     if(showitem4)
                         IconButton(onClick = {RoomNumber = RoomNumber.replaceFirst(".$".toRegex(), EMPTY_STRING)}) {
-                            Icon(painter = painterResource(R.drawable.backspace), contentDescription = "description") }
+                            Icon(painter = painterResource(Drawables.backspace), contentDescription = "description") }
                     FilledTonalIconButton(onClick = {
                         when(pagerState.currentPage) {
                             HEFEI_TAB -> {
@@ -413,7 +414,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                 }
                             }
                         }
-                    }) { Icon(painter = painterResource(R.drawable.search), contentDescription = "description") }
+                    }) { Icon(painter = painterResource(Drawables.search), contentDescription = "description") }
 
                     FilledTonalButton(
                         onClick = {
@@ -459,7 +460,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
 
                                 MenuChip(
                                     label = { Text(text = region) },
-                                    //    leadingIcon = { Icon(painter = painterResource(R.drawable.calendar), contentDescription = "description") }
+                                    //    leadingIcon = { Icon(painter = painterResource(Drawables.calendar), contentDescription = "description") }
                                 ) {
                                     menuOffset = it
                                     when {
@@ -477,7 +478,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                 AssistChip(
                                     onClick = { showitem4 = !showitem4 },
                                     label = { Text(text = "寝室 ${RoomNumber}") },
-                                    //leadingIcon = { Icon(painter = painterResource(R.drawable.add), contentDescription = "description") }
+                                    //leadingIcon = { Icon(painter = painterResource(Drawables.add), contentDescription = "description") }
                                 )
                             }
 
@@ -572,7 +573,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                     TransplantListItem(
                                         overlineContent = {Text( text = if(!show)"房间号 " + " 300XXXXX1" else "房间号 " + Result.substringAfter(" ")  )},
                                         headlineContent = { (if(!show)"X号楼XXX寝室方向设施" else prefs.getString("RoomText",null))?.let { Text(text = it) } },
-                                        leadingContent = { Icon(painter = painterResource(id = R.drawable.info), contentDescription = EMPTY_STRING)}
+                                        leadingContent = { Icon(painter = painterResource(id = Drawables.info), contentDescription = EMPTY_STRING)}
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP/2))
@@ -584,24 +585,24 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                     TransplantListItem(
                                         headlineContent = { Text("夜间透支") },
                                         supportingContent = { Text("每日23:00之前缴费，最迟23:00到账，23:00之后缴费，次日6点到账，在23:01-6:00时间段，账户如果欠费不会断电")},
-                                        leadingContent = { Icon(painterResource(R.drawable.dark_mode),null)}
+                                        leadingContent = { Icon(painterResource(Drawables.dark_mode),null)}
                                     )
                                     PaddingHorizontalDivider()
                                     TransplantListItem(
                                         headlineContent = { Text("最大功率") },
                                         supportingContent = { Text("超出800W将自动断电，5分钟后自动恢复")},
-                                        leadingContent = { Icon(painterResource(R.drawable.hvac_max_defrost),null)}
+                                        leadingContent = { Icon(painterResource(Drawables.hvac_max_defrost),null)}
                                     )
                                     PaddingHorizontalDivider()
                                     TransplantListItem(
                                         headlineContent = { Text("月末补贴") },
                                         supportingContent = { Text("照明空调各￥15，约下旬初到账")},
-                                        leadingContent = { Icon(painterResource(R.drawable.paid),null)}
+                                        leadingContent = { Icon(painterResource(Drawables.paid),null)}
                                     )
                                     PaddingHorizontalDivider()
                                     TransplantListItem(
                                         headlineContent = { Text("寝室缴费实测存在一定延迟") },
-                                        leadingContent = { Icon(painterResource(R.drawable.schedule),null)}
+                                        leadingContent = { Icon(painterResource(Drawables.schedule),null)}
                                     )
                                 }
                             }
@@ -875,7 +876,7 @@ fun ElectricHefei(
                         Text(it.name)
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.info),null)
+                        Icon(painterResource(Drawables.info),null)
                     }
                 )
                 BottomButton(
@@ -913,7 +914,7 @@ fun ElectricHefei(
                     )
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.info),null)
+                    Icon(painterResource(Drawables.info),null)
                 },
             )
         }

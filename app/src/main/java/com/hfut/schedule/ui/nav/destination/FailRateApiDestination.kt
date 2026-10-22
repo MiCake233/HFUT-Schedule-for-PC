@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,8 +39,8 @@ data class FailRateApiDestination(
     override val icon = ICON
 
     companion object {
-        val TITLE = res(R.string.navigation_label_fail_rate)
-        val ICON = R.drawable.radio_button_partial
+        val TITLE = res(Strings.navigation_label_fail_rate)
+        val ICON = Drawables.radio_button_partial
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

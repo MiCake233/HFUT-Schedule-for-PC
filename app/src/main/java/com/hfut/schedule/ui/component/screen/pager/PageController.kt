@@ -28,7 +28,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.R
@@ -182,7 +183,7 @@ private fun BoxScope.BasePageController(
                     previousPage(terminalPage)
                 }
             },
-        ) { Icon(painterResource(R.drawable.arrow_back), "Add Button") }
+        ) { Icon(painterResource(Drawables.arrow_back), "Add Button") }
 
     }
     AnimatedVisibility(
@@ -215,7 +216,7 @@ private fun BoxScope.BasePageController(
         },
         modifier = paddingModifier.align(Alignment.BottomEnd),
     ) {
-        Icon(painterResource(R.drawable.arrow_forward), "Add Button", modifier = Modifier.rotate(angle))
+        Icon(painterResource(Drawables.arrow_forward), "Add Button", modifier = Modifier.rotate(angle))
     }
 }
 

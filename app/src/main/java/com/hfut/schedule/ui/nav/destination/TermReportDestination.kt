@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object TermReportDestination : NavDestination() {
     override val key = "term_report"
-    override val title = res(R.string.navigation_label_term_report)
-    override val icon = R.drawable.kid_star
+    override val title = res(Strings.navigation_label_term_report)
+    override val icon = Drawables.kid_star
 
     @Composable
     override fun Content() {

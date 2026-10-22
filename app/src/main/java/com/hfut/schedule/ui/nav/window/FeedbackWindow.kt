@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.window
 
+import com.xah.common.ui.res.Strings
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -26,7 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.xah.common.logic.model.CampusRegion
@@ -52,7 +55,7 @@ object FeedbackWindow: FloatingWindow() {
 
     override val key = "feedback"
 
-    override val title = res(R.string.navigation_label_feedback)
+    override val title = res(Strings.navigation_label_feedback)
 
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
     @Composable
@@ -103,7 +106,7 @@ object FeedbackWindow: FloatingWindow() {
                                                 }
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.mail),null)
+                                                Icon(painterResource(Drawables.mail),null)
                                             }
                                         )
                                     }
@@ -116,7 +119,7 @@ object FeedbackWindow: FloatingWindow() {
                                                 }
                                             },
                                             leadingContent = {
-                                                Icon(painterResource(R.drawable.mail),null)
+                                                Icon(painterResource(Drawables.mail),null)
                                             }
                                         )
                                     }
@@ -146,7 +149,7 @@ object FeedbackWindow: FloatingWindow() {
                             backdrop = rememberLayerBackdrop(),
                             isCircle = true
                         ) {
-                            Icon(painterResource(R.drawable.close),null)
+                            Icon(painterResource(Drawables.close),null)
                         }
                     }
                 }

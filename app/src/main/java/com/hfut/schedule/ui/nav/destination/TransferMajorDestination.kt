@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.TransferScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object TransferMajorDestination : NavDestination() {
     override val key = "transfer_major"
-    override val title = res(R.string.navigation_label_transfer_major)
-    override val icon = R.drawable.compare_arrows
+    override val title = res(Strings.navigation_label_transfer_major)
+    override val icon = Drawables.compare_arrows
 
     @Composable
     override fun Content() {

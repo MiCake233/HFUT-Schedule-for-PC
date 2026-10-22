@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
@@ -11,7 +13,7 @@ import com.xah.navigation.util.LocalNavDependencies
 object SchoolCardDestination : NavDestination() {
     override val key = "school_card"
     override val title = text("校园一卡通")
-    override val icon = R.drawable.credit_card
+    override val icon = Drawables.credit_card
 
     @Composable
     override fun Content() {

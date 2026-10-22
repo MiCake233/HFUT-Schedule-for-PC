@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Drawables
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -28,7 +30,7 @@ import dev.chrisbanes.haze.hazeSource
 object SettingsSearchDestination : NavDestination() {
     override val key: String = "settings_search"
     override val title: UiText = text("搜索设置项")
-    override val icon = R.drawable.search
+    override val icon = Drawables.search
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     @OptIn(ExperimentalMaterial3Api::class)

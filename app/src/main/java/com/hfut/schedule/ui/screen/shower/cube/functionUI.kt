@@ -23,7 +23,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
@@ -54,7 +55,7 @@ fun GuaGuaSettings(innerPadding: PaddingValues) {
                        headlineContent = { Text(text = "刷新登录状态") },
                        supportingContent = { Text(text = "呱呱物联只允许登录一端，在使用小程序后需要重新登录") },
                        leadingContent = {
-                           Icon(painterResource(id = R.drawable.rotate_right), contentDescription = EMPTY_STRING)
+                           Icon(painterResource(id = Drawables.rotate_right), contentDescription = EMPTY_STRING)
                        },
                        modifier = Modifier.clickable {
                            navController.push(GuaGuaLoginDestination, effect = JumpTransitionEffectWallpaper())
@@ -65,7 +66,7 @@ fun GuaGuaSettings(innerPadding: PaddingValues) {
 //                       headlineContent = { Text(text = "预加载使用码") },
 //                       supportingContent = { Text(text = "打开后将主动加载使用码，即使您不需要使用时") },
 //                       leadingContent = {
-//                           Icon(painterResource(id = R.drawable.reset_iso), contentDescription = EMPTY_STRING)
+//                           Icon(painterResource(id = Drawables.reset_iso), contentDescription = EMPTY_STRING)
 //                       },
 //                       trailingContent = {
 //                           Switch(checked = autoUseCode, onCheckedChange = { autoUseCode = it })
@@ -78,7 +79,7 @@ fun GuaGuaSettings(innerPadding: PaddingValues) {
                        headlineContent = { Text(text = "修改loginCode") },
                        supportingContent = { Text(text = "保持多端loginCode一致可实现多端登录") },
                        leadingContent = {
-                           Icon(painterResource(id = R.drawable.cookie), contentDescription = EMPTY_STRING)
+                           Icon(painterResource(id = Drawables.cookie), contentDescription = EMPTY_STRING)
                        }
                    )
                    EditLoginCode()
@@ -115,7 +116,7 @@ fun EditLoginCode(isOnLogin: Boolean = false, onClickLogin: (() -> Unit)? = null
                         IconButton(
                             onClick = onClickLogin
                         ) {
-                            Icon(painterResource(R.drawable.login),null)
+                            Icon(painterResource(Drawables.login),null)
                         }
                     }
                 } else {
@@ -123,7 +124,7 @@ fun EditLoginCode(isOnLogin: Boolean = false, onClickLogin: (() -> Unit)? = null
                         onClick = {
                             ClipBoardHelper.copy(input)
                         }) {
-                        Icon(painter = painterResource(R.drawable.copy_all), contentDescription = "description")
+                        Icon(painter = painterResource(Drawables.copy_all), contentDescription = "description")
                     }
                 }
             },

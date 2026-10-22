@@ -25,7 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -105,7 +106,7 @@ fun Life() {
 //                                )
 //                            )
                         BrushIcon(
-                            icon = R.drawable.kid_star,
+                            icon = Drawables.kid_star,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -128,20 +129,20 @@ private val items = listOf(
     NavigationBarItemData(
         LifeBarItems.WEATHER.name,
         "生活服务",
-        R.drawable.near_me,
-        R.drawable.near_me_filled,
+        Drawables.near_me,
+        Drawables.near_me_filled,
     ),
     NavigationBarItemData(
         LifeBarItems.CAMPUS.name,
         "楼层导向",
-        R.drawable.directions_alt,
-        R.drawable.directions_alt_filled,
+        Drawables.directions_alt,
+        Drawables.directions_alt_filled,
     ),
     NavigationBarItemData(
         LifeBarItems.STARTER.name,
         "第三方应用",
-        R.drawable.widgets,
-        R.drawable.widgets_filled,
+        Drawables.widgets,
+        Drawables.widgets_filled,
     )
 )
 

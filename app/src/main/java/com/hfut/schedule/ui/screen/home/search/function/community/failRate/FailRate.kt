@@ -30,7 +30,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -143,7 +144,7 @@ fun FailRateScreen(
                                         refreshNetwork()
                                     }
                                 }) {
-                                Icon(painter = painterResource(R.drawable.search), contentDescription = "description")
+                                Icon(painter = painterResource(Drawables.search), contentDescription = "description")
                             }
                         },
                         shape = MaterialTheme.shapes.medium,

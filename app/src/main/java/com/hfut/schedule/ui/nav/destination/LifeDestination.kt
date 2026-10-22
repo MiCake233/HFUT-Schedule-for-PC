@@ -1,5 +1,9 @@
 package com.hfut.schedule.ui.nav.destination
 
+import com.xah.common.ui.res.Strings
+
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.runtime.Composable
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.screen.home.search.function.other.life.LifeScreen
@@ -10,8 +14,8 @@ import com.xah.common.ui.util.res
 
 object LifeDestination : NavDestination() {
     override val key = "life"
-    override val title = res(R.string.navigation_label_life)
-    override val icon = R.drawable.near_me
+    override val title = res(Strings.navigation_label_life)
+    override val icon = Drawables.near_me
 
     @Composable
     override fun Content() {

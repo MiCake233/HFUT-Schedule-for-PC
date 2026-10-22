@@ -34,7 +34,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.hfut.schedule.R
@@ -102,7 +103,7 @@ fun FocusWidgetSettingsUI(
                     Spacer(Modifier.height(APP_HORIZONTAL_DP))
 
                     RowHorizontal {
-                        WidgetPreview(R.drawable.focus_widget_preview)
+                        WidgetPreview(Drawables.focus_widget_preview)
                     }
                     Spacer(Modifier.height(APP_HORIZONTAL_DP))
 
@@ -119,7 +120,7 @@ fun FocusWidgetSettingsUI(
                         },
                         supportingContent = { Text("调整方格的文字大小(默认为100%)") },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.translate),null)
+                            Icon(painterResource(Drawables.translate),null)
                         },
                     )
 
@@ -148,7 +149,7 @@ fun FocusWidgetSettingsUI(
                         TransplantListItem(
                             headlineContent = { Text("当前未添加组件") },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.upcoming),null)
+                                Icon(painterResource(Drawables.upcoming),null)
                             },
                         )
                     } else {
@@ -161,7 +162,7 @@ fun FocusWidgetSettingsUI(
                                 }
                             },
                             leadingContent = {
-                                Icon(painterResource(R.drawable.rotate_right),null)
+                                Icon(painterResource(Drawables.rotate_right),null)
                             },
                             supportingContent = { Text("当前有 $focusWidgetCount 个组件；由于Android的底层机制，小组件需尽可能地节省电量，故显示的是静态内容，刷新相当于重新绘制，App在添加组件时已默认将每30分钟自动刷新的任务发送至系统队列中") },
                         )

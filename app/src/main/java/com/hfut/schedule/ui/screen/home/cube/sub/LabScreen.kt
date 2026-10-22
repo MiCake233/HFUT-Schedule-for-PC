@@ -15,7 +15,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
@@ -40,7 +41,7 @@ fun LabScreen(innerPadding : PaddingValues) {
                 Text("本页面功能不代表最终是否正式使用，可能会随后续版本重新调整")
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.info),null)
+                Icon(painterResource(Drawables.info),null)
             },
         )
         DividerTextExpandedWith("开关") {
@@ -53,7 +54,7 @@ fun LabScreen(innerPadding : PaddingValues) {
                         Text("已转正至外观设置，本入口将被移除")
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.label),null)
+                        Icon(painterResource(Drawables.label),null)
                     },
                     trailingContent = {
                         FilledTonalIconButton(
@@ -61,7 +62,7 @@ fun LabScreen(innerPadding : PaddingValues) {
                                 navController.push(SettingsAppearanceDestination, effect = JumpTransitionEffectWallpaper())
                             }
                         ) {
-                            Icon(painterResource(R.drawable.forward),null)
+                            Icon(painterResource(Drawables.forward),null)
                         }
                     },
                     modifier = Modifier.clickable {

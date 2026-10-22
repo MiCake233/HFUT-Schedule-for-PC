@@ -29,7 +29,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -177,7 +178,7 @@ fun SecondClassScreen(
                                             Text("类型")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.kid_star),null)
+                                            Icon(painterResource(Drawables.kid_star),null)
                                         },
                                         modifier = Modifier.weight(.5f)
                                     )
@@ -189,7 +190,7 @@ fun SecondClassScreen(
                                             Text("形式")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.directions_alt),null)
+                                            Icon(painterResource(Drawables.directions_alt),null)
                                         },
                                         modifier = Modifier.weight(.5f)
                                     )
@@ -203,7 +204,7 @@ fun SecondClassScreen(
                                             Text("校区")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.near_me),null)
+                                            Icon(painterResource(Drawables.near_me),null)
                                         },
                                         modifier = Modifier.weight(.5f)
                                     )
@@ -215,7 +216,7 @@ fun SecondClassScreen(
                                             Text("额定人数")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.group),null)
+                                            Icon(painterResource(Drawables.group),null)
                                         },
                                         modifier = Modifier.weight(.5f)
                                     )
@@ -243,7 +244,7 @@ fun SecondClassScreen(
                                             Text("主讲人")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.voice_selection),null)
+                                            Icon(painterResource(Drawables.voice_selection),null)
                                         }
                                     )
                                 }
@@ -256,7 +257,7 @@ fun SecondClassScreen(
                                             Text("地点")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.near_me),null)
+                                            Icon(painterResource(Drawables.near_me),null)
                                         }
                                     )
                                 }
@@ -269,7 +270,7 @@ fun SecondClassScreen(
                                             Text("时间")
                                         },
                                         leadingContent = {
-                                            Icon(painterResource(R.drawable.schedule),null)
+                                            Icon(painterResource(Drawables.schedule),null)
                                         }
                                     )
                                 }

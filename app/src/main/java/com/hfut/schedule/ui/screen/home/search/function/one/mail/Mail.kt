@@ -22,8 +22,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.R
@@ -59,9 +61,9 @@ fun Mail(
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
     TransplantListItem(
-        headlineContent = { ScrollText(text = stringResource(R.string.navigation_label_school_email)) },
+        headlineContent = { ScrollText(text = stringResource(Strings.navigation_label_school_email)) },
 //        overlineContent = { ScrollText(text = MyApplication.EMAIL) },
-        leadingContent = { Icon(painter = painterResource(id = R.drawable.mail), contentDescription = EMPTY_STRING) },
+        leadingContent = { Icon(painter = painterResource(id = Drawables.mail), contentDescription = EMPTY_STRING) },
         modifier = Modifier.clickable {
             showBottomSheet = true
         }
@@ -112,7 +114,7 @@ fun MailUI(vm: NetWorkViewModel) {
                                 response.data.let {
                                     if(it != null) {
                                         used = !used
-                                        Starter.startWebUrlInner(context,it,getSchoolEmail() ?: "邮箱", icon = R.drawable.mail)
+                                        Starter.startWebUrlInner(context,it,getSchoolEmail() ?: "邮箱", icon = Drawables.mail)
                                     } else {
                                         showToast( "错误 " + response.msg)
                                     }
@@ -121,7 +123,7 @@ fun MailUI(vm: NetWorkViewModel) {
                         },
                         modifier = Modifier.fillMaxWidth().weight(.5f),
                         text = "进入邮箱",
-                        icon = R.drawable.mail
+                        icon = Drawables.mail
                     )
                     Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
                     LargeButton (
@@ -137,7 +139,7 @@ fun MailUI(vm: NetWorkViewModel) {
                         },
                         modifier = Modifier.fillMaxWidth().weight(.5f),
                         text = "在浏览器打开",
-                        icon = R.drawable.net,
+                        icon = Drawables.net,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.secondary
                     )
@@ -151,7 +153,7 @@ fun MailUI(vm: NetWorkViewModel) {
                 Text("一些邮件，可能在应用内无法跳转链接，需要选择右侧按钮以用浏览器打开")
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.net),null)
+                Icon(painterResource(Drawables.net),null)
             }
         )
         CardListItem(
@@ -162,7 +164,7 @@ fun MailUI(vm: NetWorkViewModel) {
                 Starter.startWebUrlOuter(context,Constant.ONE_URL)
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.arrow_forward),null)
+                Icon(painterResource(Drawables.arrow_forward),null)
             }
         )
         if(isSupabaseRegistering) {
@@ -171,7 +173,7 @@ fun MailUI(vm: NetWorkViewModel) {
                     Text("共建平台注册激活请选择在浏览器使用，并检查最新收件箱 来自Supabase Auth的邮件 点击链接并Confirm")
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.database),null)
+                    Icon(painterResource(Drawables.database),null)
                 }
             )
         }

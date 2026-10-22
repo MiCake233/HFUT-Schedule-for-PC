@@ -24,7 +24,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -141,10 +142,10 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = R.drawable.lock_reset)
+                            Starter.startWebUrlInner(context,"${Constant.HUI_XIN_URL}campus-card/cardSetPwd" + "?synjones-auth=" + auth,"修改密码", icon = Drawables.lock_reset)
                         }
                     },
-                    leadingContent = { Icon(painterResource(R.drawable.lock_reset),null) },
+                    leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
@@ -159,7 +160,7 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                     trailingContent = { Switch(checked = useEditedPwd, onCheckedChange = {
                         click()
                     }) },
-                    leadingContent = { Icon(painterResource(R.drawable.edit),null) },
+                    leadingContent = { Icon(painterResource(Drawables.edit),null) },
                     modifier = Modifier.clickable {
                         click()
                     },
@@ -167,7 +168,7 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
             }
             Spacer(Modifier.height(CARD_NORMAL_DP))
             CardListItem(
-                leadingContent = { Icon(painterResource(R.drawable.info),null) },
+                leadingContent = { Icon(painterResource(Drawables.info),null) },
                 color = MaterialTheme.colorScheme.surface,
                 supportingContent = {
                     Text("初始密码为身份证后6位(若以X结尾则为X前6位)")
@@ -246,11 +247,11 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                                         context,
                                         "http://172.31.243.228/Self/setting/changePassword",
                                         "修改密码",
-                                        icon = R.drawable.lock_reset
+                                        icon = Drawables.lock_reset
                                     )
                                 }
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.lock_reset),null) },
+                            leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },
                         )
                         PaddingHorizontalDivider()
                         TransplantListItem(
@@ -265,7 +266,7 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                             trailingContent = { Switch(checked = useEditedPwd, onCheckedChange = {
                                 click()
                             }) },
-                            leadingContent = { Icon(painterResource(R.drawable.edit),null) },
+                            leadingContent = { Icon(painterResource(Drawables.edit),null) },
                             modifier = Modifier.clickable {
                                 click()
                             },
@@ -273,7 +274,7 @@ fun EditHuixXinPasswordScreen(innerPadding : PaddingValues) {
                     }
                     Spacer(Modifier.height(CARD_NORMAL_DP))
                     CardListItem(
-                        leadingContent = { Icon(painterResource(R.drawable.info),null) },
+                        leadingContent = { Icon(painterResource(Drawables.info),null) },
                         color = MaterialTheme.colorScheme.surface,
                         supportingContent = {
                             Text("初始密码为身份证后6位(包含X)")
@@ -322,10 +323,10 @@ fun EditJxglstuPasswordScreen(vm : NetWorkViewModel,innerPadding : PaddingValues
                 modifier = Modifier.clickable {
                     scope.launch {
                         val cookie = getJxglstuCookie()
-                        Starter.startWebUrlInner(context, Constant.JXGLSTU_URL + "my/account", cookie = cookie,title = "修改密码", icon = R.drawable.lock_reset)
+                        Starter.startWebUrlInner(context, Constant.JXGLSTU_URL + "my/account", cookie = cookie,title = "修改密码", icon = Drawables.lock_reset)
                     }
                 },
-                leadingContent = { Icon(painterResource(R.drawable.lock_reset),null) },
+                leadingContent = { Icon(painterResource(Drawables.lock_reset),null) },
             )
             PaddingHorizontalDivider()
             TransplantListItem(
@@ -334,7 +335,7 @@ fun EditJxglstuPasswordScreen(vm : NetWorkViewModel,innerPadding : PaddingValues
                     if(loading) {
                         LoadingIcon()
                     } else {
-                        Icon(painterResource(R.drawable.rotate_right),null)
+                        Icon(painterResource(Drawables.rotate_right),null)
                     }
                 },
                 headlineContent = {
@@ -362,7 +363,7 @@ fun EditJxglstuPasswordScreen(vm : NetWorkViewModel,innerPadding : PaddingValues
         ) {
             TransplantListItem(
                 color = MaterialTheme.colorScheme.surface,
-                leadingContent = { Icon(painterResource(R.drawable.info),null) },
+                leadingContent = { Icon(painterResource(Drawables.info),null) },
                 headlineContent = {
                     Text("当前密码")
                 },

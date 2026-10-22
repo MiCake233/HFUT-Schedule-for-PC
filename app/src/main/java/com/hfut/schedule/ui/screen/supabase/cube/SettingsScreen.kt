@@ -22,7 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.R
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
@@ -111,19 +112,19 @@ fun SupabaseSettingsScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,ha
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 TransplantListItem(
                     headlineContent = { Text("修改密码") },
-                    leadingContent = { Icon(painterResource(R.drawable.password), null) },
+                    leadingContent = { Icon(painterResource(Drawables.password), null) },
                     modifier = Modifier.clickable { showToast("正在开发") }
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text("注销") },
-                    leadingContent = { Icon(painterResource(R.drawable.delete), null) },
+                    leadingContent = { Icon(painterResource(Drawables.delete), null) },
                     modifier = Modifier.clickable { showToast("正在开发") }
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = { Text("了解隐私保护") },
-                    leadingContent = { Icon(painterResource(R.drawable.visibility), null) },
+                    leadingContent = { Icon(painterResource(Drawables.visibility), null) },
                     modifier = Modifier.clickable { showBottomSheet = true }
                 )
             }
@@ -133,7 +134,7 @@ fun SupabaseSettingsScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,ha
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 TransplantListItem(
                     headlineContent = { Text(if(jwt.isEmptyOrBlank()) "注册/登录" else "刷新登陆状态") },
-                    leadingContent = { Icon(painterResource(R.drawable.login), null) },
+                    leadingContent = { Icon(painterResource(Drawables.login), null) },
                     modifier = Modifier.clickable {
                         navController.push(SupabaseLoginDestination, effect = JumpTransitionEffectWallpaper())
                     }
@@ -142,7 +143,7 @@ fun SupabaseSettingsScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,ha
                 TransplantListItem(
                     headlineContent = { Text("过滤不适用日程") },
                     supportingContent = { Text("仅展示${if(!filter) "所有" else "包含 " + getPersonInfo().campus  + getPersonInfo().className + " 的"}日程" ) },
-                    leadingContent = { Icon(painterResource(R.drawable.filter_alt), null) },
+                    leadingContent = { Icon(painterResource(Drawables.filter_alt), null) },
                     trailingContent = {
                         Switch(checked = filter, onCheckedChange = {  scope.launch { DataStoreManager.saveSupabaseFilterEvent(!filter) } })
                     },

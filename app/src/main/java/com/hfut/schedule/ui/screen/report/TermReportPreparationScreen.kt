@@ -22,7 +22,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.R
 import com.hfut.schedule.ui.component.container.CustomCard
@@ -83,7 +84,7 @@ fun TermReportPreparationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-            painter = painterResource(R.drawable.celebration),
+            painter = painterResource(Drawables.celebration),
             contentDescription = null,
             modifier = Modifier.size(56.dp),
             tint = MaterialTheme.colorScheme.primary
@@ -128,28 +129,28 @@ fun TermReportPreparationScreen(
                             }
                             ReportPreparationStatus.COMPLETED -> {
                                 Icon(
-                                    painterResource(R.drawable.check_circle),
+                                    painterResource(Drawables.check_circle),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                             ReportPreparationStatus.TIMED_OUT -> {
                                 Icon(
-                                    painterResource(R.drawable.timer),
+                                    painterResource(Drawables.timer),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.error
                                 )
                             }
                             ReportPreparationStatus.PARTIAL -> {
                                 Icon(
-                                    painterResource(R.drawable.warning),
+                                    painterResource(Drawables.warning),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.tertiary
                                 )
                             }
                             else -> {
                                 Icon(
-                                    painterResource(R.drawable.warning),
+                                    painterResource(Drawables.warning),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.error
                                 )

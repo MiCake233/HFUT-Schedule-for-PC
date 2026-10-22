@@ -1,5 +1,7 @@
 package com.hfut.schedule.logic.util.sys
 
+import com.xah.common.ui.res.Drawables
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
@@ -41,16 +43,16 @@ object Starter {
         val appName : String,
         val icon : Int,
     ) {
-        TODAY_CAMPUS("com.wisedu.cpdaily","今日校园",R.drawable.today_campus_icon),
-        WECHAT("com.tencent.mm","微信",R.drawable.wechat_icon),
-        CHAO_XING("com.chaoxing.mobile","学习通",R.drawable.chao_xing_icon),
-        MOOC("com.netease.edu.ucmooc","中国大学MOOC",R.drawable.mooc_icon),
-        RAIN_CLASSROOM("com.xuetangx.ykt","雨课堂",R.drawable.rain_classroom_icon),
-        LE_PAO("com.yunzhi.tiyu","云运动",R.drawable.le_pao_icon),
-        ANHUI_HALL("com.iflytek.oshall.ahzwfw","皖事通",R.drawable.anhui_hall_icon),
-        ALIPAY("com.eg.android.AlipayGphone","支付宝",R.drawable.alipay_icon),
-        PDD("com.xunmeng.pinduoduo","拼多多",R.drawable.pdd_icon),
-        TAO_BAO("com.taobao.taobao","淘宝",R.drawable.taobao_icon),
+        TODAY_CAMPUS("com.wisedu.cpdaily","今日校园",Drawables.today_campus_icon),
+        WECHAT("com.tencent.mm","微信",Drawables.wechat_icon),
+        CHAO_XING("com.chaoxing.mobile","学习通",Drawables.chao_xing_icon),
+        MOOC("com.netease.edu.ucmooc","中国大学MOOC",Drawables.mooc_icon),
+        RAIN_CLASSROOM("com.xuetangx.ykt","雨课堂",Drawables.rain_classroom_icon),
+        LE_PAO("com.yunzhi.tiyu","云运动",Drawables.le_pao_icon),
+        ANHUI_HALL("com.iflytek.oshall.ahzwfw","皖事通",Drawables.anhui_hall_icon),
+        ALIPAY("com.eg.android.AlipayGphone","支付宝",Drawables.alipay_icon),
+        PDD("com.xunmeng.pinduoduo","拼多多",Drawables.pdd_icon),
+        TAO_BAO("com.taobao.taobao","淘宝",Drawables.taobao_icon),
     }
     //通过包名启动第三方应用
     @JvmStatic
@@ -205,7 +207,7 @@ object Starter {
         url : String,
         title : String = getPureUrl(url),
         cookie :String? = null,
-        icon : Int = R.drawable.net,
+        icon : Int = Drawables.net,
     ) {
         if(GlobalUiStateHolder.globalWebVpn) {
             val cookieWebVpn = getWebVpnCookie()
@@ -224,7 +226,7 @@ object Starter {
         url : String,
         title : String = getPureUrl(url),
         cookie :String? = null,
-        icon : Int = R.drawable.net,
+        icon : Int = Drawables.net,
     ) {
         navController.push(
             WebViewDestination(

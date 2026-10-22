@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.news.xuancheng
 
+import com.xah.common.ui.res.Drawables
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -69,7 +71,7 @@ fun XuanquNewsUI(innerPadding : PaddingValues,vm : NetWorkViewModel) {
                         leadingContent = { Text((index+1).toString()) },
                         modifier = Modifier.clickable {
                             scope.launch {
-                                Starter.startWebUrlInner(context ,Constant.NEWS_XC_URL + item.link,item.title,icon = R.drawable.stream, cookie = cookies)
+                                Starter.startWebUrlInner(context ,Constant.NEWS_XC_URL + item.link,item.title,icon = Drawables.stream, cookie = cookies)
                             }
                         },
                     )

@@ -86,8 +86,11 @@ import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.Strings
+import com.xah.common.ui.res.stringOf
+import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -333,7 +336,7 @@ fun SharedAppearanceSettingsScreen(
                     .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.medium)
                     .padding(vertical = APP_HORIZONTAL_DP)) {
                     CustomTextField(
-                        label = { Text(stringResource(R.string.appearance_settings_tips_input_color)) },
+                        label = { Text(stringResource(Strings.appearance_settings_tips_input_color)) },
                         input = input,
                         trailingIcon = {
                             parse?.let {
@@ -358,7 +361,7 @@ fun SharedAppearanceSettingsScreen(
                                 .fillMaxWidth()
                                 .weight(.5f)
                         ) {
-                            Text(stringResource(R.string.appearance_settings_button_input_color_set))
+                            Text(stringResource(Strings.appearance_settings_button_input_color_set))
                         }
                         Spacer(Modifier.width(APP_HORIZONTAL_DP))
                         FilledTonalButton (
@@ -369,7 +372,7 @@ fun SharedAppearanceSettingsScreen(
                                 .fillMaxWidth()
                                 .weight(.5f)
                         ) {
-                            Text(stringResource(R.string.appearance_settings_button_input_color_cancel))
+                            Text(stringResource(Strings.appearance_settings_button_input_color_cancel))
                         }
                     }
 
@@ -401,12 +404,12 @@ fun SharedAppearanceSettingsScreen(
         }
 
 
-        DividerTextExpandedWith(stringResource(R.string.appearance_settings_theme_half_title),contentColor=contentColor) {
+        DividerTextExpandedWith(stringResource(Strings.appearance_settings_theme_half_title),contentColor=contentColor) {
             CustomCard(color = backgroundColor) {
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.appearance_settings_pure_black_background_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.appearance_settings_pure_black_background_description)) },
-                    leadingContent = { Icon(painterResource(R.drawable.contrast), contentDescription = "Localized description") },
+                    headlineContent = { Text(text = stringResource(Strings.appearance_settings_pure_black_background_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.appearance_settings_pure_black_background_description)) },
+                    leadingContent = { Icon(painterResource(Drawables.contrast), contentDescription = "Localized description") },
                     trailingContent = {
                         Switch(checked = currentPureDark, onCheckedChange = { scope.launch { DataStoreManager.savePureDark(!currentPureDark) } })
                     },
@@ -416,9 +419,9 @@ fun SharedAppearanceSettingsScreen(
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.appearance_settings_enforce_web_page_dark_theme_title)) },
-                    supportingContent = { Text(text = stringResource(R.string.appearance_settings_enforce_web_page_dark_theme_description)) },
-                    leadingContent = { Icon(painterResource(R.drawable.syringe), contentDescription = "Localized description") },
+                    headlineContent = { Text(text = stringResource(Strings.appearance_settings_enforce_web_page_dark_theme_title)) },
+                    supportingContent = { Text(text = stringResource(Strings.appearance_settings_enforce_web_page_dark_theme_description)) },
+                    leadingContent = { Icon(painterResource(Drawables.syringe), contentDescription = "Localized description") },
                     trailingContent = {
                         Switch(checked = webViewDark, onCheckedChange = { scope.launch { DataStoreManager.saveWebViewDark(!webViewDark) } })
                     },
@@ -428,14 +431,14 @@ fun SharedAppearanceSettingsScreen(
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.appearance_settings_theme_title)) },
+                    headlineContent = { Text(text = stringResource(Strings.appearance_settings_theme_title)) },
                     leadingContent = {
                         Icon(
                             painterResource(
                                 when(currentColorModeIndex) {
-                                    ColorMode.DARK.code -> R.drawable.dark_mode
-                                    ColorMode.LIGHT.code -> R.drawable.light_mode
-                                    else -> R.drawable.routine
+                                    ColorMode.DARK.code -> Drawables.dark_mode
+                                    ColorMode.LIGHT.code -> Drawables.light_mode
+                                    else -> Drawables.routine
                                 }
                             ),
                             contentDescription = "Localized description",
@@ -465,16 +468,16 @@ fun SharedAppearanceSettingsScreen(
                 }
             }
         }
-        DividerTextExpandedWith(stringResource(R.string.appearance_settings_color_half_title),contentColor=contentColor) {
+        DividerTextExpandedWith(stringResource(Strings.appearance_settings_color_half_title),contentColor=contentColor) {
             CustomCard(color = backgroundColor) {
                 Colors(isControlCenter)
-                DividerTextExpandedWith(stringResource(R.string.appearance_settings_default_color_half_title)) {
+                DividerTextExpandedWith(stringResource(Strings.appearance_settings_default_color_half_title)) {
                     TransplantListItem(
-                        headlineContent = { Text(text = stringResource(R.string.appearance_settings_dynamic_color_title)) },
-                        leadingContent = { Icon(painterResource(R.drawable.palette), contentDescription = "Localized description") },
+                        headlineContent = { Text(text = stringResource(Strings.appearance_settings_dynamic_color_title)) },
+                        leadingContent = { Icon(painterResource(Drawables.palette), contentDescription = "Localized description") },
                         trailingContent = {
                             if(useDynamicColor) {
-                                Icon(painterResource(R.drawable.check),null)
+                                Icon(painterResource(Drawables.check),null)
                             }
                         },
                         modifier = Modifier.clickable {
@@ -484,19 +487,19 @@ fun SharedAppearanceSettingsScreen(
                         }
                     )
                 }
-                DividerTextExpandedWith(stringResource(R.string.appearance_settings_pick_color_half_title)) {
+                DividerTextExpandedWith(stringResource(Strings.appearance_settings_pick_color_half_title)) {
                     if(!useDynamicColor) {
                         val d = styleList.find { it.code == customColorStyle }?.description?.asString()
                         TransplantListItem(
                             headlineContent = {
                                 d?.let {
                                     Text(text = stringResource(
-                                        R.string.appearance_settings_color_bright_title,
+                                        Strings.appearance_settings_color_bright_title,
                                         it
                                     ))
                                 }
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.invert_colors), contentDescription = "Localized description") },
+                            leadingContent = { Icon(painterResource(Drawables.invert_colors), contentDescription = "Localized description") },
                         )
 
                         CustomSlider(
@@ -531,8 +534,8 @@ fun SharedAppearanceSettingsScreen(
                             )
                         }
                         TransplantListItem(
-                            headlineContent = { Text(text = stringResource(R.string.appearance_settings_pick_color_by_photo_title)) },
-                            leadingContent = { Icon(painterResource(R.drawable.image), contentDescription = "Localized description") },
+                            headlineContent = { Text(text = stringResource(Strings.appearance_settings_pick_color_by_photo_title)) },
+                            leadingContent = { Icon(painterResource(Drawables.image), contentDescription = "Localized description") },
                             supportingContent = {
                                 Text("选择图片或以壁纸取色")
                             },
@@ -545,7 +548,7 @@ fun SharedAppearanceSettingsScreen(
                                         wallpaper = getWallpaper()
                                     }
                                 ) {
-                                    Icon(painterResource(R.drawable.wallpaper),null)
+                                    Icon(painterResource(Drawables.wallpaper),null)
                                 }
                             },
                             modifier = Modifier.clickable {
@@ -559,10 +562,10 @@ fun SharedAppearanceSettingsScreen(
                         PaddingHorizontalDivider()
                     }
                     TransplantListItem(
-                        headlineContent = { Text(text = stringResource(R.string.appearance_settings_pick_color_by_hue_band_title)) },
-                        leadingContent = { Icon(painterResource(R.drawable.colorize), contentDescription = "Localized description") },
+                        headlineContent = { Text(text = stringResource(Strings.appearance_settings_pick_color_by_hue_band_title)) },
+                        leadingContent = { Icon(painterResource(Drawables.colorize), contentDescription = "Localized description") },
                         supportingContent = {
-                            Text(stringResource(R.string.appearance_settings_pick_color_by_hue_band_description))
+                            Text(stringResource(Strings.appearance_settings_pick_color_by_hue_band_description))
                         },
                         trailingContent = {
                             if(!useDynamicColor) {
@@ -622,14 +625,14 @@ fun SharedAppearanceSettingsScreen(
                 }
             }
         }
-        DividerTextExpandedWith(stringResource(R.string.appearance_settings_effect_half_title),contentColor=contentColor) {
+        DividerTextExpandedWith(stringResource(Strings.appearance_settings_effect_half_title),contentColor=contentColor) {
             CustomCard(color = backgroundColor) {
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.appearance_settings_motion_blur_title)) },
+                    headlineContent = { Text(text = stringResource(Strings.appearance_settings_motion_blur_title)) },
                     supportingContent = {
                         Text(text = stringResource(
-                            R.string.appearance_settings_motion_blur_description_supported,
-                            if (!AppVersion.CAN_MOTION_BLUR) stringResource(R.string.appearance_settings_motion_blur_description_unsupported) else EMPTY_STRING
+                            Strings.appearance_settings_motion_blur_description_supported,
+                            if (!AppVersion.CAN_MOTION_BLUR) stringResource(Strings.appearance_settings_motion_blur_description_unsupported) else EMPTY_STRING
                         ))
                     },
                     leadingContent = { MotionBlurIcon(motionBlur) },
@@ -643,10 +646,10 @@ fun SharedAppearanceSettingsScreen(
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = {
-                        Text(text = stringResource(R.string.appearance_settings_layer_blur_title))
+                        Text(text = stringResource(Strings.appearance_settings_layer_blur_title))
                     },
                     supportingContent = {
-                        Text(text = stringResource(R.string.appearance_settings_layer_blur_description))
+                        Text(text = stringResource(Strings.appearance_settings_layer_blur_description))
                     },
                     leadingContent = {
                         HazeBlurIcon(blur)
@@ -659,12 +662,12 @@ fun SharedAppearanceSettingsScreen(
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = {
-                        Text(text = stringResource(R.string.appearance_settings_shader_title))
+                        Text(text = stringResource(Strings.appearance_settings_shader_title))
                     },
                     supportingContent = {
-                        Text(text = stringResource(R.string.appearance_settings_shader_description_supported) + (
+                        Text(text = stringResource(Strings.appearance_settings_shader_description_supported) + (
                                 if(!AppVersion.CAN_SHADER)
-                                    stringResource(R.string.appearance_settings_shader_description_unsupported)
+                                    stringResource(Strings.appearance_settings_shader_description_unsupported)
                                 else
                                     EMPTY_STRING
                         ) )
@@ -690,13 +693,13 @@ fun SharedAppearanceSettingsScreen(
                 PaddingHorizontalDivider()
                 TransplantListItem(
                     headlineContent = {
-                        Text(text = stringResource(R.string.appearance_settings_camera_render_real_time_title))
+                        Text(text = stringResource(Strings.appearance_settings_camera_render_real_time_title))
                     },
                     supportingContent = {
-                        Text(text = stringResource(R.string.appearance_settings_camera_render_real_time_description))
+                        Text(text = stringResource(Strings.appearance_settings_camera_render_real_time_description))
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.monochrome_photos),null)
+                        Icon(painterResource(Drawables.monochrome_photos),null)
                     },
                     trailingContent = {
                         Switch(checked = enableCameraDynamicRecord, onCheckedChange = {
@@ -713,21 +716,21 @@ fun SharedAppearanceSettingsScreen(
                 )
             }
         }
-        DividerTextExpandedWith(stringResource(R.string.appearance_settings_dynamic_effect_half_title),contentColor=contentColor) {
+        DividerTextExpandedWith(stringResource(Strings.appearance_settings_dynamic_effect_half_title),contentColor=contentColor) {
             CustomCard(color = backgroundColor) {
                 TransplantListItem(
                     headlineContent = {
                         Column {
                             Text(text = stringResource(
-                                R.string.appearance_settings_transition_level_title,
+                                Strings.appearance_settings_transition_level_title,
                                 transition,
                             ))
                         }
                     },
                     supportingContent = {
-                        Text(text = stringResource(R.string.appearance_settings_transition_level_description))
+                        Text(text = stringResource(Strings.appearance_settings_transition_level_description))
                     },
-                    leadingContent = { Icon(painterResource(R.drawable.airline_stops), contentDescription = "Localized description") },
+                    leadingContent = { Icon(painterResource(Drawables.airline_stops), contentDescription = "Localized description") },
                 )
                 CustomSlider(
                     value = transition.toFloat(),
@@ -753,11 +756,11 @@ fun SharedAppearanceSettingsScreen(
                             painterResource(
                                 // TODO 这里可以做动效，懒
                                 when(containerSharedSpeed) {
-                                    in 0.5f .. 0.875f -> R.drawable.speed_2
-                                    in 0.875f .. 1.25f -> R.drawable.speed_3
-                                    in 1.25f .. 1.625f -> R.drawable.speed_4
-                                    in 1.625f .. 2f -> R.drawable.speed
-                                    else -> R.drawable.timer
+                                    in 0.5f .. 0.875f -> Drawables.speed_2
+                                    in 0.875f .. 1.25f -> Drawables.speed_3
+                                    in 1.25f .. 1.625f -> Drawables.speed_4
+                                    in 1.625f .. 2f -> Drawables.speed
+                                    else -> Drawables.timer
                                 }
                             ),
                             null
@@ -782,9 +785,9 @@ fun SharedAppearanceSettingsScreen(
                 )
                 PaddingHorizontalDivider()
                 TransplantListItem(
-                    headlineContent = { Text(text = stringResource(R.string.appearance_settings_transition_splash_title)) },
+                    headlineContent = { Text(text = stringResource(Strings.appearance_settings_transition_splash_title)) },
                     supportingContent = {
-                        Text(stringResource(R.string.appearance_settings_transition_splash_description))
+                        Text(stringResource(Strings.appearance_settings_transition_splash_description))
                     },
                     trailingContent = {
                         Switch(checked = enableNavSplashScreen, onCheckedChange = {
@@ -793,7 +796,7 @@ fun SharedAppearanceSettingsScreen(
                             }
                         })
                     },
-                    leadingContent = { Icon(painterResource(R.drawable.resize), contentDescription = "Localized description") },
+                    leadingContent = { Icon(painterResource(Drawables.resize), contentDescription = "Localized description") },
                 )
                 if(transition != EffectLevel.NONE.levelNum) {
                     PaddingHorizontalDivider()
@@ -809,13 +812,13 @@ fun SharedAppearanceSettingsScreen(
                                 }
                             })
                         },
-                        leadingContent = { Icon(painterResource(R.drawable.responsive_layout), contentDescription = "Localized description") },
+                        leadingContent = { Icon(painterResource(Drawables.responsive_layout), contentDescription = "Localized description") },
                     )
                     PaddingHorizontalDivider()
                     if(enableContainerShare) {
                         TransplantListItem(
                             headlineContent = { Text(text = "容器填充方案") },
-                            leadingContent = { Icon(painterResource(R.drawable.responsive_layout), contentDescription = "Localized description") },
+                            leadingContent = { Icon(painterResource(Drawables.responsive_layout), contentDescription = "Localized description") },
                         )
                         CustomSingleChoiceRow<SharedContainerFilledStrategy>(
                             selected = currentContainerFilledModeIndex,
@@ -831,7 +834,7 @@ fun SharedAppearanceSettingsScreen(
                             supportingContent = {
                                 Text("过渡时容器带有倾斜的视差效果")
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.ic_360), contentDescription = "Localized description") },
+                            leadingContent = { Icon(painterResource(Drawables.ic_360), contentDescription = "Localized description") },
                         )
                         CustomSingleChoiceRow<SharedNavTilt> (
                             selected = enableContainerTilt,
@@ -854,13 +857,13 @@ fun SharedAppearanceSettingsScreen(
                                     }
                                 })
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.shapes), contentDescription = "Localized description") },
+                            leadingContent = { Icon(painterResource(Drawables.shapes), contentDescription = "Localized description") },
                         )
                         PaddingHorizontalDivider()
                         TransplantListItem(
-                            headlineContent = { Text(text = stringResource(R.string.appearance_settings_transition_extension_title)) },
+                            headlineContent = { Text(text = stringResource(Strings.appearance_settings_transition_extension_title)) },
                             supportingContent = {
-                                Text(stringResource(R.string.appearance_settings_transition_extension_description))
+                                Text(stringResource(Strings.appearance_settings_transition_extension_description))
                             },
                             trailingContent = {
                                 Switch(checked = useDoubleExtension, onCheckedChange = {
@@ -869,7 +872,7 @@ fun SharedAppearanceSettingsScreen(
                                     }
                                 })
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.responsive_layout), contentDescription = "Localized description") },
+                            leadingContent = { Icon(painterResource(Drawables.responsive_layout), contentDescription = "Localized description") },
                         )
                         ExtensionSample()
                     } else {
@@ -878,7 +881,7 @@ fun SharedAppearanceSettingsScreen(
                             supportingContent = {
                                 Text("强制全局的转场动效,部分场景下不会生效")
                             },
-                            leadingContent = { Icon(painterResource(R.drawable.responsive_layout), contentDescription = "Localized description") },
+                            leadingContent = { Icon(painterResource(Drawables.responsive_layout), contentDescription = "Localized description") },
                         )
                         CustomSingleChoiceRow<SharedNavEffect>(
                             selected = defaultTransitionEffectIndex,
@@ -900,9 +903,9 @@ fun SharedAppearanceSettingsScreen(
                     ) {
                         TransplantListItem(
                             color = backgroundColor,
-                            headlineContent = { Text(text = stringResource(R.string.appearance_settings_transition_screen_corner_title)) },
+                            headlineContent = { Text(text = stringResource(Strings.appearance_settings_transition_screen_corner_title)) },
                             supportingContent = {
-                                Text(stringResource(R.string.appearance_settings_transition_screen_corner_description))
+                                Text(stringResource(Strings.appearance_settings_transition_screen_corner_description))
                             },
                             modifier = Modifier.clickable {
                                 scope.launch {
@@ -920,19 +923,19 @@ fun SharedAppearanceSettingsScreen(
                 }
             }
         }
-        DividerTextExpandedWith(stringResource(R.string.appearance_settings_calendar_half_title),contentColor=contentColor) {
+        DividerTextExpandedWith(stringResource(Strings.appearance_settings_calendar_half_title),contentColor=contentColor) {
             CustomCard(color = backgroundColor) {
                 CalendarUISettings()
             }
         }
-        DividerTextExpandedWith(stringResource(R.string.appearance_settings_bottom_bar_half_title),contentColor=contentColor) {
+        DividerTextExpandedWith(stringResource(Strings.appearance_settings_bottom_bar_half_title),contentColor=contentColor) {
             CustomCard(color = backgroundColor) {
                 TransplantListItem(
                     headlineContent = {
                         Text("悬浮底栏样式")
                     },
                     leadingContent = {
-                        Icon(painterResource(R.drawable.fiber_new),null)
+                        Icon(painterResource(Drawables.fiber_new),null)
                     },
                     trailingContent = {
                         Switch(
@@ -954,16 +957,16 @@ fun SharedAppearanceSettingsScreen(
                 if(!enableNewBottomBar) {
                     TransplantListItem(
                         headlineContent = {
-                            Text(stringResource(R.string.appearance_settings_always_display_bottom_bar_labels_title))
+                            Text(stringResource(Strings.appearance_settings_always_display_bottom_bar_labels_title))
                         },
                         supportingContent = {
-                            Text(stringResource(R.string.appearance_settings_always_display_bottom_bar_labels_description))
+                            Text(stringResource(Strings.appearance_settings_always_display_bottom_bar_labels_description))
                         },
                         modifier = Modifier.clickable {
                             scope.launch { DataStoreManager.saveShowBottomBarLabel(!showBottomBarLabel) }
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.label),null)
+                            Icon(painterResource(Drawables.label),null)
                         },
                         trailingContent = {  Switch(checked = showBottomBarLabel, onCheckedChange = { scope.launch { DataStoreManager.saveShowBottomBarLabel(!showBottomBarLabel) } }) },
                     )
@@ -980,7 +983,7 @@ fun SharedAppearanceSettingsScreen(
                             scope.launch { DataStoreManager.saveEnableNewBottomBarSafelyPadding(!enablePaddingSafely) }
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.height),null)
+                            Icon(painterResource(Drawables.height),null)
                         },
                         trailingContent = {  Switch(checked = enablePaddingSafely, onCheckedChange = { scope.launch { DataStoreManager.saveEnableNewBottomBarSafelyPadding(!enablePaddingSafely) } }) },
                     )
@@ -1005,16 +1008,16 @@ private fun ExtensionSample() {
         var rect by remember { mutableStateOf<Rect?>(null) }
 //        var index by remember { mutableStateOf(0) }
 //        val icons = remember { listOf(
-//            R.drawable.wechat_icon,
+//            Drawables.wechat_icon,
 //            R.drawable.amap_icon,
-//            R.drawable.chao_xing_icon,
-//            R.drawable.alipay_icon,
-//            R.drawable.anhui_hall_icon,
+//            Drawables.chao_xing_icon,
+//            Drawables.alipay_icon,
+//            Drawables.anhui_hall_icon,
 //            R.drawable.hfut_schedule_icon,
-//            R.drawable.le_pao_icon,
-//            R.drawable.today_campus_icon,
-//            R.drawable.mooc_icon,
-//            R.drawable.rain_classroom_icon
+//            Drawables.le_pao_icon,
+//            Drawables.today_campus_icon,
+//            Drawables.mooc_icon,
+//            Drawables.rain_classroom_icon
 //        ) }
 //
 //        LaunchedEffect(Unit) {
@@ -1061,7 +1064,7 @@ private fun ExtensionSample() {
                             }
                         }
                 ) {
-                    Image(painterResource(R.drawable.alipay_icon),null)
+                    Image(painterResource(Drawables.alipay_icon),null)
                 }
                 Box(
                     modifier = Modifier
@@ -1102,7 +1105,7 @@ private fun ExtensionSample() {
                             Text("图书馆")
                         },
                         leadingContent = {
-                            Icon(painterResource(R.drawable.book_5),null)
+                            Icon(painterResource(Drawables.book_5),null)
                         }
                     )
                 }
@@ -1135,7 +1138,7 @@ fun CalendarUISettings(
                 val savedPath = persistImage(context, imageUri)
                 savedPath?.let {
                     DataStoreManager.saveCustomBackground(it)
-                    showToast(context.getString(R.string.appearance_settings_toast_set_calendar_background))
+                    showToast(stringOf(Strings.appearance_settings_toast_set_calendar_background))
                     extractColor(imageUri)?.let { color ->
                         DataStoreManager.saveCustomColor(color)
                     }
@@ -1190,17 +1193,17 @@ fun CalendarUISettings(
             }
             TransplantListItem(
                 headlineContent = {
-                    Text(stringResource(R.string.appearance_settings_calendar_background_title))
+                    Text(stringResource(Strings.appearance_settings_calendar_background_title))
                 },
                 supportingContent = {
                     if(!isTiny)
-                        Text(stringResource(R.string.appearance_settings_calendar_background_description))
+                        Text(stringResource(Strings.appearance_settings_calendar_background_description))
                 },
                 modifier = Modifier.clickable {
                     pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.image),null)
+                    Icon(painterResource(Drawables.image),null)
                 },
                 trailingContent = {
                     if(useCustomBackground) {
@@ -1213,7 +1216,7 @@ fun CalendarUISettings(
                                 }
                             }
                         ) {
-                            Icon(painterResource(R.drawable.delete),null)
+                            Icon(painterResource(Drawables.delete),null)
                         }
                     } else {
                         LiquidButton(
@@ -1230,7 +1233,7 @@ fun CalendarUISettings(
                                     val savedPath = persistImage(context, wallpaper!!)
                                     savedPath?.let {
                                         DataStoreManager.saveCustomBackground(it)
-                                        showToast(context.getString(R.string.appearance_settings_toast_set_calendar_background))
+                                        showToast(stringOf(Strings.appearance_settings_toast_set_calendar_background))
                                         extractColor(wallpaper!!).let { color ->
                                             DataStoreManager.saveCustomColor(color)
                                         }
@@ -1238,7 +1241,7 @@ fun CalendarUISettings(
                                 }
                             },
                         ) {
-                            Icon(painterResource(R.drawable.wallpaper),null)
+                            Icon(painterResource(Drawables.wallpaper),null)
                         }
                     }
                 }
@@ -1253,16 +1256,16 @@ fun CalendarUISettings(
                 headlineContent = {
                     Text(
                         stringResource(
-                            R.string.appearance_settings_calendar_square_alpha_title,
+                            Strings.appearance_settings_calendar_square_alpha_title,
                             (customSquareAlpha * 100).roundOffString(0)
                         ))
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.visibility),null)
+                    Icon(painterResource(Drawables.visibility),null)
                 },
                 supportingContent = {
                     if(!isTiny)
-                        Text(stringResource(R.string.appearance_settings_calendar_square_alpha_description))
+                        Text(stringResource(Strings.appearance_settings_calendar_square_alpha_description))
                 }
             )
             CustomSlider(
@@ -1284,11 +1287,11 @@ fun CalendarUISettings(
                     Text("前景模糊 ${(customSquareBlur * 100).roundOffString(0)}%")
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.visibility),null)
+                    Icon(painterResource(Drawables.visibility),null)
                 },
                 supportingContent = {
                     if(!isTiny)
-                        Text(stringResource(R.string.appearance_settings_calendar_square_alpha_description))
+                        Text(stringResource(Strings.appearance_settings_calendar_square_alpha_description))
                 }
             )
             CustomSlider(
@@ -1311,7 +1314,7 @@ fun CalendarUISettings(
                     Text("RefractionHeight ${GlobalUiStateHolder.calendarSquareRefractionHeight.roundOffString(1)}")
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.visibility),null)
+                    Icon(painterResource(Drawables.visibility),null)
                 },
             )
             CustomSlider(
@@ -1333,7 +1336,7 @@ fun CalendarUISettings(
                     Text("RefractionAmount ${GlobalUiStateHolder.calendarSquareRefractionAmount.roundOffString(1)}")
                 },
                 leadingContent = {
-                    Icon(painterResource(R.drawable.visibility),null)
+                    Icon(painterResource(Drawables.visibility),null)
                 },
             )
             CustomSlider(
@@ -1356,7 +1359,7 @@ fun CalendarUISettings(
             headlineContent = {
                 Text(
                     stringResource(
-                        R.string.appearance_settings_calendar_square_height_title,
+                        Strings.appearance_settings_calendar_square_height_title,
                         calendarSquareHeightNew.roundOffString(0)
                     ))
             },
@@ -1364,12 +1367,12 @@ fun CalendarUISettings(
                 if(!isTiny)
                     Text(
                         stringResource(
-                            R.string.appearance_settings_calendar_square_height_description,
+                            Strings.appearance_settings_calendar_square_height_description,
                             MyApplication.CALENDAR_SQUARE_HEIGHT.roundOffString(0)
                         ))
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.height),null)
+                Icon(painterResource(Drawables.height),null)
             },
         )
 
@@ -1392,16 +1395,16 @@ fun CalendarUISettings(
             headlineContent = {
                 Text(
                     stringResource(
-                        R.string.appearance_settings_calendar_square_text_size_title,
+                        Strings.appearance_settings_calendar_square_text_size_title,
                         (calendarSquareTextSize * 100).roundOffString(0)
                     ))
             },
             supportingContent = {
                 if(!isTiny)
-                    Text(stringResource(R.string.appearance_settings_calendar_square_text_size_description))
+                    Text(stringResource(Strings.appearance_settings_calendar_square_text_size_description))
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.translate),null)
+                Icon(painterResource(Drawables.translate),null)
             },
         )
 
@@ -1423,16 +1426,16 @@ fun CalendarUISettings(
             headlineContent = {
                 Text(
                     stringResource(
-                        R.string.appearance_settings_calendar_square_text_line_padding_title,
+                        Strings.appearance_settings_calendar_square_text_line_padding_title,
                         calendarSquareTextPadding.roundOffString(2)
                     ))
             },
             supportingContent = {
                 if(!isTiny)
-                    Text(stringResource(R.string.appearance_settings_calendar_square_text_line_padding_description))
+                    Text(stringResource(Strings.appearance_settings_calendar_square_text_line_padding_description))
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.translate),null)
+                Icon(painterResource(Drawables.translate),null)
             },
         )
 
@@ -1466,7 +1469,7 @@ fun CalendarUISettings(
                 )
             },
             leadingContent = {
-                Icon(painterResource(R.drawable.line_end_circle),null)
+                Icon(painterResource(Drawables.line_end_circle),null)
             },
         )
     }
@@ -1598,7 +1601,7 @@ private fun MotionBlurIcon(motionBlur : Boolean) {
         )
 
         Icon(
-            painter = painterResource(R.drawable.filter_vintage),
+            painter = painterResource(Drawables.filter_vintage),
             contentDescription = "Localized description",
             modifier = Modifier
                 .align(Alignment.Center)
@@ -1610,7 +1613,7 @@ private fun MotionBlurIcon(motionBlur : Boolean) {
                 .scale(scale)
         )
         Icon(
-            painter = painterResource(R.drawable.filter_vintage),
+            painter = painterResource(Drawables.filter_vintage),
             contentDescription = "Localized description",
             modifier = Modifier
                 .align(Alignment.Center)
@@ -1636,7 +1639,7 @@ private fun ShaderIcon(shader : Boolean) {
         .size(24.dp)
         .background(Color.Transparent, shape = CircleShape)){
         Icon(
-            painter = painterResource(R.drawable.filter_vintage),
+            painter = painterResource(Drawables.filter_vintage),
             contentDescription = "Localized description",
             modifier = Modifier
                 .align(Alignment.Center)
@@ -1657,7 +1660,7 @@ private fun HazeBlurIcon(blur : Boolean) {
     val size = 24.dp
     Box(modifier = Modifier.size(size)) {
         Icon(
-            painter = painterResource(R.drawable.filter_vintage),
+            painter = painterResource(Drawables.filter_vintage),
             contentDescription = "Localized description",
             modifier = Modifier
                 .matchParentSize()
@@ -1670,7 +1673,7 @@ private fun HazeBlurIcon(blur : Boolean) {
                 }
         )
         Icon(
-            painter = painterResource(R.drawable.filter_vintage),
+            painter = painterResource(Drawables.filter_vintage),
             contentDescription = null,
             modifier = Modifier
                 .matchParentSize()

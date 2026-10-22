@@ -45,7 +45,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import com.xah.common.ui.res.Drawables
+import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastMap
 import com.hfut.schedule.R
@@ -115,7 +116,7 @@ fun Work() {
                 modifier = Modifier.size(30.dp)
             ) {
                 // 特殊加大size
-                Icon(painterResource(R.drawable.person),null, modifier = Modifier.size(20.dp+2.dp))
+                Icon(painterResource(Drawables.person),null, modifier = Modifier.size(20.dp+2.dp))
             }
         },
         modifier = Modifier.clickable {
@@ -169,13 +170,13 @@ fun WorkScreen(
                                             context,
                                             url = url,
                                             title = "就业网(${campus.description})",
-                                            icon = R.drawable.net,
+                                            icon = Drawables.net,
                                         )
                                     }
                                 },
                                 isCircle = true
                             ) {
-                                Icon(painterResource(R.drawable.net), contentDescription = null)
+                                Icon(painterResource(Drawables.net), contentDescription = null)
                             }
                             Spacer(Modifier.width(BUTTON_PADDING))
                             LiquidButton(
@@ -187,7 +188,7 @@ fun WorkScreen(
                                     }
                                 },
                             ) {
-                                Icon(painterResource(R.drawable.person),null)
+                                Icon(painterResource(Drawables.person),null)
                             }
                             Spacer(Modifier.width(BUTTON_PADDING))
                             LiquidButton(
@@ -216,7 +217,7 @@ fun WorkScreen(
                         .containerBackDrop(backDrop, MaterialTheme.shapes.medium),
                     trailingIcon = { IconButton(
                         onClick = { scope.launch { refreshNetwork(1,pagerState.currentPage) } }
-                    ) { Icon(painterResource(R.drawable.search),null) } },
+                    ) { Icon(painterResource(Drawables.search),null) } },
 //                    leadingIcon = if(!(input.isEmpty() || input.isEmptyOrBlank())) {
 //                        {
 //                            IconButton(
@@ -226,7 +227,7 @@ fun WorkScreen(
 //                                        refreshNetwork()
 //                                    }
 //                                }
-//                            ) { Icon(painterResource(R.drawable.close),null) }
+//                            ) { Icon(painterResource(Drawables.close),null) }
 //                        }
 //                    } else null
                 ) { input = it }
