@@ -106,3 +106,14 @@ tasks.register<JavaExec>("verifyIcs") {
     args = listOf("--verify-ics")
     systemProperty("java.awt.headless", "false")
 }
+
+// 渲染外观设置页
+tasks.register<JavaExec>("snapshotAppearance") {
+    group = "verification"
+    description = "离屏渲染桌面版外观设置页为 PNG"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--snapshot", "E:/dshworkspace/research/hfut-desktop/desktop-appearance.png", "--appearance")
+    systemProperty("java.awt.headless", "false")
+}

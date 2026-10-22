@@ -84,10 +84,23 @@ fun DesktopApp(exitApp: () -> Unit) {
             val args = arg as List<*>
             DesktopSettingsScreen(args[0] as androidx.compose.foundation.layout.PaddingValues)
         }
+        // 平台页面工厂：外观设置页在桌面端用自己的实现（Android 那套是壁纸/小组件相关）
+        PlatformHooks.platformScreenFactory = { key ->
+            if (key == "platform_settings_appearance") {
+                val content: @Composable () -> Unit = {
+                    val nav = com.xah.navigation.util.LocalNavController.current
+                    DesktopAppearanceScreen(onBack = { nav.pop() })
+                }
+                content
+            } else {
+                null
+            }
+        }
         onDispose {
             PlatformHooks.onLoginSuccess = null
             PlatformHooks.onNavigateHome = null
             PlatformHooks.onExitApp = null
+            PlatformHooks.platformScreenFactory = null
         }
     }
 

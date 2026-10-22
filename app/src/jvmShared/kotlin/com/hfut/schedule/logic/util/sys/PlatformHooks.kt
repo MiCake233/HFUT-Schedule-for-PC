@@ -16,4 +16,11 @@ object PlatformHooks {
 
     /** 退出应用 */
     var onExitApp: (() -> Unit)? = null
+
+    /**
+     * 桌面端可以为某个平台页面 key 提供自己的实现。
+     * Android 专属页面（如设置页）在桌面上往往需要完全不同的 UI，
+     * 注册后 RenderPlatformScreen 会优先渲染它，返回 null 则继续走占位逻辑。
+     */
+    var platformScreenFactory: ((String) -> (@androidx.compose.runtime.Composable () -> Unit)?)? = null
 }

@@ -67,6 +67,17 @@ fun main(args: Array<String>) {
             com.hfut.schedule.logic.util.storage.kv.DataStoreManager.saveEnableUse(true)
         }
         if (args.contains("--logged-in")) DesktopWindowState.loggedIn = true
+        // 外观设置页单独出图（自动化验收用）
+        if (args.contains("--appearance")) {
+            var ok2 = false
+            javax.swing.SwingUtilities.invokeAndWait {
+                ok2 = snapshotOf(out) {
+                    DesktopAppTheme { DesktopAppearanceScreen(onBack = {}) }
+                }
+            }
+            if (!ok2) System.exit(2)
+            return
+        }
         // 必须跑在 AWT 事件线程上：Compose 桌面版的主线程即 EDT
         var ok = false
         javax.swing.SwingUtilities.invokeAndWait { ok = snapshot(out) }
@@ -139,9 +150,15 @@ private fun initAppInfo() {
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
-private fun snapshot(path: String): Boolean = try {
+private fun snapshot(path: String): Boolean = snapshotOf(path) {
+    DesktopApp(exitApp = {})
+}
+
+/** 通用离屏渲染：把任意 composable 渲染成 PNG */
+@OptIn(ExperimentalComposeUiApi::class)
+private fun snapshotOf(path: String, content: @androidx.compose.runtime.Composable () -> Unit): Boolean = try {
     val scene = ImageComposeScene(width = 1180, height = 820, density = Density(1f)) {
-        DesktopApp(exitApp = {})
+        content()
     }
     val image = scene.render()
     val data = image.encodeToData(EncodedImageFormat.PNG) ?: return false
