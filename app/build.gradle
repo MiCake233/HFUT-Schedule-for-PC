@@ -103,10 +103,6 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = '11'
-    }
-
     buildFeatures {
         compose true
         aidl true
@@ -258,4 +254,9 @@ dependencies {
     implementation(project(':network-api'))
     // 基准文件模块
     baselineProfile project(":baselineProfile")
+}
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
 }

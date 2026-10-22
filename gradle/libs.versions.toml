@@ -55,16 +55,23 @@ sharednav = "1.0.0-dev09300016"
 tesseract4android = "4.9.0"
 uiautomator = "2.3.0"
 # 非必要不建议动
-kotlin = "2.1.21"
-agp = "8.9.3"
+# 桌面端(Win)改造：升级至 2.3.10 / CMP 1.12.2，以复用 SharedNav 的 desktop(jvm) 制品
+kotlin = "2.3.10"
+# 桌面端改造：AGP 8.9.3 -> 8.13.2（KSP 2.3.x 要求 AGP >= 8.12，且正式支持 compileSdk 36）
+agp = "8.13.2"
 runner = "1.7.0"
 core = "1.5.0"
 # 非必要不建议动
-ksp = "2.1.20-1.0.32"
+# KSP 已与 Kotlin 版本解耦（KSP2），取当前稳定版
+ksp = "2.3.12"
 test = "8.9.3"
 webkit = "1.14.0"
 accompanistPermissions = "0.34.0"
-composeMultiplatform = "1.8.0"
+composeMultiplatform = "1.12.2"
+# CMP 1.12.2 对应的 JetBrains Material3（基于 Jetpack material3 1.5.0-alpha22）
+jbMaterial3 = "1.12.0-alpha03"
+# KMP 版 lifecycle（供桌面端与后续 KMP 化使用）
+lifecycleKmp = "2.11.0"
 androidx-testExt = "1.3.0"
 workRuntimeKtx = "2.11.0"
 materialVersion = "1.13.0"
@@ -124,6 +131,12 @@ glide = { module = "com.github.bumptech.glide:compose", version.ref = "glideComp
 gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "converterGson" }
 sharednav = { module = "com.github.Chiu-xaH.SharedNav:navigation-android", version.ref = "sharednav" }
+# 桌面端(jvm) 导航骨架
+sharednav-jvm = { module = "com.github.Chiu-xaH.SharedNav:navigation-jvm", version.ref = "sharednav" }
+# KMP 版 Compose Material3（桌面端与后续 KMP 化共用）
+jb-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "jbMaterial3" }
+jb-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleKmp" }
+jb-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleKmp" }
 zxing = { module = "com.google.zxing:core", version.ref = "coreVersion" }
 eddsa = { module = "net.i2p.crypto:eddsa", version.ref = "eddsa" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
