@@ -54,6 +54,11 @@ HFUT 课程表 · 桌面版（Windows）
 Windows: %APPDATA%\HFUT-Schedule
 卸载时不会自动删除数据；需要彻底清除时手动删除该目录即可。
 
+技术信息
+--------
+* 内置运行时：Temurin JDK 21.0.12.1（随安装包，无需另装 Java）
+* 构建工具链：JDK 21 + Gradle 8.13 + Compose Multiplatform 1.11.1
+
 问题反馈
 --------
 本移植版基于 GPL-3.0 开源的 HFUT-Schedule（作者 Chiu-xaH）构建，
