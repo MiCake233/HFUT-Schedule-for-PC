@@ -148,18 +148,16 @@ private fun VersionInfoCard() {
                         headlineContent = { Text(text = "版本号 ${AppInfo.getVersionCode()}") },
                         modifier = Modifier.weight(.5f)
                     )
-                    AppVersion.getSplitType().let {
-                        TransplantListItem(
-                            overlineContent = { Text(text = if(it == AppVersion.SplitType.COMMON) "全量包" else "架构分包") },
-                            leadingContent = { Icon(painter = painterResource(id = Drawables.package_2), contentDescription = EMPTY_STRING) },
-                            headlineContent = { Text(text = it.description) },
-                            modifier = Modifier.weight(.5f)
-                        )
-                    }
-                    // 包体标识
+                    // 包体标识：桌面端只有一种形态，固定展示为全量包
                     /*
                     Dev开发版可能存在更多的日志、更差的性能、以及部分隐藏入口
                      */
+                    TransplantListItem(
+                        overlineContent = { Text(text = "全量包") },
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.archive), contentDescription = EMPTY_STRING) },
+                        headlineContent = { Text(text = AppInfo.getVersionName()) },
+                        modifier = Modifier.weight(.5f)
+                    )
                 }
             }
         }

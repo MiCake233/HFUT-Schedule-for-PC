@@ -141,6 +141,10 @@ sharednav = { module = "com.github.Chiu-xaH.SharedNav:navigation-android", versi
 sharednavJvm = { module = "com.github.Chiu-xaH.SharedNav:navigation-jvm", version.ref = "sharednav" }
 # KMP 坐标（由 Gradle 按目标自动选择 android / jvm 变体）
 sharednavKmp = { module = "com.github.Chiu-xaH.SharedNav:navigation", version.ref = "sharednav" }
+# SharedNav 的 Skia 着色器模块（KMP，含桌面端 Skia 实现）
+sharednavShader = { module = "com.github.Chiu-xaH.SharedNav:shader", version.ref = "sharednav" }
+sharednavShaderAndroid = { module = "com.github.Chiu-xaH.SharedNav:shader-android", version.ref = "sharednav" }
+sharednavShaderJvm = { module = "com.github.Chiu-xaH.SharedNav:shader-jvm", version.ref = "sharednav" }
 # KMP 版 Compose Material3（桌面端与后续 KMP 化共用）
 jb-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "jbMaterial3" }
 jb-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleKmp" }

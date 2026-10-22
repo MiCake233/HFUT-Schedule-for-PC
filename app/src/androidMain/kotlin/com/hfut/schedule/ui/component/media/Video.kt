@@ -52,7 +52,7 @@ import java.io.IOException
 
 
 @Composable
-fun SimpleVideo(
+actual fun SimpleVideo(
     filePath: String,
     modifier: Modifier = Modifier,
     autoPlay: Boolean = true,
@@ -201,7 +201,7 @@ fun SimpleVideo(
  * @return 是否删除成功
  */
 suspend fun clearVideoCache(context: Context): Boolean = withContext(Dispatchers.IO) {
-    val dir = File(context.getExternalFilesDir(null), "videos")
+    val dir = File((context as? android.content.Context)?.getExternalFilesDir(null), "videos")
 
     if (!dir.exists()) return@withContext true
 
@@ -221,12 +221,12 @@ suspend fun clearVideoCache(context: Context): Boolean = withContext(Dispatchers
  * @param downloadUrl 下载链接
  * @return 本地视频路径或 null（下载失败）
  */
-suspend fun checkOrDownloadVideo(
+actual suspend fun checkOrDownloadVideo(
     context: Context,
     fileName: String,
     downloadUrl: String
 ): String? = withContext(Dispatchers.IO) {
-    val dir = File(context.getExternalFilesDir(null), "videos")
+    val dir = File((context as? android.content.Context)?.getExternalFilesDir(null), "videos")
     if (!dir.exists()) dir.mkdirs()
 
     val videoFile = File(dir, fileName)

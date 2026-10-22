@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.common
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -71,7 +72,7 @@ fun DraggableWeekButton(
     modifier: Modifier = Modifier,
     currentWeek: Long,
     key: Any?,
-    shaderState: Backdrop?,
+    shaderState: PlatformBackdrop?,
     expanded: Boolean = true,
     containerColor : Color = MaterialTheme.colorScheme.primaryContainer,
     contentColor : Color = MaterialTheme.colorScheme.primary,

@@ -77,10 +77,6 @@ import com.xah.navigation.util.LocalNavController
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-fun getLocation(campus : CampusRegion = getCampusRegion()) : String = when(campus) {
-    CampusRegion.XUANCHENG -> "101221401"
-    CampusRegion.HEFEI -> "101220101"
-}
 
 @Composable
 fun HuoZaiFeiXuan() {

@@ -250,9 +250,6 @@ fun AddEventFloatButton(
         }
     }
 }
-enum class AddEventOrigin {
-    FOCUS_EDITED,FOCUS_ADD,CALENDAR
-}
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AddEventScreen(

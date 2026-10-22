@@ -2,20 +2,17 @@ package com.hfut.schedule.logic.util.dev
 
 import com.hfut.schedule.logic.model.AppConst
 
-import android.os.Environment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.hfut.schedule.application.MyApplication
+import java.io.File
 import com.hfut.schedule.logic.util.dev.ExceptionHelper.getKeyStackTraceDesc
-import com.hfut.schedule.logic.util.other.AppVersion
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 import com.xah.common.logic.util.LogUtil
 import kotlinx.coroutines.runBlocking
-import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -69,13 +66,13 @@ object CrashHandler : Thread.UncaughtExceptionHandler {
             return
         }
         try {
-            val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val downloadsDir = File(com.xah.common.platform.Platform.dataDirPath(), "logs").apply { mkdirs() }
             val dateTime = LocalDateTime.now()
             val filename = "${AppConst.APP_NAME}_崩溃日志_${System.currentTimeMillis()}.log"
             val file = File(downloadsDir, filename)
             val log = """
-                软件版本: ${AppVersion.getVersionName()} (${AppVersion.getVersionCode()})
-                系统版本: ${AppVersion.sdkInt}
+                软件版本: ${com.hfut.schedule.logic.util.other.AppInfo.getVersionName()} (${com.hfut.schedule.logic.util.other.AppInfo.getVersionCode()})
+                系统版本: ${com.hfut.schedule.logic.util.other.AppInfo.sdkInt}
                 时间: ${dateTime.format(DateTimeManager.formatterAll)}
                 用户: ${getPersonInfo().getStudentIdFinally() ?: "游客"}
                 ${getKeyStackTraceDesc(throwable)}

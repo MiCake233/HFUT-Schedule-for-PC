@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.survey
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable

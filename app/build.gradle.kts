@@ -50,6 +50,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             // 导航 / 容器共享 / 浮窗骨架（KMP：按目标自动选 android / jvm 变体）
             api(libs.sharednavKmp)
+
             // 模糊
             implementation(libs.haze)
             implementation(libs.haze.materials)
@@ -77,6 +78,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.sharednav)
+            implementation(libs.sharednavShaderAndroid)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.appcompat)
             implementation(libs.androidx.core.ktx)
@@ -111,6 +113,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.sharednavJvm)
+            implementation(libs.sharednavShaderJvm)
             // 桌面端 SQLite 驱动（Room KMP）
             implementation(libs.androidx.sqlite.bundled)
             implementation(libs.kotlinx.coroutines.swing)

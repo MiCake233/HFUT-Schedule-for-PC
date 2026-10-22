@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.communtiy
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -68,7 +69,7 @@ fun CommunityCourseTableUI(
     onDateChange : (LocalDate) ->Unit,
     today: LocalDate,
     hazeState: HazeState,
-    backGroundHaze : Backdrop?,
+    backGroundHaze : PlatformBackdrop?,
 //    navController : NavHostController,
     onSwapShowAll : (Boolean) -> Unit,
     onRestoreHeight : () -> Unit

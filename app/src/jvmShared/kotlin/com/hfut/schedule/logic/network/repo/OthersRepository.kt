@@ -1,9 +1,8 @@
 package com.hfut.schedule.logic.network.repo
-
+import com.hfut.schedule.logic.model.dto.toRequestBody
 
 import com.google.gson.reflect.TypeToken
 import com.hfut.schedule.logic.model.dto.toDto
-import com.hfut.schedule.logic.model.dto.toRequestBody
 import com.hfut.schedule.logic.util.network.launchRequestState
 import com.hfut.schedule.logic.util.parse.roundOffString
 import com.hfut.schedule.network.api.impl.DormitoryScoreServiceCreator

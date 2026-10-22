@@ -1,6 +1,6 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
-import android.app.Activity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -94,7 +94,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 @Composable
-fun ScheduleItem(listItem : GithubIoSchedule, isFuture: Boolean, activity : Activity) {
+fun ScheduleItem(listItem : GithubIoSchedule, isFuture: Boolean, activity : Any?) {
 
     if(prefs.getString("my","")?.contains("Schedule") == true) {
         val startTime = listItem.startTime
@@ -127,7 +127,7 @@ fun ScheduleItem(listItem : GithubIoSchedule, isFuture: Boolean, activity : Acti
 }
 
 @Composable
-private fun ScheduleItemUI(listItem: GithubIoSchedule, isFuture : Boolean, activity : Activity) {
+private fun ScheduleItemUI(listItem: GithubIoSchedule, isFuture : Boolean, activity : Any?) {
     if(!listItem.showPublic) {
         return
     }
@@ -169,7 +169,7 @@ private fun ScheduleItemUI(listItem: GithubIoSchedule, isFuture : Boolean, activ
 }
 
 @Composable
-fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Activity) {
+fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Any?) {
     if(!listItem.showPublic) {
         return
     }
@@ -369,7 +369,7 @@ fun CustomItem(
     item : CustomEventDTO,
     hazeState: HazeState,
     isFuture: Boolean,
-    activity: Activity,
+    activity: Any?,
     showTomorrow : Boolean,
     showOutOfDateItems : Boolean = true,
     refresh : () -> Unit
@@ -439,7 +439,7 @@ fun DateTimeBean.toLocalDateTime(): LocalDateTime {
 fun CustomItemUI(
     item: CustomEventDTO,
     isFuture: Boolean,
-    activity: Activity,
+    activity: Any?,
     hazeState: HazeState,
     isOutOfDate : Boolean = false,
     isTomorrow : Boolean,refresh: () -> Unit

@@ -1,6 +1,7 @@
 package com.hfut.schedule.logic.network.repo
 
-import androidx.core.net.toUri
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 import com.hfut.schedule.network.api.model.response.json.wechat.WeChatZhiJianClassmates
 import com.hfut.schedule.network.api.model.response.json.wechat.WeChatZhiJianClassmateResponse
@@ -88,11 +89,11 @@ object WeChatZhiJianRepository : WeChatZhiJianRepositoryInf {
             holder = holder,
             request = {
                 // 先解析原 URL
-                val originalUri = url.toUri()
+                val originalUri = url.toHttpUrlOrNull() ?: error("非法URL: $url")
                 // 用原路径和查询参数替换 host
-                val newUrl = originalUri.buildUpon()
-                    .encodedAuthority(Constant.WX_URL.toUri().encodedAuthority)
-                    .scheme(Constant.WX_URL.toUri().scheme)
+                val newUrl = originalUri.newBuilder()
+                    .encodedAuthority(Constant.WX_URL.toHttpUrl().encodedAuthority)
+                    .scheme(Constant.WX_URL.toHttpUrl().scheme)
                     .build()
                     .toString()
                 // 处理URL 将其HOST换成

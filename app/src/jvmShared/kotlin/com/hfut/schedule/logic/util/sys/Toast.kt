@@ -1,4 +1,5 @@
 package com.hfut.schedule.logic.util.sys
+import com.xah.common.ui.model.text.asStringNow
 
 import com.xah.common.logic.util.ToastUtil
 import com.xah.common.ui.model.text.UiText

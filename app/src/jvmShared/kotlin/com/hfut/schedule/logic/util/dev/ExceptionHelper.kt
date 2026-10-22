@@ -1,6 +1,5 @@
 package com.hfut.schedule.logic.util.dev
 
-import com.hfut.schedule.logic.util.other.AppVersion
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -9,7 +8,7 @@ object ExceptionHelper {
 
     @JvmStatic
     fun getKeyStackTrace(e: Throwable): KeyThrowable {
-        val appPackage = AppVersion.appPackageName
+        val appPackage = com.hfut.schedule.logic.platform.AppCapabilities.packageName()
         val sw = StringWriter()
         val pw = PrintWriter(sw)
         e.printStackTrace(pw)

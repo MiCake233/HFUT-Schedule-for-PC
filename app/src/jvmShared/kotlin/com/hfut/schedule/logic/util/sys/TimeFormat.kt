@@ -1,4 +1,5 @@
 package com.hfut.schedule.logic.util.sys
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 /**
  * 两位数补零（时间/日期格式化用）。

@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.timetable.ui
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -62,7 +63,7 @@ fun TimeTable(
     modifier: Modifier = Modifier,
     squareModifier : Modifier = Modifier,
     scaleFactor : Float = 1f,
-    shaderState : Backdrop? = null,
+    shaderState : PlatformBackdrop? = null,
     onTapBlankRegion : ((Offset) -> Unit)? = null,
     onLongTapBlankRegion : ((Offset) -> Unit)? = null,
     onDoubleTapBlankRegion : ((Offset) -> Unit)? = null,

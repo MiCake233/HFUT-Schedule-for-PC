@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.jxglstu
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -152,7 +153,7 @@ fun JxglstuCourseTableTwo(
     dataSource : TotalCourseDataSource,
     onDateChange: (LocalDate) ->Unit,
     today: LocalDate,
-    backGroundHaze : Backdrop?,
+    backGroundHaze : PlatformBackdrop?,
     onSwapShowAll : (Boolean) -> Unit
 ) {
     val list by produceState(initialValue = emptyList(),key1 = dataSource) {
@@ -182,7 +183,7 @@ fun JxglstuCourseTableSearch(
     list : List<JxglstuLesson>,
     onDateChange: ((LocalDate) ->Unit)? = null,
     today: LocalDate? = null,
-    backGroundHaze : Backdrop? = null,
+    backGroundHaze : PlatformBackdrop? = null,
     onSwapShowAll : (Boolean) -> Unit
 ) {
     val customBackgroundAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = AppConst.CALENDAR_SQUARE_ALPHA)

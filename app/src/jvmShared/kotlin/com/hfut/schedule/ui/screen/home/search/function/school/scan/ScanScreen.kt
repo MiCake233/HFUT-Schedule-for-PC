@@ -1,4 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.scan
+
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.hfut.schedule.logic.util.sys.activityOrNull
 
 
@@ -35,7 +38,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
-import androidx.core.net.toUri
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.other.parseQRCode
 import com.hfut.schedule.logic.util.parse.isWifiContent

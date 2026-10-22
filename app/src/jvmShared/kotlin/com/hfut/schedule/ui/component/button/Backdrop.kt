@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.component.button
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import androidx.compose.runtime.Composable
 
@@ -16,3 +17,5 @@ expect interface PlatformBackdrop
  */
 @Composable
 expect fun rememberLayerBackdrop(): PlatformBackdrop
+/** 兼容旧写法：原 kyant 库里的类型名就叫 Backdrop */
+typealias Backdrop = PlatformBackdrop

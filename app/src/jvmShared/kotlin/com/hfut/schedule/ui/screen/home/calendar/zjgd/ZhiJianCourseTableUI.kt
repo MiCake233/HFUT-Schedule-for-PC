@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.zjgd
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -111,7 +112,7 @@ fun ZhiJianCourseTableUI(
     studentId : String,
     today: LocalDate,
     onDateChange: (LocalDate) ->Unit,
-    backGroundHaze : Backdrop?,
+    backGroundHaze : PlatformBackdrop?,
     hazeState: HazeState,
     onSwapShowAll : (Boolean) -> Unit
 ) {

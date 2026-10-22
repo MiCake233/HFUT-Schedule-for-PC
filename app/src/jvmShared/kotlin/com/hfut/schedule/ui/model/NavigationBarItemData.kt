@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.model
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.ui.util.rememberTouchExplorationEnabled
 
 import androidx.compose.animation.animateColorAsState
@@ -8,10 +9,6 @@ import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -142,7 +139,6 @@ fun NavigationBarItemDynamicIcon(selected : Boolean,icon : Int,filledIcon: Int) 
     )
 }
 
-@OptIn(androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun NavigationBarItemDynamicIconModern(
     selected: Boolean,
@@ -1150,7 +1146,7 @@ private fun NavigationItemContent(
 
 
 @Composable
-@OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalNavigationBarApi::class)
+@OptIn(ExperimentalNavigationBarApi::class)
 private fun NavigationIconContent(item: NewNavigationBarItemData, active: Boolean) {
     when (val icon = item.icon) {
         is NavigationBarIcon.Compose -> icon.content(active)

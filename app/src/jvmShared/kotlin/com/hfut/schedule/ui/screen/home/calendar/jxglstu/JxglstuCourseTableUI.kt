@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.jxglstu
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -139,7 +140,7 @@ fun JxglstuCourseTableUI(
     onDateChange: (LocalDate) ->Unit,
     today: LocalDate,
     hazeState: HazeState,
-    backGroundHaze : Backdrop?,
+    backGroundHaze : PlatformBackdrop?,
     isEnabled : Boolean,
     onEnabled : (Boolean) -> Unit,
     onSwapShowAll : (Boolean) -> Unit,

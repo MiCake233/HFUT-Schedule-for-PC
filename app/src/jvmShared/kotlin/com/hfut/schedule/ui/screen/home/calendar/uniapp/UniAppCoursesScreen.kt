@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.uniapp
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
 
@@ -70,7 +71,7 @@ fun UniAppCoursesScreen(
     today: LocalDate,
     hazeState: HazeState,
 //    navController: NavHostController,
-    backGroundHaze : Backdrop?,
+    backGroundHaze : PlatformBackdrop?,
     onSwapShowAll : (Boolean) -> Unit,
     onRestoreHeight : () -> Unit
 ) {
