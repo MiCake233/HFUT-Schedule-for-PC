@@ -3,10 +3,9 @@ package com.hfut.schedule.ui.style.shader
 import androidx.compose.ui.graphics.RenderEffect
 import com.xah.shader.skia.RuntimeShader
 import com.xah.shader.skia.canUseRuntimeShader
-import androidx.annotation.RequiresApi
+import com.xah.shader.skia.RuntimeShaderEffect
 import org.intellij.lang.annotations.Language
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 fun enhanceColorShader(
     enabled : Boolean
 ): RenderEffect {

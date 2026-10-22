@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.align.CenterScreen
@@ -42,7 +41,7 @@ data class SchoolNetWindow(
                     .navigationBarsPadding()
                     .statusBarsPadding()
             ) {
-                LoginWebScaUI(vm)
+                com.hfut.schedule.ui.nav.UiSlots.Render("huixin_login", vm)
             }
         }
     }

@@ -22,3 +22,6 @@ actual object PermissionSet {
 
 @androidx.compose.runtime.Composable
 actual fun currentPlatformActivity(): Any? = androidx.activity.compose.LocalActivity.current
+
+actual fun currentPlatformActivityOrNull(): Any? =
+    runCatching { com.hfut.schedule.application.MyApplication.getCurrentActivity() }.getOrNull()

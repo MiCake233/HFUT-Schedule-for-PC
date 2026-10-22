@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.xwx
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -84,7 +83,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.hfut.schedule.ui.screen.xwx.activity
+import androidx.compose.ui.backhandler.BackHandler
 
 suspend fun getXwxLogin() : XiaoWuXingLoginInfoDto? = withContext(Dispatchers.IO) {
     return@withContext try {

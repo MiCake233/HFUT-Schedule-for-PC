@@ -49,11 +49,11 @@ import com.hfut.schedule.ui.nav.destination.WorkAndRestDestination
 import com.hfut.schedule.ui.nav.destination.WorkDestination
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.screen.home.search.SearchAppBeanLite
-import com.hfut.schedule.ui.screen.util.TAB_STACK
 import com.hfut.schedule.ui.util.navigation.DestinationTrack
 import com.xah.navigation.model.dest.Destination
 import com.xah.shader.state.ShaderState
 import kotlinx.coroutines.flow.MutableStateFlow
+import com.hfut.schedule.ui.screen.util.TAB_STACK
 
 /**
  * 全局共享的UI状态放在这里，GlobalUiStateHolder强调UI的状态

@@ -15,8 +15,6 @@ import com.xah.common.logic.util.isEmptyOrBlank
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.json
 
 suspend fun getXwxPsk() : String? = withContext(Dispatchers.IO) {
     return@withContext try {
@@ -82,9 +80,9 @@ fun getWebInfo(vm: NetWorkViewModel) : SchoolNetInfo? {
             val jsons = GsonInstance.fromJson(json, HuiXinFeeResponse::class.java).map
             val data = jsons.showData
 
-            val jsonObject = JSONObject(json)
-            val dataObject = jsonObject.getJSONObject("map").getJSONObject("data")
-            dataObject.put("myCustomInfo", "undefined：undefined")
+            val jsonObject = GsonInstance.fromJson(json, com.google.gson.JsonObject::class.java)
+            val dataObject = jsonObject.getAsJsonObject("map").getAsJsonObject("data")
+            dataObject.addProperty("myCustomInfo", "undefined：undefined")
             val postJson = dataObject.toString()
 
             val webInfo = data["本期已使用流量"]?.let {

@@ -1,8 +1,5 @@
 package com.hfut.schedule.logic.network.repo
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
 
 import com.hfut.schedule.network.api.model.request.xiaowuxing.XiaoWuXingDocPreviewRequest
 import com.hfut.schedule.network.api.model.response.json.xiaowuxing.XiaoWuXingDocPreviewResponse
@@ -111,6 +108,6 @@ object XiaoWuXingRepository : XiaoWuXingRepositoryInf {
             throw Exception("登录状态失效")
         }
         // 直接返回图片字节（PNG/JPEG），由各平台 UI 自行解码，避免在数据层依赖 Android Bitmap
-        Base64.decode(result.result.imageBase64String.substringAfter("base64,").trimIndent(),Base64.DEFAULT)
+        java.util.Base64.getMimeDecoder().decode(result.result.imageBase64String.substringAfter("base64,").trimIndent())
     } catch (e: Exception) { throw e }
 }

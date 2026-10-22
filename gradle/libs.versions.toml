@@ -168,6 +168,8 @@ androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 androidx-vectordrawable = { group = "androidx.vectordrawable", name = "vectordrawable", version.ref = "vectordrawable" }
+# 共享层的系统返回键处理（Android 与桌面共用同一份 API）
+compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "composeMultiplatform" }
 
 [plugins]
 kotlinParcelize = { id = "kotlin-parcelize" }

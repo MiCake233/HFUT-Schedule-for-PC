@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.fix.about
 
+import com.hfut.schedule.logic.platform.AppCapabilities
+
 import com.hfut.schedule.logic.model.AppConst
 
 import androidx.compose.foundation.background
@@ -465,7 +467,7 @@ fun About(vm : NetWorkViewModel) {
                         scope.launch {
                             DataStoreManager.saveEnableUse(false)
                             showToast("已退出APP")
-                            com.hfut.schedule.logic.platform.AppCapabilities.exitApplication()
+                            AppCapabilities.exitApplication()
                         }
                     },
                     modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP, vertical = CARD_NORMAL_DP*2),

@@ -3,8 +3,6 @@ import com.hfut.schedule.logic.util.sys.runOnMain
 
 import com.hfut.schedule.logic.model.AppConst
 
-import android.content.Context
-import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
@@ -73,7 +71,7 @@ suspend fun regSupabase(password : String, vm: NetWorkViewModel, onResult : (Boo
 }
 
 // 一键登录
-suspend fun loginSupabaseWithCheck(jwt : String, refreshToken: String, vm: NetWorkViewModel,context : Context) : Boolean = withContext(Dispatchers.IO) {
+suspend fun loginSupabaseWithCheck(jwt : String, refreshToken: String, vm: NetWorkViewModel, context : Any?) : Boolean = withContext(Dispatchers.IO) {
     if(jwt.isEmptyOrBlank()) {
         // 未登陆过
         return@withContext false

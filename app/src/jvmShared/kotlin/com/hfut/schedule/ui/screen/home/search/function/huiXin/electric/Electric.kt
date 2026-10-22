@@ -30,7 +30,6 @@ import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 
 import dev.chrisbanes.haze.HazeState
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.EleUI
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +61,7 @@ fun Electric(vm : NetWorkViewModel, card : Boolean, hazeState: HazeState) {
             onDismissRequest = { showBottomSheet = false },
             showBottomSheet = showBottomSheet
         ) {
-            EleUI(vm = vm,hazeState)
+            com.hfut.schedule.ui.nav.UiSlots.Render("electric", vm)
         }
     }
 

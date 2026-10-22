@@ -27,8 +27,6 @@ import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.HazeState
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.getInGuaGua
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +41,7 @@ fun Shower(vm: NetWorkViewModel, hazeState: HazeState) {
 //            isFullScreen = false,
             showBottomSheet = showBottomSheet,
         ) {
-            ShowerUI(vm,hazeState = hazeState)
+            com.hfut.schedule.ui.nav.UiSlots.Render("shower", vm)
         }
     }
 
@@ -62,7 +60,8 @@ fun Shower(vm: NetWorkViewModel, hazeState: HazeState) {
                 modifier = Modifier
                     .size(30.dp),
                 onClick = {
-                    getInGuaGua(vm, navController) { loading = it }
+                    // 瓜瓜乐自动登录只在 Android 端实现；桌面端未注册该动作时什么都不做
+                    com.hfut.schedule.ui.nav.UiSlots.action("guagua_start")?.invoke(listOf(vm, navController))
                 },
             ) { Icon( painterResource(Drawables.shower), contentDescription = "Localized description",) }
         },

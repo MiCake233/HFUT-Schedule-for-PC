@@ -10,3 +10,5 @@ actual object PermissionSet {
 /** 桌面端没有 Activity 概念，恒为 null；调用方 `activity?.let {}` 会自然跳过 */
 @androidx.compose.runtime.Composable
 actual fun currentPlatformActivity(): Any? = null
+
+actual fun currentPlatformActivityOrNull(): Any? = null

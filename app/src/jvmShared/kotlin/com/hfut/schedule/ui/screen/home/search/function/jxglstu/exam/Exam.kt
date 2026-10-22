@@ -66,6 +66,7 @@ import com.xah.common.logic.util.remove
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
+import com.hfut.schedule.logic.util.sys.currentPlatformActivityOrNull
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -291,7 +292,7 @@ fun JxglstuExamUI(item : JxglstuExam, status : Boolean) {
                                                         endTimeHour.toInt(),
                                                         endTimeMinute.toInt()
                                                     )
-                                                activityOrNull()?.let { it0 ->
+                                                currentPlatformActivityOrNull()?.let { it0 ->
                                                     course.let {
                                                         place?.let { it1 ->
                                                             addToCalendars(startDateList, endDateList, it1, it,"考试", it0, remind = true)

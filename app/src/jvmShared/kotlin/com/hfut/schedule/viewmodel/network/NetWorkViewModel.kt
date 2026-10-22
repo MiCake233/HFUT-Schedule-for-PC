@@ -1,6 +1,7 @@
 package com.hfut.schedule.viewmodel.network
 
 import androidx.compose.runtime.mutableStateMapOf
+import com.hfut.schedule.logic.network.repo.XiaoWuXingRepository
 import com.hfut.schedule.logic.util.state.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
@@ -101,7 +102,6 @@ import com.hfut.schedule.logic.network.repo.OneRepository
 import com.hfut.schedule.logic.network.repo.OthersRepository
 import com.hfut.schedule.logic.network.repo.UniAppRepository
 import com.hfut.schedule.logic.network.repo.WeChatZhiJianRepository
-import com.hfut.schedule.logic.network.repo.XiaoWuXingRepository
 
 import com.xah.common.logic.state.UiStateHolder
 import com.hfut.schedule.network.api.model.Constant
@@ -111,8 +111,6 @@ import com.hfut.schedule.network.api.model.response.json.uniapp.UniAppProgramDat
 import com.hfut.schedule.network.api.model.response.json.uniapp.UniAppProgramSearchData
 import com.hfut.schedule.ui.component.network.onListenStateHolderForNetwork
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.MyApplyInfoBean
-import com.xah.bsdiffs.model.Patch
-import com.xah.bsdiffs.util.parsePatch
 import com.xah.common.logic.model.HuiXinBill
 import com.consumption.forecast.model.result.TotalResult
 import com.hfut.schedule.logic.network.repo.AdmissionRepository
@@ -163,7 +161,6 @@ class NetWorkViewModel() : ViewModel() {
     val giteeApkSizeResp = UiStateHolder<Double>()
     suspend fun getGiteeApkSize(version : String) = GithubRepository.getUpdateFileSize("$version.apk",giteeApkSizeResp)
     val giteePatchSizeResp = UiStateHolder<Double>()
-    suspend fun getGiteePatchSize(patch: Patch) = GithubRepository.getUpdateFileSize(parsePatch(patch),giteePatchSizeResp)
 
     val haiLeDeviceDetailResp = UiStateHolder<List<HaiLeDeviceDetailBean>>()
     suspend fun getHaiLeDeviceDetail(bean : HaiLeDeviceDetailRequest) = OthersRepository.getHaiLDeviceDetail(bean,haiLeDeviceDetailResp)

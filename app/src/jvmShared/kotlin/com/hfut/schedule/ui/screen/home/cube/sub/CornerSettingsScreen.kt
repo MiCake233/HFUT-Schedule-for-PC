@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -46,7 +45,6 @@ fun CornerSettingsScreen() {
         }
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface))
     } else {
-        val view = LocalView.current
         val scope = rememberCoroutineScope()
 
         Scaffold(
@@ -64,7 +62,7 @@ fun CornerSettingsScreen() {
                 Button(
                     onClick = {
                         scope.launch {
-                            DataStoreManager.saveScreenCorner(ScreenCornerHelper(view).getCornerDp().value)
+                            DataStoreManager.saveScreenCorner(ScreenCornerHelper.corner.value)
                         }
                     },
                     modifier = Modifier
@@ -107,7 +105,7 @@ fun CornerSettingsScreen() {
                         FilledTonalButton(
                             onClick = {
                                 scope.launch {
-                                    DataStoreManager.saveScreenCorner(ScreenCornerHelper(view).getCornerDp().value)
+                                    DataStoreManager.saveScreenCorner(ScreenCornerHelper.corner.value)
                                 }
                             },
                             modifier = Modifier.align(Alignment.Center)

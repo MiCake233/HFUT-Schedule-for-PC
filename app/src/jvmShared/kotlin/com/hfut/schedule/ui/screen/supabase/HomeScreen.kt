@@ -41,10 +41,7 @@ import com.hfut.schedule.ui.component.button.HazeBottomBar
 import com.hfut.schedule.ui.component.button.HazeBottomBarV2
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.component.screen.pager.CustomTabRow
-import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventFloatButton
 import com.hfut.schedule.ui.screen.supabase.cube.SupabaseSettingsScreen
-import com.hfut.schedule.ui.screen.supabase.focus.SupabaseStorageScreen
-import com.hfut.schedule.ui.screen.supabase.home.SupabaseHomeScreen
 import com.hfut.schedule.ui.screen.supabase.manage.SupabaseMeScreenRefresh
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -97,7 +94,18 @@ fun SupabaseHome(vm : NetWorkViewModel) {
         var innerPaddingValues by remember { mutableStateOf<PaddingValues?>(null) }
 
         Box(modifier = Modifier.align(Alignment.BottomEnd).zIndex(3f)) {
-            innerPaddingValues?.let { AddEventFloatButton(isSupabase = bottomBarItems != SupabaseScreen.STORAGE,isVisible = bottomBarItems != SupabaseScreen.SETTINGS,it,vm) }
+            innerPaddingValues?.let { paddings ->
+                // 共享层通过槽位渲染 Android 端的悬浮按钮；桌面端显示占位提示
+                com.hfut.schedule.ui.nav.UiSlots.Render(
+                    "add_event_fab",
+                    listOf(
+                        bottomBarItems != SupabaseScreen.STORAGE,
+                        bottomBarItems != SupabaseScreen.SETTINGS,
+                        paddings,
+                        vm
+                    )
+                )
+            }
         }
 
         Scaffold(
@@ -170,7 +178,7 @@ fun SupabaseHome(vm : NetWorkViewModel) {
             ) {
                 nav2Composable(SupabaseScreen.HOME.name) {
                     Scaffold {
-                        SupabaseHomeScreen(vm,sortType,sortReversed,innerPadding,pagerState)
+                        com.hfut.schedule.ui.nav.UiSlots.Render("supabase_home", vm)
                     }
                 }
                 nav2Composable(SupabaseScreen.ME.name) {
@@ -180,7 +188,7 @@ fun SupabaseHome(vm : NetWorkViewModel) {
                 }
                 nav2Composable(SupabaseScreen.STORAGE.name) {
                     Scaffold {
-                        SupabaseStorageScreen(innerPadding,hazeState)
+                        com.hfut.schedule.ui.nav.UiSlots.Render("supabase_storage", vm)
                     }
                 }
                 nav2Composable(SupabaseScreen.SETTINGS.name) {

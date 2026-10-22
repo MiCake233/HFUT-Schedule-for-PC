@@ -85,8 +85,7 @@ import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.common.ui.style.padding.navigationBarHeightPadding
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
-import org.json.JSONArray
-import com.hfut.schedule.logic.network.repo.json
+import com.hfut.schedule.network.core.GsonInstance
 
 private val items = listOf(
     NavigationBarItemData(
@@ -351,7 +350,7 @@ fun TotalNewsScreen(
 }
 
 fun transferToPostData(text : String, page : Int = 1)  : String {
-    val jsonArray = JSONArray(
+    val jsonArray = GsonInstance.fromJson(
         """
         [
             {"field": "pageIndex", "value": 1},
@@ -364,15 +363,16 @@ fun transferToPostData(text : String, page : Int = 1)  : String {
             {"field": 6, "value": ""},
             {"field": 7, "value": ""}
         ]
-        """
+        """,
+        com.google.gson.JsonArray::class.java
     )
 
     // 更新JSON内容
-    for (i in 0 until jsonArray.length()) {
-        val jsonObject = jsonArray.getJSONObject(i)
-        when (jsonObject.get("field")) {
-            "pageIndex" -> jsonObject.put("value", page)
-            "keyword" -> jsonObject.put("value", text)
+    for (i in 0 until jsonArray.size()) {
+        val jsonObject = jsonArray.get(i).asJsonObject
+        when (jsonObject.get("field").asString) {
+            "pageIndex" -> jsonObject.addProperty("value", page)
+            "keyword" -> jsonObject.addProperty("value", text)
         }
     }
 

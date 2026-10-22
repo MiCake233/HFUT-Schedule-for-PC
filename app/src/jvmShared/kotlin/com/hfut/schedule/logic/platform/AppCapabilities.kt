@@ -21,4 +21,24 @@ expect object AppCapabilities {
     fun packageName(): String
     /** 关闭当前页面/窗口 */
     fun finishCurrentScreen()
+
+    /** 清理应用缓存，返回释放的 MB 数 */
+    suspend fun cleanCache(): Double
+
+    /** 分享文本/链接 */
+    fun shareText(text: String)
+
+    /** 挂载桌面快捷方式（桌面端无此概念，空实现） */
+    fun initShortcuts(any: Any?, sort: Any?)
+
+    /** 读取系统日历列表（桌面端返回空） */
+    fun queryCalendars(): List<Pair<Long, String>>
+    /** 屏幕高度（dp）。Android 取配置；桌面端取默认值 */
+    fun screenHeightDp(): Int
+
+    /** 按文本内容打开对应应用或网页（学习通 / U 校园 / 雨课堂 / MOOC / 外链） */
+    fun openOperation(info: String)
+
+    /** 退出整个应用 */
+    fun exitApplication()
 }

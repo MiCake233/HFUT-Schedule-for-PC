@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.model.choice.ColorMode
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 /** 当前主题是否为深色（跟随用户设置或系统）。原在 WebViewFactory 中，与平台无关，抽到共享层。 */
 @Composable

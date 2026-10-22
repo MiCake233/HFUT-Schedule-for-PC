@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.logic.util.other.AppInfo
-import com.hfut.schedule.logic.util.shortcut.AppShortcutManager
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.datetime.getCelebration
 import com.hfut.schedule.logic.util.sys.datetime.getUserAge
@@ -39,6 +38,7 @@ import com.xah.navigation.util.DefaultBackHandler
 import com.xah.navigation.util.rememberNavDependencies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.hfut.schedule.logic.platform.AppCapabilities
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -107,7 +107,7 @@ fun MainHost(
 
     // 动态ShortCut添加（长按图标菜单）
     LaunchedEffect(shortcutSort) {
-        AppShortcutManager.init(context,shortcutSort)
+        AppCapabilities.initShortcuts(null, shortcutSort)
     }
 
     LaunchedEffect(corner) {

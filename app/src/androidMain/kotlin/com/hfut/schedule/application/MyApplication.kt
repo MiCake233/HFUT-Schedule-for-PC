@@ -54,7 +54,7 @@ class MyApplication : Application() {
         LogUtil.init(APP_NAME)
         // 控制SharedNav库的日志
         com.sharednav.common.util.LogUtil.init("SharedNav(${APP_NAME})", BuildConfig.DEBUG)
-        // 注册DeepLink
+        // 注册 Android 专属子页面槽位\n        com.hfut.schedule.ui.nav.registerAndroidUiSlots()\n        // 注册DeepLink
         DeepLinkRegistry.init(deepLinks)
         GlobalScope.launch {
             // 初始化周数（为课程表服务）

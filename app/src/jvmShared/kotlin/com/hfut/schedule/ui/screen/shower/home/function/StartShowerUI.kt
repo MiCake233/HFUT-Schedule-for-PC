@@ -52,7 +52,6 @@ import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.sys.PermissionSet.checkAndRequestCameraPermission
 import com.hfut.schedule.logic.util.sys.showToast
-import com.hfut.schedule.ui.component.camera.ScanQrCodeView
 import com.hfut.schedule.ui.component.dialog.LittleDialog
 import com.hfut.schedule.ui.component.network.CommonNetworkScreen
 import com.hfut.schedule.ui.component.status.StatusIcon
@@ -73,7 +72,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.hfut.schedule.ui.screen.shower.home.function.text
 
 suspend fun startShower(vm : NetWorkViewModel, macLocation : String) = withContext(Dispatchers.IO) {
     val loginCode = SharedPrefs.prefs.getString("loginCode",null)
@@ -139,8 +137,10 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
             }
         ) {
             Box(modifier = Modifier.height(height)) {
-                ScanQrCodeView(modifier = Modifier.fillMaxSize()) { result ->
-                    val text = result.text
+                com.hfut.schedule.ui.nav.UiSlots.Render("scan_camera", null) { androidx.compose.material3.Text("桌面端暂不支持扫码") }
+                val result: String? = null
+                if (result != null) {
+                    val text = result
                     if(text.contains("KLCXKJ-Water")) {
                         try {
                             val list = text.split(",")
@@ -272,10 +272,9 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        activityOrNull()?.let {
-                            checkAndRequestCameraPermission(it)
-                            show = true
-                        }
+                        // 桌面端没有摄像头扫码，直接提示不可用
+                        checkAndRequestCameraPermission(null)
+                        show = true
                     }) {
                     Icon(painter = painterResource(Drawables.qr_code_scanner), contentDescription = "description")
                 }

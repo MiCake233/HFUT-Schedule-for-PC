@@ -8,7 +8,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.hfut.schedule.ui.nav.destination.ControlCenterDestination
-import com.hfut.schedule.ui.nav.destination.HomeDestination
 import com.xah.floating.component.FloatingBackHandler
 import com.xah.floating.util.LocalFloatingControllerSafely
 import com.xah.navigation.component.NavigationBackHandler

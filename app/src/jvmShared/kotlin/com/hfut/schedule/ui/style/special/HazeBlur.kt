@@ -32,7 +32,6 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -63,6 +62,8 @@ import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.rememberHazeState
+import com.hfut.schedule.ui.component.button.PlatformBackdrop
+import com.hfut.schedule.ui.component.button.layerBackdropSource
 
 
 @Composable
@@ -256,13 +257,13 @@ fun Modifier.backDropSource(
 }
 @Composable
 fun Modifier.backDropSource(
-    backdrop : LayerBackdrop
+    backdrop : PlatformBackdrop
 ): Modifier {
     val isTransitioning = LocalNavControllerSafely.current?.isTransitioning ?: false
     val enableEffect = enableEffect()
     val enableLiquidGlass by DataStoreManager.enableLiquidGlass.collectAsState(initial = AppInfo.CAN_SHADER)
     return if(enableLiquidGlass && enableEffect) {
-        this.layerBackdrop(backdrop)
+        this.layerBackdropSource(backdrop)
     } else {
         this
     }
@@ -331,7 +332,7 @@ fun HazeBottomSheet(
     val density = LocalDensity.current
     val statusBarHeight = WindowInsets.statusBars.getTop(density)
     val navigationBarHeight = WindowInsets.navigationBars.getBottom(density)
-    val screenHeight = with(density) { LocalConfiguration.current.screenHeightDp.dp.roundToPx() }
+    val screenHeight = with(density) { com.hfut.schedule.logic.platform.AppCapabilities.screenHeightDp().dp.roundToPx() }
     val finalScreenHeight = screenHeight - statusBarHeight - navigationBarHeight
     val isFullScreen = height != null && height!! >= finalScreenHeight
     ModalBottomSheet(

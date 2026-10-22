@@ -72,9 +72,6 @@ import com.hfut.schedule.ui.screen.card.function.CardLimit
 import com.hfut.schedule.ui.screen.card.function.SelecctDateRange
 import com.hfut.schedule.ui.screen.home.calendar.jxglstu.loginHuiXin
 import com.hfut.schedule.ui.screen.home.focus.funiction.initCardNetwork
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.EleUI
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI
-import com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.washing.WashingUI
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
@@ -254,7 +251,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             },
             showBottomSheet = showBottomSheet_ELectric,
         ) {
-            EleUI(vm = vm,hazeState)
+            com.hfut.schedule.ui.nav.UiSlots.Render("electric", vm)
         }
     }
 
@@ -265,7 +262,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             },
             showBottomSheet = showBottomSheet_Web
         ) {
-            LoginWebScaUI( vm,)
+            com.hfut.schedule.ui.nav.UiSlots.Render("huixin_login", vm)
         }
     }
 
@@ -276,7 +273,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             },
             showBottomSheet = showBottomSheet_Web,
         ) {
-            ShowerUI(vm,hazeState = hazeState)
+            com.hfut.schedule.ui.nav.UiSlots.Render("shower", vm) // ShowerUI(vm,hazeState = hazeState)
         }
     }
 

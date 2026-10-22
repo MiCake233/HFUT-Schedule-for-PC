@@ -58,17 +58,14 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.schedule.logic.util.other.AppInfo
-import com.hfut.schedule.logic.util.storage.file.cleanCache
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.Starter
-import com.hfut.schedule.logic.util.sys.backToHome
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.button.NoPadding
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.text.AnimatedTextCarousel
-import com.hfut.schedule.ui.nav.destination.HomeDestination
 import com.hfut.schedule.ui.nav.destination.VersionInfoDestination
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 
@@ -91,6 +88,7 @@ import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.hfut.schedule.logic.util.sys.backToHome
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
 )
@@ -148,7 +146,7 @@ fun UpdateSuccessScreen() {
                 Button(
                     onClick = {
                         scope.launch {
-                            val result = async { cleanCache(context ) }.await()
+                            val result = async { com.hfut.schedule.logic.platform.AppCapabilities.cleanCache() }.await()
                             showToast("已清理缓存 $result MB")
                             async {
                                 SharedPrefs.saveString(

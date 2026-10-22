@@ -117,10 +117,8 @@ import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.Transfe
 import com.hfut.schedule.ui.screen.home.search.function.my.holiday.Holiday
 import com.hfut.schedule.ui.screen.home.search.function.my.notification.NotificationsCenter
 import com.hfut.schedule.ui.screen.home.search.function.my.supabase.Supabase
-import com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebUI
 import com.hfut.schedule.ui.screen.home.search.function.one.emptyRoom.Classroom
 import com.hfut.schedule.ui.screen.home.search.function.one.mail.Mail
-import com.hfut.schedule.ui.screen.home.search.function.one.pay.Pay
 import com.hfut.schedule.ui.screen.home.search.function.other.AI
 import com.hfut.schedule.ui.screen.home.search.function.other.Track
 import com.hfut.schedule.ui.screen.home.search.function.other.life.Life
@@ -137,7 +135,6 @@ import com.hfut.schedule.ui.screen.home.search.function.school.news.News
 import com.hfut.schedule.ui.screen.home.search.function.school.repair.Repair
 import com.hfut.schedule.ui.screen.home.search.function.school.scan.Scan
 import com.hfut.schedule.ui.screen.home.search.function.school.sport.lepao.LePaoYun
-import com.hfut.schedule.ui.screen.home.search.function.school.student.ToadyCampus
 import com.hfut.schedule.ui.screen.home.search.function.school.teacherSearch.TeacherSearch
 import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.WebVpn
 import com.hfut.schedule.ui.screen.home.search.function.school.work.Work
@@ -153,7 +150,6 @@ import com.xah.container.component.base.sharedContainer
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.LogUtil
 import dev.chrisbanes.haze.HazeState
-import com.hfut.schedule.network.api.inf.pay
 
 data class SearchAppBean(
     val id : Int,
@@ -223,7 +219,7 @@ fun SearchScreen(
                 SearchAppBean(8,"${FailRateDestination.title.asStringNow()}", { FailRate() }, FailRateDestination.key),
                 SearchAppBean(9,"${TermCoursesDestination.TITLE.asStringNow()} 教材 课本", { CourseTotal(ifSaved) }, TermCoursesDestination(ifSaved,"SEARCH").key),
                 SearchAppBean(10,"${PersonInfoDestination.title.asStringNow()}", { PersonUI() }, PersonInfoDestination.key),
-                SearchAppBean(11,"${WebFolderDestination.title.asStringNow()} 实验室 ${stringOf(Strings.navigation_label_hui_xin)}", { WebUI() }, WebFolderDestination.key),
+                SearchAppBean(11,"${WebFolderDestination.title.asStringNow()} 实验室 ${stringOf(Strings.navigation_label_hui_xin)}", { com.hfut.schedule.ui.nav.UiSlots.Render("web_lab", vm) }, WebFolderDestination.key),
                 SearchAppBean(12,"${stringOf(Strings.navigation_label_shower)} 洗澡 呱呱物联 ${stringOf(Strings.navigation_label_notification_box)} 缴费", { Shower(vm,hazeState) }),
                 SearchAppBean(13,"${SelectCoursesDestination.title.asStringNow()}", { SelectCourse(ifSaved) }, SelectCoursesDestination.key),
                 SearchAppBean(14,"${DormitoryDestination.title.asStringNow()} 寝室卫生评分 寝室卫生分数", { DormitoryScoreXuanCheng() }, DormitoryDestination.key),
@@ -244,10 +240,10 @@ fun SearchScreen(
                 SearchAppBean(29,"${TransferMajorDestination.title.asStringNow()}", { Transfer(ifSaved) }, TransferMajorDestination.key),
                 SearchAppBean(30,"${CourseSearchDestination.title.asStringNow()} 全校开课 课程", { CoursesSearch(ifSaved) }, CourseSearchDestination.key),
                 SearchAppBean(31,"${TeacherSearchDestination.title.asStringNow()} 老师检索", { TeacherSearch() }, TeacherSearchDestination.key),
-                SearchAppBean(32,"${FeeDestination.title.asStringNow()} 费用 欠缴学费", { Pay() }, FeeDestination.key),
+                SearchAppBean(32,"${FeeDestination.title.asStringNow()} 费用 欠缴学费", { com.hfut.schedule.ui.nav.UiSlots.Render("pay", vm) }, FeeDestination.key),
 //                SearchAppBean(33,"实习", { Practice(ifSaved) }),
                 SearchAppBean(34,"${AlumniDestination.title.asStringNow()} 校友 毕业", { Alumni() }, AlumniDestination.key),
-                SearchAppBean(35,"${StuTodayCampusDestination.title.asStringNow()} 学工系统 学工平台 请假 助学金 奖学金 贫困 寝室 心理 日常", { ToadyCampus() }, StuTodayCampusDestination.key),
+                SearchAppBean(35,"${StuTodayCampusDestination.title.asStringNow()} 学工系统 学工平台 请假 助学金 奖学金 贫困 寝室 心理 日常", { com.hfut.schedule.ui.nav.UiSlots.Render("today_campus", vm) }, StuTodayCampusDestination.key),
                 SearchAppBean(36,"${stringOf(Strings.navigation_label_ietp)} 大学生创新创业系统", { IETP() }, WebViewDestination.getKey(Constant.IETP_URL)),
                 SearchAppBean(37,"${WorkDestination.title.asStringNow()} 实习 春招 双选 秋招", { Work() }, WorkDestination.key),
                 SearchAppBean(38,"${HolidayDestination.title.asStringNow()} 国家法定节假日 假期 节日 调休", { Holiday() }, HolidayDestination.key),

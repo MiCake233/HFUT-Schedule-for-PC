@@ -31,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import com.hfut.schedule.R
 import com.hfut.schedule.network.api.model.response.json.jxglstu.transfer.JxglstuTransferMajorMyApply
 import com.hfut.schedule.network.api.model.response.json.jxglstu.transfer.JxglstuTransferMajorData
 import com.xah.common.logic.state.NetworkUiState

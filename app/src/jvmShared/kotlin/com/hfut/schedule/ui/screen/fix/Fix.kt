@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.fix
 
+import com.hfut.schedule.logic.util.sys.currentPlatformActivity
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -18,7 +20,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
-import com.hfut.schedule.ui.screen.fix.fix.FixUI
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
@@ -32,7 +33,7 @@ import dev.chrisbanes.haze.hazeSource
 fun Fix(vm : NetWorkViewModel) {
     val hazeState = rememberHazeBlur()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val context = LocalActivity.current
+    val context = currentPlatformActivity()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
@@ -46,7 +47,7 @@ fun Fix(vm : NetWorkViewModel) {
                     title = { Text("修复") },
                     navigationIcon = {
                         IconButton(onClick = {
-                            context?.finish()
+                            com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
                         }) {
                             Icon(painterResource(Drawables.arrow_back), contentDescription = EMPTY_STRING, tint = MaterialTheme.colorScheme.primary)
                         }
@@ -59,7 +60,7 @@ fun Fix(vm : NetWorkViewModel) {
             modifier = Modifier.hazeSource(state = hazeState),
             color = MaterialTheme.colorScheme.surfaceContainer
         ) {
-            FixUI(innerPadding = innerPadding,vm)
+            com.hfut.schedule.ui.nav.UiSlots.Render("fix") // FixUI(innerPadding = innerPadding,vm)
         }
     }
 }

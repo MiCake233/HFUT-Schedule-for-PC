@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -176,7 +175,6 @@ fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Any?
     val time = listItem.time
     val info = listItem.info
     val title = listItem.title
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     //仅接受showPublic为true
@@ -226,7 +224,7 @@ fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Any?
                                         contentDescription = "Localized description",)
                                 }
                             },
-                            modifier = Modifier.clickable { openOperation(info,context) }
+                            modifier = Modifier.clickable { com.hfut.schedule.logic.platform.AppCapabilities.openOperation(info) }
                         )
                 }
             } else {
@@ -244,7 +242,7 @@ fun NetCourseItem(listItem : GithubIoSchedule, isFuture: Boolean, activity: Any?
                             trailingContent = {
                                 Text(text = "今日截止")
                             },
-                            modifier = Modifier.clickable { openOperation(info,context) }
+                            modifier = Modifier.clickable { com.hfut.schedule.logic.platform.AppCapabilities.openOperation(info) }
                         )
                 }
             }

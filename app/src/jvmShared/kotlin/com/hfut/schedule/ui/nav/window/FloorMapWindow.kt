@@ -31,7 +31,6 @@ import com.hfut.schedule.ui.component.button.NoPadding
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.network.UrlImage
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
-import com.hfut.schedule.ui.screen.home.search.function.other.life.RoomMap
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.align.RowHorizontal
@@ -90,7 +89,7 @@ data class FloorMapWindow(
 
                             if(uiState is NetworkUiState.Success && controller.current()?.window == this@FloorMapWindow) {
                                 val buildings = (uiState as NetworkUiState.Success).data
-                                RoomMap(buildings, selectedIds = selectedRooms)
+                                com.hfut.schedule.ui.nav.UiSlots.Render("room_map") // RoomMap(buildings, selectedIds = selectedRooms)
                             }
                         }
 

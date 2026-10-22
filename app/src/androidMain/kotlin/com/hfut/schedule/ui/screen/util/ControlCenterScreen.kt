@@ -95,7 +95,6 @@ fun Char.isChinese(): Boolean = this in '\u4e00'..'\u9fff'
 
 fun containsChinese(str: String): Boolean = str.any { it.isChinese() }
 
-const val TAB_STACK = 0
 private const val TAB_SETTINGS = 1
 private const val TAB_SEARCH = 2
 

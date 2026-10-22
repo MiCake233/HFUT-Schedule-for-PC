@@ -674,5 +674,13 @@ actual fun RenderPlatformScreen(key: String): Boolean = when (key.split("#").fir
                     XwxMainScreen(vm)
             true
         }
+        "platform_settings_appearance" -> {
+            com.hfut.schedule.ui.nav.destination.SettingsAppearanceDestination.Content()
+            true
+        }
+        "platform_settings_jxglstu_password" -> {
+            com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordDestination.Content()
+            true
+        }
     else -> false
 }

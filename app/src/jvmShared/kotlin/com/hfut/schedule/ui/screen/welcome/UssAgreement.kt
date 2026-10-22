@@ -34,19 +34,15 @@ import androidx.compose.ui.graphics.RectangleShape
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.work.Data
 import com.hfut.schedule.logic.util.other.AppInfo
-import com.hfut.schedule.logic.util.storage.file.killAppUnSafely
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.sys.Starter
-import com.hfut.schedule.logic.util.sys.backToHome
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.button.NoPadding
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.text.AnimatedTextCarousel
-import com.hfut.schedule.ui.nav.destination.HomeDestination
 import com.hfut.schedule.ui.style.special.bottomBarBlur
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
@@ -60,7 +56,7 @@ import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import com.xah.common.ui.res.work
+import com.hfut.schedule.logic.util.sys.backToHome
 
 val arguments = listOf(
     "本应用所使用权限为：网络、日历(用于向日历写入日程)、存储(用于导入导出文件)、相机(用于扫码)、通知，均由用户自由决定授予；",
@@ -142,7 +138,7 @@ fun UseAgreementScreen() {
                                     scope.launch {
                                         DataStoreManager.saveEnableUse(false)
                                         showToast("已关闭APP")
-                                        killAppUnSafely()
+                                        com.hfut.schedule.logic.platform.AppCapabilities.exitApplication()
                                     }
                                 },
                                 modifier = Modifier

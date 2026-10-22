@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.card
 
+import com.hfut.schedule.logic.util.sys.currentPlatformActivity
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -117,7 +119,7 @@ fun CardUI(vm : NetWorkViewModel) {
     var sorted by remember { mutableStateOf(true) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val backdrop = rememberLayerBackdrop()
-    val context = LocalActivity.current
+    val context = currentPlatformActivity()
     val navTopController = LocalNavController.current
     Scaffold(
 //        modifier = Modifier.fillMaxSize(),

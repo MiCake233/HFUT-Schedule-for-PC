@@ -1,5 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.classroom
 
+
 import com.hfut.schedule.logic.model.AppConst
 
 import androidx.compose.animation.AnimatedVisibility
@@ -119,7 +120,6 @@ import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.TimeTableType
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.distinctForUniApp
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.parseJxglstuIntTime
 import com.hfut.schedule.ui.screen.home.calendar.timetable.ui.TimeTable
-import com.hfut.schedule.ui.screen.home.smoothToOne
 import com.hfut.schedule.ui.style.color.textFiledAllTransplant
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -899,6 +899,7 @@ fun ClassroomLessonsScreen(
         refreshNetwork()
     }
     val scaleFactor = rememberSaveable { mutableFloatStateOf(1f) } // 捏合手势缩放因子
+    val scope = rememberCoroutineScope()
 
     var today by remember { mutableStateOf(DateTimeManager.getToday()) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -1057,7 +1058,7 @@ fun ClassroomLessonsScreen(
                         innerPadding = innerPadding,
                         onTapBlankRegion = {
                             if(!isExpand) {
-                                smoothToOne(scaleFactor)
+                                scope.launch { com.hfut.schedule.ui.util.smoothToOneLocal(scaleFactor) }
                             }
                         },
                         scaleFactor = scaleFactor.floatValue,

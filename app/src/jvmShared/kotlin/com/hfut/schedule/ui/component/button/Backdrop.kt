@@ -2,6 +2,7 @@ package com.hfut.schedule.ui.component.button
 import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
 /**
  * 平台无关的「液态玻璃背景源」。
@@ -17,5 +18,12 @@ expect interface PlatformBackdrop
  */
 @Composable
 expect fun rememberLayerBackdrop(): PlatformBackdrop
+
+/**
+ * 把该图层记录为「液态玻璃」的背景源。
+ * Android 用 kyant backdrop 的 layerBackdrop；桌面端由自研玻璃效果直接采样，无需记录图层。
+ */
+@Composable
+expect fun Modifier.layerBackdropSource(backdrop: PlatformBackdrop): Modifier
 /** 兼容旧写法：原 kyant 库里的类型名就叫 Backdrop */
 typealias Backdrop = PlatformBackdrop

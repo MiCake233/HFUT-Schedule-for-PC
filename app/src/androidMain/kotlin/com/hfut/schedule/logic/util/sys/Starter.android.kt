@@ -185,10 +185,8 @@ actual object PlatformStarter {
 
 // ---------- Android 专属的旧入口（桌面端没有等价物，保留在 androidMain） ----------
 
-fun NavigationController.backToHome(
-    subStartDestination: BottomBarItems = BottomBarItems.FOCUS,
-) {
-    push(
+actual fun navigateToHome(navController: NavigationController, subStartDestination: BottomBarItems) {
+    navController.push(
         HomeDestination(subStartDestination),
         launchMode = LaunchMode.Clear(),
     )

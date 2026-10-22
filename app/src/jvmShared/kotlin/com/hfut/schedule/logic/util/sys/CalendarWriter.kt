@@ -12,7 +12,7 @@ expect suspend fun addToCalendars(
     title: String,
     remark: String?,
     activity: Any?,
-    remind: Boolean
+    remind: Boolean = false
 )
 
 /** 用标准格式化的 YYYY-MM-DD / HH:mm 写入日历 */
@@ -35,5 +35,5 @@ expect suspend fun addToCalendars(
     title: String,
     remark: String?,
     activity: Any?,
-    remind: Boolean
+    remind: Boolean = false
 )

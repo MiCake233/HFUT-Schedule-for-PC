@@ -19,7 +19,6 @@ import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.WebURLEntity
 import com.hfut.schedule.logic.database.entity.WebURLType
 import com.hfut.schedule.logic.util.sys.ClipBoardHelper
-import com.hfut.schedule.logic.util.sys.ShareTo
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.button.CardBottomButton
@@ -132,7 +131,7 @@ fun StorageWeb(hazeState : HazeState) {
                                         ClipBoardHelper.copy(url)
                                     },
                                     CardBottomButton("分享") {
-                                        ShareTo.shareString(url)
+                                        com.hfut.schedule.logic.platform.AppCapabilities.shareText(url)
                                     },
                                     CardBottomButton("删除", errorColor = true) {
                                         selectedDelTitle = name

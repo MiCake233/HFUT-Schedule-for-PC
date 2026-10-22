@@ -42,11 +42,6 @@ import com.hfut.schedule.ui.component.network.UrlImage
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.AddEventDestination
 import com.hfut.schedule.ui.nav.destination.ClassroomDestination
-import com.hfut.schedule.ui.nav.destination.SettingsAppearanceDestination
-import com.hfut.schedule.ui.nav.destination.SettingsConfigurationDestination
-import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordDestination
-import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordDestination
-import com.hfut.schedule.ui.nav.destination.SettingsShortcutEditDestination
 import com.hfut.schedule.ui.nav.destination.TrackDestination
 import com.hfut.schedule.ui.nav.destination.VersionInfoDestination
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
@@ -60,6 +55,7 @@ import com.xah.floating.util.LocalFloatingControllerSafely
 import com.xah.navigation.util.LocalNavController
 import com.xah.navigation.util.LocalNavControllerSafely
 import kotlinx.coroutines.launch
+import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordPlatformDestination
 
 private const val RELEASE_DATE = "2026-10-10"
 
@@ -71,7 +67,7 @@ fun VersionInfo() {
 //        UpdateItems("新增 允许在课程表显示日历账户的日程")
         UpdateItems("新增 支持极端场景下数据库升级失败而导致崩溃的止损措施")//
         UpdateItems("新增 支持自动获取教务系统密码")//
-        UpdateItems("新增 修改教务系统密码的入口","位于 查询中心-个人信息-密码信息",to = To.Screen(SettingsJxglstuPasswordDestination))//
+        UpdateItems("新增 修改教务系统密码的入口","位于 查询中心-个人信息-密码信息",to = To.Screen(SettingsJxglstuPasswordPlatformDestination))//
         UpdateItems("重构 创建日程时选择日期不再按范围，而是自由选择若干日期")
         UpdateItems("新增 支持克隆已有日程","编辑日程时右上角的复制图标，点击后会复制此日程信息到新建页面")//
         UpdateItems("新增 支持接入大模型帮助创建日程","位于右上角彩色图标",to = To.Screen(AddEventDestination()))
@@ -154,7 +150,7 @@ private fun VersionInfoCard() {
                      */
                     TransplantListItem(
                         overlineContent = { Text(text = "全量包") },
-                        leadingContent = { Icon(painter = painterResource(id = Drawables.archive), contentDescription = EMPTY_STRING) },
+                        leadingContent = { Icon(painter = painterResource(id = Drawables.history), contentDescription = EMPTY_STRING) },
                         headlineContent = { Text(text = AppInfo.getVersionName()) },
                         modifier = Modifier.weight(.5f)
                     )

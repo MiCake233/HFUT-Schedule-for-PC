@@ -1,4 +1,6 @@
 package com.hfut.schedule.ui.nav.window
+
+import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.animation.core.Animatable
@@ -33,7 +35,8 @@ import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.PermissionSet
 import com.hfut.schedule.ui.component.dialog.LittleDialog
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
-import com.hfut.schedule.logic.util.sys.saveImageToGallery\nimport com.hfut.schedule.ui.style.special.rememberHazeBlur
+import com.hfut.schedule.logic.util.sys.saveImageToGallery
+import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.util.text
 import com.xah.container.component.base.SharedContent
@@ -116,7 +119,6 @@ private fun ZoomableImage(
             onConfirmation = {
                 scope.launch {
                     // 保存图片
-                    activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
                     saveImageToGallery(bitmap)?.let { showToast("已保存至 $it") }
                     displayDialog = false
                 }

@@ -24,6 +24,8 @@ kotlin {
         optIn.add("androidx.compose.material3.ExperimentalMaterial3ExpressiveApi")
         optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
         optIn.add("androidx.compose.foundation.ExperimentalFoundationApi")
+        // Compose 1.11 的共享层 BackHandler 仍是实验 API
+        optIn.add("androidx.compose.ui.ExperimentalComposeUiApi")
     }
 
     sourceSets {
@@ -69,6 +71,8 @@ kotlin {
             implementation(libs.retrofit)
             implementation(libs.gson)
             implementation(libs.zxing)
+            // 共享层的 BackHandler（Android → Activity 返回键，桌面 → 窗口级返回）
+            implementation(libs.compose.ui.backhandler)
             // 模块
             api(project(":common-ui"))
             api(project(":common-logic"))

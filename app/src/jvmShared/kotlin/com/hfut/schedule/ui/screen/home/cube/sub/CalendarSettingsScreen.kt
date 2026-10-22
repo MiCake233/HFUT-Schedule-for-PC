@@ -26,14 +26,12 @@ import androidx.navigation.NavHostController
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.PermissionSet
-import com.hfut.schedule.logic.util.sys.queryCalendars
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 
 import kotlinx.coroutines.launch
-import com.hfut.schedule.ui.screen.home.cube.sub.activity
 
 @Composable
 fun CalendarSettingsScreen(innerPadding : PaddingValues) {
@@ -42,15 +40,10 @@ fun CalendarSettingsScreen(innerPadding : PaddingValues) {
 //    TransitionBackHandler(navController,enablePredictive) {
 //        scale = it
 //    }
-    LaunchedEffect(activity) {
-        activityOrNull()?.let {
-            PermissionSet.checkAndRequestCalendarPermission(it)
-        }
-    }
     val defaultCalendarAccount by DataStoreManager.defaultCalendarAccountId.collectAsState(initial = 1)
 
     val calendarAccounts by produceState<List<Pair<Long, String>>>(initialValue = emptyList()) {
-        value = queryCalendars()
+        value = com.hfut.schedule.logic.platform.AppCapabilities.queryCalendars()
     }
     val scope = rememberCoroutineScope()
     Column(modifier = Modifier.padding(innerPadding)) {

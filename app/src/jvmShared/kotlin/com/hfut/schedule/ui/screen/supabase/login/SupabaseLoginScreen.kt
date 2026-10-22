@@ -60,8 +60,7 @@ import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.navigation.util.LocalNavController
 import kotlinx.coroutines.launch
-import com.hfut.schedule.ui.screen.supabase.login.regSupabase
-import com.hfut.schedule.ui.screen.supabase.login.loginSupabaseWithPassword
+import com.hfut.schedule.logic.util.sys.currentPlatformActivityOrNull
 
 private const val TAB_LOGIN = 0
 private const val TAB_REG = 1
@@ -70,7 +69,7 @@ private const val TAB_REG = 1
 @Composable
 fun SupabaseLoginScreen(vm : NetWorkViewModel) {
     val navController = LocalNavController.current
-    val context = LocalActivity.current
+    val context = currentPlatformActivityOrNull()
     var hidden by rememberSaveable { mutableStateOf(true) }
     var loading by rememberSaveable { mutableStateOf(false) }
     val titles = remember { listOf("登录","注册") }

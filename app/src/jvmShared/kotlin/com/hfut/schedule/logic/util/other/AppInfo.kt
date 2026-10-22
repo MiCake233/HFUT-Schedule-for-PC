@@ -36,7 +36,10 @@ object AppInfo {
     val isNormalEnv: Boolean
         get() = !isDebug && isSignatureValid && !isDev && !isRunningOnAvd && !isRunningOnWsa && !isHarmony
 
+    // 属性与旧函数 API 并存：@JvmName 只改 JVM 签名，Kotlin 调用方不受影响
+    @JvmName("versionNameText")
     fun getVersionName(): String = versionName
 
+    @JvmName("versionCodeValue")
     fun getVersionCode(): Int = versionCode
 }

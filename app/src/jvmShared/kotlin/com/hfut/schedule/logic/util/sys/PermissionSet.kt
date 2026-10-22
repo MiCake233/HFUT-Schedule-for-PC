@@ -22,3 +22,8 @@ expect fun currentPlatformActivity(): Any?
  */
 @androidx.compose.runtime.Composable
 fun activityOrNull(): Any? = currentPlatformActivity()
+/**
+ * 非 @Composable 上下文（协程 / 点击回调）里获取当前窗口。
+ * Android 取全局记录的 Activity；桌面端恒为 null，调用链自然跳过。
+ */
+expect fun currentPlatformActivityOrNull(): Any?

@@ -23,10 +23,10 @@ import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
-import com.hfut.schedule.ui.nav.destination.SettingsAppearanceDestination
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.navigation.util.LocalNavController
 import kotlinx.coroutines.launch
+import com.hfut.schedule.ui.nav.destination.SettingsAppearancePlatformDestination
 
 @Composable
 fun LabScreen(innerPadding : PaddingValues) {
@@ -58,14 +58,14 @@ fun LabScreen(innerPadding : PaddingValues) {
                     trailingContent = {
                         FilledTonalIconButton(
                             onClick = {
-                                navController.push(SettingsAppearanceDestination, effect = JumpTransitionEffectWallpaper())
+                                navController.push(SettingsAppearancePlatformDestination, effect = JumpTransitionEffectWallpaper())
                             }
                         ) {
                             Icon(painterResource(Drawables.forward),null)
                         }
                     },
                     modifier = Modifier.clickable {
-                        navController.push(SettingsAppearanceDestination, effect = JumpTransitionEffectWallpaper())
+                        navController.push(SettingsAppearancePlatformDestination, effect = JumpTransitionEffectWallpaper())
                     }
                 )
             }

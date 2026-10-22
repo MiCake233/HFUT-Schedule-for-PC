@@ -57,9 +57,6 @@ import com.xah.navigation.util.LocalNavController
 import com.xah.common.logic.util.LogUtil
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
-import com.hfut.schedule.ui.screen.home.search.function.other.life.CampusMapScreen
-import com.hfut.schedule.ui.screen.home.search.function.other.life.WeatherScreen
-import com.hfut.schedule.ui.screen.home.search.function.other.life.StarterScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
@@ -212,7 +209,7 @@ fun LifeScreen(
         ) {
             nav2Composable(LifeBarItems.CAMPUS.name) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    CampusMapScreen(vm,innerPadding)
+                    com.hfut.schedule.ui.nav.UiSlots.Render("campus_map", vm)
                 }
             }
             nav2Composable(LifeBarItems.WEATHER.name) {
@@ -221,7 +218,7 @@ fun LifeScreen(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {
                         InnerPaddingHeight(innerPadding,true)
-                        WeatherScreen(vm)
+                        com.hfut.schedule.ui.nav.UiSlots.Render("weather", vm)
                         InnerPaddingHeight(innerPadding,false)
                     }
                 }
@@ -232,7 +229,7 @@ fun LifeScreen(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {
                         InnerPaddingHeight(innerPadding,true)
-                        StarterScreen()
+                        com.hfut.schedule.ui.nav.UiSlots.Render("starter")
                         InnerPaddingHeight(innerPadding,false)
                     }
                 }
