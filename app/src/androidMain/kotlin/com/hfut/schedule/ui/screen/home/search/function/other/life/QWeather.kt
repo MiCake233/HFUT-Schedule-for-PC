@@ -123,7 +123,7 @@ fun StarterScreen() {
             Text("医保缴费、宣城市实时公交等功能")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.ANHUI_HALL,context)
+            Starter.startAppLaunch(Starter.AppPackages.ANHUI_HALL)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.ANHUI_HALL)
@@ -135,7 +135,7 @@ fun StarterScreen() {
             Text("拼多多身份码，校区快递站用")
         },
         modifier = Modifier.clickable {
-            Starter.startPddExpress(context)
+            Starter.startPddExpress()
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.PDD)
@@ -147,7 +147,7 @@ fun StarterScreen() {
             Text("淘宝身份码，合肥校区快递站用")
         },
         modifier = Modifier.clickable {
-            Starter.startTaoBaoExpress(context)
+            Starter.startTaoBaoExpress()
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.TAO_BAO)
@@ -183,7 +183,7 @@ fun StarterScreen() {
             Text("大一大二校园跑")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.LE_PAO,context)
+            Starter.startAppLaunch(Starter.AppPackages.LE_PAO)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.LE_PAO)
@@ -195,7 +195,7 @@ fun StarterScreen() {
             Text("节假日离返校、心理测试等")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.TODAY_CAMPUS,context)
+            Starter.startAppLaunch(Starter.AppPackages.TODAY_CAMPUS)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.TODAY_CAMPUS)
@@ -207,7 +207,7 @@ fun StarterScreen() {
             Text("考勤、作业等课堂功能")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.RAIN_CLASSROOM,context)
+            Starter.startAppLaunch(Starter.AppPackages.RAIN_CLASSROOM)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.RAIN_CLASSROOM)
@@ -219,7 +219,7 @@ fun StarterScreen() {
             Text("考勤、作业等课堂功能")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.CHAO_XING,context)
+            Starter.startAppLaunch(Starter.AppPackages.CHAO_XING)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.CHAO_XING)
@@ -231,7 +231,7 @@ fun StarterScreen() {
             Text("网课、作业等课堂功能")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.MOOC,context)
+            Starter.startAppLaunch(Starter.AppPackages.MOOC)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.MOOC)
@@ -243,7 +243,7 @@ fun StarterScreen() {
             Text("合工大教务公众号、第二课堂小程序等")
         },
         modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.WECHAT,context)
+            Starter.startAppLaunch(Starter.AppPackages.WECHAT)
         },
         leadingContent = {
             StartAppIcon(Starter.AppPackages.WECHAT)

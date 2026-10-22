@@ -171,7 +171,7 @@ fun About(vm : NetWorkViewModel) {
                         trailingContent = {
                             FilledTonalIconButton(
                                 onClick = {
-                                    Starter.emailMe(context)
+                                    Starter.emailMe()
                                 }
                             ) {
                                 Icon(painterResource(Drawables.mail),null)

@@ -32,7 +32,7 @@ fun StartAppIconButton(
     LiquidButton  (
         isCircle = true,
         backdrop = backdrop,
-        onClick = { Starter.startAppLaunch(app,context) },
+        onClick = { Starter.startAppLaunch(app) },
         modifier = modifier,
         innerPadding = 6.5.dp
     ) {

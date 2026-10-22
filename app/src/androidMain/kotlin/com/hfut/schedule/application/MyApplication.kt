@@ -1,4 +1,5 @@
 package com.hfut.schedule.application
+import com.hfut.schedule.logic.model.AppConst
 
 import android.app.Activity
 import android.app.Application

@@ -75,7 +75,7 @@ fun Survey(
             Icon(painterResource(SurveyDestination.ICON), contentDescription = null)
         },
         modifier = Modifier.clickable {
-            if(ifSaved) refreshLogin(context) else {
+            if(ifSaved) refreshLogin() else {
                 navController.push(SurveyDestination(ifSaved))
             }
         }

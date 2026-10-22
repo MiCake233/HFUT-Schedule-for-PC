@@ -113,7 +113,7 @@ fun WebVpnScreen(
                         LiquidButton(
                             onClick = {
                                 if(!webVpn) {
-                                    Starter.refreshLogin(context)
+                                    Starter.refreshLogin()
                                 }
                             },
                             backdrop = backdrop,
@@ -238,7 +238,7 @@ fun WebVpnScreen(
                                                                     Starter.startWebUrlInner(it, cookie = cookies)
                                                                 } else {
                                                                     showToast("先以外地访问模式登录")
-                                                                    Starter.refreshLogin(context)
+                                                                    Starter.refreshLogin()
                                                                 }
                                                             }
                                                         },
@@ -388,7 +388,7 @@ private fun EnableGlobalWebVpn(
                 switch()
             } else {
                 showToast("先以外地访问模式登录")
-                Starter.refreshLogin(context)
+                Starter.refreshLogin()
             }
         }
     )

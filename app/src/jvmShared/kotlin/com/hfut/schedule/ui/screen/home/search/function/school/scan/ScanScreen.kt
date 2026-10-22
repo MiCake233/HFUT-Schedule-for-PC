@@ -237,7 +237,7 @@ fun ScanScreen(
                                     listOf(
                                         CardBottomButton("连接") {
                                             parseWifiQrCode(resultText)?.password?.let { ClipBoardHelper.copy(it) }
-                                            Starter.startWlanSettings(context)
+                                            Starter.startWlanSettings()
                                         },
                                         CardBottomButton("隐藏") {
                                             resultText = EMPTY_STRING

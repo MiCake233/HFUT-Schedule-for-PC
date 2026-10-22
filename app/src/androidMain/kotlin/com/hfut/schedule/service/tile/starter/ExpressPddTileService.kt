@@ -6,6 +6,6 @@ import com.hfut.schedule.logic.util.sys.Starter
 class ExpressPddTileService : TileService() {
     override fun onClick() {
         super.onClick()
-        Starter.startPddExpress(this)
+        Starter.startPddExpress()
     }
 }

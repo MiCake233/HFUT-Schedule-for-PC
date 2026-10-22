@@ -112,7 +112,7 @@ fun Program(
                 if (json?.contains("children") == true || !ifSaved) {
                     navController.push(ProgramDestination(ifSaved))
                 }
-                else refreshLogin(context)
+                else refreshLogin()
             }
         }
     )
@@ -169,7 +169,7 @@ fun ProgramScreen(
                                         if (json?.contains("children") == true || !ifSaved) navController.push(
                                             dest
                                         )
-                                        else refreshLogin(context)
+                                        else refreshLogin()
                                     }
                                 },
                                 icon = ProgramCompetitionDestination.ICON,
@@ -192,7 +192,7 @@ fun ProgramScreen(
                                     if (!ifSaved) {
                                         navController.push(ProgramConfirmationDestination)
                                     } else {
-                                        refreshLogin(context)
+                                        refreshLogin()
                                     }
                                 },
                                 icon = ProgramConfirmationDestination.icon,

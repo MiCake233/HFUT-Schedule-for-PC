@@ -125,7 +125,7 @@ private fun ContributeButtons() {
             text = "邮件反馈通道",
             icon = Drawables.mail,
             onClick = {
-                Starter.emailMe(context)
+                Starter.emailMe()
             }
         )
     }

@@ -534,7 +534,7 @@ fun MainScreen(
                                         if (ifSaved) {
                                             LiquidButton(
                                                 onClick = {
-                                                    refreshLogin(context)
+                                                    refreshLogin()
                                                 },
                                                 backdrop = backdrop,
                                                 isCircle = true,

@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.my.webLab
+import com.hfut.schedule.logic.util.sys.isValidWebUrl
 
 import android.graphics.Bitmap
 import android.util.Patterns

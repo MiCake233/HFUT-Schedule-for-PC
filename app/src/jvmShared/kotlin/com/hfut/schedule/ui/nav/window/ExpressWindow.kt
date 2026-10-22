@@ -85,7 +85,7 @@ object ExpressWindow: FloatingWindow() {
                                     Text("拼多多身份码，校区快递站用")
                                 },
                                 modifier = Modifier.clickable {
-                                    Starter.startPddExpress(context)
+                                    Starter.startPddExpress()
                                 },
                                 leadingContent = {
                                     StartAppIcon(Starter.AppPackages.PDD)
@@ -98,7 +98,7 @@ object ExpressWindow: FloatingWindow() {
                                     Text("淘宝身份码，合肥校区快递站用")
                                 },
                                 modifier = Modifier.clickable {
-                                    Starter.startTaoBaoExpress(context)
+                                    Starter.startTaoBaoExpress()
                                 },
                                 leadingContent = {
                                     StartAppIcon(Starter.AppPackages.TAO_BAO)

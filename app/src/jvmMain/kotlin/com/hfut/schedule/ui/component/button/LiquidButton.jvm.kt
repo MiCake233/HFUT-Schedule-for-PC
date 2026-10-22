@@ -29,10 +29,12 @@ import com.xah.shader.state.ShaderState
  * 桌面端实现：没有 kyant backdrop 的折射透镜效果，
  * 用「半透明表面 + 圆角裁切」来近似液态玻璃观感，保留全部布局与交互行为。
  */
-actual class PlatformBackdrop
+actual interface PlatformBackdrop
+
+private class DesktopBackdrop : PlatformBackdrop
 
 @Composable
-actual fun rememberLayerBackdrop(): PlatformBackdrop = remember { PlatformBackdrop() }
+actual fun rememberLayerBackdrop(): PlatformBackdrop = remember { DesktopBackdrop() }
 
 @Composable
 actual fun LiquidButton(

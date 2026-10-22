@@ -504,7 +504,7 @@ fun ProgramDetailInfo(courseInfo : JxglstuProgramItemDto, ifSaved: Boolean, onDi
                             navController.push(CourseSearchApiDestination(null,courseInfo.code))
                         } else {
                             showToast("登录教务后可查询开课")
-                            refreshLogin(context)
+                            refreshLogin()
                         }
                     }
                 ) {

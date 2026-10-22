@@ -7,6 +7,6 @@ import com.hfut.schedule.network.api.model.Constant
 class RechargeTileService : TileService() {
     override fun onClick() {
         super.onClick()
-        Starter.startAppUrl(this, Constant.ALIPAY_CARD_URL)
+        Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
     }
 }

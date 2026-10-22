@@ -184,7 +184,7 @@ fun NetworkSettingsScreen(
                     supportingContent = { Text(text = stringResource(Strings.network_settings_refresh_login_description)) },
                     leadingContent = { Icon(painterResource(Drawables.rotate_right), contentDescription = "Localized description",) },
                     modifier = Modifier.clickable {
-                        refreshLogin(context)
+                        refreshLogin()
                     }
                 )
             }

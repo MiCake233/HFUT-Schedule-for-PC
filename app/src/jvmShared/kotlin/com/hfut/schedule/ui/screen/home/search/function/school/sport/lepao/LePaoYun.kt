@@ -41,7 +41,7 @@ fun LePaoYun() {
             FilledTonalIconButton(
                 modifier = Modifier.size(30.dp),
                 onClick = {
-                    Starter.startAppLaunch(Starter.AppPackages.LE_PAO, context)
+                    Starter.startAppLaunch(Starter.AppPackages.LE_PAO)
                 },
             ) { Icon( painterResource(Drawables.directions_run), contentDescription = null, modifier = Modifier.size(20.dp)) }
         },

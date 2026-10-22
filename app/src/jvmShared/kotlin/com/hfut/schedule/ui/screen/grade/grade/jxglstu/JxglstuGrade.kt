@@ -372,7 +372,7 @@ fun GradeItemJxglstuUI(
                                             if (needSurvey) {
                                                 if (ifSaved) {
                                                     showToast("未评教，请登录后评教")
-                                                    Starter.refreshLogin(context)
+                                                    Starter.refreshLogin()
                                                 } else {
                                                     surveyCode = subItem.lessonCode
                                                     showToast("请为本课程的所有教师评教，下拉刷新以查看成绩")

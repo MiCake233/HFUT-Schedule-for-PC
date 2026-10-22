@@ -48,7 +48,6 @@ import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.Observer
 
 import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.CampusRegion
@@ -94,9 +93,9 @@ private fun getUrl(page : Int,) : String {
 }
 fun getInGuaGua(vm: NetWorkViewModel,navController: NavigationController,onResult : (Boolean) -> Unit) {
 
-    lateinit var guaguaUserInfoObserver: Observer<String?> // 延迟初始化观察者
+    lateinit var guaguaUserInfoObserver: (String?) -> Unit // 延迟初始化观察者
 
-    guaguaUserInfoObserver = Observer { result ->
+    guaguaUserInfoObserver = { result ->
         if(result != null) {
             onResult(false)
             if (result.contains("成功")) {

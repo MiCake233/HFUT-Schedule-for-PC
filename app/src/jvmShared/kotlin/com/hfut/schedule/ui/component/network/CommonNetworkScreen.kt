@@ -98,7 +98,7 @@ fun CommonNetworkScreen(
                                 TextButton(onClick = {
                                     e?.let { ClipBoardHelper.copy(it.stackTraceToString()) }
                                     showToast("请截图或粘贴详细错误信息，并注明功能，发送邮件")
-                                    Starter.emailMe(context)
+                                    Starter.emailMe()
                                 }) {
                                     Text( "上报开发者")
                                 }
@@ -111,18 +111,18 @@ fun CommonNetworkScreen(
 //                            Spacer(Modifier.height(APP_HORIZONTAL_DP *1.5f))
                             TextButton(onClick = {
                                 showToast("请截图并注明功能，发送邮件")
-                                Starter.emailMe(context)
+                                Starter.emailMe()
                             }) {
                                 Text( "上报开发者")
                             }
                         }
                         StatusCode.UNAUTHORIZED.code -> {
                             StatusIcon(Drawables.login, text("登录状态失效"), onTextClick = {
-                                Starter.refreshLogin(context)
+                                Starter.refreshLogin()
                             })
 //                            Spacer(Modifier.height(APP_HORIZONTAL_DP *1.5f))
 //                            TextButton(onClick = {
-//                                Starter.refreshLogin(context)
+//                                Starter.refreshLogin()
 //                            }) {
 //                                Text("刷新登陆状态")
 //                            }

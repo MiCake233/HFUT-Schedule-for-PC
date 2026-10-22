@@ -286,7 +286,7 @@ fun MultiScheduleSettings(
                     },
                     modifier = Modifier.clickable {
                         if(d)
-                            refreshLogin(context)
+                            refreshLogin()
                         else {
                             showToast("请回到聚焦,等待转圈完成即刷新完成")
                         }

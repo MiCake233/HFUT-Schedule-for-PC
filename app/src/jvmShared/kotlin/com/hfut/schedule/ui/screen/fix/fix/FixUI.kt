@@ -154,7 +154,7 @@ fun FixUI(
                 headlineContent = { Text(text = "刷新登录状态") },
                 leadingContent = { Icon(painterResource(Drawables.rotate_right), contentDescription = "Localized description",) },
                 modifier = Modifier.clickable {
-                    refreshLogin(context)
+                    refreshLogin()
                 }
             )
             PaddingHorizontalDivider()

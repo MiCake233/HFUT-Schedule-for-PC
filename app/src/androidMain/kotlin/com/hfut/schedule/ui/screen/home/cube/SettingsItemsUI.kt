@@ -412,7 +412,7 @@ fun AlwaysItem(update : GiteeReleaseResponse?) {
             headlineContent = { Text(text = stringResource(Strings.network_settings_refresh_login_title)) },
             supportingContent = { Text(text = stringResource(Strings.network_settings_refresh_login_description)) },
             leadingContent = { Icon(painterResource(Drawables.rotate_right), contentDescription = "Localized description",) },
-            modifier = Modifier.clickable { refreshLogin(context) },
+            modifier = Modifier.clickable { refreshLogin() },
         )
         if (show) {
             PaddingHorizontalDivider()

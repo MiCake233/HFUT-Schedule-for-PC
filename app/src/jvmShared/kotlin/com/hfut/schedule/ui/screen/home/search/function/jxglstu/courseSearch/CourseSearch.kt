@@ -30,7 +30,7 @@ fun CoursesSearch(
             Icon(painterResource(CourseSearchDestination.icon), contentDescription = null)
         },
         modifier = Modifier.clickable {
-            if(ifSaved) refreshLogin(context)
+            if(ifSaved) refreshLogin()
             else navController.push(CourseSearchDestination)
         }
     )

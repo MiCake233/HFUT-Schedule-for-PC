@@ -394,7 +394,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                                 if (text != "00" && text!!.toDouble() < 10) {
                                                     Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
                                                 } else if (text == "00") {
-                                                    refreshLogin(context)
+                                                    refreshLogin()
                                                 } else {
                                                     showToast("未检测出问题,若卡仍异常请咨询有关人士")
                                                 }

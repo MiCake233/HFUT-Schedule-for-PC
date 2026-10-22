@@ -196,7 +196,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                         Icon(painterResource(Drawables.alternate_email), contentDescription = "Localized description")
                     },
                     modifier = Modifier.clickable {
-                        Starter.emailMe(context)
+                        Starter.emailMe()
                     }
                 )
                 PaddingHorizontalDivider()

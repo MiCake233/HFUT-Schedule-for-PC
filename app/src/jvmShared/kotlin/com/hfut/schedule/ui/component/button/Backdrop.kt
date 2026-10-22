@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
  * Android 端直接复用 kyant backdrop 库的 Backdrop（actual typealias），
  * 桌面端用自研的轻量实现（见 jvmMain），保证 UI 层 API 完全一致。
  */
-expect class PlatformBackdrop
+expect interface PlatformBackdrop
 
 /**
  * 记录当前图层作为背景源。

@@ -31,7 +31,7 @@ fun SelectCourse(
         },
         modifier = Modifier.clickable {
             if(!ifSaved) navController.push(SelectCoursesDestination)
-            else refreshLogin(context)
+            else refreshLogin()
         }
     )
 }

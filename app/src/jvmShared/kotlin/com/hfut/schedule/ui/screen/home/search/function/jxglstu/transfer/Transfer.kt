@@ -34,7 +34,7 @@ fun Transfer(
             Icon(painterResource(TransferMajorDestination.icon), contentDescription = null)
         },
         modifier = Modifier.clickable {
-            if(ifSaved) refreshLogin(context) else {
+            if(ifSaved) refreshLogin() else {
                 navController.push(TransferMajorDestination)
             }
         }

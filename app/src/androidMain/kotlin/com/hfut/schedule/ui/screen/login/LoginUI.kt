@@ -180,7 +180,7 @@ private fun loginClick(
                                     if(GlobalUiStateHolder.excludeJxglstu) {
                                         onResult("登陆成功")
                                         saveInput(username,inputAES)
-                                        Starter.loginSuccess(context)
+                                        Starter.loginSuccess()
                                     } else if(!GlobalUiStateHolder.webVpn) {
                                         onResult("请输入正确的账号")
                                         refresh(vm)
@@ -188,7 +188,7 @@ private fun loginClick(
                                         onResult("登陆成功")
                                         vm.loginJxglstu()
                                         saveInput(username,inputAES)
-                                        Starter.loginSuccess(context)
+                                        Starter.loginSuccess()
                                     }
                                 }
                                 StatusCode.REDIRECT.code.toString() -> {
@@ -196,7 +196,7 @@ private fun loginClick(
                                         vm.location.value.toString().contains("ticket") -> {
                                             onResult("登陆成功")
                                             saveInput(username,inputAES)
-                                            Starter.loginSuccess(context)
+                                            Starter.loginSuccess()
                                         }
                                         else -> {
                                             onResult("登陆失败")
@@ -347,7 +347,7 @@ fun LoginScreen(
                             }
 
                             IconButton(onClick = {
-                                Starter.startFix(context)
+                                Starter.startFix()
                             }) {
                                 Icon(painterResource(id = Drawables.build), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
                             }
@@ -452,7 +452,7 @@ fun LoginScreen(
                                 TransplantListItem(
                                     supportingContent = { Text(status.text ) },
                                     modifier = Modifier.clickable {
-                                        Starter.startWlanSettings(context)
+                                        Starter.startWlanSettings()
                                     },
                                     headlineContent = {
                                         Text("教务系统联通状态")
