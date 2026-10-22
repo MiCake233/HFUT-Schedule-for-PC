@@ -23,7 +23,7 @@ data class HaiLeWashingDetailDestination(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("washing_detail")) {
+        if (!com.hfut.schedule.ui.nav.RenderPlatformDestination(this)) {
             com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }

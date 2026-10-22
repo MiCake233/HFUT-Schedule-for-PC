@@ -15,7 +15,7 @@ object AiDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("ai")) {
+        if (!com.hfut.schedule.ui.nav.RenderPlatformDestination(this)) {
             com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }

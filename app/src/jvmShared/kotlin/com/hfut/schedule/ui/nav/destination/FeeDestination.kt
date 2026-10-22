@@ -17,7 +17,7 @@ object FeeDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("fee")) {
+        if (!com.hfut.schedule.ui.nav.RenderPlatformDestination(this)) {
             com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }

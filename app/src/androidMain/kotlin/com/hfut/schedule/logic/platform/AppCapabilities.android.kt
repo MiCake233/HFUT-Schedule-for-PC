@@ -37,7 +37,7 @@ actual object AppCapabilities {
     }
 
     actual fun initShortcuts(any: Any?, sort: Any?) {
-        runCatching { com.hfut.schedule.logic.util.shortcut.AppShortcutManager.init(any as android.content.Context, sort as List<String>?) }
+        runCatching { com.hfut.schedule.logic.util.shortcut.AppShortcutManager.init(any as android.content.Context, sort as? String) }
     }
 
     actual fun queryCalendars(): List<Pair<Long, String>> =

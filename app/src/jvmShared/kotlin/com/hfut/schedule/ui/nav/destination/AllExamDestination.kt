@@ -17,7 +17,7 @@ object AllExamDestination : NavDestination() {
 
     @Composable
     override fun Content() {
-        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("all_exam")) {
+        if (!com.hfut.schedule.ui.nav.RenderPlatformDestination(this)) {
             com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }

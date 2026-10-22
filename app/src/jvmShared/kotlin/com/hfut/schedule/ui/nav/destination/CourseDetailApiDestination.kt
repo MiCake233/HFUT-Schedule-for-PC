@@ -28,7 +28,7 @@ data class CourseDetailApiDestination(
 
     @Composable
     override fun Content() {
-        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("course_detail_api_$courseCode")) {
+        if (!com.hfut.schedule.ui.nav.RenderPlatformDestination(this)) {
             com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }

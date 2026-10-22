@@ -53,6 +53,7 @@ import kotlinx.coroutines.launch
 fun NetworkSettingsScreen(
     innerPaddings : PaddingValues,
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val navTopController = LocalNavController.current
 
     Column(modifier = Modifier

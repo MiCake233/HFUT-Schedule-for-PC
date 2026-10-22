@@ -30,7 +30,7 @@ data class AddEventDestination(
 
     @Composable
     override fun Content() {
-        if (!com.hfut.schedule.ui.nav.RenderPlatformScreen("AddEventDestination#${if(id == null || id <= 0) -1 else id}#$enableCopy#$isSupabase")) {
+        if (!com.hfut.schedule.ui.nav.RenderPlatformDestination(this)) {
             com.hfut.schedule.ui.nav.UnavailableFeature(title)
         }
     }

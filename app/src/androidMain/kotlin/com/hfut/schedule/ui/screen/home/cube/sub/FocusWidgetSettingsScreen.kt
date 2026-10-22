@@ -77,6 +77,7 @@ fun FocusWidgetSettingsUI(
     innerPadding : PaddingValues,
     modifier: Modifier = Modifier,
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val focusWidgetCount by produceState(initialValue = 0) {
         value = hasFocusWidget(context)
     }

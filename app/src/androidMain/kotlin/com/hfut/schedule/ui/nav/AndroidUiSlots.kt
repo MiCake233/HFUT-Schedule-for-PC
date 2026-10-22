@@ -19,13 +19,13 @@ fun registerAndroidUiSlots() {
     }
 
     UiSlots.register("web_lab") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebUI(vmOf(arg))
+        com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebUI()
     }
     UiSlots.register("pay") { arg ->
         com.hfut.schedule.ui.screen.home.search.function.one.pay.Pay()
     }
     UiSlots.register("today_campus") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.school.student.ToadyCampus(vmOf(arg))
+        com.hfut.schedule.ui.screen.home.search.function.school.student.ToadyCampus()
     }
     UiSlots.register("electric") { arg ->
         com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.EleUI(
@@ -63,7 +63,7 @@ fun registerAndroidUiSlots() {
     UiSlots.register("supabase_home") { arg ->
         com.hfut.schedule.ui.screen.supabase.home.SupabaseHomeScreen(
             vmOf(arg),
-            sortType = 0,
+            sortType = com.hfut.schedule.logic.model.enumeration.SortType.TIME_LINE,
             sortReversed = false,
             innerPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
             pagerState = androidx.compose.foundation.pager.rememberPagerState { 3 }

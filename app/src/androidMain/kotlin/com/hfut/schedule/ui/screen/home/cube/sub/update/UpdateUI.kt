@@ -86,6 +86,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.io.File
+import com.hfut.schedule.viewmodel.network.getGiteePatchSize
 /* 本kt文件已完成多语言文案适配 */
 
 sealed class DownloadResult {

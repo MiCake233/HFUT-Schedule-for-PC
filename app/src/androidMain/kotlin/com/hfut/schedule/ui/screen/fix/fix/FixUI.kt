@@ -62,6 +62,7 @@ import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.hfut.schedule.logic.util.sys.currentPlatformActivityOrNull
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -161,7 +162,7 @@ fun FixUI(
             TransplantListItem(
                 headlineContent = { Text(text = "联系开发者") },
                 leadingContent = { Icon(painterResource(Drawables.mail), contentDescription = "Localized description",) },
-                modifier = Modifier.clickable{ emailMe(context) }
+                modifier = Modifier.clickable{ emailMe() }
             )
             PaddingHorizontalDivider()
             TransplantListItem(
@@ -247,7 +248,7 @@ fun BugShare() {
                             FilledTonalIconButton(
                                 onClick = {
                                     scope.launch {
-                                        activityOrNull()?.let {
+                                        currentPlatformActivityOrNull()?.let {
                                             PermissionSet.checkAndRequestStoragePermission(
                                                 it
                                             )
@@ -317,12 +318,12 @@ fun BugShare() {
             }
         },
         modifier = Modifier.clickable {
-            activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+            currentPlatformActivityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
             CrashHandler.enableSaveLogToFile = !CrashHandler.enableSaveLogToFile
         },
         trailingContent = {
             Switch(checked = CrashHandler.enableSaveLogToFile, onCheckedChange = {
-                activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+                currentPlatformActivityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
                 CrashHandler.enableSaveLogToFile = !CrashHandler.enableSaveLogToFile
             })
         },

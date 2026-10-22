@@ -29,6 +29,15 @@ import com.xah.common.ui.res.painterResource
 @Composable
 expect fun RenderPlatformScreen(key: String): Boolean
 
+/**
+ * 平台专属页面的**类型分发**入口。
+ *
+ * 参数直接挂在 Destination 对象上（如 GradeDestination(ifSaved)），
+ * Android 端在注册表里按类型渲染真实界面，桌面端返回 false 由 [UnavailableFeature] 兜底。
+ */
+@Composable
+expect fun RenderPlatformDestination(destination: com.hfut.schedule.ui.nav.destination.base.NavDestination): Boolean
+
 /** 桌面端的功能占位：说明该功能仅 Android 提供 */
 @Composable
 fun UnavailableFeature(title: UiText) {

@@ -17,7 +17,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.CardListItem
@@ -94,31 +93,3 @@ fun LineProgressIcon(
 }
  */
 
-@Preview
-@Composable
-fun A() {
-    CenterScreen {
-        Box {
-            CardListItem(
-                headlineContent = {
-                    Text("hello",color = Color.Red)
-                },
-                leadingContent = {
-                    CircleProgressIcon(
-                        progress = 0.75f,
-                    )
-                },
-                color = Color.Transparent
-            )
-            CardListItem(
-                headlineContent = {
-                    Text("hello")
-                },
-                leadingContent = {
-                    LoadingIcon()
-                },
-                color = Color.Transparent
-            )
-        }
-    }
-}

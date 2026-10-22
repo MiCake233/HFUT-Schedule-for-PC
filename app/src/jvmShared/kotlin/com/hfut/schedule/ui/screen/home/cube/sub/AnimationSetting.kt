@@ -39,29 +39,6 @@ import kotlinx.coroutines.launch
 
 // DataStore 用法
 @Composable
-//@Preview
-fun AnimationSetting(speed : Int = AppAnimationManager.ANIMATION_SPEED) {
-    if(speed == 0) return
-    val lists = listOf(
-        AppAnimationManager.centerAnimation,
-        AppAnimationManager.fadeAnimation,
-        AppAnimationManager.nullAnimation
-    )
-    val currentAnimationIndex by DataStoreManager.animationType.collectAsState(initial = 1)
-
-    LazyRow() {
-        item { Spacer(Modifier.width(10.dp)) }
-        items(lists.size) { index ->
-            Spacer(Modifier.width(5.dp))
-            AnimationCard(lists[index],currentAnimationIndex,index,speed)
-        }
-        item {
-            Spacer(Modifier.width(APP_HORIZONTAL_DP))
-        }
-    }
-}
-
-@Composable
 private fun AnimationCard(animation :  AppAnimationManager. TransferAnimation, currentAnimationIndex : Int, index : Int,speed : Int) {
     val isSelected = currentAnimationIndex == index
 

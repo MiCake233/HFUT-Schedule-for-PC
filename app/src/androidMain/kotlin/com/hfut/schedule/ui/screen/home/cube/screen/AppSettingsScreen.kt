@@ -85,6 +85,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfigurationSettingsScreen(innerPaddings: PaddingValues, ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
     val scope = rememberCoroutineScope()
     val navTopController = LocalNavController.current

@@ -15,7 +15,7 @@ enum class RepeatFrequency {
     DAILY, WEEKLY, MONTHLY, YEARLY
 }
 
-private fun parseDateTimeBean(start : List<Int>, end : List<Int>) : DateTime? =
+internal fun parseDateTimeBean(start : List<Int>, end : List<Int>) : DateTime? =
     if(start.size == end.size && start.size == 5) {
         try {
             DateTime(

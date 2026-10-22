@@ -57,6 +57,8 @@ fun BackupScreen(
     innerPadding : PaddingValues,
     isInSheet : Boolean = false
 ) {
+    val activity = androidx.activity.compose.LocalActivity.current
+    val context = androidx.compose.ui.platform.LocalContext.current
 //    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
 //    var scale by remember { mutableFloatStateOf(1f) }
     var showDialog by remember { mutableStateOf(false) }
@@ -68,14 +70,14 @@ fun BackupScreen(
 //    }
 
     LaunchedEffect(activity) {
-        activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+        PermissionSet.checkAndRequestStoragePermission(activity)
     }
 
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             uri?.let {
-                activityOrNull()?.let {
+                activity?.let {
                     file = copyUriToCacheFile(context,uri)
                     if(file == null) {
                         showToast(error)
@@ -91,7 +93,7 @@ fun BackupScreen(
         LittleDialog(
             onConfirmation = {
                 scope.launch {
-                    activityOrNull()?.let {
+                    activity?.let {
                         file?.let { backupFile ->
                             restoreData(it,context,backupFile)
                         } ?: showToast(error)
@@ -129,7 +131,7 @@ fun BackupScreen(
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            activityOrNull()?.let {
+                            activity?.let {
                                 val result = backupData(it,context)
                                 if(result) {
                                     showToast("备份成功，请前往Download目录查看")

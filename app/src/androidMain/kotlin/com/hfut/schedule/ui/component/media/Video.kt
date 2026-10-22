@@ -54,11 +54,11 @@ import java.io.IOException
 @Composable
 actual fun SimpleVideo(
     filePath: String,
-    modifier: Modifier = Modifier,
-    autoPlay: Boolean = true,
-    mute: Boolean = true,
-    loop: Boolean = true,
-    aspectRatio: Float? = null
+    modifier: Modifier,
+    autoPlay: Boolean,
+    mute: Boolean,
+    loop: Boolean,
+    aspectRatio: Float?
 ) {
     val scope = rememberCoroutineScope()
     var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
@@ -222,7 +222,7 @@ suspend fun clearVideoCache(context: Context): Boolean = withContext(Dispatchers
  * @return 本地视频路径或 null（下载失败）
  */
 actual suspend fun checkOrDownloadVideo(
-    context: Context,
+    context: Any?,
     fileName: String,
     downloadUrl: String
 ): String? = withContext(Dispatchers.IO) {

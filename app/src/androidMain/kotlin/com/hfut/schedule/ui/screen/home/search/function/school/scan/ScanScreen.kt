@@ -69,12 +69,14 @@ import com.xah.navigation.util.LocalNavController
 import com.xah.common.logic.util.LogUtil
 import com.xah.common.logic.util.isEmptyOrBlank
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ScanScreen(
     vm : NetWorkViewModel,
 ) {
+    val activity = androidx.activity.compose.LocalActivity.current
     val hapticFeedback = LocalHapticFeedback.current
     val navController = LocalNavController.current
     val color = MaterialTheme.colorScheme.surface
@@ -287,7 +289,7 @@ fun ScanScreen(
         },
     ) { _ ->
         LaunchedEffect(activity) {
-            activityOrNull()?.let { PermissionSet.checkAndRequestCameraPermission(it) }
+            com.hfut.schedule.logic.util.sys.currentPlatformActivityOrNull()?.let { PermissionSet.checkAndRequestCameraPermission(it) }
         }
         Box(
             modifier = Modifier

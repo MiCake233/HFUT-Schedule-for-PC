@@ -1,7 +1,7 @@
 package com.hfut.schedule.viewmodel.network
 
 import com.hfut.schedule.logic.network.repo.GithubRepository
-import com.xah.bsdiffs.util.Patch
+import com.xah.bsdiffs.model.Patch
 import com.xah.bsdiffs.util.parsePatch
 
 /**

@@ -1237,7 +1237,7 @@ fun topBarText(num : BottomBarItems,context: Context) : String = when(num) {
     SETTINGS -> stringOf(Strings.settings_title)
     else -> {
         val chineseNumber  =
-            if(LanguageHelper.isChineseLanguage(context)) {
+            if(LanguageHelper.isChineseLanguage()) {
                 "周${numToChinese(DateTimeManager.dayWeek)}"
             } else {
                 when(DateTimeManager.dayWeek) {

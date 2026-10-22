@@ -101,9 +101,3 @@ fun LoadingIconNew() {
 
 
 //@Composable
-//@Preview
-//fun P() {
-//    CenterScreen {
-//        WindmillIcon()
-//    }
-//}
