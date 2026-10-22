@@ -41,7 +41,7 @@ import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.ui.nav.destination.AllExamDestination
 import com.hfut.schedule.ui.nav.destination.NewsApiDestination
 import com.hfut.schedule.logic.util.sys.isValidWebUrl
-import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.getWebVpnCookie
+import com.hfut.schedule.logic.util.sys.getWebVpnCookie
 import com.hfut.schedule.ui.screen.news.home.TotalNewsScreen
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur

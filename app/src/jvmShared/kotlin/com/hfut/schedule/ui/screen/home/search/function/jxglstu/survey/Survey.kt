@@ -148,7 +148,7 @@ fun SurveyScreen(
 @Composable
 private fun SurveyAllButton(
     vm: NetWorkViewModel,
-    backDrop : Backdrop,
+    backDrop : PlatformBackdrop,
     refresh : suspend () -> Unit
 ) {
     val surveyListData by vm.surveyListData.state.collectAsState()

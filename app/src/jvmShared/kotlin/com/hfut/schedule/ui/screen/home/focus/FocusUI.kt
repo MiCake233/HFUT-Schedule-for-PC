@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.focus
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -317,7 +318,7 @@ fun TodayScreen(
                             //日程
                             customScheduleList.let { list ->
                                 items(list.size,key = { list[it].hashCode() }){ item ->
-                                    activity?.let { it1 ->
+                                    activityOrNull()?.let { it1 ->
                                         CustomItem(item = list[item], hazeState = hazeState, activity = it1, isFuture = false,showTomorrow = showTomorrow,showOutOfDateItems = enableShowOverdueFocus) { refreshDB = !refreshDB }
                                     }
                                 }
@@ -325,7 +326,7 @@ fun TodayScreen(
 
                             scheduleList.let { list ->
                                 items(list.size,key = { list[it].hashCode() }) { item ->
-                                    activity?.let {
+                                    activityOrNull()?.let {
                                         ScheduleItem(listItem = list[item],false,it)
                                     }
                                 }
@@ -336,7 +337,7 @@ fun TodayScreen(
                             //网课
                             netCourseList.let { list ->
                                 items(list.size,key = { list[it].hashCode() }) { item ->
-                                    activity?.let {
+                                    activityOrNull()?.let {
                                         NetCourseItem(listItem = list[item],false,it)
                                     }
                                 }
@@ -378,7 +379,7 @@ fun TodayScreen(
                             //日程
                             customScheduleList.let { list ->
                                 items(list.size,key = { list[it].hashCode() }){ item ->
-                                    activity?.let { it1 ->
+                                    activityOrNull()?.let { it1 ->
                                         CustomItem(item = list[item], hazeState = hazeState, activity = it1, isFuture = true,showTomorrow = false, showOutOfDateItems = enableShowOutOfDateEvent) { refreshDB = !refreshDB }
                                     }
                                 }
@@ -386,7 +387,7 @@ fun TodayScreen(
 
                             scheduleList.let { list ->
                                 items(list.size,key = { list[it].hashCode() }) { item ->
-                                    activity?.let {
+                                    activityOrNull()?.let {
                                         ScheduleItem(listItem = list[item],true,it)
                                     }
                                 }
@@ -395,7 +396,7 @@ fun TodayScreen(
                             //网课
                             netCourseList.let { list ->
                                 items(list.size,key = { list[it].hashCode() }) { item ->
-                                    activity?.let {
+                                    activityOrNull()?.let {
                                         NetCourseItem(listItem = list[item],true,it)
                                     }
                                 }

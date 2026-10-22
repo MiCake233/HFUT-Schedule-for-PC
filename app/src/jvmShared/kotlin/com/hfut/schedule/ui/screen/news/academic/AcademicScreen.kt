@@ -32,7 +32,7 @@ import com.hfut.schedule.ui.component.network.CommonNetworkScreen
 import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButton
 import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.logic.util.sys.isValidWebUrl
-import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.getWebVpnCookie
+import com.hfut.schedule.logic.util.sys.getWebVpnCookie
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.logic.state.NetworkUiState
 import com.xah.common.ui.style.padding.InnerPaddingHeight

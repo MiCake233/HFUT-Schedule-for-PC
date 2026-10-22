@@ -1,10 +1,9 @@
 package com.hfut.schedule.service.tile.base
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 import com.xah.common.ui.res.Drawables
 
 import android.content.Intent
-import android.os.Handler
-import android.os.Looper
 import android.service.quicksettings.TileService
 import android.widget.Toast
 import com.hfut.schedule.activity.util.WebViewActivity
@@ -38,7 +37,7 @@ open class BaseWebViewTileService(
     }
 
     private fun toast(text : String) {
-        Handler(Looper.getMainLooper()).post {
+        runOnMain {
             Toast.makeText(this,text, Toast.LENGTH_SHORT).show()
         }
     }

@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.model
+import com.hfut.schedule.ui.util.rememberTouchExplorationEnabled
 
-import android.content.Context
-import android.view.accessibility.AccessibilityManager
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseOut
@@ -79,7 +78,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
@@ -152,11 +150,7 @@ fun NavigationBarItemDynamicIconModern(
 ) {
     key(avdResource) {
         // 资源变了就重组，以免外部手动更新后依旧使用缓存
-        val image = AnimatedImageVector.animatedVectorResource(avdResource)
-        val painter = rememberAnimatedVectorPainter(
-            animatedImageVector = image,
-            atEnd = selected
-        )
+        val painter = com.hfut.schedule.ui.component.icon.rememberAnimatedNavIcon(avdResource, selected)
         Icon(
             painter = painter,
             contentDescription = null,
@@ -1154,28 +1148,6 @@ private fun NavigationItemContent(
     }
 }
 
-@Composable
-private fun rememberTouchExplorationEnabled(): Boolean {
-    // 查询当前是否启用了 TalkBack 类似的读屏应用
-    // 如果其他地方有用到可以把它放到工具类里面
-    val context = LocalContext.current
-    val accessibilityManager = remember(context) {
-        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
-    }
-    var enabled by remember(accessibilityManager) {
-        mutableStateOf(accessibilityManager?.isTouchExplorationEnabled == true)
-    }
-    DisposableEffect(accessibilityManager) {
-        val listener = AccessibilityManager.TouchExplorationStateChangeListener {
-            enabled = it
-        }
-        accessibilityManager?.addTouchExplorationStateChangeListener(listener)
-        onDispose {
-            accessibilityManager?.removeTouchExplorationStateChangeListener(listener)
-        }
-    }
-    return enabled
-}
 
 @Composable
 @OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalNavigationBarApi::class)
@@ -1188,9 +1160,9 @@ private fun NavigationIconContent(item: NewNavigationBarItemData, active: Boolea
         is NavigationBarIcon.Resource -> {
             if (item.iconType == IconType.ANIMATED) {
                 key(icon.resId) {
-                    val image = AnimatedImageVector.animatedVectorResource(icon.resId)
+                    val navPainter = com.hfut.schedule.ui.component.icon.rememberAnimatedNavIcon(icon.resId, active)
                     Icon(
-                        painter = rememberAnimatedVectorPainter(image, atEnd = active),
+                        painter = navPainter,
                         contentDescription = icon.contentDescription,
                         modifier = Modifier.fillMaxSize(),
                     )

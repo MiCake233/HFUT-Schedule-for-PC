@@ -13,4 +13,7 @@ actual object AppCapabilities {
     actual fun canPickFile(): Boolean = true
 
     actual fun packageName(): String = com.hfut.schedule.application.MyApplication.context.packageName
+    actual fun finishCurrentScreen() {
+        com.hfut.schedule.application.MyApplication.getCurrentActivity()?.finish()
+    }
 }

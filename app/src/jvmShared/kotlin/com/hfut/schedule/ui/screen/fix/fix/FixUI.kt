@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.fix.fix
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -246,7 +247,7 @@ fun BugShare() {
                             FilledTonalIconButton(
                                 onClick = {
                                     scope.launch {
-                                        activity?.let {
+                                        activityOrNull()?.let {
                                             PermissionSet.checkAndRequestStoragePermission(
                                                 it
                                             )
@@ -316,12 +317,12 @@ fun BugShare() {
             }
         },
         modifier = Modifier.clickable {
-            activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+            activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
             CrashHandler.enableSaveLogToFile = !CrashHandler.enableSaveLogToFile
         },
         trailingContent = {
             Switch(checked = CrashHandler.enableSaveLogToFile, onCheckedChange = {
-                activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+                activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
                 CrashHandler.enableSaveLogToFile = !CrashHandler.enableSaveLogToFile
             })
         },

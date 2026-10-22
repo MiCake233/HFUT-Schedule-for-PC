@@ -25,7 +25,7 @@ import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 
 @Composable
 fun StartAppIconButton(
-    backdrop: Backdrop,
+    backdrop: PlatformBackdrop,
     app : Starter.AppPackages,
     modifier: Modifier = Modifier
 ) {

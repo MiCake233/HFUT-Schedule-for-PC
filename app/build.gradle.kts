@@ -60,6 +60,8 @@ kotlin {
             // 数据持久化
             implementation(libs.androidx.datastore.preferences.core)
             implementation(libs.androidx.room.runtime)
+            // Room KMP 的 SQLite 抽象（SupportSQLiteDatabase 等）
+            implementation(libs.androidx.sqlite)
             // 网络 / 解析
             implementation(libs.jsoup)
             implementation(libs.okhttp)

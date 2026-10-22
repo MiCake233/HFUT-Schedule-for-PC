@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse
+import com.hfut.schedule.logic.util.sys.runOnMain
 
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.expandVertically
@@ -631,7 +630,7 @@ private fun SelectCourseInfo(vm: NetWorkViewModel,courseId : Int, search : Strin
                 if(cookie == null) return@LaunchedEffect
                 stdCount = "0"
                 vm.getSCount(cookie!!, lists.id)
-                Handler(Looper.getMainLooper()).post {
+                runOnMain {
                     vm.stdCountData.observeForever { result ->
                         if (result != null) {
                             if (result.contains(lists.id.toString())) {

@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.shower.login
+import com.hfut.schedule.logic.util.sys.runOnMain
 
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -129,7 +128,7 @@ fun ShowerLogin(vm : NetWorkViewModel) {
                         CoroutineScope(Job()).launch {
                             async { vm.getGuaGuaUserInfo() }.await()
                             launch {
-                                Handler(Looper.getMainLooper()).post {
+                                runOnMain {
                                     vm.guaGuaUserInfo.observeForever { result ->
                                         if (result?.contains("成功") == true) {
                                             saveString("GuaGuaPersonInfo",result)

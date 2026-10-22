@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.nav.window
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
@@ -117,7 +118,7 @@ private fun ZoomableImage(
             onConfirmation = {
                 scope.launch {
                     // 保存图片
-                    activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+                    activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
                     saveImageToFile(bitmap.asAndroidBitmap())
                     displayDialog = false
                 }

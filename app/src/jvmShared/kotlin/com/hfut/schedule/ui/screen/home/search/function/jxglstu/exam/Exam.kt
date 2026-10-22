@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.exam
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
@@ -290,7 +291,7 @@ fun JxglstuExamUI(item : JxglstuExam, status : Boolean) {
                                                         endTimeHour.toInt(),
                                                         endTimeMinute.toInt()
                                                     )
-                                                activity?.let { it0 ->
+                                                activityOrNull()?.let { it0 ->
                                                     course.let {
                                                         place?.let { it1 ->
                                                             addToCalendars(startDateList, endDateList, it1, it,"考试", it0, remind = true)

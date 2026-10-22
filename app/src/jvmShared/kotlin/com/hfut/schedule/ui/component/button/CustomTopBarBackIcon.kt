@@ -191,7 +191,7 @@ fun TopBarNavigationIcon(
 //                                if(canPop) {
 //                                    navController.pop()
 //                                } else {
-//                                    activity?.finish()
+//                                    com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
 //                                }
                             }
                         }
@@ -212,7 +212,7 @@ fun TopBarNavigationIcon(
                     if(canPop) {
                         navController.pop()
                     } else {
-                        activity?.finish()
+                        com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
                     }
                 },
                 onDoubleClick = null,
@@ -244,7 +244,7 @@ fun TopBarNavigationIcon(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun LiquidTopBarNavigateIcon(
-    backdrop: Backdrop,
+    backdrop: PlatformBackdrop,
 ) {
     val navController = LocalNavController.current
     val canPop = navController.canPop()
@@ -253,7 +253,7 @@ fun LiquidTopBarNavigateIcon(
             if(canPop) {
                 navController.pop()
             } else {
-                activity?.finish()
+                com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
             }
         },
         backdrop = backdrop,

@@ -63,7 +63,7 @@ import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.ui.model.NavigationBarItemData
 import com.hfut.schedule.ui.nav.destination.NewsApiDestination
 import com.hfut.schedule.ui.nav.destination.NewsDestination
-import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.getWebVpnCookie
+import com.hfut.schedule.logic.util.sys.getWebVpnCookie
 import com.hfut.schedule.ui.screen.news.academic.AcademicTotalScreen
 import com.hfut.schedule.ui.screen.news.academic.AcademicXCScreen
 import com.hfut.schedule.ui.screen.news.department.SchoolsUI

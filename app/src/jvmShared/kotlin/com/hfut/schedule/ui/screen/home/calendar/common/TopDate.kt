@@ -45,7 +45,7 @@ import java.time.LocalDate
 fun ScheduleTopDate(
     showAll: Boolean,
     today : LocalDate,
-    backdrop: Backdrop
+    backdrop: PlatformBackdrop
 ) {
     val mondayOfCurrentWeek = today.minusDays(today.dayOfWeek.value - 1L)
     val todayDate = DateTimeManager.Date_yyyy_MM_dd

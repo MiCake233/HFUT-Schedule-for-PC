@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
+import com.hfut.schedule.logic.util.sys.runOnMain
 
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
@@ -372,7 +371,7 @@ suspend fun getWebInfoFromHuiXin(vm: NetWorkViewModel) = withContext(Dispatchers
     val auth = prefs.getString("auth","")
     async { vm.getFee("bearer $auth",HuiXinFeeType.NET_XUANCHENG) }.await()
     async {
-        Handler(Looper.getMainLooper()).post{
+        runOnMain {
             vm.infoValue.observeForever { result ->
                 if(result != null && result.contains("success")&&!result.contains("账号不存在")) {
                     GlobalUiStateHolder.webValue.value = getWebInfo(vm)
@@ -396,7 +395,7 @@ suspend fun getElectricFromHuiXin(vm : NetWorkViewModel) = withContext(Dispatche
         }
         async { vm.getFee("bearer $auth", HuiXinFeeType.ELECTRIC_HEFEI_UNDERGRADUATE, room = bean.roomNumber, building = bean.buildingNumber) }.await()
         async {
-            Handler(Looper.getMainLooper()).post{
+            runOnMain {
                 vm.hefeiElectric.observeForever { result ->
                     if (result?.contains("success") == true) {
                         try {
@@ -420,7 +419,7 @@ suspend fun getElectricFromHuiXin(vm : NetWorkViewModel) = withContext(Dispatche
         val input = "300$BuildingsNumber$RoomNumber$EndNumber"
         async { vm.getFee("bearer $auth", HuiXinFeeType.ELECTRIC_XUANCHENG, room = input) }.await()
         async {
-            Handler(Looper.getMainLooper()).post{
+            runOnMain {
                 vm.electricData.observeForever { result ->
                     if (result?.contains("success") == true) {
                         try {

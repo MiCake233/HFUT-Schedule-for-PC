@@ -200,7 +200,7 @@ fun HazeBottomBarDynamic(
 
 @Composable
 fun SpecialBottomBar(
-    shaderState : Backdrop,
+    shaderState : PlatformBackdrop,
     list : List<NavigationBarItemDataDynamic>,
     navController : NavController,
     enabled : Boolean = true,
@@ -230,7 +230,7 @@ fun SpecialBottomBar(
 @Composable
 fun HazeBottomBarV2(
     hazeState: HazeState,
-    backdrop : Backdrop,
+    backdrop : PlatformBackdrop,
     list: List<NavigationBarItemData>,
     navController: NavController,
     enabled: Boolean = true,

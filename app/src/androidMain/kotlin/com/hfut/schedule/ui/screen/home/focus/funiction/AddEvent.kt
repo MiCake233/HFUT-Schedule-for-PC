@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
+import com.hfut.schedule.logic.util.sys.runOnMain
 
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.BackEventCompat
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.PredictiveBackHandler
@@ -708,7 +707,7 @@ fun AddEventUI(
                 launch { vm.supabaseAdd(jwt, entity) }
             }
 
-            Handler(Looper.getMainLooper()).post {
+            runOnMain {
                 vm.supabaseAddResp.observeForever { result ->
                     if (result != null) {
                         if(result.first) {

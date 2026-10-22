@@ -1,10 +1,9 @@
 package com.hfut.schedule.ui.screen.login
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 //import androidx.compose.ui.tooling.preview.Preview
 import android.content.Context
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.annotation.RequiresApi
@@ -163,7 +162,7 @@ private fun loginClick(
         }.await()
         async { onLoad(true) }.await()
         async {
-            Handler(Looper.getMainLooper()).post{
+            runOnMain {
                 vm.code.observeForever { result ->
                     if(result != null) {
                         scope.launch {

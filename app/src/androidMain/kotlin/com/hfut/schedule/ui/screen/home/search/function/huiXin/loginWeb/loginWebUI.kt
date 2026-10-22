@@ -1,10 +1,9 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 import com.hfut.schedule.logic.model.AppConst
 
 
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -163,7 +162,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
             async { reEmptyLiveDta(vm.infoValue) }.await()
             async { vm.getFee("bearer $auth", HuiXinFeeType.NET_XUANCHENG) }.await()
             async {
-                Handler(Looper.getMainLooper()).post {
+                runOnMain {
                     vm.infoValue.observeForever { result ->
                         if (result != null)
                             if(result.contains("success")&&!result.contains("账号不存在")) {

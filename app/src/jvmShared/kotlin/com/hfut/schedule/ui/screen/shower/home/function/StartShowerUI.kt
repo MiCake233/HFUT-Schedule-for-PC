@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.shower.home.function
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -270,7 +271,7 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        activity?.let {
+                        activityOrNull()?.let {
                             checkAndRequestCameraPermission(it)
                             show = true
                         }

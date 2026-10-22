@@ -1,5 +1,7 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
 
+import com.hfut.schedule.logic.util.sys.activityOrNull
+
 import com.hfut.schedule.logic.model.AppConst
 
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -66,14 +68,14 @@ fun BackupScreen(
 //    }
 
     LaunchedEffect(activity) {
-        activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+        activityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
     }
 
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             uri?.let {
-                activity?.let {
+                activityOrNull()?.let {
                     file = copyUriToCacheFile(context,uri)
                     if(file == null) {
                         showToast(error)
@@ -89,7 +91,7 @@ fun BackupScreen(
         LittleDialog(
             onConfirmation = {
                 scope.launch {
-                    activity?.let {
+                    activityOrNull()?.let {
                         file?.let { backupFile ->
                             restoreData(it,context,backupFile)
                         } ?: showToast(error)
@@ -127,7 +129,7 @@ fun BackupScreen(
                     },
                     modifier = Modifier.clickable {
                         scope.launch {
-                            activity?.let {
+                            activityOrNull()?.let {
                                 val result = backupData(it,context)
                                 if(result) {
                                     showToast("备份成功，请前往Download目录查看")

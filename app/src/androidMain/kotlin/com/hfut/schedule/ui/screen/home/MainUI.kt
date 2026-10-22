@@ -856,7 +856,7 @@ fun MainScreen(
                 listOf(
                     NewNavigationBarItemData(
                         icon = NavigationBarIcon.Resource(
-                            resId = R.drawable.avd_calendar
+                            resId = Drawables.avd_calendar
                         ),
                         iconType = IconType.ANIMATED,
                         text = "课程表",
@@ -864,7 +864,7 @@ fun MainScreen(
                     ),
                     NewNavigationBarItemData(
                         icon = NavigationBarIcon.Resource(
-                            resId = R.drawable.avd_lightbulb
+                            resId = Drawables.avd_lightbulb
                         ),
                         iconType = IconType.ANIMATED,
                         text = "聚焦",
@@ -872,7 +872,7 @@ fun MainScreen(
                     ),
                     NewNavigationBarItemData(
                         icon = NavigationBarIcon.Resource(
-                            resId = R.drawable.avd_category_search
+                            resId = Drawables.avd_category_search
                         ),
                         iconType = IconType.ANIMATED,
                         text = "查询中心",
@@ -880,7 +880,7 @@ fun MainScreen(
                     ),
                     NewNavigationBarItemData(
                         icon = NavigationBarIcon.Resource(
-                            resId = if (showBadge) R.drawable.avd_deployed_code_update else R.drawable.avd_deployed_code
+                            resId = if (showBadge) Drawables.avd_deployed_code_update else Drawables.avd_deployed_code
                         ),
                         iconType = IconType.ANIMATED,
                         text = "选项",
@@ -898,7 +898,7 @@ fun MainScreen(
                     icon = { selected ->
                         NavigationBarItemDynamicIconModern(
                             selected,
-                            R.drawable.avd_calendar
+                            Drawables.avd_calendar
                         )
                     },
                 ),
@@ -908,7 +908,7 @@ fun MainScreen(
                     icon = { selected ->
                         NavigationBarItemDynamicIconModern(
                             selected,
-                            R.drawable.avd_lightbulb
+                            Drawables.avd_lightbulb
                         )
                     },
                 ),
@@ -918,7 +918,7 @@ fun MainScreen(
                     icon = { selected ->
                         NavigationBarItemDynamicIconModern(
                             selected,
-                            R.drawable.avd_category_search,
+                            Drawables.avd_category_search,
                         )
                     },
                 ),
@@ -928,7 +928,7 @@ fun MainScreen(
                     icon = { selected ->
                         NavigationBarItemDynamicIconModern(
                             selected,
-                            if (!showBadge) R.drawable.avd_deployed_code else R.drawable.avd_deployed_code_update,
+                            if (!showBadge) Drawables.avd_deployed_code else Drawables.avd_deployed_code_update,
                         )
                     },
                     badge = {

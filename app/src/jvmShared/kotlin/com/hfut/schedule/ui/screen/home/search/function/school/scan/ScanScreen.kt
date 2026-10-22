@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.scan
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -157,7 +158,7 @@ fun ScanScreen(
                                                     if(navController.canPop()) {
                                                         navController.pop()
                                                     } else {
-                                                        activity?.finish()
+                                                        com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
                                                     }
                                                 }
                                             }
@@ -284,7 +285,7 @@ fun ScanScreen(
         },
     ) { _ ->
         LaunchedEffect(activity) {
-            activity?.let { PermissionSet.checkAndRequestCameraPermission(it) }
+            activityOrNull()?.let { PermissionSet.checkAndRequestCameraPermission(it) }
         }
         Box(
             modifier = Modifier

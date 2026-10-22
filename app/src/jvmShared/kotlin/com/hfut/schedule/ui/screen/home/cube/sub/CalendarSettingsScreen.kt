@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
+import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -41,7 +42,7 @@ fun CalendarSettingsScreen(innerPadding : PaddingValues) {
 //        scale = it
 //    }
     LaunchedEffect(activity) {
-        activity?.let {
+        activityOrNull()?.let {
             PermissionSet.checkAndRequestCalendarPermission(it)
         }
     }

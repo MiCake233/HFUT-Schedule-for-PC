@@ -1,8 +1,7 @@
 package com.hfut.schedule.service.tile.base
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 import android.Manifest
-import android.os.Handler
-import android.os.Looper
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.widget.Toast
@@ -78,7 +77,7 @@ open class LoginSchoolNetTileService(private val campus : CampusRegion) : TileSe
     }
 
     private fun toast(text : String) {
-        Handler(Looper.getMainLooper()).post {
+        runOnMain {
             Toast.makeText(this,text, Toast.LENGTH_SHORT).show()
         }
     }

@@ -19,4 +19,6 @@ expect object AppCapabilities {
 
     /** 应用包名/标识：Android 取 Context.packageName，桌面端为固定值 */
     fun packageName(): String
+    /** 关闭当前页面/窗口 */
+    fun finishCurrentScreen()
 }

@@ -1,10 +1,9 @@
 package com.hfut.schedule.ui.screen.supabase.login
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 import com.hfut.schedule.logic.model.AppConst
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import com.hfut.schedule.application.MyApplication
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString
@@ -55,7 +54,7 @@ suspend fun loginSupabaseWithPassword(password : String, vm: NetWorkViewModel, n
 
 suspend fun regSupabase(password : String, vm: NetWorkViewModel, onResult : (Boolean) -> Unit) = withContext(
     Dispatchers.IO) {
-    Handler(Looper.getMainLooper()).post {
+    runOnMain {
         vm.supabaseRegResp.observeForever { result ->
             result?.let {
                 onResult(false)

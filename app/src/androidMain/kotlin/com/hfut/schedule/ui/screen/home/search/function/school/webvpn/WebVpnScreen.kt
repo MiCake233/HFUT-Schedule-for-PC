@@ -360,15 +360,6 @@ fun WebVpnScreen(
 //    return Constant.WEBVPN_COOKIE_HEADER + webVpnCookie
 //}
 
-suspend fun getWebVpnCookie() : String? =
-    if(GlobalUiStateHolder.webVpn) {
-        val webVpnCookie = withContext(Dispatchers.IO) {
-            DataStoreManager.webVpnCookies.first{ it.isNotEmpty() }
-        }
-        Constant.WEBVPN_COOKIE_HEADER + webVpnCookie
-    } else {
-        null
-    }
 
 @Composable
 private fun EnableGlobalWebVpn(

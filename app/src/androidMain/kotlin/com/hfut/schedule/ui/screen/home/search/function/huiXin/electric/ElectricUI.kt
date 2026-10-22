@@ -1,8 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.electric
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
@@ -335,7 +334,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
             async { reEmptyLiveDta(vm.hefeiElectric) }.await()
             async { vm.getFee("bearer $auth", HuiXinFeeType.ELECTRIC_HEFEI_UNDERGRADUATE, room = data.roomNumber, building = data.buildingNumber) }.await()
             async {
-                Handler(Looper.getMainLooper()).post{
+                runOnMain {
                     vm.hefeiElectric.observeForever { result ->
                         if (result?.contains("success") == true) {
                             try {
@@ -386,7 +385,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                     }.await()
                                     async { vm.getFee("bearer $auth", HuiXinFeeType.ELECTRIC_XUANCHENG, room = input) }.await()
                                     async {
-                                        Handler(Looper.getMainLooper()).post{
+                                        runOnMain {
                                             vm.electricData.observeForever { result ->
                                                 if (result?.contains("success") == true) {
                                                     try {

@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.supabase.home
+import com.hfut.schedule.logic.util.sys.runOnMain
 
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -104,7 +103,7 @@ fun SupabaseHomeScreen(vm: NetWorkViewModel, sortType: SortType, sortReversed : 
             reEmptyLiveDta(vm.supabaseGetEventsResp)
             vm.supabaseGetEvents()
         }
-        Handler(Looper.getMainLooper()).post {
+        runOnMain {
             vm.supabaseGetEventsResp.observeForever { result ->
                 if (result != null) {
                     refreshing = false

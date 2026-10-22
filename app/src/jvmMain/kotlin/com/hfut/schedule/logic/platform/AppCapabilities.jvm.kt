@@ -11,4 +11,7 @@ actual object AppCapabilities {
     actual fun canPickFile(): Boolean = true
 
     actual fun packageName(): String = "com.hfut.schedule"
+    actual fun finishCurrentScreen() {
+        // 桌面端由导航栈负责返回，这里不做处理
+    }
 }

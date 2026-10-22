@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
+import com.hfut.schedule.logic.util.sys.runOnMain
 
-import android.os.Handler
-import android.os.Looper
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinCardResponse
 import com.hfut.schedule.logic.model.dto.HuiXinCardInfoDto
 import com.hfut.schedule.logic.util.parse.roundOffString
@@ -22,7 +21,7 @@ suspend fun initCardNetwork(vm : NetWorkViewModel) = withContext(Dispatchers.IO)
     val auth = prefs.getString("auth","")
     async { vm.getHuiXinCardInfo("bearer $auth") }.await()
     launch {
-        Handler(Looper.getMainLooper()).post {
+        runOnMain {
             vm.huiXinCardInfoResponse.observeForever { result ->
                 if (result != null && result.contains("操作成功")) {
                     try {

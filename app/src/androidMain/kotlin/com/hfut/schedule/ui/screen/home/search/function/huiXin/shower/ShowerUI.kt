@@ -1,8 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.shower
+import com.hfut.schedule.logic.util.sys.runOnMain
 
 
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -116,7 +115,7 @@ fun getInGuaGua(vm: NetWorkViewModel,navController: NavigationController,onResul
         async { onResult(true) }.await()
         async { vm.getGuaGuaUserInfo() }.await()
         launch {
-            Handler(Looper.getMainLooper()).post {
+            runOnMain {
                 vm.guaGuaUserInfo.observeForever(guaguaUserInfoObserver)
             }
         }
@@ -267,14 +266,14 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                         CoroutineScope(Job()).launch {
                             async {
                                 showitem4 = false
-                                Handler(Looper.getMainLooper()).post{
+                                runOnMain {
                                     vm.electricData.value = "{}"
                                 }
                                 saveString("PhoneNumber",phoneNumber )
                             }.await()
                             async { vm.getFee("bearer $auth", HuiXinFeeType.SHOWER_XUANCHENG, phoneNumber = phoneNumber) }.await()
                             async {
-                                Handler(Looper.getMainLooper()).post{
+                                runOnMain {
                                     vm.showerData.observeForever { result ->
                                         if (result?.contains("success") == true) {
                                             showButton = true

@@ -334,7 +334,7 @@ fun SearchScreen(
 @Composable
 fun SearchFuncs(
     input: String,
-    backdrop : Backdrop,
+    backdrop : PlatformBackdrop,
     onShow : (Boolean) -> Unit,
     onInputChanged: (String) -> Unit
 ) {
