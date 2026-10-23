@@ -2,7 +2,6 @@ package com.hfut.schedule.ui.screen.home.search.function.huiXin.shower
 import com.hfut.schedule.logic.util.sys.runOnMain
 
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -43,13 +42,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
-import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinFeeType
@@ -84,7 +81,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.math.BigDecimal
 
 private fun getUrl(page : Int,) : String {
@@ -189,11 +185,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                         IconButton(onClick = {
                                             if (payNumber.length < 3)
                                                 payNumber += items.toString()
-                                            else Toast.makeText(
-                                                MyApplication.context,
-                                                "最高999元",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            else showToast("最高999元")
                                         }) { Text(text = items.toString()) }
                                     }
                                 }
@@ -205,7 +197,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                         IconButton(onClick = {
                                             if (payNumber.length < 3)
                                                 payNumber += num
-                                            else Toast.makeText(MyApplication.context, "最高999元", Toast.LENGTH_SHORT).show()
+                                            else showToast("最高999元")
                                         }) { Text(text = num.toString()) }
                                     }
                                 }
@@ -248,7 +240,6 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
             }
         }
 
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var loading by remember { mutableStateOf(false) }
 
@@ -282,9 +273,9 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                                 studentID = jsons.identifier.toString()
                                                 balance = jsons.accountMoney
                                                 givenBalance = jsons.accountGivenMoney
-                                                val jsonObject = JSONObject(result)
-                                                val dataObject = jsonObject.getJSONObject("map").getJSONObject("data")
-                                                dataObject.put("myCustomInfo", "undefined：$phoneNumber")
+                                                val jsonObject = com.hfut.schedule.network.core.GsonInstance.fromJson(result, com.google.gson.JsonObject::class.java)
+                                                val dataObject = jsonObject.getAsJsonObject("map").getAsJsonObject("data")
+                                                dataObject.addProperty("myCustomInfo", "undefined：$phoneNumber")
                                                 json = dataObject.toString()
                                                 show = true
                                             } catch (e:Exception) {
@@ -392,11 +383,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                                             IconButton(onClick = {
                                                                 if (phoneNumber.length < 11)
                                                                     phoneNumber += items.toString()
-                                                                else Toast.makeText(
-                                                                    MyApplication.context,
-                                                                    "11位数",
-                                                                    Toast.LENGTH_SHORT
-                                                                ).show()
+                                                                else showToast("11位数")
                                                             }) { Text(text = items.toString()) }
                                                         }
                                                     }
@@ -408,7 +395,7 @@ fun ShowerUI(vm : NetWorkViewModel, isInGuagua : Boolean = false, hazeState: Haz
                                                             IconButton(onClick = {
                                                                 if (phoneNumber.length < 11)
                                                                     phoneNumber += num
-                                                                else Toast.makeText(MyApplication.context, "11位数", Toast.LENGTH_SHORT).show()
+                                                                else showToast("11位数")
                                                             }) { Text(text = num.toString()) }
                                                         }
                                                     }

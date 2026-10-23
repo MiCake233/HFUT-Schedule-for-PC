@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.other.life
 
-import android.content.Context
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,9 +36,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
+import com.xah.common.ui.res.drawableIdOrNull
 import androidx.compose.ui.unit.dp
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -81,7 +80,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun HuoZaiFeiXuan() {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     CardListItem(
         headlineContent = {
@@ -110,7 +108,6 @@ fun HuoZaiFeiXuan() {
  */
 @Composable
 fun StarterScreen() {
-    val context = LocalContext.current
 
     HuoZaiFeiXuan()
     CardListItem(
@@ -550,28 +547,14 @@ private fun HumidityIcons(level : HumidityLevel) {
 @Composable
 private fun QWeatherIcon(code: Int?) {
     if (code != null) {
-        val context = LocalContext.current
-        val resourceId = reflectResId(context,"qweather$code",ReflectType.DRAWABLE)
+        // 桌面端没有 Resources，改成查迁移后的图标注册表（400+ 张 qweather 图标都已迁移）
+        val resourceId = drawableIdOrNull("qweather$code")
 
-        resourceId?.let {
-            Icon(
-                painter = painterResource(id = it),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
+        Icon(
+            painter = painterResource(id = resourceId ?: Drawables.cloud),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp)
+        )
     }
 }
 
-enum class ReflectType {
-    DRAWABLE,STRING,DIMEN
-}
-
-/**
- * 以反射形式拿到资源
- */
-fun reflectResId(context : Context, resName : String,type : ReflectType) : Int? {
-    val result = context.resources.getIdentifier(resName, type.name.lowercase(), context.packageName)
-    // 确保资源存在
-    return if(result == 0) null else result
-}

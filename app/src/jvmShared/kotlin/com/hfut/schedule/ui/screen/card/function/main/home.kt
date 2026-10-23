@@ -251,7 +251,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             },
             showBottomSheet = showBottomSheet_ELectric,
         ) {
-            com.hfut.schedule.ui.nav.UiSlots.Render("electric", vm)
+            com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.EleUI(vm = vm, hazeState = hazeState)
         }
     }
 
@@ -273,7 +273,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             },
             showBottomSheet = showBottomSheet_Web,
         ) {
-            com.hfut.schedule.ui.nav.UiSlots.Render("shower", vm) // ShowerUI(vm,hazeState = hazeState)
+            com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI(vm, hazeState = hazeState)
         }
     }
 

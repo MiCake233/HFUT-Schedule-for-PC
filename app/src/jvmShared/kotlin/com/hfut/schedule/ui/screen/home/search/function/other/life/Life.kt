@@ -209,7 +209,7 @@ fun LifeScreen(
         ) {
             nav2Composable(LifeBarItems.CAMPUS.name) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    com.hfut.schedule.ui.nav.UiSlots.Render("campus_map", vm)
+                    CampusMapScreen(vm, innerPadding)
                 }
             }
             nav2Composable(LifeBarItems.WEATHER.name) {
@@ -218,7 +218,7 @@ fun LifeScreen(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {
                         InnerPaddingHeight(innerPadding,true)
-                        com.hfut.schedule.ui.nav.UiSlots.Render("weather", vm)
+                        WeatherScreen(vm)
                         InnerPaddingHeight(innerPadding,false)
                     }
                 }
@@ -229,7 +229,7 @@ fun LifeScreen(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {
                         InnerPaddingHeight(innerPadding,true)
-                        com.hfut.schedule.ui.nav.UiSlots.Render("starter")
+                        StarterScreen()
                         InnerPaddingHeight(innerPadding,false)
                     }
                 }

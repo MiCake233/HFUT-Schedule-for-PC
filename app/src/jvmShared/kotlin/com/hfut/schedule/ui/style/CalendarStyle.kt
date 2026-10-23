@@ -14,6 +14,15 @@ data class CalendarStyle(val showAll: Boolean) {
     val rowCount = if (showAll) 7 else 5
     val columnCount = 6
 
+    /**
+     * 课表（表头日期 + 网格）的最大宽度。
+     *
+     * 手机屏幕窄，5 列时每格约 70~80dp；桌面窗口动辄 1200dp 以上，
+     * 同样 5 列会被拉成 200dp+，课程方块就显得又宽又胖。
+     * 这里给课表区域一个统一上限并居中，让格子比例接近手机端。
+     */
+    val maxWidth = 560.dp
+
     val containerColor @Composable
     get() = MaterialTheme.colorScheme.surfaceContainerHigh.copy(.6f).compositeOver(MaterialTheme.colorScheme.surface)
 
@@ -27,6 +36,3 @@ data class CalendarStyle(val showAll: Boolean) {
         vertical = everyPadding
     )
 }
-
-
-

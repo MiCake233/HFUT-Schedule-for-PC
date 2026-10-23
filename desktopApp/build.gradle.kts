@@ -45,7 +45,7 @@ compose.desktop {
             targetFormats(TargetFormat.Msi)
             packageName = "HFUT-Schedule"
             // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "1.0.2"
+            packageVersion = "1.0.3"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "GPL-3.0"
@@ -128,5 +128,16 @@ tasks.register<JavaExec>("loginProbe") {
     mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf("--login-probe")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验天气图标注册表
+tasks.register<JavaExec>("verifyDrawables") {
+    group = "verification"
+    description = "检查 qweather 图标能否按名字从注册表取到"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-drawables")
     systemProperty("java.awt.headless", "false")
 }

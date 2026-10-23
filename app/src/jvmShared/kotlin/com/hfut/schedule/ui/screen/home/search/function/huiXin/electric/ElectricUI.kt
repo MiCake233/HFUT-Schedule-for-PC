@@ -2,7 +2,6 @@ package com.hfut.schedule.ui.screen.home.search.function.huiXin.electric
 import com.hfut.schedule.logic.util.sys.runOnMain
 
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.expandVertically
@@ -50,14 +49,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
-import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.Campus
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampus
@@ -101,7 +98,6 @@ import com.xah.common.logic.util.remove
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
 private const val HEFEI_TAB = 0
 private const val XUANCHENG_TAB = 1
@@ -121,7 +117,6 @@ private fun getUrl(page : Int) : String {
 @Composable
 fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
     val titles = remember { listOf("合肥","宣城") }
-    val context = LocalContext.current
 
     val pagerState = rememberPagerState(pageCount = { titles.size }, initialPage =
         when(getCampusRegion()) {
@@ -206,11 +201,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                         IconButton(onClick = {
                                             if (payNumber.length < 3)
                                                 payNumber += items.toString()
-                                            else Toast.makeText(
-                                                MyApplication.context,
-                                                "最高999元",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            else showToast("最高999元")
                                         }) { Text(text = items.toString()) }
                                     }
                                 }
@@ -222,11 +213,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                         IconButton(onClick = {
                                             if (payNumber.length < 3)
                                                 payNumber += num
-                                            else Toast.makeText(
-                                                MyApplication.context,
-                                                "最高999元",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            else showToast("最高999元")
                                         }) { Text(text = num.toString()) }
                                     }
                                 }
@@ -350,9 +337,9 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                 LogUtil.error(e)
                                 showToast("错误")
                             }
-//                                                    val jsonObject = JSONObject(result)
-//                                                    val dataObject = jsonObject.getJSONObject("map").getJSONObject("data")
-//                                                    dataObject.put("myCustomInfo", "房间：$input")
+//                                                    val jsonObject = com.hfut.schedule.network.core.GsonInstance.fromJson(result, com.google.gson.JsonObject::class.java)
+//                                                    val dataObject = jsonObject.getAsJsonObject("map").getAsJsonObject("data")
+//                                                    dataObject.addProperty("myCustomInfo", "房间：$input")
 //                                                    json = dataObject.toString()
 //                                                    show = false
                         }
@@ -398,9 +385,9 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                                         LogUtil.error(e)
                                                         showToast("错误")
                                                     }
-                                                    val jsonObject = JSONObject(result)
-                                                    val dataObject = jsonObject.getJSONObject("map").getJSONObject("data")
-                                                    dataObject.put("myCustomInfo", "房间：$input")
+                                                    val jsonObject = com.hfut.schedule.network.core.GsonInstance.fromJson(result, com.google.gson.JsonObject::class.java)
+                                                    val dataObject = jsonObject.getAsJsonObject("map").getAsJsonObject("data")
+                                                    dataObject.addProperty("myCustomInfo", "房间：$input")
                                                     json = dataObject.toString()
                                                     show = false
                                                 }
@@ -466,7 +453,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                                 BuildingsNumber.toInt() in 1..5 -> showitem3 = true
                                             }
                                         }
-                                        else -> Toast.makeText(MyApplication.context,"请选择楼栋", Toast.LENGTH_SHORT).show()
+                                        else -> showToast("请选择楼栋")
                                     }
                                 }
 
@@ -506,11 +493,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                                         IconButton(onClick = {
                                                             if (RoomNumber.length < 3)
                                                                 RoomNumber += items.toString()
-                                                            else Toast.makeText(
-                                                                MyApplication.context,
-                                                                "三位数",
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
+                                                            else showToast("三位数")
                                                         }) { Text(text = items.toString()) }
                                                     }
                                                 }
@@ -522,7 +505,7 @@ fun EleUI(vm : NetWorkViewModel, hazeState: HazeState) {
                                                         IconButton(onClick = {
                                                             if (RoomNumber.length < 3)
                                                                 RoomNumber += num
-                                                            else Toast.makeText(MyApplication.context, "三位数", Toast.LENGTH_SHORT).show()
+                                                            else showToast("三位数")
                                                         }) { Text(text = num.toString()) }
                                                     }
                                                 }

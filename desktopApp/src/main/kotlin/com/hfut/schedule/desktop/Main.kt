@@ -36,6 +36,17 @@ fun main(args: Array<String>) {
         return
     }
 
+    // 自检：天气图标从注册表按名字取图（替代 Android 的 resources.getIdentifier）
+    if (args.contains("--verify-drawables")) {
+        val codes = listOf("100", "101", "104", "305", "9999")
+        codes.forEach { code ->
+            val id = com.xah.common.ui.res.drawableIdOf("qweather$code")
+            println("qweather$code -> id=$id" + (if (id >= 0) " name=" + com.xah.common.ui.res.Drawables.nameOf(id) else " (缺失, 会用兜底图标)"))
+        }
+        println("DRAWABLES_TOTAL=" + com.xah.common.ui.res.Drawables.size)
+        return
+    }
+
     // 自检：验证「写入日历」在桌面端会导出 .ics（自动化验收用）
     if (args.contains("--verify-ics")) {
         kotlinx.coroutines.runBlocking {

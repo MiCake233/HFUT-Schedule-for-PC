@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -53,9 +55,9 @@ fun ScheduleTopDate(
     val style = remember(showAll) { CalendarStyle(showAll) }
     val size = style.rowCount
 
-    Column(modifier = Modifier.background(Color.Transparent)) {
+    Column(modifier = Modifier.fillMaxWidth().background(Color.Transparent)) {
         Spacer(modifier = Modifier.height(CARD_NORMAL_DP*0))
-        LazyVerticalGrid(columns = GridCells.Fixed(size),modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP-if (showAll) 1.75.dp else 2.5.dp)){
+        LazyVerticalGrid(columns = GridCells.Fixed(size),modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP-if (showAll) 1.75.dp else 2.5.dp).widthIn(max = style.maxWidth).align(Alignment.CenterHorizontally)){
             items(size) { item ->
 
                 val date = mondayOfCurrentWeek.plusDays(item.toLong()).toString() //YYYY-MM-DD 与考试对比
@@ -93,9 +95,9 @@ fun ScheduleTopDate(
     val mondayOfCurrentWeek = today.minusDays(today.dayOfWeek.value - 1L)
     val calendarStyle = remember(showAll) { CalendarStyle(showAll) }
 
-    Column(modifier = Modifier.background(Color.Transparent)) {
+    Column(modifier = Modifier.fillMaxWidth().background(Color.Transparent)) {
         Spacer(modifier = Modifier.height(CARD_NORMAL_DP*0))
-        LazyVerticalGrid(columns = GridCells.Fixed(calendarStyle.rowCount),modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP-if (showAll) 1.75.dp else 2.5.dp)){
+        LazyVerticalGrid(columns = GridCells.Fixed(calendarStyle.rowCount),modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP-if (showAll) 1.75.dp else 2.5.dp).widthIn(max = calendarStyle.maxWidth).align(Alignment.CenterHorizontally)){
             items(calendarStyle.rowCount) { item ->
 
                 val date = mondayOfCurrentWeek.plusDays(item.toLong()).toString()

@@ -18,47 +18,23 @@ fun registerAndroidUiSlots() {
         (arg as? NetWorkViewModel) ?: LocalNavDependencies.current.get()
     }
 
-    UiSlots.register("web_lab") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebUI()
-    }
     UiSlots.register("pay") { arg ->
         com.hfut.schedule.ui.screen.home.search.function.one.pay.Pay()
+    }
+    UiSlots.register("web_lab") { arg ->
+        com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebUI()
     }
     UiSlots.register("today_campus") { arg ->
         com.hfut.schedule.ui.screen.home.search.function.school.student.ToadyCampus()
     }
-    UiSlots.register("electric") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.EleUI(
-            vm = vmOf(arg),
-            hazeState = rememberHazeBlurCompat()
-        )
-    }
     UiSlots.register("huixin_login") { arg ->
         com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI(vmOf(arg))
-    }
-    UiSlots.register("shower") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI(
-            vmOf(arg),
-            hazeState = rememberHazeBlurCompat()
-        )
     }
     UiSlots.register("guagua_person") { arg ->
         com.hfut.schedule.ui.screen.shower.home.function.GuaGuaPersonInfoUI(
             vmOf(arg),
             rememberHazeBlurCompat()
         )
-    }
-    UiSlots.register("campus_map") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.other.life.CampusMapScreen(
-            vmOf(arg),
-            androidx.compose.foundation.layout.PaddingValues(0.dp)
-        )
-    }
-    UiSlots.register("weather") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.other.life.WeatherScreen(vmOf(arg))
-    }
-    UiSlots.register("starter") {
-        com.hfut.schedule.ui.screen.home.search.function.other.life.StarterScreen()
     }
     UiSlots.register("supabase_home") { arg ->
         com.hfut.schedule.ui.screen.supabase.home.SupabaseHomeScreen(

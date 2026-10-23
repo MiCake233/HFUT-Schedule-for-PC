@@ -213,6 +213,18 @@ fun JxglstuCourseTableUI(
         }
     }
 
+    // 兜底：登录引导里任何一步抛错都会让 loadingJxglstu 卡在 true（界面永远转圈），
+    // 这里加超时保护，到点强制结束 loading 并提示下拉刷新。
+    LaunchedEffect(refreshLogin) {
+        if (!refreshLogin) return@LaunchedEffect
+        kotlinx.coroutines.delay(25_000)
+        if (loadingJxglstu) {
+            loadingJxglstu = false
+            onEnabled(true)
+            showToast("课表刷新超时，请在聚焦界面下拉刷新")
+        }
+    }
+
     if(refreshLogin) {
         val casCookies = GlobalUiStateHolder.casCookies
         val tgcCookie = prefs.getString("TGC", "")
