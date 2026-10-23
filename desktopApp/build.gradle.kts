@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.haze.materials)
     // 底栏用到的 Nav2（KMP，桌面有 jvm 变体）
     implementation(libs.navigation2)
+    implementation(libs.okhttp)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.swing)
 }
@@ -43,7 +44,8 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Msi)
             packageName = "HFUT-Schedule"
-            packageVersion = "1.0.0"
+            // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
+            packageVersion = "1.0.1"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "GPL-3.0"
@@ -115,5 +117,16 @@ tasks.register<JavaExec>("snapshotAppearance") {
     mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf("--snapshot", "E:/dshworkspace/research/hfut-desktop/desktop-appearance.png", "--appearance")
+    systemProperty("java.awt.headless", "false")
+}
+
+// CAS 登录链路诊断
+tasks.register<JavaExec>("loginProbe") {
+    group = "verification"
+    description = "打印 CAS 登录前置条件（dispatcher/prefs/cookie/captcha/login 回调）"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--login-probe")
     systemProperty("java.awt.headless", "false")
 }

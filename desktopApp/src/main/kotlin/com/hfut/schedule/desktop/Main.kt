@@ -30,6 +30,12 @@ private val windowPrefs: Preferences = Preferences.userRoot().node("com/hfut/sch
 fun main(args: Array<String>) {
     initAppInfo()
 
+    // 自检：CAS 登录链路诊断（用户报「点登录一直转圈」时用来定位）
+    if (args.contains("--login-probe")) {
+        runLoginProbe()
+        return
+    }
+
     // 自检：验证「写入日历」在桌面端会导出 .ics（自动化验收用）
     if (args.contains("--verify-ics")) {
         kotlinx.coroutines.runBlocking {
@@ -159,6 +165,20 @@ private fun snapshot(path: String): Boolean = snapshotOf(path) {
 private fun snapshotOf(path: String, content: @androidx.compose.runtime.Composable () -> Unit): Boolean = try {
     val scene = ImageComposeScene(width = 1180, height = 820, density = Density(1f)) {
         content()
+    }
+    // 先渲染一帧把 LaunchedEffect 跑起来（网络图片、异步状态都在这里发起）
+    scene.render()
+    // 离屏场景没有自己的事件循环：必须反复 render() 才会推进协程/动画，
+    // 否则验证码这类异步加载的图片永远停在占位图。
+    val wait = System.getProperty("hfut.snapshot.wait")?.toLongOrNull() ?: 0L
+    if (wait > 0) {
+        val step = 150L
+        var elapsed = 0L
+        while (elapsed < wait) {
+            Thread.sleep(step)
+            scene.render()
+            elapsed += step
+        }
     }
     val image = scene.render()
     val data = image.encodeToData(EncodedImageFormat.PNG) ?: return false

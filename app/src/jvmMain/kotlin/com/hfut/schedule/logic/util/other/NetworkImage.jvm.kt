@@ -37,7 +37,9 @@ actual fun rememberImageState(
                     if (!resp.isSuccessful) return@runCatching null
                     resp.body?.bytes()?.decodeToImageBitmap()
                 }
-            }.onFailure { LogUtil.error(it) }.getOrNull()
+            }.onFailure {
+                LogUtil.error(it)
+            }.getOrNull()
         }
         state.value = image
     }

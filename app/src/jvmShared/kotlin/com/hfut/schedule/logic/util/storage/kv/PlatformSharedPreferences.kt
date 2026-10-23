@@ -38,6 +38,16 @@ class PlatformSharedPreferences(private val file: File) {
         editor.commit()
     }
 
+    /** 把外部 store 里已有的键值（形如 `s|KEY`）补进本 store，已存在的键不覆盖 */
+    internal fun importMissing(entries: Map<String, String>) {
+        if (entries.isEmpty()) return
+        val missing = synchronized(lock) { entries.filterKeys { !props.containsKey(it) } }
+        if (missing.isEmpty()) return
+        val editor = Editor()
+        editor.putRaw(missing)
+        editor.commit()
+    }
+
     inner class Editor {
         private val puts = mutableMapOf<String, String>()
         private val removes = mutableListOf<String>()
@@ -52,6 +62,9 @@ class PlatformSharedPreferences(private val file: File) {
         fun putFloat(key: String, value: Float) = apply { puts["f|$key"] = value.toString() }
 
         fun remove(key: String) = apply { TYPES.forEach { removes.add("$it|$key") } }
+
+        /** 直接写入已经带类型前缀的键（用于旧数据迁移） */
+        internal fun putRaw(values: Map<String, String>) = apply { puts.putAll(values) }
 
         internal fun commit() {
             synchronized(lock) {

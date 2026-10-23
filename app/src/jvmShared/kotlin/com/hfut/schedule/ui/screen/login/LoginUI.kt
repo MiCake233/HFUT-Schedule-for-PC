@@ -70,6 +70,7 @@ import com.hfut.schedule.network.api.util.CryptoUtil
 import com.hfut.schedule.logic.util.network.state.CONNECTION_ERROR_CODE
 import com.hfut.schedule.logic.util.network.state.TIMEOUT_ERROR_CODE
 import com.xah.common.logic.state.NetworkUiState
+import com.hfut.schedule.logic.platform.AppCapabilities
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString
@@ -166,7 +167,7 @@ private fun loginClick(
                                     refresh(vm)
                                 }
                                 StatusCode.UNAUTHORIZED.code.toString() -> {
-                                    onResult("密码错误")
+                                    onResult("账号、密码或验证码不正确")
                                     refresh(vm)
                                 }
                                 StatusCode.OK.code.toString() -> {
@@ -790,7 +791,7 @@ private fun TwoTextField(
                                         }
                                     }
                                 },
-                                supportingText = if (!enableOcr) {
+                                supportingText = if (!enableOcr && AppCapabilities.isOcrModelAvailable()) {
                                     {
                                         Text(
                                             "点击下载模型文件以启用自动填充",
