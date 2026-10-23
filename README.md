@@ -42,10 +42,12 @@
 
 ## 来源与许可
 
-* 上游项目：[Chiu-xaH/HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule)。本项目灵感来源于此，
-  并复用了其绝大部分界面与业务逻辑；上游作者与贡献者名单见 [`docs/Developer.md`](docs/Developer.md)。
+* 上游项目：[Chiu-xaH/HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule)（Apache License 2.0）。
+  本桌面版基于上游源码修改而成，复用了其绝大部分界面与业务逻辑；
+  上游版权归原作者及贡献者所有，贡献者名单见 [`docs/Developer.md`](docs/Developer.md)。
+* 修改说明：本仓库在 `desktop-windows` 分支上做了桌面移植改动，详见 [`NOTICE`](NOTICE)。
 * 桌面移植部分：新增 `:desktopApp` 模块，把 Android 源码逐步迁入 `jvmShared` 共享源集，用 `expect/actual` 划分平台边界。
-* 许可证：**GNU General Public License v3.0**，与上游一致，详见 [`LICENSE`](LICENSE)。
+* 许可证：**Apache License 2.0**（与上游一致），详见 [`LICENSE`](LICENSE)。
 
 ---
 

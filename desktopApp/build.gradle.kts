@@ -48,7 +48,7 @@ compose.desktop {
             packageVersion = "1.0.6"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
-            copyright = "GPL-3.0"
+            copyright = "Apache-2.0"
             // 内置 JRE 的模块清单：Room/SQLite 用到 java.sql，OkHttp 用到 jdk.unsupported，
             // 加密/证书链还需要 jdk.crypto.ec，缺一个都会在启动时抛 NoClassDefFoundError
             modules(

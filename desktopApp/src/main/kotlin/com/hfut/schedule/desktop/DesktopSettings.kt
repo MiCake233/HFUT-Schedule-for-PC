@@ -122,7 +122,7 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                 CustomCard {
                     TransplantListItem(
                         headlineContent = { Text("开源协议") },
-                        supportingContent = { Text("GPL-3.0") },
+                        supportingContent = { Text("Apache-2.0") },
                         leadingContent = { Icon(painterResource(Drawables.info), null) },
                         modifier = Modifier.desktopClickable {
                             Starter.startWebUrlOuter("https://github.com/Chiu-xaH/HFUT-Schedule")

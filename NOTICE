@@ -1,0 +1,41 @@
+HFUT-Schedule for PC
+====================
+
+This repository is a modified version of HFUT-Schedule.
+
+Upstream work:
+  HFUT-Schedule
+  https://github.com/Chiu-xaH/HFUT-Schedule
+  Copyright (c) the HFUT-Schedule authors and contributors
+  Licensed under the Apache License, Version 2.0
+
+This fork ("HFUT-Schedule for PC") adds a Windows desktop port and is
+distributed under the same license, the Apache License, Version 2.0
+(see LICENSE). It is not affiliated with, endorsed by, or sponsored by the
+upstream authors or by Hefei University of Technology.
+
+Modifications (as required by Apache License 2.0, section 4(b))
+--------------------------------------------------------------
+1. Added module `desktopApp`: the Windows entry point (Compose Desktop window,
+   packaging via jpackage/MSI, app icon, window state, settings page,
+   session restore, autostart).
+2. Added Android/JVM `jvmShared` source set in `:app` and moved the original
+   Android sources into it, so the same UI and business logic build for both
+   platforms; added `expect/actual` capability declarations
+   (`AppCapabilities`, `PlatformStarter`, `OcrSupport`, `ClipBoardHelper`,
+   `CalendarWriter`, `LanguageHelper`, `AppAssets`, ...).
+3. Extracted platform page dispatch (`ui/nav/PlatformScreens.*`) and added
+   `logic/platform/PlatformFeatures.kt`, which hides pages that only exist on
+   Android.
+4. Replaced Android-only implementations on desktop: in-app WebView becomes the
+   system browser, system-calendar writes become an `.ics` export, QR codes are
+   drawn with zxing on a Compose Canvas, PNG icons are read from classpath
+   resources instead of APK assets.
+5. Added a cross-platform preferences store, and desktop-specific pages
+   (appearance settings, settings list).
+6. Replaced the app icon with new artwork (red field, white "HFUT" lettering).
+7. Added verification tasks under `:desktopApp` (offscreen render, login probe,
+   ICS export, icon lookup, feature filtering, session/autostart probe).
+
+Newly added files carry this modification notice through this NOTICE file and
+the "来源与许可" section of README.md.
