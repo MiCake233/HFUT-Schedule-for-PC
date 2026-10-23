@@ -16,15 +16,23 @@ upstream authors or by Hefei University of Technology.
 
 Usage notice (applies to this fork's additions)
 -----------------------------------------------
-This project is provided for study and technical exchange only.
-Commercial use is prohibited, including selling, paid distribution, bundling
-for sale, or offering paid services based on this project. Use for any illegal
-purpose is prohibited, including bypassing the access control of university
-systems, scraping or reselling other people's data, or interfering with or
-attacking university information systems. Credentials and personal data stay on
-the user's own machine; the user is responsible for how the account is used.
-The software is provided "AS IS", without warranties or conditions of any kind;
-the author is not liable for any damage arising from its use.
+This project is provided for study, research and technical exchange only.
+See DISCLAIMER.md for the full terms. In short:
+
+- Commercial use is prohibited without written permission, including selling,
+  paid distribution, bundling with hardware or services, and offering paid
+  services based on this project.
+- Use for illegal or infringing purposes is prohibited, including bypassing the
+  access control of university systems, scraping or reselling other people's
+  data, impersonation, and interfering with or attacking information systems.
+- Copyright, licence and attribution notices must not be removed or altered.
+- This is an unofficial project. It is not affiliated with Hefei University of
+  Technology or with the upstream authors, and is not endorsed by them.
+- Credentials and personal data stay on the user's own machine; the user is
+  responsible for how the account is used.
+- The software is provided "AS IS", without warranties or conditions of any
+  kind; the author is not liable for any damage arising from its use.
+
 
 Modifications (as required by Apache License 2.0, section 4(b))
 --------------------------------------------------------------
