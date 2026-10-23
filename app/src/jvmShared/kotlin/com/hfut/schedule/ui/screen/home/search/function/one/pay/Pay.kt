@@ -51,8 +51,6 @@ import com.hfut.schedule.ui.component.divider.DashedDivider
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.FeeDestination
-import com.hfut.schedule.ui.screen.home.cube.screen.QR_CODE_PADDING
-import com.hfut.schedule.ui.screen.home.cube.screen.rememberCreateQrCode
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -69,6 +67,7 @@ import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
+import androidx.compose.foundation.layout.size
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
@@ -149,8 +148,10 @@ fun PayUI(vm: NetWorkViewModel,hazeState : HazeState) {
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = APP_HORIZONTAL_DP, vertical = 5.dp), horizontalArrangement = Arrangement.Center) {
-                    val qrPainter = rememberCreateQrCode(Constant.PAY_FEE_URL)
-                    qrPainter?.let { Image(it.asImageBitmap(), contentDescription = EMPTY_STRING) }
+                    com.hfut.schedule.ui.component.qrcode.QrCodeImage(
+                        content = Constant.PAY_FEE_URL,
+                        modifier = Modifier.size(220.dp)
+                    )
                 }
                 Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP))
             }
@@ -225,13 +226,11 @@ fun PayUI(vm: NetWorkViewModel,hazeState : HazeState) {
                     ClipBoardHelper.copy(Constant.PAY_FEE_URL)
                 }
             )
-            val qrPainter = rememberCreateQrCode(Constant.PAY_FEE_URL)
-            qrPainter?.let {
-                DashedDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP))
-                Image(
-                    it.asImageBitmap(),
-                    contentDescription = EMPTY_STRING,
-                    modifier = Modifier.padding(APP_HORIZONTAL_DP - QR_CODE_PADDING)
+            DashedDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                com.hfut.schedule.ui.component.qrcode.QrCodeImage(
+                    content = Constant.PAY_FEE_URL,
+                    modifier = Modifier.size(200.dp)
                 )
             }
         }

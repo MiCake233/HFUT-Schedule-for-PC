@@ -18,40 +18,19 @@ fun registerAndroidUiSlots() {
         (arg as? NetWorkViewModel) ?: LocalNavDependencies.current.get()
     }
 
-    UiSlots.register("pay") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.one.pay.Pay()
-    }
-    UiSlots.register("web_lab") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebUI()
-    }
-    UiSlots.register("today_campus") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.school.student.ToadyCampus()
-    }
-    UiSlots.register("huixin_login") { arg ->
-        com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI(vmOf(arg))
-    }
     UiSlots.register("guagua_person") { arg ->
         com.hfut.schedule.ui.screen.shower.home.function.GuaGuaPersonInfoUI(
             vmOf(arg),
             rememberHazeBlurCompat()
         )
     }
-    UiSlots.register("supabase_home") { arg ->
-        com.hfut.schedule.ui.screen.supabase.home.SupabaseHomeScreen(
-            vmOf(arg),
-            sortType = com.hfut.schedule.logic.model.enumeration.SortType.TIME_LINE,
-            sortReversed = false,
-            innerPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
-            pagerState = androidx.compose.foundation.pager.rememberPagerState { 3 }
-        )
-    }
-    UiSlots.register("supabase_storage") { _ ->
-        com.hfut.schedule.ui.screen.supabase.focus.SupabaseStorageScreen(
-            androidx.compose.foundation.layout.PaddingValues(0.dp),
-            rememberHazeBlurCompat()
-        )
-    }
     // 课表设置面板（原 MainUI 里的 BottomSheet）
+    UiSlots.register("fix") {
+        com.hfut.schedule.ui.screen.fix.fix.FixUI(
+            innerPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+            vm = LocalNavDependencies.current.get()
+        )
+    }
     UiSlots.register("calendar_ui_settings") {
         com.hfut.schedule.ui.screen.home.cube.screen.CalendarUISettings(true)
     }
@@ -81,16 +60,7 @@ fun registerAndroidUiSlots() {
             arg as androidx.compose.foundation.layout.PaddingValues
         )
     }
-    // 参数：isSupabase / isVisible / 内边距 / ViewModel
-    UiSlots.register("add_event_fab") { arg ->
-        val args = arg as List<*>
-        com.hfut.schedule.ui.screen.home.focus.funiction.AddEventFloatButton(
-            isSupabase = args[0] as Boolean,
-            isVisible = args[1] as Boolean,
-            innerPaddings = args[2] as androidx.compose.foundation.layout.PaddingValues,
-            vm = args[3] as NetWorkViewModel
-        )
-    }
+
     // 参数：ViewModel / 导航控制器
     UiSlots.registerAction("guagua_start") { arg ->
         val args = arg as List<*>

@@ -800,6 +800,22 @@ actual fun RenderPlatformDestination(destination: NavDestination): Boolean = whe
 /** 少数只有 key、没有参数对象的平台页面（设置页壳）走这个入口 */
 @Composable
 actual fun RenderPlatformScreen(key: String): Boolean = when (key.split("#").first()) {
+        "platform_settings_ai_api_key" -> {
+            com.hfut.schedule.ui.nav.destination.SettingsAiApiKeyDestination.Content()
+            true
+        }
+        "platform_settings_huixin_password" -> {
+            com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordDestination.Content()
+            true
+        }
+        "platform_settings_backup" -> {
+            com.hfut.schedule.ui.nav.destination.SettingsBackupDestination.Content()
+            true
+        }
+        "platform_settings_tips" -> {
+            com.hfut.schedule.ui.nav.destination.SettingsTipsDestination.Content()
+            true
+        }
         "platform_settings_appearance" -> {
             com.hfut.schedule.ui.nav.destination.SettingsAppearanceDestination.Content()
             true

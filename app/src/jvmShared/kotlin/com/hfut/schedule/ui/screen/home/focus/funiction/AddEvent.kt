@@ -1,9 +1,7 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
 import com.hfut.schedule.logic.util.sys.runOnMain
 
-import androidx.activity.BackEventCompat
-import androidx.activity.compose.BackHandler
-import androidx.activity.compose.PredictiveBackHandler
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedVisibility
@@ -19,9 +17,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkVertically
@@ -89,7 +84,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -97,7 +91,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
-import com.hfut.schedule.R
 import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
 import com.hfut.schedule.logic.database.entity.CustomEventType
@@ -110,7 +103,7 @@ import com.hfut.schedule.network.api.util.getUinAppCampusId
 import com.hfut.schedule.logic.network.repo.UniAppRepository
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.network.state.reEmptyLiveDta
-import com.hfut.schedule.logic.util.other.AppVersion
+import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.logic.util.sys.Starter
@@ -184,6 +177,8 @@ import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.util.UUID
 import kotlin.coroutines.cancellation.CancellationException
+import com.hfut.schedule.logic.util.sys.parseTimeItem
+import androidx.compose.ui.draw.rotate
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -265,7 +260,6 @@ fun AddEventScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var showDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val backDrop = rememberLayerBackdrop()
 
 
@@ -368,7 +362,7 @@ fun AddEventScreen(
         },
     ) { innerPadding ->
         val canUse by produceState<Boolean?>(initialValue = null) {
-            value = if(isSupabase) loginSupabaseWithCheck(jwt,refreshToken,vm,context) else true
+            value = if(isSupabase) loginSupabaseWithCheck(jwt,refreshToken,vm,null) else true
         }
         Column(modifier = Modifier.padding(innerPadding)) {
             when(canUse) {
@@ -443,10 +437,9 @@ private fun SharedTransitionScope.SurfaceUI(
     val refreshToken by DataStoreManager.supabaseRefreshToken.collectAsState(initial = EMPTY_STRING)
 
 //    var loading by remember { mutableStateOf(false) }
-    val context = LocalContext.current
 
     val scope = rememberCoroutineScope()
-    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppVersion.CAN_PREDICTIVE)
+    val enablePredictive by DataStoreManager.enablePredictive.collectAsState(initial = AppInfo.CAN_PREDICTIVE)
     var useBackHandler by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         if(useBackHandler == false) {
@@ -464,23 +457,9 @@ private fun SharedTransitionScope.SurfaceUI(
     }
     val navController = LocalNavController.current
     var scale by remember { mutableFloatStateOf(1f) }
-    if(useBackHandler && enablePredictive) {
-        PredictiveBackHandler() { progress: Flow<BackEventCompat> ->
-            // code for gesture back started
-            try {
-                progress.collect { backEvent ->
-                    // code for progress
-                    scale = 1f - (0.075f * backEvent.progress)
-                }
-                // code for completion
-                scale = 0f
-                showChange(false)
-            } catch (e: CancellationException) {
-                // code for cancellation
-                scale = 1f
-            }
-        }
-    } else {
+    // 预测式返回（PredictiveBackHandler）是 Android 专属手势，桌面端没有；
+    // 这里统一用跨平台的 BackHandler，两端行为一致。
+    if(useBackHandler) {
         BackHandler {
             showChange(false)
         }
@@ -532,7 +511,7 @@ private fun SharedTransitionScope.SurfaceUI(
             exit = fadeOut(tween(durationMillis = 0))
         ) {
             val canUse by produceState<Boolean?>(initialValue = null) {
-                value = if(isSupabase) loginSupabaseWithCheck(jwt,refreshToken,vm,context) else true
+                value = if(isSupabase) loginSupabaseWithCheck(jwt,refreshToken,vm,null) else true
             }
             Column(modifier = Modifier
                 .padding(innerPadding)
@@ -918,9 +897,16 @@ fun AddEventUI(
                                             displaySelector = !displaySelector
                                         }
                                     ) {
-                                        val animatedImageVector = AnimatedImageVector.animatedVectorResource(id = R.drawable.ic_anim_expand)
-                                        val painter = rememberAnimatedVectorPainter(animatedImageVector, displaySelector)
-                                        Icon(painter, null)
+                                        // 原 AVD 是箭头旋转，跨平台改成静态图标 + 旋转动画
+                                        val rotation by androidx.compose.animation.core.animateFloatAsState(
+                                            targetValue = if (displaySelector) 180f else 0f,
+                                            label = "expand_rotation"
+                                        )
+                                        Icon(
+                                            painterResource(Drawables.collapse_content),
+                                            null,
+                                            modifier = Modifier.rotate(rotation)
+                                        )
                                     }
                                 },
                                 modifier = Modifier,
@@ -1011,9 +997,15 @@ fun AddEventUI(
                                     displaySelector = !displaySelector
                                 }
                             ) {
-                                val animatedImageVector = AnimatedImageVector.animatedVectorResource(id = R.drawable.ic_anim_expand)
-                                val painter = rememberAnimatedVectorPainter(animatedImageVector, displaySelector)
-                                Icon(painter, null)
+                                val rotation2 by androidx.compose.animation.core.animateFloatAsState(
+                                    targetValue = if (displaySelector) 180f else 0f,
+                                    label = "expand_rotation2"
+                                )
+                                Icon(
+                                    painterResource(Drawables.collapse_content),
+                                    null,
+                                    modifier = Modifier.rotate(rotation2)
+                                )
                             }
                         },
                         modifier = Modifier,

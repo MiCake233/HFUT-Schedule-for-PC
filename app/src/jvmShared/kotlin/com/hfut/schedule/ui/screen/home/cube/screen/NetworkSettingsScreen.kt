@@ -38,9 +38,9 @@ import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.media.SimpleVideo
 import com.hfut.schedule.ui.component.media.checkOrDownloadVideo
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
-import com.hfut.schedule.ui.nav.destination.SettingsAiApiKeyDestination
-import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordDestination
-import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordDestination
+import com.hfut.schedule.ui.nav.destination.SettingsAiApiKeyPlatformDestination
+import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordPlatformDestination
+import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordPlatformDestination
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.container.component.base.SharedContainer
@@ -53,7 +53,8 @@ import kotlinx.coroutines.launch
 fun NetworkSettingsScreen(
     innerPaddings : PaddingValues,
 ) {
-    val context = androidx.compose.ui.platform.LocalContext.current
+    // 视频下载需要平台上下文：Android 拿窗口，桌面为 null（内部会退化到相对目录）
+    val context = com.hfut.schedule.logic.util.sys.currentPlatformActivityOrNull()
     val navTopController = LocalNavController.current
 
     Column(modifier = Modifier
@@ -91,7 +92,7 @@ fun NetworkSettingsScreen(
         DividerTextExpandedWith(stringResource(Strings.network_settings_config_half_title)) {
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 SharedContainer(
-                    key = SettingsHuiXinPasswordDestination.key,
+                    key = SettingsHuiXinPasswordPlatformDestination.key,
                     shape = MaterialTheme.shapes.medium.copy(
                         bottomStart = CornerSize(0.dp),
                         bottomEnd = CornerSize(0.dp),
@@ -104,13 +105,13 @@ fun NetworkSettingsScreen(
                         supportingContent = { Text(text = stringResource(Strings.network_settings_school_card_password_description)) },
                         leadingContent = { Icon(painterResource(Drawables.lock), contentDescription = "Localized description",) },
                         modifier = Modifier.clickable {
-                            navTopController.push(SettingsHuiXinPasswordDestination)
+                            navTopController.push(SettingsHuiXinPasswordPlatformDestination)
                         }
                     )
                 }
                 PaddingHorizontalDivider()
                 SharedContainer(
-                    key = SettingsJxglstuPasswordDestination.key,
+                    key = SettingsJxglstuPasswordPlatformDestination.key,
                     shape = NoneRoundShape,
                     containerColor = MaterialTheme.colorScheme.surface
                 ) {
@@ -120,7 +121,7 @@ fun NetworkSettingsScreen(
                         supportingContent = { Text(text = stringResource(Strings.network_settings_jxglstu_password_description)) },
                         leadingContent = { Icon(painterResource(Drawables.lock), contentDescription = "Localized description",) },
                         modifier = Modifier.clickable {
-                            navTopController.push(SettingsJxglstuPasswordDestination)
+                            navTopController.push(SettingsJxglstuPasswordPlatformDestination)
                         }
                     )
                 }
@@ -134,7 +135,7 @@ fun NetworkSettingsScreen(
                 )
                 PaddingHorizontalDivider()
                 SharedContainer(
-                    key = SettingsAiApiKeyDestination.key,
+                    key = SettingsAiApiKeyPlatformDestination.key,
                     shape = MaterialTheme.shapes.medium.copy(
                         topStart = CornerSize(0.dp),
                         topEnd = CornerSize(0.dp)
@@ -152,7 +153,7 @@ fun NetworkSettingsScreen(
                             contentDescription = "Localized description"
                         ) },
                         modifier = Modifier.clickable {
-                            navTopController.push(SettingsAiApiKeyDestination)
+                            navTopController.push(SettingsAiApiKeyPlatformDestination)
                         }
                     )
                 }

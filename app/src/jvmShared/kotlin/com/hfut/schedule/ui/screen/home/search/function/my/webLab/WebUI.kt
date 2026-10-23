@@ -1,8 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.my.webLab
 import com.hfut.schedule.logic.util.sys.isValidWebUrl
 
-import android.graphics.Bitmap
-import android.util.Patterns
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
@@ -46,9 +44,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -75,12 +71,10 @@ import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButto
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.DepartmentsDestination
 import com.hfut.schedule.ui.nav.destination.NotificationBoxDestination
-import com.hfut.schedule.ui.nav.destination.SettingsBackupDestination
-import com.hfut.schedule.ui.nav.destination.SettingsTipsDestination
+import com.hfut.schedule.ui.nav.destination.SettingsBackupPlatformDestination
+import com.hfut.schedule.ui.nav.destination.SettingsTipsPlatformDestination
 import com.hfut.schedule.ui.nav.destination.VersionInfoDestination
 import com.hfut.schedule.ui.nav.destination.WebFolderDestination
-import com.hfut.schedule.ui.screen.home.cube.screen.QR_CODE_PADDING
-import com.hfut.schedule.ui.screen.home.cube.screen.createQrCode
 
 import com.hfut.schedule.ui.screen.home.cube.sub.MyAPIItem
 import com.hfut.schedule.ui.screen.home.search.function.my.notification.NotificationItems
@@ -88,7 +82,7 @@ import com.hfut.schedule.ui.screen.home.search.function.my.notification.getNotif
 import com.hfut.schedule.ui.screen.home.search.function.other.life.HuoZaiFeiXuan
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
-import com.hfut.schedule.ui.util.getPureUrl
+import com.hfut.schedule.logic.util.sys.getPureUrl
 import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
@@ -103,6 +97,7 @@ import com.xah.container.component.base.SharedContainer
 import com.xah.container.component.base.sharedContainer
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.size
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -192,7 +187,6 @@ fun WebNavigationScreen(
             }
         }
     }
-    val context = LocalContext.current
     var input by rememberSaveable { mutableStateOf("https://") }
     var inputCookies by remember { mutableStateOf(EMPTY_STRING) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -249,7 +243,7 @@ fun WebNavigationScreen(
             DividerTextExpandedWith(text = "浏览器") {
                 Column() {
                     val color = MaterialTheme.colorScheme.primary
-                    var qrPainter by remember { mutableStateOf<Bitmap?>(null) }
+                    var showQr by remember { mutableStateOf(false) }
 
                     CustomTextField(
                         input = input,
@@ -260,17 +254,13 @@ fun WebNavigationScreen(
                                 IconButton(
                                     enabled = input.isNotEmpty() && input.isNotBlank(),
                                     onClick = {
-                                        if(qrPainter == null) {
-                                            qrPainter = createQrCode(input,color)
-                                        } else {
-                                            qrPainter = null
-                                        }
+                                        showQr = !showQr
                                     },
                                 ) {
                                     Icon(
                                         painterResource(Drawables.qr_code_2),
                                         null,
-                                        tint = if(qrPainter == null) LocalContentColor.current else MaterialTheme.colorScheme.primary
+                                        tint = if(!showQr) LocalContentColor.current else MaterialTheme.colorScheme.primary
                                     )
                                 }
                                 IconButton(
@@ -305,21 +295,13 @@ fun WebNavigationScreen(
                         )
                     ) { inputCookies = it }
 
-                    qrPainter?.let {
-                        var first by remember { mutableStateOf(true) }
-                        LaunchedEffect(input) {
-                            if(first) {
-                                first = false
-                                return@LaunchedEffect
-                            }
-                            qrPainter = createQrCode(input,color)
-                        }
-                        DashedDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP).padding(top = QR_CODE_PADDING))
+                    if (showQr) {
+                        DashedDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP).padding(top = APP_HORIZONTAL_DP * 4))
                         RowHorizontal {
-                            Image(
-                                it.asImageBitmap(),
-                                contentDescription = EMPTY_STRING,
-                                modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP - QR_CODE_PADDING)
+                            com.hfut.schedule.ui.component.qrcode.QrCodeImage(
+                                content = input,
+                                contentColor = color,
+                                modifier = Modifier.size(200.dp)
                             )
                         }
                     }
@@ -404,14 +386,14 @@ fun NotificationBoxScreen(
                         Text("解锁聚在工大的更多场景与用法")
                     },
                     leadingContent = {
-                        Icon(painterResource(SettingsTipsDestination.icon),null)
+                        Icon(painterResource(SettingsTipsPlatformDestination.icon),null)
                     },
                     modifier = Modifier.clickable {
-                        navController.push(SettingsTipsDestination)
+                        navController.push(SettingsTipsPlatformDestination)
                     },
                     shape = NoneRoundShape,
                     cardModifier = Modifier.sharedContainer(
-                        SettingsTipsDestination.key,
+                        SettingsTipsPlatformDestination.key,
                         MaterialTheme.shapes.medium,
                         cardNormalColor()
                     )
@@ -445,7 +427,7 @@ fun NotificationBoxScreen(
                     CardListItem(
                         headlineContent = { Text("数据备份") },
                         modifier = Modifier.clickable {
-                            navController.push(SettingsBackupDestination)
+                            navController.push(SettingsBackupPlatformDestination)
                         }
                     )
                 }

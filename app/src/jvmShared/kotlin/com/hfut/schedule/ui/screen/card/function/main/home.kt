@@ -262,7 +262,7 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
             },
             showBottomSheet = showBottomSheet_Web
         ) {
-            com.hfut.schedule.ui.nav.UiSlots.Render("huixin_login", vm)
+            com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI(vm)
         }
     }
 

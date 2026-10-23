@@ -60,7 +60,7 @@ fun Fix(vm : NetWorkViewModel) {
             modifier = Modifier.hazeSource(state = hazeState),
             color = MaterialTheme.colorScheme.surfaceContainer
         ) {
-            com.hfut.schedule.ui.nav.UiSlots.Render("fix") // FixUI(innerPadding = innerPadding,vm)
+            com.hfut.schedule.ui.nav.UiSlots.Render("fix")
         }
     }
 }

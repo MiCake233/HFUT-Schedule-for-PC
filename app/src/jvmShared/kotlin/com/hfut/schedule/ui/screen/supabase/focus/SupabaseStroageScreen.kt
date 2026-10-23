@@ -1,7 +1,5 @@
 package com.hfut.schedule.ui.screen.supabase.focus
 
-import android.app.Activity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,7 +33,6 @@ import com.hfut.schedule.ui.component.dialog.LittleDialog
 import com.hfut.schedule.ui.component.container.CardListItem
   
 import com.hfut.schedule.logic.util.sys.showToast
-import com.hfut.schedule.ui.screen.home.focus.funiction.openOperation
 import com.hfut.schedule.logic.util.sys.parseTimeItem
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.remove
@@ -50,7 +46,6 @@ import kotlinx.coroutines.launch
 fun SupabaseStorageScreen(innerPadding : PaddingValues,hazeState : HazeState) {
 //    var customNetCourseList by remember { mutableStateOf<List<CustomEventDTO>>(emptyList()) }
     var customScheduleList by remember { mutableStateOf<List<CustomEventDTO>>(emptyList()) }
-    val activity = LocalActivity.current
     var refreshDB by remember { mutableStateOf(false) }
     var input by remember { mutableStateOf(EMPTY_STRING) }
 
@@ -74,14 +69,13 @@ fun SupabaseStorageScreen(innerPadding : PaddingValues,hazeState : HazeState) {
             ) { input = it }
             Spacer(Modifier.height(CARD_NORMAL_DP))
         }
-        customScheduleList.let { list -> items(list.size){ item -> activity?.let { it1 -> CustomItem(item = list[item], hazeState = hazeState, activity = it1) { refreshDB = !refreshDB } } } }
-//        customNetCourseList.let { list -> items(list.size){ item -> activity?.let { it1 -> CustomItem(item = list[item], hazeState = hazeState, activity = it1) { refreshDB = !refreshDB } } } }
+        customScheduleList.let { list -> items(list.size){ item -> CustomItem(item = list[item], hazeState = hazeState, activity = null) { refreshDB = !refreshDB } } }
         items(2) { InnerPaddingHeight(innerPadding,false) }
     }
 }
 
 @Composable
-private fun CustomItem(item : CustomEventDTO, hazeState: HazeState, activity: Activity, refresh : () -> Unit) {
+private fun CustomItem(item : CustomEventDTO, hazeState: HazeState, activity: Any?, refresh : () -> Unit) {
     val dateTime = item.dateTime
     val nowTimeNum = DateTimeManager.Date_yyyy_MM_dd.remove("-").toLong()
     val endNum = with(dateTime.end) { "$year${parseTimeItem(month)}${parseTimeItem(day)}" }.toLong()
@@ -96,14 +90,13 @@ private fun CustomItem(item : CustomEventDTO, hazeState: HazeState, activity: Ac
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun CustomItemUI(item: CustomEventDTO,activity: Activity,hazeState: HazeState,isOutOfDate : Boolean = false,refresh: () -> Unit) {
+private fun CustomItemUI(item: CustomEventDTO,activity: Any?,hazeState: HazeState,isOutOfDate : Boolean = false,refresh: () -> Unit) {
     val title = item.title
     val description = item.description
     val dateTime = item.dateTime
     var id by remember { mutableIntStateOf(-1) }
     var showDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     if(showDialog)
         LittleDialog(
@@ -163,7 +156,7 @@ private fun CustomItemUI(item: CustomEventDTO,activity: Activity,hazeState: Haze
             }
         },
         modifier = Modifier.combinedClickable(
-            onClick = { description?.let { openOperation(it,context) } },
+            onClick = { description?.let { com.hfut.schedule.logic.platform.AppCapabilities.openOperation(it) } },
             onDoubleClick = null,
             onLongClick = {
                 //长按操作

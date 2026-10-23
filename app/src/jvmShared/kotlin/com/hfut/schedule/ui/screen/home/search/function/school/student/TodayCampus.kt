@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.student
 
-import android.content.Context
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -103,7 +101,6 @@ fun StuTodayCampusScreen(
     vm: NetWorkViewModel,
 ) {
     val hazeState = rememberHazeBlur()
-    val context = LocalContext.current
     val backDrop = rememberLayerBackdrop()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var input by remember { mutableStateOf(EMPTY_STRING) }
@@ -176,11 +173,10 @@ fun StuAppsScreen(
         }
     }
     val cookie = remember { prefs.getString("stu","") }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val size = remember { 30.dp }
     val uiState by vm.stuAppsResponse.state.collectAsState()
-    val localList = remember { getTodayCampusApps(context) }
+    val localList = remember { getTodayCampusApps() }
     LaunchedEffect(Unit) {
         if(uiState is NetworkUiState.Success) {
             return@LaunchedEffect
@@ -393,10 +389,10 @@ fun StuAppsScreen(
     }
 }
 
-private fun getTodayCampusApps(context: Context) : List<TodayCampusApp> {
+private fun getTodayCampusApps() : List<TodayCampusApp> {
     try {
         val json = with(Dispatchers.IO) {
-            context.assets.open("stu.json").bufferedReader().use { it.readText() }
+            com.hfut.schedule.logic.util.storage.file.readAppAsset("stu.json") ?: "[]"
         }
         return with(Dispatchers.Default) {
             GsonInstance.fromJson(json, TodayCampusAppResponse::class.java).list

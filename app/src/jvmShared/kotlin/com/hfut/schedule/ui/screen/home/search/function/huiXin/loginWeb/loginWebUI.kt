@@ -4,7 +4,6 @@ import com.hfut.schedule.logic.util.sys.runOnMain
 import com.hfut.schedule.logic.model.AppConst
 
 
-import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,13 +41,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.hfut.schedule.application.MyApplication
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.network.api.model.response.json.huixin.HuiXinFeeType
@@ -73,7 +70,7 @@ import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.screen.pager.CustomTabRow
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.component.text.HazeBottomSheetTopBar
-import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordDestination
+import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordPlatformDestination
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.PayFor
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
@@ -93,7 +90,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
 
 private const val HEFEI_TAB = 0
@@ -169,9 +165,9 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                 val webInfo = getWebInfo(vm)
                                 GlobalUiStateHolder.webValue.value = webInfo
                                 if (webInfo != null) {
-                                    val jsonObject = JSONObject(result)
-                                    val dataObject = jsonObject.getJSONObject("map").getJSONObject("data")
-                                    dataObject.put("myCustomInfo", "undefined：undefined")
+                                    val jsonObject = com.hfut.schedule.network.core.GsonInstance.fromJson(result, com.google.gson.JsonObject::class.java)
+                                    val dataObject = jsonObject.getAsJsonObject("map").getAsJsonObject("data")
+                                    dataObject.addProperty("myCustomInfo", "undefined：undefined")
                                     json = dataObject.toString()
 //                                    json = webInfo.postJson
                                     flow = webInfo.flow
@@ -215,7 +211,6 @@ fun LoginWebUI(vm : NetWorkViewModel) {
         }
     }
 
-    val context = LocalContext.current
     val navController = LocalNavController.current
     val floatingController = LocalFloatingController.current
 
@@ -238,11 +233,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                         IconButton(onClick = {
                                             if (payNumber.length < 3)
                                                 payNumber += items.toString()
-                                            else Toast.makeText(
-                                                MyApplication.context,
-                                                "最高999元",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            else showToast("最高999元")
                                         }) { Text(text = items.toString()) }
                                     }
                                 }
@@ -254,7 +245,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                         IconButton(onClick = {
                                             if (payNumber.length < 3)
                                                 payNumber += num
-                                            else Toast.makeText(MyApplication.context, "最高999元", Toast.LENGTH_SHORT).show()
+                                            else showToast("最高999元")
                                         }) { Text(text = num.toString()) }
                                     }
                                 }
@@ -441,7 +432,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                     windowToDestination(
                                         floatingController,
                                         navController,
-                                        SettingsHuiXinPasswordDestination,
+                                        SettingsHuiXinPasswordPlatformDestination,
                                         effect = JumpTransitionEffectWallpaper()
                                     )
                                 }
@@ -501,7 +492,7 @@ fun LoginWebUI(vm : NetWorkViewModel) {
                                     windowToDestination(
                                         floatingController,
                                         navController,
-                                        SettingsHuiXinPasswordDestination,
+                                        SettingsHuiXinPasswordPlatformDestination,
                                         effect = JumpTransitionEffectWallpaper()
                                     )
                                 }

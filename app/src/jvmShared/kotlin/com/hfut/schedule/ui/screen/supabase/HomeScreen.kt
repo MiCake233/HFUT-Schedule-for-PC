@@ -95,15 +95,12 @@ fun SupabaseHome(vm : NetWorkViewModel) {
 
         Box(modifier = Modifier.align(Alignment.BottomEnd).zIndex(3f)) {
             innerPaddingValues?.let { paddings ->
-                // 共享层通过槽位渲染 Android 端的悬浮按钮；桌面端显示占位提示
-                com.hfut.schedule.ui.nav.UiSlots.Render(
-                    "add_event_fab",
-                    listOf(
-                        bottomBarItems != SupabaseScreen.STORAGE,
-                        bottomBarItems != SupabaseScreen.SETTINGS,
-                        paddings,
-                        vm
-                    )
+                // 创建日程的悬浮按钮已共享化，两端直接调用
+                com.hfut.schedule.ui.screen.home.focus.funiction.AddEventFloatButton(
+                    isSupabase = bottomBarItems != SupabaseScreen.STORAGE,
+                    isVisible = bottomBarItems != SupabaseScreen.SETTINGS,
+                    innerPaddings = paddings,
+                    vm = vm
                 )
             }
         }
@@ -178,7 +175,13 @@ fun SupabaseHome(vm : NetWorkViewModel) {
             ) {
                 nav2Composable(SupabaseScreen.HOME.name) {
                     Scaffold {
-                        com.hfut.schedule.ui.nav.UiSlots.Render("supabase_home", vm)
+                        com.hfut.schedule.ui.screen.supabase.home.SupabaseHomeScreen(
+                            vm = vm,
+                            sortType = sortType,
+                            sortReversed = sortReversed,
+                            innerPadding = innerPadding,
+                            pagerState = pagerState
+                        )
                     }
                 }
                 nav2Composable(SupabaseScreen.ME.name) {
@@ -188,7 +191,7 @@ fun SupabaseHome(vm : NetWorkViewModel) {
                 }
                 nav2Composable(SupabaseScreen.STORAGE.name) {
                     Scaffold {
-                        com.hfut.schedule.ui.nav.UiSlots.Render("supabase_storage", vm)
+                        com.hfut.schedule.ui.screen.supabase.focus.SupabaseStorageScreen(innerPadding, hazeState)
                     }
                 }
                 nav2Composable(SupabaseScreen.SETTINGS.name) {
