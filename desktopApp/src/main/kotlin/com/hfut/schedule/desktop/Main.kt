@@ -78,6 +78,16 @@ fun main(args: Array<String>) {
         return
     }
 
+    // 自检：登录状态持久化（有无本地凭据 / 恢复结果）
+    if (args.contains("--verify-session")) {
+        println("AUTOSTART=" + AutoStart.isEnabled())
+        println("EXE=" + (AutoStart.currentExePath() ?: "null"))
+        println("HAS_SAVED_SESSION=" + DesktopSession.hasSavedSession())
+        val restored = kotlinx.coroutines.runBlocking { DesktopSession.restore() }
+        println("RESTORE_RESULT=" + (restored ?: "null"))
+        return
+    }
+
     // 自检：平台功能过滤（桌面端应隐藏扫码/WebVPN/办事大厅等入口）
     if (args.contains("--verify-funcs")) {
         val keys = listOf(

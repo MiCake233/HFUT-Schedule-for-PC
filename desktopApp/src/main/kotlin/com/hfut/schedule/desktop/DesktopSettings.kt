@@ -10,14 +10,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.logic.util.other.AppInfo
-import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.container.CustomCard
@@ -32,12 +34,14 @@ import com.xah.navigation.util.LocalNavController
 /**
  * 桌面版「选项」页。
  *
- * Android 端的设置页（HomeSettingScreen）依赖小组件/快捷方式/权限等系统能力，
+ * Android 端的设置页依赖小组件/快捷方式/权限等系统能力，
  * 桌面端只保留 PC 上真正有意义的入口，通过 UiSlots("home_settings") 注入到主界面里。
  */
 @Composable
 fun DesktopSettingsScreen(innerPadding: PaddingValues) {
     val navController = LocalNavController.current
+    var autoStart by remember { mutableStateOf(AutoStart.isEnabled()) }
+    val sessionSaved = remember { DesktopSession.hasSavedSession() }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -66,6 +70,54 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                     )
                 }
             }
+            DividerTextExpandedWith("启动") {
+                CustomCard {
+                    TransplantListItem(
+                        headlineContent = { Text("开机自动运行") },
+                        supportingContent = {
+                            Text(
+                                if (autoStart) "已加入 Windows 启动项"
+                                else "登录 Windows 后自动启动本程序"
+                            )
+                        },
+                        leadingContent = { Icon(painterResource(Drawables.play_arrow), null) },
+                        trailingContent = {
+                            Switch(
+                                checked = autoStart,
+                                onCheckedChange = { checked ->
+                                    if (AutoStart.setEnabled(checked)) {
+                                        autoStart = checked
+                                        showToast(if (checked) "已设置为开机自动运行" else "已取消开机自动运行")
+                                    } else {
+                                        showToast("设置失败，请手动将本程序加入启动项")
+                                    }
+                                }
+                            )
+                        },
+                        modifier = Modifier.clickable {
+                            if (AutoStart.setEnabled(!autoStart)) {
+                                autoStart = !autoStart
+                                showToast(if (autoStart) "已设置为开机自动运行" else "已取消开机自动运行")
+                            } else {
+                                showToast("设置失败，请手动将本程序加入启动项")
+                            }
+                        }
+                    )
+                    HorizontalDivider()
+                    TransplantListItem(
+                        headlineContent = { Text("退出登录") },
+                        supportingContent = {
+                            Text(if (sessionSaved) "清除已保存的登录状态，下次启动需重新登录" else "当前未保存登录状态")
+                        },
+                        leadingContent = { Icon(painterResource(Drawables.logout), null) },
+                        modifier = Modifier.desktopClickable {
+                            DesktopSession.clear()
+                            DesktopWindowState.loggedIn = false
+                            showToast("已退出登录")
+                        }
+                    )
+                }
+            }
             DividerTextExpandedWith("关于") {
                 CustomCard {
                     TransplantListItem(
@@ -85,4 +137,3 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
 @Composable
 internal fun Modifier.desktopClickable(onClick: () -> Unit): Modifier =
     this.clickable(onClick = onClick)
-

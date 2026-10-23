@@ -50,7 +50,7 @@ fun GuaGuaSettings(innerPadding: PaddingValues) {
            InnerPaddingHeight(innerPadding,true)
            DividerTextExpandedWith("设置") {
                CustomCard(color = MaterialTheme.colorScheme.surface) {
-                   // 淋浴登录页是 Android 专属的 WebView 实现，桌面端不展示该入口
+                   // 淋浴登录仅 Android 提供
                    if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(GuaGuaLoginDestination.key)) {
                    TransplantListItem(
                        headlineContent = { Text(text = "刷新登录状态") },

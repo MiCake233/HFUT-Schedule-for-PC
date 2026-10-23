@@ -26,7 +26,7 @@ import com.xah.common.ui.component.text.ScrollText
 fun Transfer(
     ifSaved : Boolean,
 ){
-    // 转专业页依赖 Android 专属实现，桌面端不展示入口
+    // 转专业仅 Android 提供
     if (!com.hfut.schedule.logic.platform.PlatformFeatures.supports(TransferMajorDestination.key)) return
     val navController = LocalNavController.current
 

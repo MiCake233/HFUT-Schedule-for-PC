@@ -69,7 +69,7 @@ fun Life() {
             Icon(painterResource(LifeDestination.icon), contentDescription = null)
         },
         trailingContent = {
-            // 学期报告依赖 Android 的 PDF 导出实现，桌面端不展示这个入口
+            // 学期报告仅 Android 提供
             if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(TermReportDestination.key)) SharedContainer(
                 key = TermReportDestination.key,
                 shape = CircleShape,

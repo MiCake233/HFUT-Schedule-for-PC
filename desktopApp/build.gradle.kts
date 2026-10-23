@@ -45,7 +45,7 @@ compose.desktop {
             targetFormats(TargetFormat.Msi)
             packageName = "HFUT-Schedule"
             // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "1.0.5"
+            packageVersion = "1.0.6"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "GPL-3.0"
@@ -151,5 +151,16 @@ tasks.register<JavaExec>("verifyFuncs") {
     mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf("--verify-funcs")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验登录状态持久化与开机自启动
+tasks.register<JavaExec>("verifySession") {
+    group = "verification"
+    description = "检查本地登录凭据、恢复结果与启动项注册状态"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-session")
     systemProperty("java.awt.headless", "false")
 }

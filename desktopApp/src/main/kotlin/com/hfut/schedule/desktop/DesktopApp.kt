@@ -81,23 +81,10 @@ fun DesktopApp(exitApp: () -> Unit) {
     // 窗口级钩子：登录成功 / 同意协议 / 退出应用
     DisposableEffect(Unit) {
         PlatformHooks.onLoginSuccess = {
-            // 1) 切到「已登录」态：MainHost 会按 Android 的 SuccessActivity 参数重建
-            //    （login=false / isSuccessActivity=true / 起始页 = HomeDestination），
-            //    这样 MainScreen 以 isLogin=true 进入，课表页签才会执行
-            //    「登录各平台 + 拉取课表/一卡通数据」的引导流程。
+            // 切到已登录态：MainHost 按 SuccessActivity 的参数重建（login=false /
+            // isSuccessActivity=true / 起始页 HomeDestination），课表页签才会执行登录引导。
             DesktopWindowState.loggedIn = true
-            // 2) 对齐 Android SuccessActivity.onCreate：用 redirect cookie 换取教务会话
-            scope.launch(kotlinx.coroutines.Dispatchers.IO) {
-                runCatching {
-                    if (!com.hfut.schedule.ui.util.state.GlobalUiStateHolder.webVpn) {
-                        val redirect = com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
-                            .getString("redirect", "") ?: ""
-                        if (redirect.isNotEmpty()) {
-                            networkVm.jxglstuLogin(redirect)
-                        }
-                    }
-                }.onFailure { com.xah.common.logic.util.LogUtil.error(it) }
-            }
+            applyLoggedIn(networkVm, scope)
         }
         PlatformHooks.onNavigateHome = { /* 协议页同意后 DataStore 会自动置位，无需额外状态 */ }
         PlatformHooks.onExitApp = exitApp
@@ -152,5 +139,27 @@ fun DesktopApp(exitApp: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+/**
+ * 登录成功（含恢复登录）后的统一收尾：
+ * 保存会话以便下次免登录，并用 redirect cookie 换取教务会话。
+ */
+private fun applyLoggedIn(
+    networkVm: NetWorkViewModel,
+    scope: kotlinx.coroutines.CoroutineScope
+) {
+    DesktopSession.save(com.hfut.schedule.ui.util.state.GlobalUiStateHolder.casCookies)
+    scope.launch(kotlinx.coroutines.Dispatchers.IO) {
+        runCatching {
+            if (!com.hfut.schedule.ui.util.state.GlobalUiStateHolder.webVpn) {
+                val redirect = com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
+                    .getString("redirect", "") ?: ""
+                if (redirect.isNotEmpty()) {
+                    networkVm.jxglstuLogin(redirect)
+                }
+            }
+        }.onFailure { com.xah.common.logic.util.LogUtil.error(it) }
     }
 }

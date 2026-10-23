@@ -1,15 +1,9 @@
 package com.hfut.schedule.logic.platform
 
 /**
- * 功能可用性：把「只在 Android 上成立」的功能入口在共享 UI 里统一隐藏。
+ * 功能可用性判定。
  *
- * 桌面版（Windows）没有相机扫码、内嵌 WebView、控制中心磁贴、SAF 文件选择等系统能力，
- * 对应页面在 `androidMain` 里实现，桌面端只能显示「该功能依赖 Android 系统能力」的占位页。
- * 与其让用户点进去看到占位，不如**直接把入口去掉** —— 这里就是唯一的判定源：
- * 共享的列表/卡片在渲染入口前问一句 [PlatformFeatures.supports] / [supportsFunc]。
- *
- * 注意：桌面端已经**实际移植**的功能（成绩、课表、一卡通、图书馆、洗浴、电费、
- * 失物招领、通知、Supabase……）不在此列，见 `PlatformScreens.jvm.kt`。
+ * 仅存在于 Android 的页面（相机扫码、内嵌 WebView、磁贴、PDF 导出等）在桌面端不显示入口。
  */
 object PlatformFeatures {
 
@@ -45,20 +39,14 @@ object PlatformFeatures {
     private fun isAndroidOnly(key: String): Boolean =
         ANDROID_ONLY_KEYS.any { key == it || key.startsWith(it) }
 
-    /**
-     * 该 Destination（按 key）在当前平台是否可用。
-     * Android 端恒为 true；桌面端对 [ANDROID_ONLY_KEYS] 返回 false。
-     */
+    /** 该 Destination 在当前平台是否可用；Android 端恒为 true。 */
     fun supports(key: String?): Boolean {
         if (key.isNullOrEmpty()) return true
         if (AppCapabilities.isAndroidPlatform()) return true
         return !isAndroidOnly(key)
     }
 
-    /**
-     * 聚焦页 / 搜索页的功能条目（见 GlobalUiStateHolder.funcDefault）是否可用。
-     * id 与功能一一对应，Android 端不做过滤。
-     */
+    /** 聚焦页 / 搜索页的功能条目（GlobalUiStateHolder.funcDefault）是否可用。 */
     fun supportsFunc(id: Int): Boolean =
         AppCapabilities.isAndroidPlatform() || id !in ANDROID_ONLY_FUNC_IDS
 }

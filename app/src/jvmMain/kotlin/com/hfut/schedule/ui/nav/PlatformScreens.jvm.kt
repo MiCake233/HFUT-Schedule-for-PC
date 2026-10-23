@@ -108,17 +108,12 @@ import com.xah.navigation.util.LocalNavDependencies
 import dev.chrisbanes.haze.hazeSource
 
 /**
- * 桌面端「平台专属页面」渲染入口（完整移植版）。
+ * 桌面端「平台专属页面」渲染入口。
  *
- * 原则：
- * 1. 原来**只在 Android 端**渲染的共享页面，只要它依赖的 Screen 已经搬进 `jvmShared`，
- *    桌面端就在这里按同样的参数直接调用它 —— 于是成绩、考试、课表、一卡通、图书馆、
- *    洗浴、电费、Supabase、失物招领、通知等绝大多数功能在电脑上也能用。
- * 2. 真正依赖 Android 系统能力、且在 `androidMain` 里实现的页面（相机扫码、内嵌 WebView、
- *    磁贴、小物星、淋浴登录、学期报告 PDF 导出、办事大厅 WebView）保持返回 false，
- *    由 [UnavailableFeature] 兜底；这些功能的入口也会在 UI 上隐藏（见 PlatformFeatures）。
- * 3. 窗口层若为某个 key 注册了专门的桌面实现（PlatformHooks.platformScreenFactory），
- *    优先用它（目前用于「外观设置」页换成 PC 版实现）。
+ * 页面实现已位于 `jvmShared` 的，按同一份参数直接调用；
+ * 依赖 Android 系统能力（相机、WebView、磁贴、PDF 导出）的返回 false，
+ * 由 [UnavailableFeature] 兜底，其入口由 PlatformFeatures 在 UI 上过滤。
+ * 窗口层注册了专门实现的 key（PlatformHooks.platformScreenFactory）优先。
  */
 @Composable
 actual fun RenderPlatformDestination(destination: NavDestination): Boolean {
@@ -634,8 +629,7 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         WebNavigationScreen()
         true
     }
-    // 网页类页面（体育/学信网/IETP/慧新…）：桌面端没有内嵌 WebView，
-    // 改为调用系统默认浏览器打开，比显示「不支持」有用得多。
+    // 网页类页面：桌面端用系统默认浏览器打开
     is com.hfut.schedule.ui.nav.destination.WebViewDestination -> {
         OpenWebPageInBrowser(destination.url, destination.description)
         true
@@ -658,12 +652,7 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
     else -> false
 }
 
-/**
- * 桌面端「网页类页面」的等价实现：没有内嵌 WebView，就用系统默认浏览器打开。
- *
- * Android 侧的这些页面（体育、学信网、IETP、慧新……）本来也是加载同一个 URL，
- * 打开浏览器后登录态由浏览器自己维护，比显示占位页更有意义。
- */
+/** 网页类页面在桌面端的实现：交给系统默认浏览器。 */
 @Composable
 private fun OpenWebPageInBrowser(url: String, name: String?) {
     val opened = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
