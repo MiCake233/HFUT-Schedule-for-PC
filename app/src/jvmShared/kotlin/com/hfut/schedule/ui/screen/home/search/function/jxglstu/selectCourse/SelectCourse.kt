@@ -22,6 +22,8 @@ import com.xah.common.ui.component.text.ScrollText
 fun SelectCourse(
     ifSaved : Boolean,
 ) {
+    // 选课页依赖 Android 专属实现，桌面端不展示入口
+    if (!com.hfut.schedule.logic.platform.PlatformFeatures.supports(SelectCoursesDestination.key)) return
     val navController = LocalNavController.current
 
     TransplantListItem(

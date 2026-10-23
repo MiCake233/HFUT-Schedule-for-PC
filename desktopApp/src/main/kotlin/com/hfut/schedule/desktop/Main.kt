@@ -1,9 +1,11 @@
 package com.hfut.schedule.desktop
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.ImageComposeScene
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -76,6 +78,21 @@ fun main(args: Array<String>) {
         return
     }
 
+    // 自检：平台功能过滤（桌面端应隐藏扫码/WebVPN/办事大厅等入口）
+    if (args.contains("--verify-funcs")) {
+        val keys = listOf(
+            "scan_qr_code", "webvpn", "office_hall", "control_center", "term_report",
+            "guagua_login", "person_info", "select_courses", "transfer_major",
+            "update_history", "calendar_config", "xwx_home",
+            "school_card", "grade_0", "life", "library", "washing"
+        )
+        keys.forEach { println("supports($it) = " + com.hfut.schedule.logic.platform.PlatformFeatures.supports(it)) }
+        val funcs = com.hfut.schedule.ui.util.state.GlobalUiStateHolder.funcDefault
+        println("FUNC_COUNT=" + funcs.size)
+        println("FUNC_IDS=" + funcs.map { it.id }.joinToString(","))
+        return
+    }
+
     val snapshotIndex = args.indexOf("--snapshot")
     if (snapshotIndex >= 0) {
         val out = args.getOrNull(snapshotIndex + 1) ?: "desktop-home.png"
@@ -122,7 +139,9 @@ fun main(args: Array<String>) {
                 exitApplication()
             },
             title = "HFUT 课程表 · 桌面版",
-            state = state
+            state = state,
+            // 窗口/任务栏图标，与安装包 MSI 用同一个图形资源
+            icon = remember { loadAppIcon() }
         ) {
             DesktopApp(exitApp = { exitApplication() })
         }
@@ -136,6 +155,19 @@ private const val KEY_WIDTH = "window.width"
 private const val KEY_HEIGHT = "window.height"
 private const val KEY_X = "window.x"
 private const val KEY_Y = "window.y"
+
+/**
+ * 从 classpath 读应用图标（`desktopApp/src/main/resources/app-icon.png`）。
+ *
+ * Android 端图标由资源系统接管；桌面端没有资源系统，直接交给 Skia 解码成
+ * Compose 的 Painter，由 `Window(icon = ...)` 送到任务栏/标题栏。
+ */
+private fun loadAppIcon(): androidx.compose.ui.graphics.painter.Painter? = runCatching {
+    val bytes = object {}.javaClass.getResourceAsStream("/app-icon.png")!!.use { it.readBytes() }
+    androidx.compose.ui.graphics.painter.BitmapPainter(
+        org.jetbrains.skia.Image.makeFromEncoded(bytes).toComposeImageBitmap()
+    )
+}.getOrNull()
 
 private fun saveWindowState(state: androidx.compose.ui.window.WindowState) {
     runCatching {

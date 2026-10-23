@@ -270,7 +270,10 @@ fun SearchScreen(
     }
     val state = rememberLazyGridState()
 
-    val filteredList = funcMaps.filter { it.searchKeyWord.contains(input, ignoreCase = true) }
+    // 先按平台能力过滤（桌面端没有扫码/WebView 等功能），再按输入关键词过滤
+    val filteredList = funcMaps
+        .filter { com.hfut.schedule.logic.platform.PlatformFeatures.supports(it.route) }
+        .filter { it.searchKeyWord.contains(input, ignoreCase = true) }
 
 
     val paddingModifier = remember { Modifier.padding(horizontal = 3.dp, vertical = 3.dp) }

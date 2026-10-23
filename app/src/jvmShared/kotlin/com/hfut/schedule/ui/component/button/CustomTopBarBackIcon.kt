@@ -174,11 +174,14 @@ fun TopBarNavigationIcon(
 
                             if (downDrag >= 300f) {
                                 downDrag = 0f
+                                // 快捷控制中心是 Android 的手势/磁贴入口，桌面端不提供
+                                if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(ControlCenterDestination.key)) {
                                 navController.push(
                                     destination = ControlCenterDestination,
                                     effect = ControlCenterTransitionEffect(compositeOverColor = surfaceColor),
                                     launchMode = LaunchMode.Push(keepPreviousAlive = true)
                                 )
+                                }
                             }
                         }
                         // 向右

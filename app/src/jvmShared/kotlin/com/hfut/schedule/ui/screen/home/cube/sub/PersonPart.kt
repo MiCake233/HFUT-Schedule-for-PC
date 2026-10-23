@@ -88,7 +88,10 @@ fun PersonPart() {
                             expandItems = !expandItems
                         },
                         onClick = {
+                            // 个人信息页依赖 Android 专属布局，桌面端不跳转
+                            if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(PersonInfoDestination.key)) {
                             navController.push(PersonInfoDestination)
+                            }
                         },
                         onDoubleClick = null
                     )

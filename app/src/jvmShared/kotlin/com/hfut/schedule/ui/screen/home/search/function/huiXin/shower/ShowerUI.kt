@@ -100,7 +100,10 @@ fun getInGuaGua(vm: NetWorkViewModel,navController: NavigationController,onResul
                 navController.push(GuaGuaDestination, effect = JumpTransitionEffectWallpaper())
             } else if (result.contains("error")) {
                 vm.guaGuaUserInfo.removeObserver(guaguaUserInfoObserver) // 正常移除观察者
+                // 淋浴登录页是 Android 专属实现，桌面端没有可跳转的目标
+                if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(GuaGuaLoginDestination.key)) {
                 navController.push(GuaGuaLoginDestination, effect = JumpTransitionEffectWallpaper())
+                }
             }
         }
     }

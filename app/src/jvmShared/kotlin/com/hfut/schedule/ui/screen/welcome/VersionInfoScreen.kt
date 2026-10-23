@@ -50,12 +50,15 @@ fun VersionInfoScreen() {
                     TopBarNavigationIcon()
                 },
                 actions = {
+                    // 更新历史页属于 Android 的更新模块，桌面端不展示入口
+                    if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(UpdateHistoryDestination.key)) {
                     LiquidButton (
                         onClick = { navController.push(UpdateHistoryDestination) },
                         modifier = Modifier.padding(end = BUTTON_END_PADDING),
                         backdrop = backDrop
                     ) {
                         Text("历史更新日志")
+                    }
                     }
                 }
             )

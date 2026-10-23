@@ -5,6 +5,9 @@ package com.hfut.schedule.logic.platform
  * 而不是到处写 if (isAndroid)。
  */
 expect object AppCapabilities {
+    /** 当前是否运行在 Android 上（桌面端为 false），用于隐藏只在手机上成立的功能入口 */
+    fun isAndroidPlatform(): Boolean
+
     /** 验证码识别模型是否可用（桌面端暂不支持 OCR） */
     fun isOcrModelAvailable(): Boolean
 

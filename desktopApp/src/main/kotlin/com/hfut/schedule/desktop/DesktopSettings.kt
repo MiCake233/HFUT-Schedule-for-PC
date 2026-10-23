@@ -38,8 +38,6 @@ import com.xah.navigation.util.LocalNavController
 @Composable
 fun DesktopSettingsScreen(innerPadding: PaddingValues) {
     val navController = LocalNavController.current
-    val webVpnCookie by DataStoreManager.webVpnCookies.collectAsState(initial = "")
-    val webVpn = webVpnCookie.isNotEmpty()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -64,18 +62,6 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                         leadingContent = { Icon(painterResource(Drawables.palette), null) },
                         modifier = Modifier.desktopClickable {
                             navController.push(SettingsAppearancePlatformDestination)
-                        }
-                    )
-                }
-            }
-            DividerTextExpandedWith("网络") {
-                CustomCard {
-                    TransplantListItem(
-                        headlineContent = { Text("WebVPN") },
-                        supportingContent = { Text(if (webVpn) "已开启" else "未开启（校外访问教务需要）") },
-                        leadingContent = { Icon(painterResource(Drawables.settings), null) },
-                        modifier = Modifier.desktopClickable {
-                            showToast("桌面端暂未提供该设置页，可在 Android 端开启后同步配置")
                         }
                     )
                 }

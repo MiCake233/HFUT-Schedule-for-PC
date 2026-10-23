@@ -357,11 +357,14 @@ fun MainScreen(
                     drag += dragAmount
                     if (drag >= 300f) {
                         drag = 0f
+                        // 快捷控制中心是 Android 的磁贴/手势入口，桌面端不提供
+                        if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(ControlCenterDestination.key)) {
                         navHostTopController.push(
                             destination = ControlCenterDestination,
                             effect = ControlCenterTransitionEffect(compositeOverColor = surfaceColor),
                             launchMode = LaunchMode.Push(keepPreviousAlive = true)
                         )
+                        }
                     }
                 }
             },

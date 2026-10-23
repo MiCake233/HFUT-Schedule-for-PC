@@ -227,6 +227,8 @@ fun MultiScheduleSettings(
         Spacer(Modifier.height(CARD_NORMAL_DP))
         DividerTextExpandedWith(text = "操作") {
             CustomCard (color = cardNormalColor()){
+                // 日历/小组件配置只存在于 Android（含桌面小组件），桌面端整条入口不展示
+                if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(CalendarConfigDestination.key)) {
                 TransplantListItem(
                     headlineContent = { Text(text = "课程表配置") },
                     supportingContent = {  Text("切换学期、切换默认课程表等配置") },
@@ -239,6 +241,7 @@ fun MultiScheduleSettings(
                     }
                 )
                 PaddingHorizontalDivider()
+                }
                 TransplantListItem(
                     headlineContent = { Text(text = "外观调整") },
                     supportingContent = {  Text("调整课程表方格外观、背景等") },

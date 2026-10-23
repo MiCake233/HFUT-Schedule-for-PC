@@ -4,6 +4,8 @@ import com.hfut.schedule.logic.util.ocr.TesseractUtils
 import com.hfut.schedule.logic.util.shortcut.AppShortcutManager
 
 actual object AppCapabilities {
+    actual fun isAndroidPlatform(): Boolean = true
+
     actual fun isOcrModelAvailable(): Boolean = runCatching { TesseractUtils.isExistModule() }.getOrDefault(false)
 
     actual fun shortcutStorageStr(): String = runCatching { AppShortcutManager.getStorageStr() }.getOrDefault("")

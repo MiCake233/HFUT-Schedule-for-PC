@@ -1,3 +1,88 @@
+# 聚在工大 · Windows 桌面版（HFUT-Schedule Desktop）
+
+<p align="center">
+  <img src="/docs/img/desktop-icon.png" width="128" alt="HFUT-Schedule 桌面版图标">
+</p>
+
+> 本项目是 [**Chiu-xaH/HFUT-Schedule**](https://github.com/Chiu-xaH/HFUT-Schedule) 的 **Windows 桌面移植版**：
+> 用 Kotlin Multiplatform + Compose Multiplatform 把原 Android 应用的界面与逻辑**直接复用**到电脑上，
+> 不是重写、也不是网页套壳。项目灵感、界面设计与绝大部分业务代码均来自上游项目，
+> 遵循 **GNU GPL-3.0** 协议，来源与致谢见下方章节。
+
+## 下载（Windows 10 / 11 x64）
+
+到本仓库的 [Releases](../../releases/latest) 页面下载：
+
+| 文件 | 说明 |
+| --- | --- |
+| `HFUT-Schedule-Setup-x.y.z.msi` | 安装包，双击安装（**自带 JDK 21 运行时**，无需另装 Java），安装后开始菜单/桌面有快捷方式 |
+| `HFUT-Schedule-x.y.z-portable.zip` | 便携版，解压后双击 `HFUT-Schedule.exe` 即可，不写注册表 |
+
+## 桌面版能做什么
+
+| 能力 | 说明 |
+| --- | --- |
+| 课表 | 周视图 + 学期切换 + 多课表来源 + 拖拽排序 + 空白格点击建单次日程，网格宽度做了上限（窗口拉宽也不会把课程格拉胖） |
+| 登录 | 统一身份认证（CAS）账号密码登录，验证码在线显示，登录态存在本地；无需模拟器 |
+| 一卡通 | 卡片余额/流水/账单分析、消费报表、限额设置 |
+| 成绩 / 考试 | 成绩查询与 GPA 分析、考试安排、教学计划完成情况、总学分、挂科率、教师检索、课程检索 |
+| 生活服务 | 天气与校园地图、楼层导向、第三方应用入口、失物招领、通知中心 |
+| 洗浴 / 水电 / 洗衣 | 淋浴使用码、电费余额与充值入口、洗衣机状态 |
+| 图书馆 / 校车 | 借阅记录、馆藏检索、班车时刻 |
+| Supabase | 信息共建、日程共建、网址导航、存储 |
+| 其他 | 节假日、第二课堂、招生信息、校友、辅导员（工作）、AI 助手、校园邮箱…… |
+| 桌面端专属 | 窗口尺寸/位置记忆、`--snapshot` 离屏渲染、ICS 日历导出（代替系统日历写入） |
+
+## 电脑上确实做不到的功能（入口已从界面移除）
+
+| 功能 | 原因 |
+| --- | --- |
+| 相机扫码 | 没有摄像头调用链 |
+| 内嵌 WebView 页面（WebVPN、办事大厅、淋浴登录、慧新登录） | 桌面端没有 WebView，改用**系统默认浏览器**打开 |
+| 桌面小组件 / 快捷方式排序 / 控制中心磁贴 / 通知栏实时活动 | Android 独有的系统概念 |
+| 学期报告（PDF 导出）、个人信息页 | 依赖 Android 的导出与专属布局 |
+| 选课 / 退课 / 转专业 | 页面实现依赖 Android 专属控件 |
+| OCR 验证码自动识别、AIDL 互联、应用内增量更新 | Android 系统能力 |
+
+以上入口在桌面端**不会出现**（由 `PlatformFeatures` 统一判定），不会让用户点进去看到占位页。
+
+## 从源码构建
+
+前置：JDK 21、Android SDK（仅在编译 `:app` 的 Android 目标时需要）、[WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)（仅在生成 MSI 时需要）。
+
+```powershell
+# 只编译桌面运行时依赖的 JVM 目标
+.\gradlew.bat :app:compileKotlinJvm
+
+# 免安装目录（build/compose/binaries/main/app/HFUT-Schedule/）
+.\gradlew.bat :desktopApp:createDistributable
+
+# 生成 MSI 安装包（需要 WiX，设置 WIX_PATH 或在 PATH 里有 candle/light）
+.\gradlew.bat :desktopApp:packageMsi
+```
+
+验证任务（本项目所有改动都靠它们做回归）：
+
+```powershell
+.\gradlew.bat :desktopApp:snapshotHome      # 离屏渲染主界面
+.\gradlew.bat :desktopApp:loginProbe        # CAS 登录链路诊断
+.\gradlew.bat :desktopApp:verifyIcs         # 日历导出 .ics
+.\gradlew.bat :desktopApp:verifyDrawables   # 图标注册表
+.\gradlew.bat :desktopApp:verifyFuncs       # 桌面端功能过滤
+```
+
+移植细节与每个版本踩过的坑见 [`docs/桌面版移植说明.md`](docs/桌面版移植说明.md)，使用说明见 [`docs/桌面版使用说明.txt`](docs/桌面版使用说明.txt)。
+
+## 来源与致谢
+
+* 上游项目：[**Chiu-xaH/HFUT-Schedule**](https://github.com/Chiu-xaH/HFUT-Schedule) —— 本桌面版**灵感来源于此**，并直接复用了其绝大部分界面与业务逻辑。请先给上游项目点个 Star。
+* 本仓库在 `desktop-windows` 分支上叠加桌面移植：新增 `:desktopApp` 模块、把 Android 源码逐步搬到 `jvmShared` 共享源集、以 `expect/actual` 划出平台边界。
+* 上游作者与贡献者名单见 [`docs/Developer.md`](docs/Developer.md)。
+* 图标：为规避校徽版权，桌面版使用**卡通风格自制徽标**（`desktopApp/icons/app-512.png`，由 `research/make-icon.ps1` 类似的脚本生成），并非合肥工业大学官方校徽。
+* 本项目按 **GNU General Public License v3.0** 发布，与上游一致，详见 [`LICENSE`](LICENSE)。
+
+---
+
 # 聚在工大（HFUT-Schedule）
 ![封面](/src/img/cover.png)
 

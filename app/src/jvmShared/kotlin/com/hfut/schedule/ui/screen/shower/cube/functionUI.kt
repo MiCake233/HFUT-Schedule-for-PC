@@ -50,6 +50,8 @@ fun GuaGuaSettings(innerPadding: PaddingValues) {
            InnerPaddingHeight(innerPadding,true)
            DividerTextExpandedWith("设置") {
                CustomCard(color = MaterialTheme.colorScheme.surface) {
+                   // 淋浴登录页是 Android 专属的 WebView 实现，桌面端不展示该入口
+                   if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(GuaGuaLoginDestination.key)) {
                    TransplantListItem(
                        headlineContent = { Text(text = "刷新登录状态") },
                        supportingContent = { Text(text = "呱呱物联只允许登录一端，在使用小程序后需要重新登录") },
@@ -60,6 +62,7 @@ fun GuaGuaSettings(innerPadding: PaddingValues) {
                            navController.push(GuaGuaLoginDestination, effect = JumpTransitionEffectWallpaper())
                        }
                    )
+                   }
 //                   PaddingHorizontalDivider()
 //                   TransplantListItem(
 //                       headlineContent = { Text(text = "预加载使用码") },

@@ -45,7 +45,7 @@ compose.desktop {
             targetFormats(TargetFormat.Msi)
             packageName = "HFUT-Schedule"
             // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "1.0.4"
+            packageVersion = "1.0.5"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "GPL-3.0"
@@ -69,7 +69,8 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 perUserInstall = true
-                // 应用图标（由 .idea/icon.png 转出的多尺寸 ico）
+                // 应用图标：icons/app.ico 由 icons/app-512.png 生成（卡通风格自制徽标，
+                // 不使用合工大官方校徽原图）。窗口/任务栏图标用同一张 PNG。
                 iconFile.set(project.file("icons/app.ico"))
             }
         }
@@ -139,5 +140,16 @@ tasks.register<JavaExec>("verifyDrawables") {
     mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf("--verify-drawables")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验「桌面端不提供的功能」是否已从 UI 入口列表中过滤掉
+tasks.register<JavaExec>("verifyFuncs") {
+    group = "verification"
+    description = "打印 PlatformFeatures 判定与聚焦页功能列表"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-funcs")
     systemProperty("java.awt.headless", "false")
 }

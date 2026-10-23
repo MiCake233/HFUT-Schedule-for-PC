@@ -154,5 +154,7 @@ object GlobalUiStateHolder {
         SearchAppBeanLite(49, Strings.navigation_label_express,Drawables.package_2),
         SearchAppBeanLite(50, Strings.navigation_label_feedback,Drawables.voice_selection),
     )
+        // 桌面端没有相机/WebView 等功能，对应入口直接不出现（Android 端此过滤为空操作）
+        .filter { com.hfut.schedule.logic.platform.PlatformFeatures.supportsFunc(it.id) }
     val funcMaps = funcDefault.toMutableStateList()
 }

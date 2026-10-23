@@ -486,6 +486,8 @@ fun WeatherScreen(vm: NetWorkViewModel) {
         }
         Spacer(Modifier.height(APP_HORIZONTAL_DP/2))
         BottomTip("天气数据源为和风天气")
+        // 学期报告依赖 Android 的 PDF 导出实现，桌面端不展示这个入口
+        if (com.hfut.schedule.logic.platform.PlatformFeatures.supports(TermReportDestination.key)) {
         DividerTextExpandedWith(text = TermReportDestination.title.asString()) {
             val navController = LocalNavController.current
             CardListItem(
@@ -512,6 +514,7 @@ fun WeatherScreen(vm: NetWorkViewModel) {
                     navController.push(TermReportDestination)
                 }
             )
+        }
         }
         DividerTextExpandedWith(text = "校园地图") {
             SchoolMapScreen(vm)

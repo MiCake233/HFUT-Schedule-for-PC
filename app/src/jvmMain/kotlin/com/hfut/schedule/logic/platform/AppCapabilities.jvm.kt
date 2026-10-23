@@ -1,6 +1,8 @@
 package com.hfut.schedule.logic.platform
 
 actual object AppCapabilities {
+    actual fun isAndroidPlatform(): Boolean = false
+
     actual fun isOcrModelAvailable(): Boolean = false
 
     actual fun shortcutStorageStr(): String = ""
