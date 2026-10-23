@@ -1,8 +1,10 @@
 package com.hfut.schedule.desktop
 
 /**
- * Windows 开机自启动：写入/删除 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`。
- * 只对已安装/免安装的 exe 生效；用 IDE 直接跑 main() 时不注册。
+ * 开机自启动设置。
+ *
+ * 读写当前用户注册表项 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`；
+ * 仅对安装版与便携版的 exe 生效，从 IDE 直接运行时不可用。
  */
 object AutoStart {
 

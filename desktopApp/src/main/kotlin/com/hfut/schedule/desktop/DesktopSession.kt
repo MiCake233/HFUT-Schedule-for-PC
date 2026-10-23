@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit
 /**
  * 登录状态持久化。
  *
- * CAS 登录成功后会把 TGC 写进偏好；下次启动时用 TGC 换一张新的教务 service ticket，
- * 再取回教务的 SESSION 并写回 `redirect`，从而免去重新输入账号密码与验证码。
+ * 登录成功后 CAS 写入 TGC，保存于本地偏好。下次启动时以 TGC 换取新的教务 service ticket，
+ * 取回教务 SESSION 并写回 `redirect`，从而免去重复的账号密码与验证码鉴权。
  */
 object DesktopSession {
 

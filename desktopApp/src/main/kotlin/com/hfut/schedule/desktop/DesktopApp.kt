@@ -143,8 +143,8 @@ fun DesktopApp(exitApp: () -> Unit) {
 }
 
 /**
- * 登录成功（含恢复登录）后的统一收尾：
- * 保存会话以便下次免登录，并用 redirect cookie 换取教务会话。
+ * 登录成功（含会话恢复）后的收尾处理：保存会话以供下次免登录，
+ * 并以 redirect cookie 换取教务会话。
  */
 private fun applyLoggedIn(
     networkVm: NetWorkViewModel,

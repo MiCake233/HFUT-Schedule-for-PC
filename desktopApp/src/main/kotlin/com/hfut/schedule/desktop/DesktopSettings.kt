@@ -34,8 +34,8 @@ import com.xah.navigation.util.LocalNavController
 /**
  * 桌面版「选项」页。
  *
- * Android 端的设置页依赖小组件/快捷方式/权限等系统能力，
- * 桌面端只保留 PC 上真正有意义的入口，通过 UiSlots("home_settings") 注入到主界面里。
+ * Android 端设置页依赖小组件、快捷方式、权限等系统能力，桌面端仅保留与 PC 相关的入口，
+ * 通过 UiSlots("home_settings") 注入主界面。
  */
 @Composable
 fun DesktopSettingsScreen(innerPadding: PaddingValues) {
@@ -76,7 +76,7 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                         headlineContent = { Text("开机自动运行") },
                         supportingContent = {
                             Text(
-                                if (autoStart) "已加入 Windows 启动项"
+                                if (autoStart) "已写入 Windows 启动项"
                                 else "登录 Windows 后自动启动本程序"
                             )
                         },
@@ -107,7 +107,7 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                     TransplantListItem(
                         headlineContent = { Text("退出登录") },
                         supportingContent = {
-                            Text(if (sessionSaved) "清除已保存的登录状态，下次启动需重新登录" else "当前未保存登录状态")
+                            Text(if (sessionSaved) "清除本机保存的登录状态，下次启动需重新登录" else "本机未保存登录状态")
                         },
                         leadingContent = { Icon(painterResource(Drawables.logout), null) },
                         modifier = Modifier.desktopClickable {

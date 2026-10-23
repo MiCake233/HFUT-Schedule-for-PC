@@ -1,53 +1,53 @@
-# 聚在工大 · Windows 桌面版（HFUT-Schedule Desktop）
+# HFUT-Schedule for PC
 
 <p align="center">
-  <img src="/docs/img/desktop-icon.png" width="128" alt="HFUT-Schedule">
+  <img src="/docs/img/desktop-icon.png" width="128" alt="HFUT-Schedule for PC">
 </p>
 
-> 基于 [Chiu-xaH/HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule) 的 Windows 桌面移植版，
-> 使用 Kotlin Multiplatform + Compose Multiplatform 复用原应用的界面与业务逻辑。
-> 按上游的 **Apache License 2.0** 发布。
+本仓库是开源项目 [HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule) 的 Windows 桌面端移植版本。
+移植基于 Kotlin Multiplatform 与 Compose Multiplatform，复用上游的界面实现与业务逻辑。
+许可为 Apache License 2.0。
 
 ## 使用声明
 
-> 本项目仅供**学习、研究与技术交流**使用。完整条款见 [`使用许可与免责声明`](DISCLAIMER.md)。
+本项目仅用于学习、研究与技术交流。完整条款见[使用许可与免责声明](DISCLAIMER.md)，要点如下：
 
-* **禁止商用**：未经书面许可，不得将本项目（含其任何部分、衍生作品或发行物）用于销售、付费分发、
-  捆绑销售、随硬件或服务搭售，或以本项目的功能为基础提供收费服务。
-* **禁止违法与侵权用途**：不得用于绕过校园信息系统的访问控制、批量抓取或倒卖他人数据、
-  冒用他人身份、攻击或干扰信息系统，以及任何违反法律法规或侵犯他人合法权益的行为。
-* **禁止移除权利声明**：不得删除或篡改版权、许可与来源说明。
-* **非官方**：本项目与合肥工业大学及上游作者均无隶属关系，未获其授权、认可或背书，不代表其立场。
-* **账号与数据**：请使用本人账号；登录凭据与个人数据仅保存在本机，账号使用的后果由使用者自行承担。
-* **免责**：本项目按「现状」提供，不附带任何担保；因使用或无法使用本项目造成的任何损失，作者不承担责任。
+| 项目 | 要求 |
+| --- | --- |
+| 商业使用 | 须获作者书面许可。不得销售、付费分发、捆绑销售，或以本项目功能提供收费服务。 |
+| 违法使用 | 禁止。含绕过访问控制、批量抓取或倒卖他人数据、冒用他人身份、攻击或干扰信息系统。 |
+| 权利声明 | 不得删除或篡改版权、许可与来源说明。 |
+| 身份表示 | 与合肥工业大学及上游作者均无隶属关系，未获授权、认可或背书。 |
+| 账号与数据 | 使用本人账号；凭据仅保存于本机；账号使用后果由使用者承担。 |
+| 担保 | 按「现状」提供，无任何明示或默示担保；作者不承担因使用产生的损失。 |
 
-你下载、安装或使用本项目，即视为已阅读并同意上述声明。
+下载或使用本项目，即视为同意上述条款。
 
-## 下载（Windows 10 / 11 x64）
+## 下载
 
-到本仓库 [Releases](../../releases/latest) 页面下载：
+适用于 Windows 10 / 11 x64。安装文件见 [Releases](../../releases/latest)。
 
 | 文件 | 说明 |
 | --- | --- |
-| `HFUT-Schedule-Setup-x.y.z.msi` | 安装包，双击安装；自带 JDK 21 运行时，无需另装 Java |
-| `HFUT-Schedule-x.y.z-portable.zip` | 便携版，解压后双击 `HFUT-Schedule.exe` |
+| `HFUT-Schedule-Setup-x.y.z.msi` | 安装包。内置 JDK 21 运行时，无需预装 Java；高版本可覆盖升级。 |
+| `HFUT-Schedule-x.y.z-portable.zip` | 便携版。解压后运行 `HFUT-Schedule.exe`。 |
 
 ## 功能
 
 | 模块 | 内容 |
 | --- | --- |
-| 登录 | 统一身份认证（CAS）账号密码登录；登录状态保存在本机，下次启动自动恢复，无需重新输入验证码 |
-| 课表 | 周视图、学期切换、多课表来源、拖拽排序、空白格建日程 |
-| 一卡通 | 余额、流水、账单分析、消费报表、限额 |
-| 教务 | 成绩与 GPA 分析、考试、教学计划、总学分、挂科率、课程/教师检索、空闲教室 |
-| 校园服务 | 图书馆、校车、第二课堂、节假日、招生、校友、辅导员、洗浴、电费、洗衣 |
-| 生活 | 天气与校园地图、楼层导向、第三方应用、失物招领、通知中心 |
-| 其他 | Supabase（信息共建 / 日程 / 存储）、AI 助手、校园邮箱、实验室、反馈 |
-| 桌面端 | 开机自启动、窗口尺寸与位置记忆、日历导出 `.ics` |
+| 登录 | 统一身份认证（CAS）账号密码登录。登录状态保存在本机，下次启动自动恢复，无需重复输入验证码。 |
+| 课表 | 周视图、学期切换、多课表来源、拖拽排序、空白格新建日程。 |
+| 一卡通 | 余额、流水、账单分析、消费报表、限额。 |
+| 教务 | 成绩与 GPA 分析、考试安排、教学计划、总学分、挂科率、课程检索、教师检索、空闲教室。 |
+| 校园服务 | 图书馆、校车、第二课堂、节假日、招生、校友、辅导员、洗浴、电费、洗衣。 |
+| 生活 | 天气、校园地图、楼层导向、第三方应用、失物招领、通知中心。 |
+| 其他 | Supabase（信息共建、日程、存储）、AI 助手、校园邮箱、实验室、反馈。 |
+| 桌面端 | 开机自启动、窗口尺寸与位置记忆、日历导出 `.ics`。 |
 
 ## 从源码构建
 
-前置：JDK 21；编译 Android 目标还需 Android SDK；生成 MSI 还需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)（`WIX_PATH` 指向其安装目录）。
+前置条件：JDK 21；编译 Android 目标需 Android SDK；生成 MSI 需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。
 
 ```powershell
 .\gradlew.bat :app:compileKotlinJvm            # 桌面端依赖的 JVM 目标

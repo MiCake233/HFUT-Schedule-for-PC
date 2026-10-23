@@ -37,7 +37,9 @@ object DesktopWindowState {
 }
 
 /**
- * 桌面端根页面：协议 → 恢复登录（若本地有 TGC）→ 登录页 / 主界面。
+ * 桌面端根页面。
+ *
+ * 显示顺序：用户协议 → 会话恢复（本地存有 TGC 时）→ 登录页或主界面。
  */
 object DesktopRootDestination : NavDestination() {
     override val key: String = "desktop_root"
