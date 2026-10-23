@@ -9,6 +9,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -22,6 +23,7 @@ import com.hfut.schedule.ui.theme.Typography
 import com.hfut.schedule.viewmodel.network.LoginViewModel
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.materialkolor.rememberDynamicColorScheme
+import kotlinx.coroutines.launch
 
 /**
  * 桌面端主题。
@@ -73,10 +75,30 @@ fun DesktopApp(exitApp: () -> Unit) {
     }
     val networkVm = remember { NetWorkViewModel() }
     val loginVm = remember { LoginViewModel() }
+    val scope = rememberCoroutineScope()
+    val loggedIn = DesktopWindowState.loggedIn
 
     // 窗口级钩子：登录成功 / 同意协议 / 退出应用
     DisposableEffect(Unit) {
-        PlatformHooks.onLoginSuccess = { DesktopWindowState.loggedIn = true }
+        PlatformHooks.onLoginSuccess = {
+            // 1) 切到「已登录」态：MainHost 会按 Android 的 SuccessActivity 参数重建
+            //    （login=false / isSuccessActivity=true / 起始页 = HomeDestination），
+            //    这样 MainScreen 以 isLogin=true 进入，课表页签才会执行
+            //    「登录各平台 + 拉取课表/一卡通数据」的引导流程。
+            DesktopWindowState.loggedIn = true
+            // 2) 对齐 Android SuccessActivity.onCreate：用 redirect cookie 换取教务会话
+            scope.launch(kotlinx.coroutines.Dispatchers.IO) {
+                runCatching {
+                    if (!com.hfut.schedule.ui.util.state.GlobalUiStateHolder.webVpn) {
+                        val redirect = com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
+                            .getString("redirect", "") ?: ""
+                        if (redirect.isNotEmpty()) {
+                            networkVm.jxglstuLogin(redirect)
+                        }
+                    }
+                }.onFailure { com.xah.common.logic.util.LogUtil.error(it) }
+            }
+        }
         PlatformHooks.onNavigateHome = { /* 协议页同意后 DataStore 会自动置位，无需额外状态 */ }
         PlatformHooks.onExitApp = exitApp
         // 桌面端「选项」页签：接管共享主界面里的 home_settings 槽位
@@ -113,13 +135,22 @@ fun DesktopApp(exitApp: () -> Unit) {
                         .writeText("UI_STARTED " + java.time.LocalDateTime.now())
                 }
             }
-            MainHost(
-                networkVm = networkVm,
-                loginVm = loginVm,
-                login = !DesktopWindowState.loggedIn,
-                isSuccessActivity = false,
-                startDestination = DesktopRootDestination,
-            )
+            // 登录成功前后是两套 MainHost 参数（对应 Android 的 MainActivity / SuccessActivity），
+            // 用 key 强制重建导航栈，否则 rememberNavController 会沿用旧的起始页。
+            androidx.compose.runtime.key(loggedIn) {
+                MainHost(
+                    networkVm = networkVm,
+                    loginVm = loginVm,
+                    login = !loggedIn,
+                    // 与 Android SuccessActivity 一致：登录成功后 isSuccessActivity=true
+                    isSuccessActivity = loggedIn,
+                    startDestination = if (loggedIn) {
+                        com.hfut.schedule.ui.nav.destination.HomeDestination()
+                    } else {
+                        DesktopRootDestination
+                    },
+                )
+            }
         }
     }
 }
