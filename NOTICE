@@ -14,36 +14,6 @@ distributed under the same license, the Apache License, Version 2.0
 (see LICENSE). It is not affiliated with, endorsed by, or sponsored by the
 upstream authors or by Hefei University of Technology.
 
-Usage notice (applies to this fork's additions)
------------------------------------------------
-This project is provided for study, research and technical exchange only.
-See DISCLAIMER.md for the full terms. In short:
-
-- This is a test build. It is not feature complete, may contain defects, and
-  may change without notice. Stability and availability are not guaranteed.
-- The information shown by the program (courses, exam schedules, grades,
-  payments, course selection, notifications) is for reference only and may be
-  missing, delayed or wrong. Always rely on the official university systems and
-  official notices. The author accepts no responsibility for missed exams,
-  registrations, payments, course selections or any other loss caused by data
-  that failed to load, arrived late or was displayed incorrectly, or by the
-  program being unavailable.
-- Commercial use is prohibited without written permission, including selling,
-  paid distribution, bundling with hardware or services, and offering paid
-  services based on this project.
-- Use for illegal or infringing purposes is prohibited, including bypassing the
-  access control of university systems, scraping or reselling other people's
-  data, impersonation, and interfering with or attacking information systems.
-- Copyright, licence and attribution notices must not be removed or altered.
-- This is an unofficial project. It is not affiliated with Hefei University of
-  Technology or with the upstream authors, and is not endorsed by them.
-- Credentials and personal data stay on the user's own machine; the user is
-  responsible for how the account is used.
-- The software is provided "AS IS", without warranties or conditions of any
-  kind; the author is not liable for any damage arising from its use.
-
-
-
 Modifications (as required by Apache License 2.0, section 4(b))
 --------------------------------------------------------------
 1. Added module `desktopApp`: the Windows entry point (Compose Desktop window,
