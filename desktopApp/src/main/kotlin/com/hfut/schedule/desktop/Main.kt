@@ -191,7 +191,19 @@ fun main(args: Array<String>) {
             icon = icon ?: ColorPainter(Color(0xFFC41228)),
             state = trayState,
             tooltip = "HFUT-Schedule for PC",
-            onAction = { DesktopTrayMenuState.show() }
+            onAction = { windowVisible = true },
+            menu = {
+                Item("Show window", onClick = { windowVisible = true })
+                Item("Hide to tray", onClick = { windowVisible = false })
+                Item("Today classes panel", onClick = { DesktopWidgetState.setShown(!DesktopWidgetState.visible) })
+                Item("Panel always on top", onClick = { DesktopWidgetState.setOnTop(!DesktopWidgetState.alwaysOnTop) })
+                Separator()
+                Item("Quit", onClick = {
+                    exiting = true
+                    saveWindowState(state)
+                    exitApplication()
+                })
+            }
         )
 
         Window(
@@ -246,23 +258,6 @@ fun main(args: Array<String>) {
                 TodayCourseWidget(onClose = { DesktopWidgetState.setShown(false) })
             }
         }
-        DesktopTrayMenuState.onShowWindow = { windowVisible = true }
-        DesktopTrayMenuState.onQuit = {
-            exiting = true
-            saveWindowState(state)
-            exitApplication()
-        }
-        Window(
-            onCloseRequest = { DesktopTrayMenuState.hide() },
-            title = "HFUT-Schedule",
-            state = rememberWindowState(size = DpSize(320.dp, 240.dp)),
-            visible = DesktopTrayMenuState.visible,
-            icon = icon,
-            resizable = false
-        ) {
-            DesktopAppTheme { DesktopTrayMenuPanel() }
-        }
-
         // 修复 / 日志窗口
         Window(
             onCloseRequest = { DesktopFixState.hide() },
