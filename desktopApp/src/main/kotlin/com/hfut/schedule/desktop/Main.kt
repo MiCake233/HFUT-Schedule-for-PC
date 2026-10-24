@@ -190,16 +190,16 @@ fun main(args: Array<String>) {
         Tray(
             icon = icon ?: ColorPainter(Color(0xFFC41228)),
             state = trayState,
-            tooltip = "HFUT-Schedule 课程表",
+            tooltip = "HFUT-Schedule for PC",
             onAction = { windowVisible = true },
             menu = {
-                Item("显示主窗口", onClick = { windowVisible = true })
-                Item("隐藏到托盘", onClick = { windowVisible = false })
+                Item("Show window", onClick = { windowVisible = true })
+                Item("Hide to tray", onClick = { windowVisible = false })
                 Separator()
-                Item("今日课程面板", onClick = { DesktopWidgetState.setShown(!DesktopWidgetState.visible) })
-                Item("面板始终置顶", onClick = { DesktopWidgetState.setOnTop(!DesktopWidgetState.alwaysOnTop) })
+                Item("Today classes panel", onClick = { DesktopWidgetState.setShown(!DesktopWidgetState.visible) })
+                Item("Panel always on top", onClick = { DesktopWidgetState.setOnTop(!DesktopWidgetState.alwaysOnTop) })
                 Separator()
-                Item("退出", onClick = {
+                Item("Quit", onClick = {
                     exiting = true
                     saveWindowState(state)
                     exitApplication()
