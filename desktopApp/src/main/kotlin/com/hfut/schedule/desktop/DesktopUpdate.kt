@@ -5,6 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.awt.Desktop
 import java.io.File
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -115,4 +117,15 @@ object DesktopUpdate {
         Desktop.getDesktop().open(file)
         true
     }.getOrDefault(false)
+}
+
+/** 启动时检测到的新版本，供窗口层弹窗提示 */
+object DesktopUpdateState {
+    var available by androidx.compose.runtime.mutableStateOf<DesktopUpdate.Result.Available?>(null)
+    var dismissed by androidx.compose.runtime.mutableStateOf(false)
+
+    fun clear() {
+        available = null
+        dismissed = false
+    }
 }

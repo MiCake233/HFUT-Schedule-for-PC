@@ -140,6 +140,18 @@ fun DesktopApp(exitApp: () -> Unit) {
                         .writeText("UI_STARTED " + java.time.LocalDateTime.now())
                 }
             }
+            // 启动后检查更新：有新版则弹窗提示下载
+            androidx.compose.runtime.LaunchedEffect(Unit) {
+                kotlinx.coroutines.delay(6000)
+                val result = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    DesktopUpdate.check()
+                }
+                if (result is DesktopUpdate.Result.Available) {
+                    DesktopUpdateState.available = result
+                    DesktopUpdateState.dismissed = false
+                }
+            }
+
             // 当前周：Android 在 Application.onCreate 里初始化，桌面端在此初始化并定时刷新，
             // 保证课表打开时跟随系统日期（跨周、跨天都会更新）。
             androidx.compose.runtime.LaunchedEffect(loggedIn) {
@@ -153,6 +165,8 @@ fun DesktopApp(exitApp: () -> Unit) {
             }
             // 登录成功前后是两套 MainHost 参数（对应 Android 的 MainActivity / SuccessActivity），
             // 用 key 强制重建导航栈，否则 rememberNavController 会沿用旧的起始页。
+            UpdateAvailableDialog()
+
             androidx.compose.runtime.key(loggedIn) {
                 MainHost(
                     networkVm = networkVm,

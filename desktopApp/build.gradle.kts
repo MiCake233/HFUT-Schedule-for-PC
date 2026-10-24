@@ -45,7 +45,7 @@ compose.desktop {
             targetFormats(TargetFormat.Msi)
             packageName = "HFUT-Schedule"
             // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "1.1.0"
+            packageVersion = "10.0.0"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "Apache-2.0"
