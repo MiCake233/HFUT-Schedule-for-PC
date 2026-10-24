@@ -45,7 +45,7 @@ compose.desktop {
             targetFormats(TargetFormat.Msi)
             packageName = "HFUT-Schedule"
             // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "1.0.7"
+            packageVersion = "1.0.8"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "Apache-2.0"
@@ -151,6 +151,17 @@ tasks.register<JavaExec>("verifyFuncs") {
     mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf("--verify-funcs")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验当前周计算
+tasks.register<JavaExec>("verifyWeek") {
+    group = "verification"
+    description = "打印学期开始时间、今天与计算出的当前周"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-week")
     systemProperty("java.awt.headless", "false")
 }
 

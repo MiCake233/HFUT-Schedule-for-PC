@@ -208,6 +208,8 @@ fun JxglstuCourseTableUI(
         // 冷启动 or 用户修改学期开始时间
         if (lastTermStartDate != start) {
             LogUtil.debug("重新初始化currentWeek")
+            // 桌面端启动不经过 MyApplication，这里按学期开始时间重算当前周，避免固定停在第 1 周
+            runCatching { DateTimeManager.initCurrentWeekValue() }
             weekSwap.backToCurrentWeek()
             lastTermStartDate = start
         }

@@ -26,6 +26,7 @@ import androidx.compose.ui.window.rememberWindowState
 import androidx.compose.ui.graphics.painter.ColorPainter
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.xah.common.logic.util.LogUtil
+import kotlinx.coroutines.flow.first
 import org.jetbrains.skia.EncodedImageFormat
 import java.io.File
 import java.util.prefs.Preferences
@@ -86,6 +87,19 @@ fun main(args: Array<String>) {
         val ics = File(File(System.getProperty("user.home"), "Downloads"), "HFUT-Schedule.ics")
         println("ICS_EXISTS=" + ics.exists() + " PATH=" + ics.absolutePath)
         if (ics.exists()) println("ICS_CONTENT_START\n" + ics.readText() + "\nICS_CONTENT_END")
+        return
+    }
+
+    // 自检：当前周计算（学期开始时间 → 第几周）
+    if (args.contains("--verify-week")) {
+        kotlinx.coroutines.runBlocking {
+            val term = com.hfut.schedule.logic.util.storage.kv.DataStoreManager.termStartDate.first()
+            runCatching { com.hfut.schedule.logic.util.sys.datetime.DateTimeManager.initCurrentWeekValue() }
+            val week = com.hfut.schedule.logic.util.sys.datetime.DateTimeManager.currentWeek
+            println("TERM_START=$term")
+            println("TODAY=" + java.time.LocalDate.now())
+            println("CURRENT_WEEK=$week")
+        }
         return
     }
 

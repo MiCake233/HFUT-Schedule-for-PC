@@ -127,6 +127,17 @@ fun DesktopApp(exitApp: () -> Unit) {
                         .writeText("UI_STARTED " + java.time.LocalDateTime.now())
                 }
             }
+            // 当前周：Android 在 Application.onCreate 里初始化，桌面端在此初始化并定时刷新，
+            // 保证课表打开时跟随系统日期（跨周、跨天都会更新）。
+            androidx.compose.runtime.LaunchedEffect(loggedIn) {
+                if (!loggedIn) return@LaunchedEffect
+                while (true) {
+                    runCatching {
+                        com.hfut.schedule.logic.util.sys.datetime.DateTimeManager.initCurrentWeekValue()
+                    }
+                    kotlinx.coroutines.delay(30 * 60_000L)
+                }
+            }
             // 登录成功前后是两套 MainHost 参数（对应 Android 的 MainActivity / SuccessActivity），
             // 用 key 强制重建导航栈，否则 rememberNavController 会沿用旧的起始页。
             androidx.compose.runtime.key(loggedIn) {
