@@ -89,11 +89,23 @@ fun DesktopApp(exitApp: () -> Unit) {
         }
         PlatformHooks.onNavigateHome = { /* 协议页同意后 DataStore 会自动置位，无需额外状态 */ }
         PlatformHooks.onExitApp = exitApp
+        // 「修复 / 日志」在桌面端是独立窗口
+        PlatformHooks.onShowFix = { DesktopFixState.show() }
         // 桌面端「选项」页签：接管共享主界面里的 home_settings 槽位
         com.hfut.schedule.ui.nav.UiSlots.register("home_settings") { arg ->
             val args = arg as List<*>
             DesktopSettingsScreen(args[0] as androidx.compose.foundation.layout.PaddingValues)
         }
+        // 上课提醒 / 日程面板槽位
+        com.hfut.schedule.ui.nav.UiSlots.register("course_events_ui") {
+            DesktopEventsPanel()
+        }
+
+        // 「修复 / 日志」槽位：桌面端渲染日志列表
+        com.hfut.schedule.ui.nav.UiSlots.register("fix") {
+            DesktopFixScreen(onClose = { DesktopFixState.hide() })
+        }
+
         // 课表设置面板：Android 端是 CalendarUISettings，桌面端用同一组偏好键的 PC 版面板
         com.hfut.schedule.ui.nav.UiSlots.register("calendar_ui_settings") {
             CalendarSettingsPanel(androidx.compose.foundation.layout.PaddingValues(0.dp))
@@ -114,6 +126,7 @@ fun DesktopApp(exitApp: () -> Unit) {
             PlatformHooks.onLoginSuccess = null
             PlatformHooks.onNavigateHome = null
             PlatformHooks.onExitApp = null
+            PlatformHooks.onShowFix = null
             PlatformHooks.platformScreenFactory = null
         }
     }

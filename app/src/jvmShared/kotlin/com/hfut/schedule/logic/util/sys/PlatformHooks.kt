@@ -23,4 +23,7 @@ object PlatformHooks {
      * 注册后 RenderPlatformScreen 会优先渲染它，返回 null 则继续走占位逻辑。
      */
     var platformScreenFactory: ((String) -> (@androidx.compose.runtime.Composable () -> Unit)?)? = null
+
+    /** 打开「修复 / 日志」页（桌面端为独立窗口） */
+    var onShowFix: (() -> Unit)? = null
 }

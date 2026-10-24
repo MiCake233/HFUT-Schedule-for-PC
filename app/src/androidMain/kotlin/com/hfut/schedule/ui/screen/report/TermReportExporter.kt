@@ -31,88 +31,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-enum class TermReportExportModule(val title: String) {
-    ACADEMIC_REPORT("学业报表"),
-    ACADEMIC_ANALYSIS("学业分析"),
-    EXPENSE_ANALYSIS("消费分析"),
-    LIBRARY("图书馆报告"),
-    LIFE("生活报告")
-}
-
-enum class TermReportExportAction {
-    SAVE_TO_GALLERY,
-    SHARE
-}
-
-data class GraduationInfo(
-    val startYear: Int,
-    val graduationYear: Int,
-    val totalSemesters: Int
-)
-
-fun detectGraduation(semesters: List<Int>): GraduationInfo? {
-    if (semesters.size < 7) return null
-
-    val years = semesters.mapNotNull { sem ->
-        val text = SemesterParser.parseSemester(sem) ?: return@mapNotNull null
-        val match = Regex("""(\d+)~(\d+)""").find(text) ?: return@mapNotNull null
-        match.groupValues[1].toIntOrNull()
-    }.distinct().sorted()
-
-    if (years.size < 4) return null
-
-    val startYear = years.first()
-    val graduationYear = startYear + 4
-
-    return GraduationInfo(
-        startYear = startYear,
-        graduationYear = graduationYear,
-        totalSemesters = semesters.size
-    )
-}
-
-@Composable
-fun TermReportExportContent(
-    vm: NetWorkViewModel,
-    semester: Int,
-    modules: Set<TermReportExportModule>,
-    isGraduating: Boolean = false,
-    allSemesters: List<Int> = emptyList()
-) {
-    val periodLabel = if (isGraduating) "四年" else "本学期"
-
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = CARD_NORMAL_DP)
-        ) {
-            if (TermReportExportModule.ACADEMIC_REPORT in modules) {
-                AcademicReportSection(
-                    vm = vm,
-                    semester = semester,
-                    allSemesters = if (isGraduating) allSemesters else emptyList(),
-                    onLatestSemester = {}
-                )
-            }
-            if (TermReportExportModule.ACADEMIC_ANALYSIS in modules) {
-                AcademicAnalysisSection(vm, semester, periodLabel)
-            }
-            if (TermReportExportModule.EXPENSE_ANALYSIS in modules) {
-                ExpenseAnalysisSection(vm, semester, periodLabel)
-            }
-            if (TermReportExportModule.LIBRARY in modules) {
-                LibraryReportSection(vm, periodLabel)
-            }
-            if (TermReportExportModule.LIFE in modules) {
-                LifeReportSection(vm, semester, allSemesters = if (isGraduating) allSemesters else emptyList())
-            }
-        }
-    }
-}
 
 suspend fun exportTermReportBitmap(
     activity: Activity,
@@ -303,4 +221,28 @@ tailrec fun Context.findActivity(): Activity? {
         is ContextWrapper -> baseContext.findActivity()
         else -> null
     }
+}
+
+
+actual suspend fun exportTermReportImage(
+    vm: NetWorkViewModel,
+    semester: Int,
+    modules: Set<TermReportExportModule>,
+    isGraduating: Boolean,
+    allSemesters: List<Int>
+): String? {
+    val activity = com.hfut.schedule.logic.util.sys.currentPlatformActivityOrNull() as? Activity
+        ?: return null
+    return runCatching {
+        exportTermReport(
+            activity = activity,
+            vm = vm,
+            semester = semester,
+            modules = modules,
+            action = TermReportExportAction.SAVE_TO_GALLERY,
+            isGraduating = isGraduating,
+            allSemesters = allSemesters
+        )
+        "相册/HFUT-Schedule"
+    }.getOrNull()
 }

@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.webvpn
 
-import android.content.Context
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,7 +28,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,11 +54,12 @@ import com.hfut.schedule.ui.component.screen.pager.CustomTabRow
 import com.hfut.schedule.ui.nav.destination.WebVpnDestination
 
 import com.hfut.schedule.logic.util.sys.isValidWebUrl
+import com.hfut.schedule.logic.util.sys.getWebVpnCookie
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
-import com.hfut.schedule.ui.util.getPureUrl
+import com.hfut.schedule.logic.util.sys.getPureUrl
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
@@ -86,7 +85,6 @@ fun WebVpnScreen(
 ) {
     val hazeState = rememberHazeBlur()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val context = LocalContext.current
     val backdrop = rememberLayerBackdrop()
     val cookies by produceState<String?>(initialValue = null)  {
         value = getWebVpnCookie()
@@ -366,7 +364,6 @@ private fun EnableGlobalWebVpn(
     webVpn : Boolean
 ) {
     val enable = GlobalUiStateHolder.globalWebVpn
-    val context = LocalContext.current
 
     fun switch() {
         GlobalUiStateHolder.globalWebVpn = !GlobalUiStateHolder.globalWebVpn

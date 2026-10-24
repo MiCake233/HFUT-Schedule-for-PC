@@ -53,7 +53,10 @@ actual object PlatformStarter {
         if (hook != null) hook() else showToast("登录成功")
     }
 
-    actual fun showFix() = showToast("桌面端暂不提供修复页")
+    actual fun showFix() {
+        val hook = com.hfut.schedule.logic.util.sys.PlatformHooks.onShowFix
+        if (hook != null) hook() else showToast("桌面端暂未注册修复页")
+    }
 
     actual fun sendMail(address: String) {
         if (!openInSystemBrowser("mailto:$address")) {

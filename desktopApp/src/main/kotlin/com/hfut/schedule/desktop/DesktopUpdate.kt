@@ -1,6 +1,10 @@
 package com.hfut.schedule.desktop
 
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.awt.Desktop
+import java.io.File
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -9,6 +13,7 @@ object DesktopUpdate {
 
     private const val REPO = "MiCake233/HFUT-Schedule-for-PC"
     private const val API = "https://api.github.com/repos/$REPO/releases"
+    private const val DOWNLOAD_BASE = "https://github.com/$REPO/releases/download"
 
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -19,7 +24,11 @@ object DesktopUpdate {
 
     sealed interface Result {
         data class UpToDate(val current: String) : Result
-        data class Available(val current: String, val latest: String, val url: String) : Result
+        data class Available(val current: String, val latest: String, val url: String) : Result {
+            /** 安装包直链：仓库命名规范固定为 HFUT-Schedule-<版本>.msi */
+            val assetUrl: String
+                get() = "$DOWNLOAD_BASE/v$latest/HFUT-Schedule-$latest.msi"
+        }
         data class Failed(val message: String) : Result
     }
 
@@ -64,4 +73,46 @@ object DesktopUpdate {
         }
         return false
     }
+
+    /**
+     * 下载安装包并启动安装程序。
+     * @return 下载到的文件；失败返回 null
+     */
+    suspend fun download(target: Result.Available, onProgress: (Long, Long) -> Unit = { _, _ -> }): File? =
+        withContext(Dispatchers.IO) {
+            runCatching {
+                val request = Request.Builder()
+                    .url(target.assetUrl)
+                    .header("User-Agent", "HFUT-Schedule-Desktop")
+                    .build()
+                val dir = File(System.getProperty("java.io.tmpdir"), "HFUT-Schedule-update").apply { mkdirs() }
+                val outFile = File(dir, "HFUT-Schedule-${target.latest}.msi")
+                client.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) return@runCatching null
+                    val body = response.body ?: return@runCatching null
+                    val total = body.contentLength()
+                    body.byteStream().use { input ->
+                        outFile.outputStream().use { output ->
+                            val buffer = ByteArray(64 * 1024)
+                            var written = 0L
+                            while (true) {
+                                val read = input.read(buffer)
+                                if (read <= 0) break
+                                output.write(buffer, 0, read)
+                                written += read
+                                onProgress(written, total)
+                            }
+                        }
+                    }
+                }
+                outFile
+            }.getOrNull()
+        }
+
+    /** 用系统默认方式启动安装包 */
+    fun launchInstaller(file: File): Boolean = runCatching {
+        if (!Desktop.isDesktopSupported()) return false
+        Desktop.getDesktop().open(file)
+        true
+    }.getOrDefault(false)
 }

@@ -86,10 +86,12 @@ import com.hfut.schedule.ui.screen.home.search.function.school.classroom.Classro
 import com.hfut.schedule.ui.screen.home.search.function.school.classroom.ClassroomScreen
 import com.hfut.schedule.ui.screen.home.search.function.school.dormitoryScore.DormitoryScoreScreen
 import com.hfut.schedule.ui.screen.home.search.function.school.student.StuTodayCampusScreen
+import com.hfut.schedule.ui.screen.home.search.function.school.webvpn.WebVpnScreen
 import com.hfut.schedule.ui.screen.home.search.function.school.teacherSearch.ApiToTeacherSearch
 import com.hfut.schedule.ui.screen.home.search.function.school.teacherSearch.TeacherSearchScreen
 import com.hfut.schedule.ui.screen.home.search.function.school.work.WorkScreen
 import com.hfut.schedule.ui.screen.news.department.SchoolsUI
+import com.hfut.schedule.ui.screen.report.TermReportScreen
 import com.hfut.schedule.ui.screen.news.home.NewsScreen
 import com.hfut.schedule.ui.screen.shower.ShowerGuaGua
 import com.hfut.schedule.ui.screen.supabase.SupabaseHome
@@ -631,6 +633,11 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         TotalCourseScreen(vm, destination.ifSaved)
         true
     }
+    is com.hfut.schedule.ui.nav.destination.TermReportDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        TermReportScreen(vm)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.TrackDestination -> {
         val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
         TrackScreen(vm)
@@ -660,6 +667,11 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         true
     }
     // 网页类页面：桌面端用系统默认浏览器打开
+    is com.hfut.schedule.ui.nav.destination.WebVpnDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        WebVpnScreen(vm)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.WebViewDestination -> {
         OpenWebPageInBrowser(destination.url, destination.description)
         true

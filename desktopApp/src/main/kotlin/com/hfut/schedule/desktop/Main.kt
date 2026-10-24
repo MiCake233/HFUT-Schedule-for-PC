@@ -43,6 +43,11 @@ private val windowPrefs: Preferences = Preferences.userRoot().node("com/hfut/sch
  */
 fun main(args: Array<String>) {
     initAppInfo()
+    // 崩溃日志：写入数据目录 logs/，供「修复」窗口查看
+    runCatching {
+        com.hfut.schedule.logic.util.dev.CrashHandler.enableSaveLogToFile = true
+        com.hfut.schedule.logic.util.dev.CrashHandler.init()
+    }
 
     // 自检：CAS 登录链路诊断（用户报「点登录一直转圈」时用来定位）
     if (args.contains("--login-probe")) {
@@ -252,6 +257,18 @@ fun main(args: Array<String>) {
             }
             DesktopAppTheme {
                 TodayCourseWidget(onClose = { DesktopWidgetState.setShown(false) })
+            }
+        }
+        // 修复 / 日志窗口
+        Window(
+            onCloseRequest = { DesktopFixState.hide() },
+            title = "修复 / 日志",
+            state = rememberWindowState(size = DpSize(760.dp, 580.dp)),
+            visible = DesktopFixState.visible,
+            icon = icon
+        ) {
+            DesktopAppTheme {
+                DesktopFixScreen(onClose = { DesktopFixState.hide() })
             }
         }
         LaunchedEffect(Unit) {

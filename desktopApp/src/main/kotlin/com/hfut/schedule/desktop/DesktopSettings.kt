@@ -3,6 +3,7 @@ package com.hfut.schedule.desktop
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -52,6 +53,8 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
     var checking by remember { mutableStateOf(false) }
     var updateState by remember { mutableStateOf<DesktopUpdate.Result?>(null) }
     var showUpdateDialog by remember { mutableStateOf(false) }
+    var downloading by remember { mutableStateOf(false) }
+    var progress by remember { mutableStateOf(0) }
 
     val remindEnabled by DataStoreManager.enableLiveCourseReminder.collectAsState(initial = false)
     val remindMinutes by DataStoreManager.liveCourseReminderMinutes.collectAsState(initial = 20)
@@ -75,10 +78,27 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
             },
             confirmButton = {
                 if (result is DesktopUpdate.Result.Available) {
-                    TextButton(onClick = {
-                        Starter.startWebUrlOuter(result.url)
-                        showUpdateDialog = false
-                    }) { Text("打开发布页") }
+                    Row {
+                        TextButton(onClick = {
+                            Starter.startWebUrlOuter(result.url)
+                            showUpdateDialog = false
+                        }) { Text("打开发布页") }
+                        TextButton(enabled = !downloading, onClick = {
+                            downloading = true
+                            scope.launch {
+                                val file = DesktopUpdate.download(result) { done, total ->
+                                    progress = if (total > 0) (done * 100 / total).toInt() else 0
+                                }
+                                downloading = false
+                                if (file != null && DesktopUpdate.launchInstaller(file)) {
+                                    showToast("已开始下载并启动安装程序")
+                                    showUpdateDialog = false
+                                } else {
+                                    showToast("下载或启动失败")
+                                }
+                            }
+                        }) { Text(if (downloading) "下载中 $progress%" else "下载并安装") }
+                    }
                 } else {
                     TextButton(onClick = { showUpdateDialog = false }) { Text("关闭") }
                 }

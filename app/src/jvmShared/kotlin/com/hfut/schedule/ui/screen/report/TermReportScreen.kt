@@ -1,7 +1,5 @@
 package com.hfut.schedule.ui.screen.report
 
-import android.widget.Toast
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -58,7 +56,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -429,8 +426,6 @@ fun TermReportScreen(vm: NetWorkViewModel) {
     val hazeState = rememberHazeBlur()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val listState = rememberLazyListState()
-
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var exporting by remember { mutableStateOf(false) }
 
@@ -848,23 +843,24 @@ fun TermReportScreen(vm: NetWorkViewModel) {
                             Text("取消")
                         }
                         Spacer(Modifier.width(8.dp))
-                        val activity = LocalActivity.current
                         FilledTonalButton(
-                            enabled = selectedModules.isNotEmpty() && !exporting && activity!= null,
+                            enabled = selectedModules.isNotEmpty() && !exporting,
                             onClick = {
                                 scope.launch(Dispatchers.IO) {
                                     exporting = true
                                     try {
-                                        exportTermReport(
-                                            activity = activity!!,
+                                        val saved = exportTermReportImage(
                                             vm = vm,
                                             semester = exportSemester,
                                             modules = selectedModules,
-                                            action = TermReportExportAction.SAVE_TO_GALLERY,
                                             isGraduating = isGraduating,
                                             allSemesters = allSemesters
                                         )
-                                        showToast( "已保存到相册/HFUT-Schedule")
+                                        if (saved != null) {
+                                            showToast("已导出到 $saved")
+                                        } else {
+                                            showToast("导出失败")
+                                        }
                                     } catch (e: Exception) {
                                         showToast("导出失败")
                                         LogUtil.error(e)
@@ -874,34 +870,7 @@ fun TermReportScreen(vm: NetWorkViewModel) {
                                 }
                             }
                         ) {
-                            Text(if (exporting) "导出中" else "保存图库")
-                        }
-                        Spacer(Modifier.width(8.dp))
-                        Button(
-                            enabled = selectedModules.isNotEmpty() && !exporting && activity != null,
-                            onClick = {
-                                scope.launch(Dispatchers.IO) {
-                                    exporting = true
-                                    try {
-                                        exportTermReport(
-                                            activity = activity!!,
-                                            vm = vm,
-                                            semester = exportSemester,
-                                            modules = selectedModules,
-                                            action = TermReportExportAction.SHARE,
-                                            isGraduating = isGraduating,
-                                            allSemesters = allSemesters
-                                        )
-                                    } catch (e: Exception) {
-                                        showToast("分享失败")
-                                        LogUtil.error(e)
-                                    }
-                                    exporting = false
-                                    showExportSheet = false
-                                }
-                            }
-                        ) {
-                            Text(if (exporting) "导出中" else "分享")
+                            Text(if (exporting) "导出中" else "导出报告")
                         }
                     }
 
