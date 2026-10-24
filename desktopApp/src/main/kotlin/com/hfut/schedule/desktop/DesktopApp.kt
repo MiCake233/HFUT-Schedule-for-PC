@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
@@ -92,6 +93,10 @@ fun DesktopApp(exitApp: () -> Unit) {
         com.hfut.schedule.ui.nav.UiSlots.register("home_settings") { arg ->
             val args = arg as List<*>
             DesktopSettingsScreen(args[0] as androidx.compose.foundation.layout.PaddingValues)
+        }
+        // 课表设置面板：Android 端是 CalendarUISettings，桌面端用同一组偏好键的 PC 版面板
+        com.hfut.schedule.ui.nav.UiSlots.register("calendar_ui_settings") {
+            CalendarSettingsPanel(androidx.compose.foundation.layout.PaddingValues(0.dp))
         }
         // 平台页面工厂：外观设置页在桌面端用自己的实现（Android 那套是壁纸/小组件相关）
         PlatformHooks.platformScreenFactory = { key ->

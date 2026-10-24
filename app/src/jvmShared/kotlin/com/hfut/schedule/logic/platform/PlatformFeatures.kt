@@ -18,20 +18,12 @@ object PlatformFeatures {
         "control_center",        // 快捷控制中心（磁贴）
         "term_report",           // 学期报告（Android PDF 导出）
         "guagua_login",          // 淋浴登录（WebView）
-        "person_info",           // 个人信息（Android 专属布局）
-        "select_courses",        // 选课（含详情页）
-        "drop_courses_",         // 退课
-        "transfer_major",        // 转专业（含详情页）
         "update_history",        // 更新历史（Android 更新模块）
-        "calendar_config",       // 日历/小组件配置
         "xwx_home",              // 小物星主页（Android 专属实现）
     )
 
     private val ANDROID_ONLY_FUNC_IDS = setOf(
         2,   // 扫码
-        10,  // 个人信息
-        13,  // 选课
-        29,  // 转专业
         42,  // WebVPN
         43,  // 办事大厅
     )

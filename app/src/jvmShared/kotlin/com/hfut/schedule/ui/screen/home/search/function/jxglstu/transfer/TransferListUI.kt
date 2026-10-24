@@ -1,6 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer
 
-import android.widget.Space
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn

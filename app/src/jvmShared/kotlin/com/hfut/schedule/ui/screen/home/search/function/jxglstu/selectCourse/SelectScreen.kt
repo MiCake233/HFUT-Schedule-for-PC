@@ -61,7 +61,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -137,7 +136,6 @@ import kotlinx.coroutines.launch
 fun SelectCourseScreen(
     vm: NetWorkViewModel,
 ) {
-    val context = LocalContext.current
     val hazeState = rememberHazeBlur()
     val scope = rememberCoroutineScope()
     val cookie by produceState(initialValue = EMPTY_STRING) {

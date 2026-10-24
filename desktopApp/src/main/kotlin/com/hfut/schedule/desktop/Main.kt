@@ -1,18 +1,29 @@
 package com.hfut.schedule.desktop
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.ImageComposeScene
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Notification
+import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberTrayState
 import androidx.compose.ui.window.rememberWindowState
+import androidx.compose.ui.graphics.painter.ColorPainter
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.xah.common.logic.util.LogUtil
 import org.jetbrains.skia.EncodedImageFormat
@@ -143,17 +154,91 @@ fun main(args: Array<String>) {
                 WindowPosition(savedX.dp, savedY.dp)
             }
         )
+        val icon = remember { loadAppIcon() }
+        val trayState = rememberTrayState()
+        val scope = rememberCoroutineScope()
+        var windowVisible by remember { mutableStateOf(!args.contains("--minimized")) }
+        var exiting by remember { mutableStateOf(false) }
+
+        androidx.compose.runtime.DisposableEffect(Unit) {
+            DesktopNotifier.sink = { title, message ->
+                trayState.sendNotification(Notification(title, message))
+            }
+            DesktopReminders.start(scope)
+            onDispose { DesktopNotifier.sink = null }
+        }
+
+        Tray(
+            icon = icon ?: ColorPainter(Color(0xFFC41228)),
+            state = trayState,
+            tooltip = "HFUT-Schedule 课程表",
+            onAction = { windowVisible = true },
+            menu = {
+                Item("显示主窗口", onClick = { windowVisible = true })
+                Item("隐藏到托盘", onClick = { windowVisible = false })
+                Separator()
+                Item("今日课程面板", onClick = { DesktopWidgetState.setShown(!DesktopWidgetState.visible) })
+                Item("面板始终置顶", onClick = { DesktopWidgetState.setOnTop(!DesktopWidgetState.alwaysOnTop) })
+                Separator()
+                Item("退出", onClick = {
+                    exiting = true
+                    saveWindowState(state)
+                    exitApplication()
+                })
+            }
+        )
+
         Window(
             onCloseRequest = {
                 saveWindowState(state)
-                exitApplication()
+                val closeToTray = windowPrefs.getBoolean(KEY_CLOSE_TO_TRAY, true)
+                if (closeToTray && !exiting) {
+                    windowVisible = false
+                } else {
+                    exiting = true
+                    exitApplication()
+                }
             },
             title = "HFUT 课程表 · 桌面版",
             state = state,
-            // 窗口/任务栏图标，与安装包 MSI 用同一个图形资源
-            icon = remember { loadAppIcon() }
+            visible = windowVisible,
+            icon = icon
         ) {
-            DesktopApp(exitApp = { exitApplication() })
+            DesktopApp(exitApp = {
+                exiting = true
+                exitApplication()
+            })
+        }
+
+        // 桌面课表小组件：常驻小窗口，显示今日课程
+        val widgetX = windowPrefs.getFloat(KEY_WIDGET_X, Float.NaN)
+        val widgetY = windowPrefs.getFloat(KEY_WIDGET_Y, Float.NaN)
+        val widgetState = rememberWindowState(
+            size = DpSize(
+                windowPrefs.getInt(KEY_WIDGET_W, 380).dp,
+                windowPrefs.getInt(KEY_WIDGET_H, 300).dp
+            ),
+            position = if (widgetX.isNaN() || widgetY.isNaN()) {
+                WindowPosition(Alignment.TopEnd)
+            } else {
+                WindowPosition(widgetX.dp, widgetY.dp)
+            }
+        )
+        Window(
+            onCloseRequest = { DesktopWidgetState.setShown(false) },
+            title = "今日课程",
+            state = widgetState,
+            visible = DesktopWidgetState.visible,
+            alwaysOnTop = DesktopWidgetState.alwaysOnTop,
+            icon = icon,
+            resizable = true
+        ) {
+            androidx.compose.runtime.DisposableEffect(Unit) {
+                onDispose { saveWidgetState(widgetState) }
+            }
+            DesktopAppTheme {
+                TodayCourseWidget(onClose = { DesktopWidgetState.setShown(false) })
+            }
         }
         LaunchedEffect(Unit) {
             LogUtil.debug("desktop window started")
@@ -165,6 +250,37 @@ private const val KEY_WIDTH = "window.width"
 private const val KEY_HEIGHT = "window.height"
 private const val KEY_X = "window.x"
 private const val KEY_Y = "window.y"
+
+/** 关闭按钮行为：true 为最小化到托盘，false 为退出 */
+private const val KEY_CLOSE_TO_TRAY = "window.closeToTray"
+
+/** 课表小组件窗口的位置与尺寸 */
+private const val KEY_WIDGET_X = "widget.x"
+private const val KEY_WIDGET_Y = "widget.y"
+private const val KEY_WIDGET_W = "widget.width"
+private const val KEY_WIDGET_H = "widget.height"
+
+private fun saveWidgetState(state: androidx.compose.ui.window.WindowState) {
+    runCatching {
+        windowPrefs.putInt(KEY_WIDGET_W, state.size.width.value.toInt())
+        windowPrefs.putInt(KEY_WIDGET_H, state.size.height.value.toInt())
+        val pos = state.position
+        if (pos is WindowPosition.Absolute) {
+            windowPrefs.putFloat(KEY_WIDGET_X, pos.x.value)
+            windowPrefs.putFloat(KEY_WIDGET_Y, pos.y.value)
+        }
+        windowPrefs.flush()
+    }
+}
+
+/** 供设置页读写窗口行为 */
+internal object DesktopWindowPrefs {
+    fun closeToTray(): Boolean = windowPrefs.getBoolean(KEY_CLOSE_TO_TRAY, true)
+    fun setCloseToTray(value: Boolean) {
+        windowPrefs.putBoolean(KEY_CLOSE_TO_TRAY, value)
+        runCatching { windowPrefs.flush() }
+    }
+}
 
 /**
  * 从 classpath 读应用图标（`desktopApp/src/main/resources/app-icon.png`）。

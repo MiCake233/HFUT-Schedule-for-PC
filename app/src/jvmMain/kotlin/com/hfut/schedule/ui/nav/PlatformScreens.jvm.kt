@@ -55,6 +55,12 @@ import com.hfut.schedule.ui.screen.home.search.function.jxglstu.courseSearch.Cou
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.exam.ExamNotificationsScreen
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.exam.ExamScreen
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.ClassmatesScreen as PersonClassmatesScreen
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.PersonScreen
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse.DropCourseScreen
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse.SelectCourseDetailScreen
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.selectCourse.SelectCourseScreen
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.TransferDetailScreen
+import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.TransferScreen
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.program.ProgramCompetitionDetailScreen
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.program.ProgramCompetitionScreen
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.program.ProgramConfirmationScreen
@@ -362,7 +368,11 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         DormitoryScoreScreen(vm)
         true
     }
-    is com.hfut.schedule.ui.nav.destination.DropCoursesDestination -> false
+    is com.hfut.schedule.ui.nav.destination.DropCoursesDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        DropCourseScreen(vm, destination.courseId, destination.name)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.ExamDestination -> {
         ExamScreen()
         true
@@ -494,7 +504,11 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         NotificationsScreen()
         true
     }
-    is com.hfut.schedule.ui.nav.destination.PersonInfoDestination -> false
+    is com.hfut.schedule.ui.nav.destination.PersonInfoDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        PersonScreen(vm)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.ProgramCompetitionDestination -> {
         val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
         ProgramCompetitionScreen(vm, destination.ifSaved)
@@ -533,8 +547,16 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         SecondClassScreen(vm)
         true
     }
-    is com.hfut.schedule.ui.nav.destination.SelectCoursesDestination -> false
-    is com.hfut.schedule.ui.nav.destination.SelectCoursesDetailDestination -> false
+    is com.hfut.schedule.ui.nav.destination.SelectCoursesDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        SelectCourseScreen(vm)
+        true
+    }
+    is com.hfut.schedule.ui.nav.destination.SelectCoursesDetailDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        SelectCourseDetailScreen(vm, destination.index, destination.name)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.SettingsLabDestination -> {
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
         val hazeState = rememberHazeBlur()
@@ -614,8 +636,16 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         TrackScreen(vm)
         true
     }
-    is com.hfut.schedule.ui.nav.destination.TransferMajorDestination -> false
-    is com.hfut.schedule.ui.nav.destination.TransferMajorDetailDestination -> false
+    is com.hfut.schedule.ui.nav.destination.TransferMajorDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        TransferScreen(vm)
+        true
+    }
+    is com.hfut.schedule.ui.nav.destination.TransferMajorDetailDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        TransferDetailScreen(destination.isHidden, destination.batchId, destination.name, vm)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.UpdateHistoryDestination -> false
     is com.hfut.schedule.ui.nav.destination.UpdateSuccessfullyDestination -> {
         UpdateSuccessScreen()

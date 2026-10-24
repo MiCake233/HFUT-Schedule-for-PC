@@ -1,7 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.person
 
-import android.graphics.BitmapFactory
-import android.util.Base64
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -34,12 +32,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hfut.schedule.logic.util.helper.getCampusRegion
+import com.hfut.schedule.logic.util.other.decodeImageBitmap
+import com.hfut.schedule.logic.util.other.decodeImageBase64
 
 import com.hfut.schedule.logic.util.parse.roundOffString
 import com.hfut.schedule.logic.util.storage.file.LargeStringDataManager
@@ -64,8 +63,8 @@ import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.ClassmatesDestination
 import com.hfut.schedule.ui.nav.destination.PersonInfoDestination
 import com.hfut.schedule.ui.nav.destination.ProgramDestination
-import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordDestination
-import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordDestination
+import com.hfut.schedule.ui.nav.destination.SettingsHuiXinPasswordPlatformDestination
+import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordPlatformDestination
 import com.hfut.schedule.ui.screen.home.cube.sub.getJxglstuPassword
 
 import com.hfut.schedule.ui.screen.home.getJxglstuCookie
@@ -213,7 +212,6 @@ private fun PersonItems(
     val jxglstuPwd by produceState(initialValue = EMPTY_STRING) {
         value = getJxglstuPassword() ?: EMPTY_STRING
     }
-    val context = LocalContext.current
 
     Column() {
         DividerTextExpandedWith(text = "账号信息") {
@@ -391,7 +389,7 @@ private fun PersonItems(
                             trailingContent = {
                                 FilledTonalIconButton(
                                     onClick = {
-                                        navController.push(SettingsJxglstuPasswordDestination, effect = JumpTransitionEffectWallpaper())
+                                        navController.push(SettingsJxglstuPasswordPlatformDestination, effect = JumpTransitionEffectWallpaper())
                                     }
                                 ) {
                                     Icon(painterResource(Drawables.edit),null)
@@ -418,7 +416,7 @@ private fun PersonItems(
                             trailingContent = {
                                 FilledTonalIconButton(
                                     onClick = {
-                                        navController.push(SettingsHuiXinPasswordDestination, effect = JumpTransitionEffectWallpaper())
+                                        navController.push(SettingsHuiXinPasswordPlatformDestination, effect = JumpTransitionEffectWallpaper())
                                     }
                                 ) {
                                     Icon(painterResource(Drawables.edit),null)
@@ -438,7 +436,7 @@ private fun PersonItems(
                                     trailingContent = {
                                         FilledTonalIconButton(
                                             onClick = {
-                                                navController.push(SettingsHuiXinPasswordDestination, effect = JumpTransitionEffectWallpaper())
+                                                navController.push(SettingsHuiXinPasswordPlatformDestination, effect = JumpTransitionEffectWallpaper())
                                             }
                                         ) {
                                             Icon(painterResource(Drawables.edit),null)
@@ -566,14 +564,16 @@ private fun PersonItems(
                                 return@m
                             }
                             if(showPhoto) {
-                                val byteArray = Base64.decode(it, Base64.DEFAULT)
-                                val bitmap = BitmapFactory.decodeByteArray(byteArray , 0, byteArray.size)
-                                val imageBitmap = bitmap.asImageBitmap()
-                                Image(bitmap = imageBitmap,
-                                    contentDescription = "Displayed image",
-                                    modifier = Modifier
-                                        .size(130.dp)
-                                        .padding(10.dp))
+                                val imageBitmap = decodeImageBitmap(decodeImageBase64(it))
+                                if (imageBitmap != null) {
+                                    Image(bitmap = imageBitmap,
+                                        contentDescription = "Displayed image",
+                                        modifier = Modifier
+                                            .size(130.dp)
+                                            .padding(10.dp))
+                                } else {
+                                    Text("图片解析失败")
+                                }
                             } else {
                                 FilledTonalButton(
                                     onClick = { showPhoto = !showPhoto },
