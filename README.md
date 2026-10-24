@@ -50,6 +50,13 @@
 .\gradlew.bat :desktopApp:packageMsi           # MSI 安装包
 ```
 
+## 反馈与联系
+
+- 问题**优先提交到本仓库 [Issues](../../issues)**：便于检索、跟踪，也方便其他人参考同类问题的处理方式。
+- 也可直接邮件联系：`zoran.zhao@hotmail.com`。
+- 提交时建议附上：问题现象、复现步骤、程序版本（「选项 → 版本信息」），必要时附崩溃日志
+  （「选项」中打开「修复」窗口 → 日志目录）。
+
 ## 来源与许可
 
 * 上游项目：[Chiu-xaH/HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule)（Apache License 2.0）。

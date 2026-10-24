@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 邮件联系维护者
+    url: mailto:zoran.zhao@hotmail.com
+    about: 不方便公开的问题可发邮件（问题请优先提交 Issues，便于检索与跟踪）。
