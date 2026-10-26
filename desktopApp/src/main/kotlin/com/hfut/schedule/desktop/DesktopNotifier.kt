@@ -78,8 +78,9 @@ object DesktopReminders {
             DesktopNotifier.send("${item.type}提醒：${item.title}", body)
         }
 
-        val expired = notified.filter { it.endsWith(LocalDate.now().minusDays(1).toString()) }
-        notified.removeAll(expired.toSet())
+        // 去重键里带开始时间（含日期），把非今天的记录清掉即可避免长期运行后集合无限增长
+        val today = LocalDate.now().toString()
+        notified.removeAll { !it.contains(today) }
     }
 
     private suspend fun refresh() {

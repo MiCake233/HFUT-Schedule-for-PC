@@ -118,6 +118,64 @@ fun main(args: Array<String>) {
         return
     }
 
+    // 自检：运行环境标志位（正式构建不应被当成调试版，否则主界面会常驻「环境异常」告警）
+    if (args.contains("--verify-env")) {
+        println("IS_DEBUG=" + AppInfo.isDebug)
+        println("SIGNATURE_VALID=" + AppInfo.isSignatureValid)
+        println("IS_NORMAL_ENV=" + AppInfo.isNormalEnv)
+        println("VERSION_NAME=" + AppInfo.versionName)
+        println("PLATFORM_IS_DEBUG=" + com.xah.common.platform.Platform.isDebug)
+        println("JPACKAGE_VERSION=" + (System.getProperty("jpackage.app-version") ?: "null"))
+        println("DATA_DIR=" + com.xah.common.platform.Platform.dataDirPath())
+        println("PASSWORD_SAVED=" + (com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
+            .getString("Password", "").orEmpty().isNotEmpty()))
+        return
+    }
+
+    // 自检：备份恢复（正常恢复 / 越界条目拒绝 / 空包拒绝，全部在临时目录内进行）
+    if (args.contains("--verify-backup")) {
+        if (!runBackupProbe()) System.exit(2)
+        return
+    }
+
+    // 自检：安装包完整性校验闸门（正确摘要应放行，错误摘要 / 非 OLE 文件应被拦截）
+    if (args.contains("--verify-integrity")) {
+        val tmp = java.io.File(System.getProperty("java.io.tmpdir"), "hfut-integrity-test.msi")
+        val ole = ByteArray(4096)
+        ole[0] = 0xD0.toByte(); ole[1] = 0xCF.toByte(); ole[2] = 0x11.toByte(); ole[3] = 0xE0.toByte()
+        tmp.writeBytes(ole)
+        val realSha = java.security.MessageDigest.getInstance("SHA-256").digest(ole)
+            .joinToString("") { "%02x".format(it) }
+        println("MATCH=" + (DesktopUpdate.verifyLocalFile(tmp, realSha) is DesktopUpdate.Download.Ok))
+        println("WRONG_SHA_REJECTED=" +
+            (DesktopUpdate.verifyLocalFile(tmp, "0".repeat(64)) is DesktopUpdate.Download.Error))
+        println("SIZE_MISMATCH_REJECTED=" +
+            (DesktopUpdate.verifyLocalFile(tmp, null, 123L) is DesktopUpdate.Download.Error))
+        val plain = java.io.File(System.getProperty("java.io.tmpdir"), "hfut-integrity-test-not-msi.bin")
+        plain.writeBytes(ByteArray(1024))
+        println("NOT_OLE_REJECTED=" +
+            (DesktopUpdate.verifyLocalFile(plain, null) is DesktopUpdate.Download.Error))
+        tmp.delete(); plain.delete()
+        return
+    }
+
+    // 自检：更新检查（版本比较 + 资产直链 + sha256 是否解析出来）
+    if (args.contains("--verify-update")) {
+        when (val result = DesktopUpdate.check()) {
+            is DesktopUpdate.Result.UpToDate -> println("UPDATE=up-to-date current=${result.current}")
+            is DesktopUpdate.Result.Available -> {
+                println("UPDATE=available current=${result.current} latest=${result.latest}")
+                println("ASSET_URL=${result.assetUrl}")
+                println("ASSET_NAME=${result.assetName}")
+                println("ASSET_SIZE=${result.assetSize}")
+                println("ASSET_SHA256=${result.sha256}")
+                println("PAGE_URL=${result.url}")
+            }
+            is DesktopUpdate.Result.Failed -> println("UPDATE=failed ${result.message}")
+        }
+        return
+    }
+
     // 自检：平台功能过滤（桌面端应隐藏扫码/WebVPN/办事大厅等入口）
     if (args.contains("--verify-funcs")) {
         val keys = listOf(
@@ -344,14 +402,19 @@ private fun initAppInfo() {
         AppInfo.versionName = "4.21.2.4"
         AppInfo.versionCode = 277
         AppInfo.deviceName = "Desktop"
-        AppInfo.isDebug = true
-        AppInfo.isSignatureValid = false
+        // 桌面端没有「调试版」概念，也没有 Android 的签名校验。这两位置对之后
+        // isNormalEnv 才成立——否则主界面会一直挂着一个点了没反应的「环境异常」按钮。
+        // 需要调试日志时用 -Dhfut.debug=true 启动。
+        AppInfo.isDebug = System.getProperty("hfut.debug")?.toBoolean() ?: false
+        AppInfo.isSignatureValid = true
         AppInfo.isRunningOnAvd = false
         AppInfo.isRunningOnWsa = false
         AppInfo.isHarmony = false
         // 桌面端按「现代 Android」处理，玻璃/模糊/着色器全部可用
         AppInfo.sdkInt = 34
     }
+    // 旧版本曾把登录密码明文写进 prefs（与 Android 端共用同一个键），桌面端一律清掉
+    runCatching { com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString("Password", "") }
 }
 
 @OptIn(ExperimentalComposeUiApi::class)

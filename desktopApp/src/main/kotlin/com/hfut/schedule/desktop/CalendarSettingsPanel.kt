@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,11 +43,11 @@ import kotlin.math.roundToInt
 fun CalendarSettingsPanel(innerPadding: PaddingValues) {
     val scope = rememberCoroutineScope()
 
-    val squareHeight by DataStoreManager.calendarSquareHeight.collectAsState(initial = 96f)
+    val squareHeight by DataStoreManager.calendarSquareHeight.collectAsState(initial = com.hfut.schedule.logic.model.AppConst.CALENDAR_SQUARE_HEIGHT)
     val textSize by DataStoreManager.calendarSquareTextSize.collectAsState(initial = 1f)
-    val textPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = 4f)
-    val squareAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = 1f)
-    val squareBlur by DataStoreManager.customCalendarSquareBlur.collectAsState(initial = 0f)
+    val textPadding by DataStoreManager.calendarSquareTextPadding.collectAsState(initial = com.hfut.schedule.logic.model.AppConst.CALENDAR_SQUARE_TEXT_PADDING)
+    val squareAlpha by DataStoreManager.customCalendarSquareAlpha.collectAsState(initial = com.hfut.schedule.logic.model.AppConst.CALENDAR_SQUARE_ALPHA)
+    val squareBlur by DataStoreManager.customCalendarSquareBlur.collectAsState(initial = com.hfut.schedule.logic.model.AppConst.CALENDAR_SQUARE_BLUR)
     val showTimeLine by DataStoreManager.enableShowCalendarTimeLine.collectAsState(initial = false)
 
     fun save(block: suspend () -> Unit) {
@@ -66,7 +67,7 @@ fun CalendarSettingsPanel(innerPadding: PaddingValues) {
                     SliderRow(
                         title = "方格高度",
                         value = squareHeight,
-                        valueText = "${squareHeight.roundToInt()} dp",
+                        valueText = { "${it.roundToInt()} dp" },
                         range = 48f..200f,
                         steps = 0,
                         onValueChange = { save { DataStoreManager.saveCalendarSquareHeight(it) } }
@@ -75,7 +76,7 @@ fun CalendarSettingsPanel(innerPadding: PaddingValues) {
                     SliderRow(
                         title = "文字大小",
                         value = textSize,
-                        valueText = "%.2f×".format(textSize),
+                        valueText = { "%.2f×".format(it) },
                         range = 0.6f..1.6f,
                         steps = 9,
                         onValueChange = { save { DataStoreManager.saveCalendarSquareTextSize(it) } }
@@ -84,7 +85,7 @@ fun CalendarSettingsPanel(innerPadding: PaddingValues) {
                     SliderRow(
                         title = "文字内边距",
                         value = textPadding,
-                        valueText = "%.1f".format(textPadding),
+                        valueText = { "%.1f".format(it) },
                         range = 0f..12f,
                         steps = 0,
                         onValueChange = { save { DataStoreManager.saveCalendarSquareTextPadding(it) } }
@@ -96,7 +97,7 @@ fun CalendarSettingsPanel(innerPadding: PaddingValues) {
                     SliderRow(
                         title = "方格不透明度",
                         value = squareAlpha,
-                        valueText = "%.2f".format(squareAlpha),
+                        valueText = { "%.2f".format(it) },
                         range = 0f..1f,
                         steps = 9,
                         onValueChange = { save { DataStoreManager.saveCustomSquareAlpha(it) } }
@@ -105,7 +106,7 @@ fun CalendarSettingsPanel(innerPadding: PaddingValues) {
                     SliderRow(
                         title = "方格模糊",
                         value = squareBlur,
-                        valueText = "%.2f".format(squareBlur),
+                        valueText = { "%.2f".format(it) },
                         range = 0f..1f,
                         steps = 9,
                         onValueChange = { save { DataStoreManager.saveCustomSquareBlur(it) } }
@@ -129,19 +130,25 @@ fun CalendarSettingsPanel(innerPadding: PaddingValues) {
 private fun SliderRow(
     title: String,
     value: Float,
-    valueText: String,
+    valueText: (Float) -> String,
     range: ClosedFloatingPointRange<Float>,
     steps: Int,
     onValueChange: (Float) -> Unit,
 ) {
+    // 拖动时只更新本地草稿值，松手才落盘：DataStore 每次写入都是整文件重写，
+    // 逐帧写会把 IO 队列塞满，滑块也会因为读回来的值滞后而抖动。
+    var draft by androidx.compose.runtime.remember(value, range) {
+        androidx.compose.runtime.mutableStateOf(value.coerceIn(range.start, range.endInclusive))
+    }
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp)) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(title, modifier = Modifier.weight(1f))
-            Text(valueText, color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(valueText(draft), color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Slider(
-            value = value.coerceIn(range.start, range.endInclusive),
-            onValueChange = onValueChange,
+            value = draft.coerceIn(range.start, range.endInclusive),
+            onValueChange = { draft = it },
+            onValueChangeFinished = { onValueChange(draft.coerceIn(range.start, range.endInclusive)) },
             valueRange = range,
             steps = steps
         )

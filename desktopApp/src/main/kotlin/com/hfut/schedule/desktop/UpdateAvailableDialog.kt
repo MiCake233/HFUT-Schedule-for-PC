@@ -51,15 +51,20 @@ fun UpdateAvailableDialog() {
             TextButton(enabled = !downloading, onClick = {
                 downloading = true
                 scope.launch {
-                    val file = DesktopUpdate.download(target) { done, total ->
+                    val outcome = DesktopUpdate.download(target) { done, total ->
                         progress = if (total > 0) (done * 100 / total).toInt() else 0
                     }
                     downloading = false
-                    if (file != null && DesktopUpdate.launchInstaller(file)) {
-                        showToast("已启动安装程序，按提示完成升级")
-                        DesktopUpdateState.dismissed = true
-                    } else {
-                        showToast("下载或启动失败，可前往发布页手动下载")
+                    when (outcome) {
+                        is DesktopUpdate.Download.Ok -> {
+                            if (DesktopUpdate.launchInstaller(outcome.file)) {
+                                showToast("已启动安装程序，按提示完成升级")
+                                DesktopUpdateState.dismissed = true
+                            } else {
+                                showToast("无法启动安装程序，请到 ${outcome.file.parent} 手动运行")
+                            }
+                        }
+                        is DesktopUpdate.Download.Error -> showToast(outcome.message)
                     }
                 }
             }) { Text(if (downloading) "下载中" else "下载并安装") }

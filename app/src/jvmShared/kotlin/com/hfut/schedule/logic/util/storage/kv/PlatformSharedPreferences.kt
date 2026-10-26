@@ -70,9 +70,27 @@ class PlatformSharedPreferences(private val file: File) {
             synchronized(lock) {
                 removes.forEach { props.remove(it) }
                 puts.forEach { (k, v) -> props.setProperty(k, v) }
+                // 先写临时文件再原子替换：直接覆盖写如果中途被打断（崩溃 / 断电 / 被强杀），
+                // 会留下半截 properties，下次启动所有设置（含登录凭据）全丢。
                 runCatching {
                     file.parentFile?.mkdirs()
-                    file.outputStream().use { props.store(it, null) }
+                    val tmp = File(file.absoluteFile.parentFile, file.name + ".tmp")
+                    tmp.outputStream().use { props.store(it, null) }
+                    try {
+                        java.nio.file.Files.move(
+                            tmp.toPath(),
+                            file.toPath(),
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+                            java.nio.file.StandardCopyOption.ATOMIC_MOVE
+                        )
+                    } catch (atomicUnsupported: Exception) {
+                        // 某些文件系统不支持原子移动，退化为覆盖写
+                        java.nio.file.Files.move(
+                            tmp.toPath(),
+                            file.toPath(),
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                        )
+                    }
                 }
             }
         }

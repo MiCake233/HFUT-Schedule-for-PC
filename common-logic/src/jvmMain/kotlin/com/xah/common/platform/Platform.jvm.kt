@@ -17,8 +17,10 @@ object PlatformDesktop {
 actual object Platform {
     actual val name: String = "desktop-%s".format(System.getProperty("os.name", "unknown"))
 
+    // 打包版默认不是调试构建：VERBOSE 级日志对普通用户没有价值，
+    // 排查问题时用 -Dhfut.debug=true 启动即可拿回全量日志。
     actual val isDebug: Boolean =
-        System.getProperty("hfut.debug")?.toBoolean() ?: true
+        System.getProperty("hfut.debug")?.toBoolean() ?: false
 
     actual fun log(level: Int, tag: String, msg: String, throwable: Throwable?) {
         val prefix = when (level) {

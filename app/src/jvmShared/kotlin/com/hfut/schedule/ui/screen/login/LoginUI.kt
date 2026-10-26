@@ -124,9 +124,15 @@ private fun saveInput(
     studentId : String,
     pwd : String
 ) {
-    //保存账密
     saveString("Username",studentId)
-    saveString("Password",pwd)
+    // 密码只在 Android 上落盘：桌面端的 prefs 是 %APPDATA% 下的明文 properties 文件，
+    // 任何以当前用户身份运行的程序、同步/备份工具都能直接读到，等于泄露校园网密码。
+    // 桌面端靠 TGC 免登录已经够用，需要时重新输入即可。
+    if (com.hfut.schedule.logic.platform.AppCapabilities.isAndroidPlatform()) {
+        saveString("Password",pwd)
+    } else {
+        saveString("Password","")
+    }
 }
 
 

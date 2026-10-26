@@ -49,10 +49,12 @@ actual suspend fun exportTermReportImage(
                 }
             }
             try {
-                // 等待异步数据（网络 / 缓存）就绪，多渲染几次
-                repeat(30) {
+                // 等待异步数据（网络 / 缓存）就绪，多渲染几次。
+                // 注意：这段必须在 EDT 上跑（Compose 桌面版的渲染线程即 EDT），
+                // 所以等待时间要短——太长会让整个窗口在导出期间无响应。
+                repeat(12) {
                     scene.render(0)
-                    Thread.sleep(200)
+                    Thread.sleep(120)
                 }
                 val skiaImage = scene.render(0)
                 val pngBytes = skiaImage.encodeToData(org.jetbrains.skia.EncodedImageFormat.PNG)?.bytes
@@ -71,8 +73,11 @@ actual suspend fun exportTermReportImage(
         if (it.isDirectory) it else File(System.getProperty("user.home"))
     }
     val file = File(dir, "学期报告_${System.currentTimeMillis()}.png")
-    runCatching { ImageIO.write(trimmed, "png", file) }
-    file.absolutePath
+    // 写盘失败时不能把路径当成功返回，否则界面会提示「已导出」但文件不存在
+    return@withContext runCatching {
+        ImageIO.write(trimmed, "png", file)
+        if (file.isFile && file.length() > 0L) file.absolutePath else null
+    }.getOrNull()
 }
 
 /** 去掉底部空白，避免固定高度造成大片留白。 */

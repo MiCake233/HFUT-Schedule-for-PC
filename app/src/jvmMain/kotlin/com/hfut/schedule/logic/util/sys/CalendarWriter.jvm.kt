@@ -121,6 +121,14 @@ internal object IcsExporter {
     private val dtFormat = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss")
     private val stampFormat = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
 
+    /**
+     * iCalendar 的 `DTSTAMP` 必须是 **UTC** 时间（带 Z 后缀）。
+     * 早先这里用的是本地时间 + 字面量 Z，导出的时间戳会整体偏 8 小时，
+     * 严格的解析器（Outlook / Google Calendar）会认为事件元数据错乱。
+     */
+    private fun utcStamp(): String =
+        java.time.Instant.now().atZone(java.time.ZoneOffset.UTC).format(stampFormat)
+
     private fun targetFile(): File {
         val downloads = File(System.getProperty("user.home"), "Downloads")
         val dir = if (downloads.isDirectory) downloads else File(System.getProperty("user.home"))
@@ -145,7 +153,7 @@ internal object IcsExporter {
             sb.append('\n')
             sb.append("BEGIN:VEVENT\n")
             sb.append("UID:").append(uid).append('\n')
-            sb.append("DTSTAMP:").append(LocalDateTime.now().format(stampFormat)).append('\n')
+            sb.append("DTSTAMP:").append(utcStamp()).append('\n')
             sb.append("DTSTART:").append(event.start.format(dtFormat)).append('\n')
             sb.append("DTEND:").append(event.end.format(dtFormat)).append('\n')
             sb.append("SUMMARY:").append(escape(event.title)).append('\n')
@@ -195,7 +203,7 @@ internal object IcsExporter {
                 "-" + event.title.hashCode().toUInt().toString(16) + "@hfut-schedule"
             sb.append("BEGIN:VEVENT\n")
             sb.append("UID:").append(uid).append('\n')
-            sb.append("DTSTAMP:").append(LocalDateTime.now().format(stampFormat)).append('\n')
+            sb.append("DTSTAMP:").append(utcStamp()).append('\n')
             sb.append("DTSTART:").append(event.start.format(dtFormat)).append('\n')
             sb.append("DTEND:").append(event.end.format(dtFormat)).append('\n')
             sb.append("SUMMARY:").append(escape(event.title)).append('\n')

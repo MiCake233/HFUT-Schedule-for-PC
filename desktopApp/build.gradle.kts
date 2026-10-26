@@ -165,6 +165,52 @@ tasks.register<JavaExec>("verifyWeek") {
     systemProperty("java.awt.headless", "false")
 }
 
+// 校验更新检查：版本比较 + 安装包直链 + sha256 解析
+tasks.register<JavaExec>("verifyUpdate") {
+    group = "verification"
+    description = "检查 GitHub 最新正式版解析、安装包直链与 sha256"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-update")
+    systemProperty("java.awt.headless", "false")
+    // 开发环境没有 jpackage 注入的版本号，这里假装当前是 9.0.0 以走到「有新版本」分支
+    systemProperty("hfut.current-version", "9.0.0")
+}
+
+// 打印运行环境标志位（isDebug / 签名位 / isNormalEnv / 版本号）
+tasks.register<JavaExec>("verifyEnv") {
+    group = "verification"
+    description = "检查是否被当作调试版（会影响主界面告警与日志级别）"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-env")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验备份恢复：正常恢复、zip 越界条目、空备份包
+tasks.register<JavaExec>("verifyBackup") {
+    group = "verification"
+    description = "在临时目录里验证备份恢复是否安全（不碰真实数据）"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-backup")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验安装包完整性闸门（sha256 不匹配 / 非 MSI 必须被拦下）
+tasks.register<JavaExec>("verifyIntegrity") {
+    group = "verification"
+    description = "检查更新下载的完整性校验是否真的会拦下篡改文件"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-integrity")
+    systemProperty("java.awt.headless", "false")
+}
+
 // 校验登录状态持久化与开机自启动
 tasks.register<JavaExec>("verifySession") {
     group = "verification"

@@ -52,12 +52,28 @@ object DesktopSession {
         }
     }
 
+    /** 本机保存过的全部登录凭据键（退出登录时一起清掉，避免残留 token 继续可用） */
+    private val CREDENTIAL_KEYS = listOf(
+        KEY_TGC,
+        KEY_CAS_COOKIES,
+        KEY_REDIRECT,
+        "ticket",          // CAS 票据
+        "auth",            // 一卡通 / 微信 auth
+        "bearer",          // 一网通办 bearer
+        "TOKEN",           // 社区登录 token
+        "LibraryToken",    // 图书馆
+        "second_class_token",
+        "SupabasePsk",     // 社区（supabase）登录密码
+        "loginCode",       // 呱呱洗浴
+        "PE",              // 体育
+        "ZhiJian",
+    )
+
     /** 清除已保存的登录状态 */
     fun clear() {
         runCatching {
-            SharedPrefs.saveString(KEY_TGC, "")
-            SharedPrefs.saveString(KEY_CAS_COOKIES, "")
-            SharedPrefs.saveString(KEY_REDIRECT, "")
+            CREDENTIAL_KEYS.forEach { SharedPrefs.saveString(it, "") }
+            SharedPrefs.saveString("Password", "")
             GlobalUiStateHolder.casCookies = null
         }
     }
