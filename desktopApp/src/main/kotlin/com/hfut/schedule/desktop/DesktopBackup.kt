@@ -36,6 +36,7 @@ object DesktopBackup {
     /** 解压上限：防止畸形的 zip（zip bomb）把磁盘写满 */
     private const val MAX_TOTAL_BYTES = 512L * 1024 * 1024
     private const val MAX_ENTRIES = 5000
+    private const val COPY_BUFFER = 64 * 1024
 
     private val stamp: String
         get() = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
@@ -165,36 +166,51 @@ object DesktopBackup {
         ZipInputStream(BufferedInputStream(FileInputStream(source))).use { zip ->
             var entry: ZipEntry? = zip.nextEntry
             while (entry != null) {
-                if (++entries > MAX_ENTRIES) throw IOException("备份条目过多，已中止")
+                entries++
+                if (entries > MAX_ENTRIES) throw IOException("备份条目过多，已中止")
                 val name = entry.name.replace('\\', '/')
                 if (name.isNotBlank()) {
-                    if (name.contains("..") || name.startsWith("/") || name.contains(':')) {
-                        throw IOException("备份内含非法路径：$name")
-                    }
-                    val dest = File(target, name)
-                    if (!dest.canonicalPath.startsWith(rootPath) && dest.canonicalPath != target.canonicalPath) {
-                        throw IOException("备份内含越界路径：$name")
-                    }
+                    val dest = resolveEntry(name, target, rootPath)
                     if (entry.isDirectory) {
                         dest.mkdirs()
                     } else {
-                        dest.parentFile?.mkdirs()
-                        BufferedOutputStream(FileOutputStream(dest)).use { out ->
-                            val buffer = ByteArray(64 * 1024)
-                            while (true) {
-                                val read = zip.read(buffer)
-                                if (read <= 0) break
-                                total += read
-                                if (total > MAX_TOTAL_BYTES) throw IOException("备份解压后超过 512 MB，已中止")
-                                out.write(buffer, 0, read)
-                            }
-                        }
+                        total = writeEntry(zip, dest, total)
                     }
                 }
                 zip.closeEntry()
                 entry = zip.nextEntry
             }
         }
+    }
+
+    /** 校验条目名并把相对路径解析到目标目录下；越界一律拒绝 */
+    private fun resolveEntry(name: String, target: File, rootPath: String): File {
+        if (name.contains("..") || name.startsWith("/") || name.contains(':')) {
+            throw IOException("备份内含非法路径：$name")
+        }
+        val dest = File(target, name)
+        val canonical = dest.canonicalPath
+        if (!canonical.startsWith(rootPath) && canonical != target.canonicalPath) {
+            throw IOException("备份内含越界路径：$name")
+        }
+        return dest
+    }
+
+    /** 写入一个文件条目，返回累计已解压字节数（用于总量上限判断） */
+    private fun writeEntry(zip: ZipInputStream, dest: File, already: Long): Long {
+        dest.parentFile?.mkdirs()
+        var total = already
+        BufferedOutputStream(FileOutputStream(dest)).use { out ->
+            val buffer = ByteArray(COPY_BUFFER)
+            while (true) {
+                val read = zip.read(buffer)
+                if (read <= 0) break
+                total += read
+                if (total > MAX_TOTAL_BYTES) throw IOException("备份解压后超过 512 MB，已中止")
+                out.write(buffer, 0, read)
+            }
+        }
+        return total
     }
 
     /** Swing 对话框必须在事件线程上创建，否则可能死锁或画不出来 */

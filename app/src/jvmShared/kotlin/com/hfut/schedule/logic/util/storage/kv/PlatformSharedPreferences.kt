@@ -18,7 +18,16 @@ class PlatformSharedPreferences(private val file: File) {
     }
     private val lock = Any()
 
-    private fun read(key: String, type: Char): String? = synchronized(lock) { props.getProperty("$type|$key") }
+    /**
+     * 读取一个值。
+     *
+     * `s|` 开头的字符串会先过 [SecretStore]：凭据类键在磁盘上是密文，这里透明解密；
+     * 旧版本留下的明文原样返回，所以升级不需要迁移步骤。
+     */
+    private fun read(key: String, type: Char): String? = synchronized(lock) {
+        val raw = props.getProperty("$type|$key") ?: return null
+        if (type == 's') SecretStore.decode(key, raw) else raw
+    }
 
     fun getString(key: String, def: String? = null): String? = read(key, 's') ?: def
     fun getBoolean(key: String, def: Boolean = false): Boolean = read(key, 'b')?.toBooleanStrictOrNull() ?: def
@@ -69,7 +78,15 @@ class PlatformSharedPreferences(private val file: File) {
         internal fun commit() {
             synchronized(lock) {
                 removes.forEach { props.remove(it) }
-                puts.forEach { (k, v) -> props.setProperty(k, v) }
+                puts.forEach { (k, v) ->
+                    // 敏感键（凭据 / token）在落盘前加密；普通键原样写入
+                    val stored = if (k.startsWith("s|")) {
+                        SecretStore.encode(k.removePrefix("s|"), v) ?: v
+                    } else {
+                        v
+                    }
+                    props.setProperty(k, stored)
+                }
                 // 先写临时文件再原子替换：直接覆盖写如果中途被打断（崩溃 / 断电 / 被强杀），
                 // 会留下半截 properties，下次启动所有设置（含登录凭据）全丢。
                 runCatching {

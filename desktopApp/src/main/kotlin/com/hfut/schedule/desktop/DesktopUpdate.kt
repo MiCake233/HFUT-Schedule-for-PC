@@ -61,6 +61,27 @@ object DesktopUpdate {
         System.getProperty("hfut.current-version")?.takeIf { it.isNotBlank() }
             ?: runCatching { System.getProperty("jpackage.app-version") }.getOrNull()?.takeIf { it.isNotBlank() }
 
+    /**
+     * 解析 GitHub `releases/latest` 的响应。
+     *
+     * 单独抽出来是为了能离线单测：网络那层只负责取字符串。
+     */
+    internal fun parseLatest(body: String): ParsedRelease? {
+        val tag = firstGroup(body, "\"tag_name\"\\s*:\\s*\"([^\"]+)\"") ?: return null
+        val pageUrl = firstGroup(body, "\"html_url\"\\s*:\\s*\"([^\"]+)\"") ?: RELEASES_PAGE
+        return ParsedRelease(
+            latest = tag.removePrefix("v").removePrefix("V"),
+            pageUrl = pageUrl,
+            asset = pickInstaller(body),
+        )
+    }
+
+    internal data class ParsedRelease(
+        val latest: String,
+        val pageUrl: String,
+        val asset: Asset?,
+    )
+
     fun check(): Result {
         val current = currentVersion() ?: return Result.Failed("当前为开发环境，无版本号")
         val request = Request.Builder()
@@ -77,28 +98,25 @@ object DesktopUpdate {
                     return@use Result.Failed("请求失败：HTTP ${response.code}")
                 }
                 val body = response.body?.string().orEmpty()
-                val tag = firstGroup(body, "\"tag_name\"\\s*:\\s*\"([^\"]+)\"")
+                val parsed = parseLatest(body)
                     ?: return@use Result.Failed("响应解析失败（缺少 tag_name）")
-                val pageUrl = firstGroup(body, "\"html_url\"\\s*:\\s*\"([^\"]+)\"") ?: RELEASES_PAGE
-                val latest = tag.removePrefix("v").removePrefix("V")
-                if (!isNewer(latest, current)) return@use Result.UpToDate(current)
+                if (!isNewer(parsed.latest, current)) return@use Result.UpToDate(current)
 
-                val asset = pickInstaller(body)
                 Result.Available(
                     current = current,
-                    latest = latest,
-                    url = pageUrl,
-                    assetUrl = asset?.url,
-                    assetName = asset?.name,
-                    sha256 = asset?.sha256,
-                    assetSize = asset?.size ?: 0L,
+                    latest = parsed.latest,
+                    url = parsed.pageUrl,
+                    assetUrl = parsed.asset?.url,
+                    assetName = parsed.asset?.name,
+                    sha256 = parsed.asset?.sha256,
+                    assetSize = parsed.asset?.size ?: 0L,
                 )
             }
         }.getOrElse { Result.Failed(it.message ?: "网络异常") }
     }
 
     /** 语义化版本比较：逐段按数字比较，缺失段按 0 处理。 */
-    private fun isNewer(candidate: String, current: String): Boolean {
+    internal fun isNewer(candidate: String, current: String): Boolean {
         val a = candidate.split('.', '-', '+').mapNotNull { it.toIntOrNull() }
         val b = current.split('.', '-', '+').mapNotNull { it.toIntOrNull() }
         if (a.isEmpty() || b.isEmpty()) return false
@@ -112,13 +130,12 @@ object DesktopUpdate {
 
     // ---- 极简 JSON 读取：只取本接口固定的几个字段，避免为一次联网引入序列化依赖 ----
 
-    private data class Asset(
+    internal data class Asset(
         val name: String,
         val url: String,
         val sha256: String?,
         val size: Long,
     )
-
     private fun firstGroup(text: String, pattern: String): String? =
         Regex(pattern).find(text)?.groupValues?.getOrNull(1)
 

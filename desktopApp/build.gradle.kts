@@ -5,7 +5,19 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinJvm)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
+
+// 静态检查只覆盖桌面壳（`desktopApp` 自己那 3k 多行）：上游共享代码体量大、历史遗留多，
+// 全量接入只会淹没在存量告警里（实测 3400+ 条），反而没人看。
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom(files("detekt.yml"))
+    source.setFrom("src/main/kotlin")
+    parallel = true
+}
+
+tasks.named("check") { dependsOn("detekt") }
 
 kotlin {
     compilerOptions {
@@ -36,6 +48,19 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.swing)
+    // Windows DPAPI：加密本机保存的登录凭据（Crypt32Util）
+    implementation(libs.jna.platform)
+
+    // 纯逻辑单测（不联网、不需要 Windows）
+    testImplementation(libs.junit)
+}
+
+tasks.test {
+    useJUnit()
+    testLogging {
+        events("passed", "failed", "skipped")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
 }
 
 /**
@@ -180,6 +205,17 @@ tasks.register<JavaExec>("verifyWeek") {
     mainClass.set("com.hfut.schedule.desktop.MainKt")
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf("--verify-week")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 校验凭据加密：DPAPI 往返、磁盘无明文、篡改拒绝
+tasks.register<JavaExec>("verifySecret") {
+    group = "verification"
+    description = "检查本机凭据是否以 DPAPI 密文保存"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-secret")
     systemProperty("java.awt.headless", "false")
 }
 

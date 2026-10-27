@@ -78,16 +78,17 @@ object DataStoreManager : IDataStore {
     private const val EMPTY_STRING = com.xah.common.logic.util.EMPTY_STRING
 
     override suspend fun <T> saveValue(key: Preferences.Key<T>, value: T) {
-        dataStore.edit { it[key] = value }
+        dataStore.edit { it[key] = secretEncode(key.name, value) }
     }
-    override fun <T> getFlow(key: Preferences.Key<T>, default: T): Flow<T> = dataStore.data.map { it[key] ?: default }
+    override fun <T> getFlow(key: Preferences.Key<T>, default: T): Flow<T> =
+        dataStore.data.map { secretDecode(key.name, it[key]) ?: default }
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun <T> getFlowSuspend(
         key: Preferences.Key<T>,
         defaultProvider: suspend () -> T
     ): Flow<T> {
         return dataStore.data.flatMapLatest { preferences ->
-            val value = preferences[key]
+            val value = secretDecode(key.name, preferences[key])
             if (value != null) {
                 flowOf(value)
             } else {
@@ -95,6 +96,48 @@ object DataStoreManager : IDataStore {
                     defaultProvider()?.let { emit(it) }
                 }
             }
+        }
+    }
+
+    /**
+     * 敏感键（密码 / token / cookie）在落盘前用 DPAPI 加密，读出后透明解密；
+     * 非字符串或非敏感键原样通过。Android 端没装加密器时退化为明文（与旧行为一致）。
+     */
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> secretEncode(name: String, value: T): T {
+        if (value !is String || !SecretStore.isSensitive(name)) return value
+        return (SecretStore.encode(name, value) ?: value) as T
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> secretDecode(name: String, stored: T?): T? {
+        if (stored !is String || !SecretStore.isSensitive(name)) return stored
+        return SecretStore.decode(name, stored) as T?
+    }
+
+    /**
+     * 把已经以明文存进 DataStore 的凭据就地升级为密文。
+     * @return 升级了多少个键
+     */
+    suspend fun migrateSensitiveValues(): Int {
+        var migrated = 0
+        dataStore.edit { prefs ->
+            SecretStore.DATASTORE_SECRET_KEYS.forEach { name ->
+                val key = stringPreferencesKey(name)
+                val current = prefs[key] ?: return@forEach
+                if (current.isEmpty() || SecretStore.isEncoded(current)) return@forEach
+                prefs[key] = SecretStore.encode(name, current) ?: current
+                migrated++
+            }
+        }
+        return migrated
+    }
+
+    /** 自检用：DataStore 里敏感键是否都已是密文（缺失也算正常） */
+    suspend fun sensitiveValuesEncoded(): Map<String, Boolean> {
+        val prefs = dataStore.data.first()
+        return SecretStore.DATASTORE_SECRET_KEYS.associateWith { name ->
+            prefs[stringPreferencesKey(name)]?.let { SecretStore.isEncoded(it) } ?: true
         }
     }
 

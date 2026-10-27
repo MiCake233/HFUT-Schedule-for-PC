@@ -170,7 +170,13 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                     TransplantListItem(
                         headlineContent = { Text("开机自动运行") },
                         supportingContent = {
-                            Text(if (autoStart) "已写入 Windows 启动项" else "登录 Windows 后自动启动本程序")
+                            Text(
+                                if (autoStart) {
+                                    "已写入 Windows 启动项（开机后驻留托盘，点托盘图标打开窗口）"
+                                } else {
+                                    "登录 Windows 后自动启动，启动后驻留托盘、不弹窗"
+                                }
+                            )
                         },
                         leadingContent = { Icon(painterResource(Drawables.play_arrow), null) },
                         trailingContent = {

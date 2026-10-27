@@ -1,0 +1,61 @@
+# detekt 配置：只针对桌面壳（desktopApp）的代码。
+#
+# 目标是「拦住新问题」，不想让 Compose 的常规写法（大参数列表、数字字面量、大写函数名）
+# 产生成百上千条噪音。找不到真人愿意处理的规则直接关掉，比挂着红叉更有效。
+build:
+  maxIssues: 0
+
+complexity:
+  LongMethod:
+    threshold: 150
+    ignoreAnnotated: ['Composable']
+  LongParameterList:
+    functionThreshold: 10
+    constructorThreshold: 10
+    ignoreAnnotated: ['Composable']
+  CyclomaticComplexMethod:
+    threshold: 30
+    ignoreAnnotated: ['Composable']
+  NestedBlockDepth:
+    threshold: 5
+  TooManyFunctions:
+    thresholdInFiles: 40
+    thresholdInClasses: 40
+    thresholdInInterfaces: 25
+    thresholdInObjects: 40
+
+naming:
+  FunctionNaming:
+    # Compose 约定：@Composable 函数用大驼峰
+    ignoreAnnotated: ['Composable']
+
+style:
+  MagicNumber:
+    # 这个模块本来就是「胶水 + UI」：HTTP 状态码、超时毫秒、缓冲区大小、dp 尺寸
+    # 到处都是，抽成常量反而把邻近的逻辑推远。规则关掉，靠单测与 code review 兜。
+    active: false
+  # 备份恢复里需要连续抛 IOException 中止流程；提醒与解析循环也确实有多处跳出
+  ThrowsCount:
+    max: 6
+  LoopWithTooManyJumpStatements:
+    maxJumpCount: 3
+  MaxLineLength:
+    maxLineLength: 160
+  UnusedPrivateMember:
+    allowedNames: '_.*'
+  ReturnCount:
+    # 命令行自检是「一个开关一个分支」的分派函数，早返回正是它的形态
+    max: 16
+  ForbiddenComment:
+    active: false
+  UnnecessaryAbstractClass:
+    active: false
+
+exceptions:
+  # Android/上游共享代码习惯 catch (e: Exception) 后统一提示，这里不强制细分
+  TooGenericExceptionCaught:
+    active: false
+  SwallowedException:
+    active: false
+  InstanceOfCheckForException:
+    active: false

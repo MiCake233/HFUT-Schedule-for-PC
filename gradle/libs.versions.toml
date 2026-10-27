@@ -33,6 +33,8 @@ espressoCore = "3.7.0"
 haze = "1.6.2"
 jsoup = "1.16.2"
 junit = "4.13.2"
+# 桌面端调用 Windows DPAPI（CryptProtectData）加密本机凭据用的绑定
+jna = "5.19.1"
 konfettiCompose = "2.0.5"
 kotlinBom = "1.8.0"
 lifecycleExtensions = "2.2.0"
@@ -155,6 +157,7 @@ haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 junit = { module = "junit:junit", version.ref = "junit" }
+jna-platform = { module = "net.java.dev.jna:jna-platform", version.ref = "jna" }
 konfetti = { module = "nl.dionsegijn:konfetti-compose", version.ref = "konfettiCompose" }
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlinBom" }
 material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }

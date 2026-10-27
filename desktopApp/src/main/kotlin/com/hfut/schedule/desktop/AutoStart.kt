@@ -5,11 +5,15 @@ package com.hfut.schedule.desktop
  *
  * 读写当前用户注册表项 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`；
  * 仅对安装版与便携版的 exe 生效，从 IDE 直接运行时不可用。
+ *
+ * 写入启动项时带上 [START_ARG]：开机后直接驻留托盘，不抢焦点弹窗
+ * （否则每次登录系统都会有一个课程表窗口怼在屏幕中间，比不开还烦）。
  */
 object AutoStart {
 
     private const val RUN_KEY = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"
     private const val VALUE_NAME = "HFUT-Schedule"
+    private const val START_ARG = "--minimized"
 
     private fun exePath(): String? {
         val state = runCatching { System.getProperty("jpackage.app-path") }.getOrNull()
@@ -32,7 +36,7 @@ object AutoStart {
     fun setEnabled(enabled: Boolean): Boolean = runCatching {
         val path = exePath() ?: return false
         val command = if (enabled) {
-            listOf("reg", "add", RUN_KEY, "/v", VALUE_NAME, "/t", "REG_SZ", "/d", "\"$path\"", "/f")
+            listOf("reg", "add", RUN_KEY, "/v", VALUE_NAME, "/t", "REG_SZ", "/d", "\"$path\" $START_ARG", "/f")
         } else {
             listOf("reg", "delete", RUN_KEY, "/v", VALUE_NAME, "/f")
         }
@@ -43,4 +47,7 @@ object AutoStart {
 
     /** 当前程序路径（用于界面提示） */
     fun currentExePath(): String? = exePath()
+
+    /** 启动项里写的参数，供界面/文档说明 */
+    fun startArgument(): String = START_ARG
 }
