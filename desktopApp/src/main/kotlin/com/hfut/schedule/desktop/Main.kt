@@ -132,6 +132,12 @@ fun main(args: Array<String>) {
         return
     }
 
+    // 自检：运行时 classpath 无重复类（依赖版本漂移时最容易踩的坑）
+    if (args.contains("--verify-classpath")) {
+        if (!runClasspathProbe()) System.exit(2)
+        return
+    }
+
     // 自检：备份恢复（正常恢复 / 越界条目拒绝 / 空包拒绝，全部在临时目录内进行）
     if (args.contains("--verify-backup")) {
         if (!runBackupProbe()) System.exit(2)

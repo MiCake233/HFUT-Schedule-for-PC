@@ -62,6 +62,29 @@
 .\gradlew.bat :desktopApp:packageMsi           # MSI 安装包
 ```
 
+依赖版本：Compose Multiplatform 的 `org.jetbrains.*` 坐标是「对齐壳」（本体只有几百字节，
+实现来自同名 `androidx.*` 坐标），壳与实现的版本在 `desktopApp/build.gradle.kts` 里用
+`resolutionStrategy.force` 钉齐，避免同一个构件在发行包里出现两个版本。
+
+## 自检
+
+桌面端没有单元测试，验收靠下面这些可重复执行的 check（`packageMsi` 会自动先跑 `verifyClasspath`）：
+
+```powershell
+.\gradlew.bat :desktopApp:verifyClasspath  # 运行时 classpath 无重复类（同一 FQN 出现在两个 jar 即失败）
+.\gradlew.bat :desktopApp:verifyEnv        # 不是调试构建（isNormalEnv / 密码未落盘）
+.\gradlew.bat :desktopApp:verifyFuncs      # 桌面不可用的入口已从 UI 过滤
+.\gradlew.bat :desktopApp:verifyWeek       # 学期开始时间 → 当前周
+.\gradlew.bat :desktopApp:verifySession    # 本机凭据存在且用 TGC 换回 SESSION
+.\gradlew.bat :desktopApp:verifyUpdate     # 只认正式版，能解析出 .msi 直链与 sha256
+.\gradlew.bat :desktopApp:verifyIntegrity  # 摘要不符 / 非 MSI 必须被拦下
+.\gradlew.bat :desktopApp:verifyBackup     # 正常恢复、zip 越界、空包三种场景
+.\gradlew.bat :desktopApp:verifyIcs        # 日程导出为 .ics
+.\gradlew.bat :desktopApp:verifyDrawables  # 天气等图标能从注册表按名字取到
+```
+
+安装版也可以直接复跑其中几项，例如 `HFUT-Schedule.exe --verify-classpath`（需从控制台启动才看得到输出）。
+
 ## 反馈与联系
 
 - 问题**优先提交到本仓库 [Issues](../../issues)**：便于检索、跟踪，也方便其他人参考同类问题的处理方式。

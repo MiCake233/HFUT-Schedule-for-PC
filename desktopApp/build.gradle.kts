@@ -38,6 +38,24 @@ dependencies {
     implementation(libs.kotlinx.coroutines.swing)
 }
 
+/**
+ * 版本对齐。
+ *
+ * Compose Multiplatform 的 `org.jetbrains.*` 坐标是「对齐壳」：本体只有几百字节，
+ * 真正实现来自同名的 `androidx.*` 坐标。壳与被依赖的实现版本不一致时，运行时会同时存在
+ * `xxx-2.9.6.jar` 与 `xxx-2.10.0.jar` 两份（类不冲突，但可读性与排查成本都变差）。
+ * 这里把壳钉到与实现一致的版本，发行包里每个坐标只留一个版本。
+ */
+configurations.configureEach {
+    resolutionStrategy {
+        force(
+            "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.10.0",
+            "org.jetbrains.androidx.savedstate:savedstate-compose:1.4.0",
+            "org.jetbrains.androidx.savedstate:savedstate:1.4.0"
+        )
+    }
+}
+
 compose.desktop {
     application {
         mainClass = "com.hfut.schedule.desktop.MainKt"
@@ -164,6 +182,23 @@ tasks.register<JavaExec>("verifyWeek") {
     args = listOf("--verify-week")
     systemProperty("java.awt.headless", "false")
 }
+
+// 校验运行时 classpath：不得出现重复类（同名 FQN 出现在两个 jar 里）
+// 扫的是程序自己启动后的 java.class.path，因此对安装版同样有效
+// （安装版可直接用 HFUT-Schedule.exe --verify-classpath 复跑）。
+tasks.register<JavaExec>("verifyClasspath") {
+    group = "verification"
+    description = "扫描运行时所有 jar，检查是否有重复类"
+    dependsOn(tasks.named("classes"))
+    mainClass.set("com.hfut.schedule.desktop.MainKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args = listOf("--verify-classpath")
+    systemProperty("java.awt.headless", "false")
+}
+
+// 打出安装包前先跑这道闸门
+tasks.matching { it.name == "packageMsi" || it.name == "createDistributable" }
+    .configureEach { dependsOn("verifyClasspath") }
 
 // 校验更新检查：版本比较 + 安装包直链 + sha256 解析
 tasks.register<JavaExec>("verifyUpdate") {
