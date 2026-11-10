@@ -92,16 +92,18 @@ object DesktopBackup {
         val parent = root.parentFile ?: throw IOException("数据目录不可写")
         val staging = File(parent, "${root.name}.restore-${stamp}").apply { deleteRecursively(); mkdirs() }
         val aside = File(parent, "${root.name}.before-restore-${stamp}").apply { deleteRecursively(); mkdirs() }
+        val moved = mutableListOf<Pair<File, File>>()
         try {
             extractValidated(source, staging)
             if (staging.walkTopDown().none { it.isFile }) throw IOException("备份文件里没有可恢复的内容")
 
-            // 1) 现有数据先挪到旁路目录（保留 cache / update）
-            val moved = mutableListOf<Pair<File, File>>()
+            // 1) 现有数据先挪到旁路目录（保留 cache / update）。
+            // 有一个挪不走就停：绝不能在没有副本的情况下删掉原文件。
             root.listFiles()?.forEach { child ->
                 if (child.name in EXCLUDE) return@forEach
                 val dest = File(aside, child.name)
-                if (move(child, dest)) moved.add(child to dest)
+                if (!move(child, dest)) throw IOException("无法移走现有数据 ${child.name}，已中止且未覆盖")
+                moved.add(child to dest)
             }
 
             // 2) 暂存内容落地
@@ -120,9 +122,10 @@ object DesktopBackup {
                 throw t
             }
         } catch (t: Throwable) {
-            // 失败时不删旁路目录：宁可多占一份空间，也不能把用户原数据删掉
-            val kept = aside.walkTopDown().firstOrNull { it.isFile }
-            val hint = if (kept != null) "；原数据保留在 ${aside.absolutePath}" else ""
+            putAsideBack(moved)
+            val stranded = moved.filter { (original, backup) -> backup.exists() && !original.exists() }
+            if (stranded.isEmpty()) aside.deleteRecursively()
+            val hint = if (stranded.isNotEmpty()) "；原数据保留在 ${aside.absolutePath}" else ""
             throw IOException("${t.message ?: "恢复中断"}$hint", t)
         } finally {
             staging.deleteRecursively()
@@ -130,15 +133,31 @@ object DesktopBackup {
         aside.deleteRecursively()
     }
 
-    /** 同一分区直接 rename，跨分区退化为复制 */
+    /** 把还留在旁路目录、原位置已经空出来的数据移回去。 */
+    private fun putAsideBack(moved: List<Pair<File, File>>) {
+        moved.forEach { (original, backup) ->
+            if (backup.exists() && !original.exists()) move(backup, original)
+        }
+    }
+
+    /**
+     * 同一分区直接 rename，跨分区退化为复制。
+     * 源文件还在就算失败：调用方会中止，而不是接着把原文件删掉。
+     */
     private fun move(from: File, to: File): Boolean {
         to.parentFile?.mkdirs()
-        if (from.renameTo(to)) return true
-        return runCatching {
+        if (from.renameTo(to) && !from.exists()) return true
+        val copied = runCatching {
             if (from.isDirectory) from.copyRecursively(to, overwrite = true) else from.copyTo(to, overwrite = true)
-            from.deleteRecursively()
-            true
-        }.getOrDefault(false)
+        }.isSuccess
+        if (!copied || !to.exists()) return false
+        from.deleteRecursively()
+        if (!from.exists()) return true
+        // 复制出去了但源删不掉（文件被占用）。把副本盖回源，避免留下半份。
+        runCatching {
+            if (to.isDirectory) to.copyRecursively(from, overwrite = true)
+        }
+        return false
     }
 
     private fun zipDirectory(root: File, current: File, zip: ZipOutputStream) {

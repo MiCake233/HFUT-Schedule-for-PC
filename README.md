@@ -47,7 +47,7 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
 
 - **数据目录**：Windows 为 `%APPDATA%\HFUT-Schedule`（便携版相同）。已发布的 macOS 预发布为 `~/Library/Application Support/HFUT-Schedule`。默认分支上非 Windows 仍是 `~/.hfut-schedule`。备份不含 `cache` 与 `update` 两个子目录。
 - **密码**：桌面版**不保存**登录密码；旧版本曾写入的明文密码会在启动时清除。
-- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）。
+- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）、各平台 token 与用户保存的平台密码。
   当前 `desktop-windows` 源码在 Windows 启动时用 DPAPI 加密敏感值，再写入数据目录的 `prefs\*.properties`（前缀 `dpapi1:`）。已发布的正式版 v10.0.0 早于这次加密，那一版只受 Windows 用户目录权限保护。
   macOS 预发布把主密钥放在登录钥匙串，磁盘上是 AES-GCM 密文。
   与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会一并清掉本机保存的各平台 token。

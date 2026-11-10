@@ -8,7 +8,6 @@ object Constant {
     // Github常量池
     const val GITHUB_DEVELOPER_NAME = "Chiu-xaH"
     const val GITHUB_REPO_NAME = "HFUT-Schedule"
-    const val GITEE_TOKEN = "bf51445a2add374b70205ca460f9a696"
     // 教务系统 有时需校园网
     const val JXGLSTU_URL = "http://jxglstu.hfut.edu.cn/eams5-student/"
     // Github
