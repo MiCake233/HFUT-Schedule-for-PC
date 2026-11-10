@@ -159,6 +159,20 @@ fun main(args: Array<String>) {
         if (surfaces.fix) {
             FixWindow(icon)
         }
+        // 课表窗口拆掉后，1.11 会因为树上没有任何 Window 而结束 application。
+        // 这个窗口不画课表，只用来把托盘和提醒留住；退出时不留。
+        if (shouldKeepApplicationAlive(exiting, surfaces.any)) {
+            Window(
+                onCloseRequest = {},
+                state = rememberWindowState(size = DpSize(1.dp, 1.dp)),
+                visible = false,
+                title = "",
+                undecorated = true,
+                transparent = true,
+                resizable = false,
+                focusable = false,
+            ) {}
+        }
 
         LaunchedEffect(Unit) {
             LogUtil.debug("desktop window started")

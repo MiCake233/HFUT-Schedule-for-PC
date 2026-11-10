@@ -56,6 +56,15 @@ class DesktopSurfacePolicyTest {
     }
 
     @Test
+    fun keeperWindowStaysOnlyWhileIdleAndNotQuitting() {
+        val idle = desktopSurfaces(mainRequested = false, widgetShown = false, fixShown = false)
+        assertTrue(shouldKeepApplicationAlive(exiting = false, anySurface = idle.any))
+        assertFalse(shouldKeepApplicationAlive(exiting = false, anySurface = true))
+        assertFalse(shouldKeepApplicationAlive(exiting = true, anySurface = false))
+        assertFalse(shouldKeepApplicationAlive(exiting = true, anySurface = true))
+    }
+
+    @Test
     fun hidingDoesNotClearTheLoginFlag() {
         val previous = DesktopWindowState.loggedIn
         try {

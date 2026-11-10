@@ -38,6 +38,14 @@ internal fun actionOnClose(closeToTray: Boolean, alreadyExiting: Boolean): Close
     if (closeToTray && !alreadyExiting) CloseAction.HideToTray else CloseAction.Exit
 
 /**
+ * Compose 1.11 ends `application { }` when the last Window leaves the tree.
+ * The schedule window stays torn down. A 1 dp hidden placeholder is composed only
+ * in this case, so the tray and reminders survive. Quitting must not keep it.
+ */
+internal fun shouldKeepApplicationAlive(exiting: Boolean, anySurface: Boolean) =
+    !exiting && !anySurface
+
+/**
  * macOS can hide the NSWindow (red close button) without delivering Compose's
  * `onCloseRequest`. The first hide after the window has actually been shown
  * must tear the composition down; later hides from that teardown are ignored.

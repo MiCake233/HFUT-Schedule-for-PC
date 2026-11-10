@@ -1,19 +1,23 @@
-HFUT-Schedule for PC  ·  桌面版 10.1.0
-==============================================
+HFUT-Schedule for PC  ·  桌面版
+==================================
 适用系统：Windows 10 / 11（x64），macOS 12 及以上。
-macOS 安装包需要在 Mac 上打包，见仓库 README「从源码构建」。
 
 一、安装与启动
 ------------
-1. Windows：HFUT-Schedule-x.y.z.msi
-   标准安装包。按当前用户安装，无需管理员权限；安装时可选择目录。
+1. Windows 正式版 v10.0.0：HFUT-Schedule-10.0.0.msi
+   已发布在 GitHub Releases。按当前用户安装，无需管理员权限；安装时可选择目录。
    完成后在开始菜单与桌面生成快捷方式。已安装旧版本时可直接覆盖升级。
+   这一档不另发 Windows 10.1.0 的 MSI。Windows 请继续用 v10.0.0，等到有 MSI 的正式版再升级。
 
-2. Windows：HFUT-Schedule-x.y.z-portable.zip
-   便携版。解压至任意目录后运行 HFUT-Schedule.exe。该目录可整体复制或迁移。
+2. Windows 便携版 v10.0.0：HFUT-Schedule-10.0.0-portable.zip
+   已发布在 GitHub Releases。解压至任意目录后运行 HFUT-Schedule.exe。该目录可整体复制或迁移。
 
-3. macOS：HFUT-Schedule-x.y.z.dmg
-   打开后把 HFUT-Schedule 拖到「应用程序」。未签名时需在「系统设置 → 隐私与安全性」中允许。
+3. macOS 10.1.0：HFUT-Schedule-10.1.0.dmg
+   在 Mac 上用 jpackage 打出后，以预发布挂到 Releases（只附带这个 .dmg）。
+   Linux 持续集成不能交叉生成 DMG。打开后把 HFUT-Schedule 拖到「应用程序」。
+   未签名时需在「系统设置 → 隐私与安全性」中允许。
+   预发布不会推给已经安装的 Windows 10.0.0。若把只有 .dmg、没有 .msi 的 10.1.0 标成正式版，
+   Windows 10.0.0 会提示有新版本，点「下载并安装」后因找不到 .msi 而失败。
 
 二、首次运行
 ------------
@@ -51,7 +55,9 @@ macOS 安装包需要在 Mac 上打包，见仓库 README「从源码构建」�
    恢复会先把备份解压到临时目录并逐条校验，全部通过后才替换数据；
    若备份文件损坏、为空或包含异常路径，程序会中止并保留原有数据。
 3. 「选项 → 应用 → 检查更新」：读取 GitHub Releases 的最新正式版（预发布不会提示）。
-   Windows 下载 .msi，macOS 下载 .dmg。下载后先校验 SHA-256 与文件头，校验不通过会删除文件并拒绝运行；
+   Windows 只下载 .msi，macOS 只下载 .dmg。当前正式版是 Windows v10.0.0；
+   macOS 10.1.0 的 .dmg 是预发布，不会被 Windows 10.0.0 当成可安装更新。
+   下载后先校验 SHA-256 与文件头，校验不通过会删除文件并拒绝运行；
    也可直接打开发布页手动下载。地址只允许 GitHub 与 githubusercontent 的 https 链接。
 
 六、功能范围
