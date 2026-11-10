@@ -6,6 +6,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.File
 
 /**
  * 更新检查的纯逻辑测试：版本比较、GitHub `releases/latest` 解析。
@@ -138,5 +139,37 @@ class DesktopUpdateTest {
     fun brokenJsonDoesNotThrow() {
         assertNull(DesktopUpdate.parseLatest("{\"tag_name\":"))
         assertNull(DesktopUpdate.parseLatest(""))
+    }
+
+    @Test
+    fun updateUrlMustBeHttpsOnGithub() {
+        assertTrue(DesktopUpdate.isTrustedUpdateUrl(
+            "https://github.com/MiCake233/HFUT-Schedule-for-PC/releases/download/v10.0.1/a.msi"
+        ))
+        assertTrue(DesktopUpdate.isTrustedUpdateUrl("https://release-assets.githubusercontent.com/github-production-release-asset/a"))
+        assertTrue(DesktopUpdate.isTrustedUpdateUrl("https://objects.githubusercontent.com/github-production-release-asset/a"))
+        assertFalse(DesktopUpdate.isTrustedUpdateUrl("http://github.com/a/b/c.msi"))
+        assertFalse(DesktopUpdate.isTrustedUpdateUrl("https://evil.example/a.msi"))
+        assertFalse(DesktopUpdate.isTrustedUpdateUrl("https://github.com.evil.example/a.msi"))
+        assertFalse(DesktopUpdate.isTrustedUpdateUrl("https://user:pass@github.com/a.msi"))
+    }
+
+    @Test
+    fun missingSha256RejectsOtherwiseValidMsi() {
+        val file = File.createTempFile("hfut-update", ".msi")
+        try {
+            val bytes = ByteArray(64)
+            bytes[0] = 0xD0.toByte()
+            bytes[1] = 0xCF.toByte()
+            bytes[2] = 0x11
+            bytes[3] = 0xE0.toByte()
+            file.writeBytes(bytes)
+            val rejected = DesktopUpdate.verifyLocalFile(file, null, file.length())
+            assertTrue(rejected is DesktopUpdate.Download.Error)
+            val shortHash = DesktopUpdate.verifyLocalFile(file, "abcd", file.length())
+            assertTrue(shortHash is DesktopUpdate.Download.Error)
+        } finally {
+            file.delete()
+        }
     }
 }
