@@ -29,6 +29,18 @@ object DesktopUpdate {
         OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
+            .addNetworkInterceptor { chain ->
+                val response = chain.proceed(chain.request())
+                if (response.isRedirect) {
+                    val loc = response.header("Location")
+                    val resolved = if (loc == null) null else chain.request().url.resolve(loc)?.toString()
+                    if (resolved == null || !isTrustedUpdateUrl(resolved)) {
+                        response.close()
+                        throw java.io.IOException("更新被重定向到不受信任的地址")
+                    }
+                }
+                response
+            }
             .build()
     }
 
@@ -199,6 +211,12 @@ object DesktopUpdate {
     ): Download = withContext(Dispatchers.IO) {
         val url = target.assetUrl
             ?: return@withContext Download.Error("该版本未提供 .msi 安装包，请到发布页手动下载")
+        if (!isTrustedUpdateUrl(url)) {
+            return@withContext Download.Error("安装包地址不受信任，已阻止下载")
+        }
+        if (target.sha256?.matches(SHA256_HEX) != true) {
+            return@withContext Download.Error("发布信息缺少有效的 SHA-256，已阻止下载")
+        }
         val fileName = target.assetName?.takeIf { it.endsWith(".msi", ignoreCase = true) }
             ?: "HFUT-Schedule-${target.latest}.msi"
         // 只允许纯文件名，杜绝 ../ 之类的路径穿越
@@ -248,15 +266,17 @@ object DesktopUpdate {
         expectedSize: Long = 0L,
     ): Download = verify(file, MessageDigest.getInstance("SHA-256").digest(file.readBytes()), expectedSha256, expectedSize)
 
-    /** 先比 sha256（服务端给了就必须一致），再用文件大小与 OLE 头兜底 */
+    /** sha256 缺失或不是 64 位十六进制一律拒绝；给了还要比对文件大小和 OLE 头 */
     private fun verify(file: File, actual: ByteArray, expectedSha256: String?, expectedSize: Long): Download {
         if (!file.isFile || file.length() == 0L) return Download.Error("下载得到的文件为空")
-        if (expectedSha256 != null) {
-            val hex = actual.joinToString("") { "%02x".format(it) }
-            if (!hex.equals(expectedSha256, ignoreCase = true)) {
-                return Download.Error("安装包校验失败（SHA-256 不匹配），已阻止运行")
-            }
-        } else if (expectedSize > 0 && file.length() != expectedSize) {
+        if (expectedSha256?.matches(SHA256_HEX) != true) {
+            return Download.Error("发布信息缺少有效的 SHA-256，已阻止运行")
+        }
+        val hex = actual.joinToString("") { "%02x".format(it) }
+        if (!hex.equals(expectedSha256, ignoreCase = true)) {
+            return Download.Error("安装包校验失败（SHA-256 不匹配），已阻止运行")
+        }
+        if (expectedSize > 0 && file.length() != expectedSize) {
             return Download.Error("安装包大小与发布信息不一致，已阻止运行")
         }
         // MSI 是 OLE 复合文档，头 4 字节固定为 D0 CF 11 E0
@@ -267,6 +287,22 @@ object DesktopUpdate {
             head[2] == 0x11.toByte() && head[3] == 0xE0.toByte()
         if (!ole) return Download.Error("下载到的不是有效的安装包（文件头异常），已阻止运行")
         return Download.Ok(file)
+    }
+
+    private val SHA256_HEX = Regex("^[0-9a-fA-F]{64}$")
+
+    /**
+     * 安装包只允许从 GitHub 的发布域名下载。
+     * `browser_download_url` 来自接口 JSON，不限制主机的话，一份被改过的响应就能让程序去拉任意地址的 MSI。
+     */
+    internal fun isTrustedUpdateUrl(url: String): Boolean {
+        val uri = runCatching { java.net.URI(url.trim()) }.getOrNull() ?: return false
+        if (!uri.scheme.equals("https", ignoreCase = true)) return false
+        if (!uri.userInfo.isNullOrEmpty()) return false
+        val host = uri.host?.lowercase() ?: return false
+        if (host == "github.com" || host == "api.github.com") return true
+        val suffix = ".githubusercontent.com"
+        return host.endsWith(suffix) && host.length > suffix.length && !host.contains("..")
     }
 
     /** 用系统默认方式启动安装包 */
