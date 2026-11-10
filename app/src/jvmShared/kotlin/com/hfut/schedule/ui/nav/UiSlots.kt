@@ -33,6 +33,11 @@ object UiSlots {
         slots[key] = content
     }
 
+    /** Drop a slot so a disposed desktop window does not keep its composable. */
+    fun unregister(key: String) {
+        slots.remove(key)
+    }
+
     fun isRegistered(key: String): Boolean = slots.containsKey(key)
 
     private val actions = mutableMapOf<String, (Any?) -> Unit>()

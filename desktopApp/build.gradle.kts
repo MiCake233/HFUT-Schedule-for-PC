@@ -84,6 +84,8 @@ configurations.configureEach {
 compose.desktop {
     application {
         mainClass = "com.hfut.schedule.desktop.MainKt"
+        // 空闲时的大头是 Skia / IOSurface，靠拆掉隐藏窗口释放，而不是把堆压得很小。
+        // 窗口打开时几百 MB 是正常的；设一个很紧的 -Xmx 会在界面还开着时 OOM。
         nativeDistributions {
             targetFormats(TargetFormat.Msi, TargetFormat.Dmg)
             packageName = "HFUT-Schedule"
