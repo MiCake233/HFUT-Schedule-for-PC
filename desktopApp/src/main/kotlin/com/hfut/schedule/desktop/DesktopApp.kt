@@ -128,6 +128,14 @@ fun DesktopApp(exitApp: () -> Unit) {
             PlatformHooks.onExitApp = null
             PlatformHooks.onShowFix = null
             PlatformHooks.platformScreenFactory = null
+            listOf(
+                "home_settings",
+                "course_events_ui",
+                "fix",
+                "calendar_ui_settings",
+            ).forEach { com.hfut.schedule.ui.nav.UiSlots.unregister(it) }
+            // Cancel in-flight UI work. Reminders do not use these ViewModels.
+            owner.viewModelStore.clear()
         }
     }
 

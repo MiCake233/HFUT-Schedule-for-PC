@@ -22,6 +22,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
 import androidx.compose.ui.window.rememberWindowState
 import com.hfut.schedule.desktop.platform.DesktopOs
+import com.hfut.schedule.desktop.platform.MacActivation
 import com.hfut.schedule.desktop.platform.MacNotifications
 import com.hfut.schedule.desktop.platform.MacSecrets
 import com.hfut.schedule.desktop.platform.currentDesktopOs
@@ -69,24 +70,17 @@ fun main(args: Array<String>) {
     if (runSelfChecks(args)) return
 
     application {
-        val savedX = windowPrefs.getFloat(KEY_X, Float.NaN)
-        val savedY = windowPrefs.getFloat(KEY_Y, Float.NaN)
-        val state = rememberWindowState(
-            size = DpSize(
-                windowPrefs.getInt(KEY_WIDTH, 1180).dp,
-                windowPrefs.getInt(KEY_HEIGHT, 820).dp
-            ),
-            position = if (savedX.isNaN() || savedY.isNaN()) {
-                WindowPosition(Alignment.Center)
-            } else {
-                WindowPosition(savedX.dp, savedY.dp)
-            }
-        )
         val icon = remember { loadAppIcon() }
         val trayState = rememberTrayState()
         val scope = rememberCoroutineScope()
         var windowVisible by remember { mutableStateOf(!args.contains("--minimized")) }
         var exiting by remember { mutableStateOf(false) }
+        val surfaces = desktopSurfaces(
+            mainRequested = windowVisible,
+            widgetShown = DesktopWidgetState.visible,
+            fixShown = DesktopFixState.visible,
+        )
+        var previousSurfaces by remember { mutableStateOf(surfaces) }
 
         DisposableEffect(Unit) {
             DesktopNotifier.sink = { title, message ->
@@ -100,53 +94,106 @@ fun main(args: Array<String>) {
             onDispose { DesktopNotifier.sink = null }
         }
 
+        LaunchedEffect(surfaces) {
+            // Dock icon only while a window exists. Tray and reminders stay either way.
+            MacActivation.apply(surfaces.macAccessory)
+            val closedOne = (previousSurfaces.main && !surfaces.main) ||
+                (previousSurfaces.widget && !surfaces.widget) ||
+                (previousSurfaces.fix && !surfaces.fix)
+            if (closedOne) BackgroundMemory.releaseAfterHide()
+            previousSurfaces = surfaces
+        }
+
+        fun revealMain() {
+            MacActivation.apply(accessory = false)
+            windowVisible = true
+        }
+
         // 托盘菜单用 ASCII 标签：jpackage 的托盘是大字体的，中文在部分系统上会渲染成方块
         Tray(
             icon = icon ?: ColorPainter(Color(0xFFC41228)),
             state = trayState,
             tooltip = "HFUT-Schedule for PC",
-            onAction = { windowVisible = true },
+            onAction = { revealMain() },
             menu = {
-                Item("Show window", onClick = { windowVisible = true })
+                Item("Show window", onClick = { revealMain() })
                 Item("Hide to tray", onClick = { windowVisible = false })
-                Item("Today classes panel", onClick = { DesktopWidgetState.setShown(!DesktopWidgetState.visible) })
+                Item("Today classes panel", onClick = {
+                    val show = !DesktopWidgetState.visible
+                    if (show) MacActivation.apply(accessory = false)
+                    DesktopWidgetState.setShown(show)
+                })
                 Item("Panel always on top", onClick = { DesktopWidgetState.setOnTop(!DesktopWidgetState.alwaysOnTop) })
                 Separator()
                 Item("Quit", onClick = {
                     exiting = true
-                    saveWindowState(state)
                     exitApplication()
                 })
             }
         )
 
-        Window(
-            onCloseRequest = {
-                saveWindowState(state)
-                if (DesktopWindowPrefs.closeToTray() && !exiting) {
-                    windowVisible = false
-                } else {
+        // 不在树上的窗口不会留下 Skia / IOSurface。登录标记在 DesktopWindowState，不随窗口拆掉。
+        if (surfaces.main) {
+            MainScheduleWindow(
+                icon = icon,
+                onHideToTray = { windowVisible = false },
+                onExit = {
                     exiting = true
                     exitApplication()
-                }
-            },
-            title = "HFUT 课程表 · 桌面版",
-            state = state,
-            visible = windowVisible,
-            icon = icon
-        ) {
-            DesktopApp(exitApp = {
-                exiting = true
-                exitApplication()
-            })
+                },
+                exiting = exiting,
+            )
         }
-
-        TodayCoursePanelWindow(icon)
-        FixWindow(icon)
+        if (surfaces.widget) {
+            TodayCoursePanelWindow(icon)
+        }
+        if (surfaces.fix) {
+            FixWindow(icon)
+        }
 
         LaunchedEffect(Unit) {
             LogUtil.debug("desktop window started")
         }
+    }
+}
+
+/** 主窗口。隐藏时整棵组合被拆掉，再次显示时按已保存的登录态和窗口位置重建。 */
+@androidx.compose.runtime.Composable
+private fun MainScheduleWindow(
+    icon: Painter?,
+    onHideToTray: () -> Unit,
+    onExit: () -> Unit,
+    exiting: Boolean,
+) {
+    val savedX = windowPrefs.getFloat(KEY_X, Float.NaN)
+    val savedY = windowPrefs.getFloat(KEY_Y, Float.NaN)
+    val state = rememberWindowState(
+        size = DpSize(
+            windowPrefs.getInt(KEY_WIDTH, 1180).dp,
+            windowPrefs.getInt(KEY_HEIGHT, 820).dp
+        ),
+        position = if (savedX.isNaN() || savedY.isNaN()) {
+            WindowPosition(Alignment.Center)
+        } else {
+            WindowPosition(savedX.dp, savedY.dp)
+        }
+    )
+    DisposableEffect(Unit) {
+        onDispose { saveWindowState(state) }
+    }
+    Window(
+        onCloseRequest = {
+            saveWindowState(state)
+            when (actionOnClose(DesktopWindowPrefs.closeToTray(), exiting)) {
+                CloseAction.HideToTray -> onHideToTray()
+                CloseAction.Exit -> onExit()
+            }
+        },
+        title = "HFUT 课程表 · 桌面版",
+        state = state,
+        icon = icon
+    ) {
+        DesktopApp(exitApp = onExit)
     }
 }
 
@@ -170,7 +217,6 @@ private fun TodayCoursePanelWindow(icon: Painter?) {
         onCloseRequest = { DesktopWidgetState.setShown(false) },
         title = "今日课程",
         state = widgetState,
-        visible = DesktopWidgetState.visible,
         alwaysOnTop = DesktopWidgetState.alwaysOnTop,
         icon = icon,
         resizable = true
@@ -191,7 +237,6 @@ private fun FixWindow(icon: Painter?) {
         onCloseRequest = { DesktopFixState.hide() },
         title = "修复 / 日志",
         state = rememberWindowState(size = DpSize(760.dp, 580.dp)),
-        visible = DesktopFixState.visible,
         icon = icon
     ) {
         DesktopAppTheme {

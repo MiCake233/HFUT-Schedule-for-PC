@@ -96,6 +96,9 @@ internal suspend fun loadTodayCourses(): List<TodayCourse> = withContext(Dispatc
 private fun formatTime(hour: Int, minute: Int): String =
     "%02d:%02d".format(hour, minute)
 
+/** The panel's timer runs only while that window is composed. */
+internal fun shouldAutoRefreshTodayCourses(panelShown: Boolean): Boolean = panelShown
+
 @Composable
 fun TodayCourseWidget(onClose: () -> Unit) {
     var courses by remember { mutableStateOf<List<TodayCourse>?>(null) }
@@ -107,10 +110,11 @@ fun TodayCourseWidget(onClose: () -> Unit) {
         courses = loadTodayCourses()
         refreshing = false
     }
-    // 每 5 分钟自动刷新
+    // 每 5 分钟自动刷新。面板没显示时这个组合不存在，循环不会跑。
     LaunchedEffect(Unit) {
-        while (true) {
+        while (shouldAutoRefreshTodayCourses(DesktopWidgetState.visible)) {
             delay(5 * 60_000L)
+            if (!shouldAutoRefreshTodayCourses(DesktopWidgetState.visible)) break
             tick++
         }
     }
