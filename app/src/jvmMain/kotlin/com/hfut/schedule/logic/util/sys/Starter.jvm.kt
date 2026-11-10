@@ -1,4 +1,5 @@
 package com.hfut.schedule.logic.util.sys
+import com.xah.common.logic.util.LogUtil
 
 import com.xah.common.ui.res.Drawables
 import com.xah.navigation.controller.NavigationController
@@ -43,7 +44,11 @@ actual object PlatformStarter {
 
     actual fun startTaoBaoExpress() = showToast("桌面端不支持淘宝快递查询")
 
-    actual fun openWlanSettings() = showToast("请使用 Windows 网络设置")
+    actual fun openWlanSettings() {
+        val os = System.getProperty("os.name", "").lowercase()
+        val hint = if (os.contains("mac")) "请使用系统设置中的无线局域网" else "请使用系统网络设置"
+        showToast(hint)
+    }
 
     actual fun restartToLogin() = showToast("请重新登录")
 

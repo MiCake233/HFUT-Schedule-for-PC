@@ -4,7 +4,7 @@
   <img src="/docs/img/desktop-icon.png" width="128" alt="HFUT-Schedule for PC">
 </p>
 
-本仓库是开源项目 [HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule) 的 Windows 桌面端移植版本。
+本仓库是开源项目 [HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule) 的桌面端移植版本，支持 Windows 与 macOS。
 移植基于 Kotlin Multiplatform 与 Compose Multiplatform，复用上游的界面实现与业务逻辑。
 许可为 Apache License 2.0。
 
@@ -13,12 +13,15 @@
 
 ## 下载
 
-适用于 Windows 10 / 11 x64。安装文件见 [Releases](../../releases)。
+安装文件见 [Releases](../../releases)。
 
 | 文件 | 说明 |
 | --- | --- |
-| `HFUT-Schedule-Setup-x.y.z.msi` | 安装包。内置 JDK 21 运行时，无需预装 Java；高版本可覆盖升级。 |
-| `HFUT-Schedule-x.y.z-portable.zip` | 便携版。解压后运行 `HFUT-Schedule.exe`。 |
+| `HFUT-Schedule-10.0.0.msi` | 已发布的 Windows 10 / 11 x64 正式版安装包。内置 JDK 21 运行时，无需预装 Java；按当前用户安装，高版本可覆盖升级。 |
+| `HFUT-Schedule-10.0.0-portable.zip` | 已发布的 Windows 便携版。解压后运行 `HFUT-Schedule.exe`。 |
+| `HFUT-Schedule-10.1.0.dmg` | macOS 12+（Apple 芯片与 Intel 均可，取决于打包机的 JDK）。内置 JDK 21。在 Mac 上用 jpackage 打出。本仓库的 Linux 持续集成不能交叉生成 DMG。 |
+
+这一档 macOS 包只附带 `.dmg`，不另做 Windows 10.1.0 的 MSI，并以预发布挂到 Releases。已经装上的 Windows 10.0.0 只看最新正式版，预发布不会推给它。Windows 请继续用上面的 v10.0.0，等到有 MSI 的正式版再升级。若把只有 `.dmg`、没有 `.msi` 的 10.1.0 标成正式版，Windows 10.0.0 会提示有新版本，点「下载并安装」后因找不到 `.msi` 而失败。
 
 ## 功能
 
@@ -27,10 +30,10 @@
 | 登录 | 统一身份认证（CAS）学号密码登录；会话凭据保存在本机，下次启动自动恢复，无需重复输入验证码；可一键退出登录并清除凭据。 |
 | 课表 | 周视图，打开即定位当前周，可左右翻周或一键回到本周；切换学期、切换课表来源（含好友课表）；拖拽排序；点击空白格新建日程；方格高度、文字大小、内边距、不透明度、模糊、时间轴可调；课程表可导出为 PNG 图片。 |
 | 今日课程面板 | 独立小窗口常驻桌面，显示今日课程的时间、课程名与地点；每 5 分钟自动刷新，可手动刷新；可始终置顶；窗口位置与大小自动记忆。 |
-| 系统托盘 | 关闭窗口默认最小化到托盘；托盘菜单可显示/隐藏主窗口、开关今日课程面板与置顶、退出程序；命令行参数 `--minimized` 启动后仅驻留托盘。 |
-| 提醒 | 上课与考试提醒，开始前 5～60 分钟（默认 20 分钟）通过系统托盘气泡提示，提前时间面板内可调。 |
-| 启动与窗口 | 开机自启动开关（写入当前用户 Windows 启动项，开机后驻留托盘不弹窗）；主窗口尺寸与位置记忆。 |
-| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）；下载后按发布资产的 SHA-256 校验，校验不通过一律拒绝运行；「选项」内亦提供手动检查与打开发布页。 |
+| 系统托盘 / 菜单栏 | Windows 为系统托盘，macOS 为菜单栏图标。关闭窗口默认最小化到托盘或菜单栏；菜单可显示/隐藏主窗口、开关今日课程面板与置顶、退出程序；命令行参数 `--minimized` 启动后不弹主窗口。 |
+| 提醒 | 上课与考试提醒，开始前 5～60 分钟（默认 20 分钟）。Windows 用托盘气泡，macOS 用通知中心。提前时间面板内可调。 |
+| 启动与窗口 | 开机自启动：Windows 写入当前用户启动项，macOS 写入 `~/Library/LaunchAgents`。登录后驻留托盘或菜单栏、不弹窗。主窗口尺寸与位置记忆。 |
+| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）。Windows 只接受 `.msi`，macOS 只接受 `.dmg`。当前正式版是 Windows v10.0.0；macOS 10.1.0 的 `.dmg` 以预发布放在 Releases，不会被 Windows 10.0.0 当成可安装更新。下载后必须通过 SHA-256，并核对 MSI 的 OLE 头或 DMG 的 `koly` 尾。任一不符即删除文件并拒绝运行。「选项」内亦提供手动检查与打开发布页。 |
 | 数据 | 通过系统文件对话框备份 / 还原本机数据目录；恢复前先解压到临时目录校验，失败不会动原数据；崩溃日志自动落盘，可在「修复」窗口查看、预览、清空与打开目录。 |
 | 一卡通 | 余额、流水、账单分析、消费报表、限额。 |
 | 教务 | 成绩查询与 GPA 分析、考试成绩详情、考试安排、教学计划完成情况、总学分、挂科率、课程检索、教师检索、空闲教室、选课、退课、转专业、个人信息、学期报告（可导出为图片）。 |
@@ -42,25 +45,44 @@
 
 ## 安全与数据说明
 
-- **数据目录**：`%APPDATA%\HFUT-Schedule`（便携版相同）。备份不含 `cache` 与 `update` 两个子目录。
+- **数据目录**：Windows 为 `%APPDATA%\HFUT-Schedule`（便携版相同）；macOS 为 `~/Library/Application Support/HFUT-Schedule`。备份不含 `cache` 与 `update` 两个子目录。Linux 上从源码运行时落在 `~/.hfut-schedule`，不是发行目标。
 - **密码**：桌面版**不保存**登录密码；旧版本曾写入的明文密码会在启动时清除。
-- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION），
-  位于该目录下的 `prefs\*.properties`，**未额外加密**（仅受 Windows 用户目录权限保护）。
-  与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会一并清掉本机保存的各平台 token。
-- **崩溃日志**：写入 `%APPDATA%\HFUT-Schedule\logs`，仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
-- **自动更新**：只从本仓库的 GitHub Releases 读取版本信息；安装包下载后校验 SHA-256 与 MSI 文件头，
-  两者任一不符即删除文件并拒绝运行。安装包当前未做代码签名，校验值以 GitHub API 返回的资产摘要为准。
+- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）、各平台 token 与用户保存的平台密码。
+  Windows 上这些值用 DPAPI 加密；macOS 上用登录钥匙串里的 AES-GCM 主密钥加密。密文写在 `prefs/*.properties` 与 DataStore 中，只有当前系统用户能解开。换机器或换用户会当成未登录。
+  与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会清掉本机保存的会话与各平台 token。
+- **崩溃日志**：写在数据目录的 `logs` 下，仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
+- **自动更新**：只从本仓库的 GitHub Releases 读取版本信息，只认最新正式版，只接受 `https` 且主机为 `github.com`、`api.github.com` 或 `*.githubusercontent.com`。Windows 只下载 `.msi`，macOS 只下载 `.dmg`。安装包下载后必须带有效 SHA-256，并核对文件头（MSI 为 OLE，DMG 为 UDIF `koly`）。任一不符即删除文件并拒绝运行。安装包当前未做代码签名，校验值以 GitHub API 返回的资产摘要为准。macOS 10.1.0 的 `.dmg` 作为预发布，避免已发布的 Windows 10.0.0 把它当成可升级的正式版。
 - **网络**：程序直接访问学校系统与 GitHub；不内置任何遥测或第三方统计上报（统计相关功能复用上游，需自行配置）。
+
+## 平台差异
+
+- 相机扫码、内嵌 WebView、系统磁贴、小物星、办事大厅只在 Android 上提供。桌面两端的入口已经隐藏。
+- iOS Husk 运行环境检测只存在于 Android。桌面没有这个转译层。
+- 电池温度只在 Android 读取。桌面开发者选项显示「不可用」。进程内存和 CPU 频率读 `/proc` 与 `/sys`，Windows 和 macOS 上通常也是「不可用」。
+- 便携 zip 仍是 Windows。macOS 发行物是 `.dmg`。两边的安装包都还没有代码签名。
+- 文件对话框：Windows 继续用 Swing 选择器，macOS 用系统原生打开/存储面板。
 
 ## 从源码构建
 
-前置条件：JDK 21；编译 Android 目标需 Android SDK；生成 MSI 需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。
+前置条件：JDK 21。编译 Android 目标另需 Android SDK。
+
+Windows 上生成 MSI 需要 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。macOS 上生成 DMG 使用 JDK 自带的 `jpackage`，不需要 WiX；必须在 Mac 上执行，不能在 Linux 或 Windows 上交叉打出 DMG。
 
 ```powershell
-.\gradlew.bat :app:compileKotlinJvm            # 桌面端依赖的 JVM 目标
-.\gradlew.bat :desktopApp:createDistributable  # 免安装目录
-.\gradlew.bat :desktopApp:packageMsi           # MSI 安装包
+# Windows
+.\gradlew.bat :app:compileKotlinJvm
+.\gradlew.bat :desktopApp:createDistributable
+.\gradlew.bat :desktopApp:packageMsi
 ```
+
+```bash
+# macOS
+./gradlew :app:compileKotlinJvm
+./gradlew :desktopApp:createDistributable
+./gradlew :desktopApp:packageDmg
+```
+
+打出来的应用在 `desktopApp/build/compose/binaries/main/dmg/`（或 `msi/`）。macOS 第一次打开未签名应用时，需要在「系统设置 → 隐私与安全性」里允许，或对 `.app` 做 ad-hoc 签名。本仓库没有配置 Apple 开发者证书。
 
 依赖版本：Compose Multiplatform 的 `org.jetbrains.*` 坐标是「对齐壳」（本体只有几百字节，
 实现来自同名 `androidx.*` 坐标），壳与实现的版本在 `desktopApp/build.gradle.kts` 里用
@@ -68,7 +90,7 @@
 
 ## 自检
 
-桌面端没有单元测试，验收靠下面这些可重复执行的 check（`packageMsi` 会自动先跑 `verifyClasspath`）：
+桌面端逻辑有 `./gradlew :desktopApp:test`（更新解析、备份恢复、凭据加密、macOS 路径与 AES-GCM）。窗口和打包另有这些可重复执行的 check（`packageMsi` / `packageDmg` 会自动先跑 `verifyClasspath`）：
 
 ```powershell
 .\gradlew.bat :desktopApp:verifyClasspath  # 运行时 classpath 无重复类（同一 FQN 出现在两个 jar 即失败）
@@ -76,8 +98,8 @@
 .\gradlew.bat :desktopApp:verifyFuncs      # 桌面不可用的入口已从 UI 过滤
 .\gradlew.bat :desktopApp:verifyWeek       # 学期开始时间 → 当前周
 .\gradlew.bat :desktopApp:verifySession    # 本机凭据存在且用 TGC 换回 SESSION
-.\gradlew.bat :desktopApp:verifyUpdate     # 只认正式版，能解析出 .msi 直链与 sha256
-.\gradlew.bat :desktopApp:verifyIntegrity  # 摘要不符 / 非 MSI 必须被拦下
+.\gradlew.bat :desktopApp:verifyUpdate     # 只认正式版；Windows 解析 .msi，macOS 解析 .dmg，都必须有 sha256
+.\gradlew.bat :desktopApp:verifyIntegrity  # 摘要不符，或文件头不是 MSI / DMG，必须被拦下
 .\gradlew.bat :desktopApp:verifyBackup     # 正常恢复、zip 越界、空包三种场景
 .\gradlew.bat :desktopApp:verifyIcs        # 日程导出为 .ics
 .\gradlew.bat :desktopApp:verifyDrawables  # 天气等图标能从注册表按名字取到
@@ -97,8 +119,8 @@
 * 上游项目：[Chiu-xaH/HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule)（Apache License 2.0）。
   本桌面版基于上游源码修改而成，复用了其绝大部分界面与业务逻辑；
   上游版权归原作者及贡献者所有，贡献者名单见 [`docs/Developer.md`](docs/Developer.md)。
-* 修改说明：本仓库在 `desktop-windows` 分支上做了桌面移植改动，详见 [`NOTICE`](NOTICE)。
-* 桌面移植部分：新增 `:desktopApp` 模块，把 Android 源码逐步迁入 `jvmShared` 共享源集，用 `expect/actual` 划分平台边界。
+* 修改说明：本仓库在 `desktop-windows` 分支上做了 Windows / macOS 桌面移植，详见 [`NOTICE`](NOTICE)。
+* 桌面移植部分：新增 `:desktopApp` 模块，把 Android 源码逐步迁入 `jvmShared` 共享源集，用 `expect/actual` 划分 Android 与 JVM 边界。Windows 与 macOS 同属一个 JVM 目标，路径、自启动、托盘/菜单栏、通知、文件对话框、凭据加密和安装包格式在运行时按系统选择。
 * 许可证：**Apache License 2.0**（与上游一致），详见 [`LICENSE`](LICENSE)。
 
 ---

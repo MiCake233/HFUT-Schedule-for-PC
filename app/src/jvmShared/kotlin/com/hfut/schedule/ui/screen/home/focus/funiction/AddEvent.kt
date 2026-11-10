@@ -1,4 +1,10 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
+import com.hfut.schedule.logic.util.sys.parseTimeItem
+import com.xah.common.logic.model.Campus
+import dev.chrisbanes.haze.hazeSource
+import androidx.compose.runtime.saveable.rememberSaveable
+import com.xah.navigation.util.LocalNavController
+import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.sys.runOnMain
 
 import androidx.compose.ui.backhandler.BackHandler
@@ -34,7 +40,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -73,7 +78,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -95,13 +99,10 @@ import com.hfut.schedule.logic.database.core.DataBaseManager
 import com.hfut.schedule.logic.database.entity.CustomEventDTO
 import com.hfut.schedule.logic.database.entity.CustomEventType
 import com.hfut.schedule.logic.database.util.CustomEventMapper
-import com.xah.common.logic.model.Campus
 import com.hfut.schedule.logic.model.enumeration.LocalEvent
-import com.hfut.schedule.logic.util.helper.getCampus
 import com.hfut.schedule.logic.model.supabase.SupabaseEventOutput
-import com.hfut.schedule.network.api.util.getUinAppCampusId
 import com.hfut.schedule.logic.network.repo.UniAppRepository
-import com.xah.common.logic.state.NetworkUiState
+import com.hfut.schedule.logic.util.helper.getCampus
 import com.hfut.schedule.logic.util.network.state.reEmptyLiveDta
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
@@ -111,6 +112,7 @@ import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
 import com.hfut.schedule.logic.util.sys.parseToDateTime
 import com.hfut.schedule.logic.util.sys.showDevelopingToast
 import com.hfut.schedule.logic.util.sys.showToast
+import com.hfut.schedule.network.api.util.getUinAppCampusId
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.BUTTON_PADDING
 import com.hfut.schedule.ui.component.button.BottomTextButtonGroup
@@ -147,16 +149,19 @@ import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.EventCa
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer.getEventCampus
 import com.hfut.schedule.ui.screen.supabase.home.getInsertedEventId
 import com.hfut.schedule.ui.screen.supabase.login.loginSupabaseWithCheck
+import com.hfut.schedule.ui.style.appNavigationBarPadding
 import com.hfut.schedule.ui.style.color.textFiledTransplant
-import com.hfut.schedule.ui.util.navigation.AppAnimationManager
+import com.hfut.schedule.ui.style.special.backDropSource
+import com.hfut.schedule.ui.style.special.rememberHazeBlur
+import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.layout.measureDpSize
+import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 
 import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.component.status.CustomSingleChoiceRow
-import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.component.status.LoadingUI
 import com.xah.common.ui.component.text.BottomTip
 import com.xah.common.ui.component.text.ScrollText
@@ -165,6 +170,7 @@ import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.style.align.ColumnVertical
 import com.xah.common.ui.style.align.RowHorizontal
 import com.xah.common.ui.style.color.topBarTransplantColor
+import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.common.ui.style.padding.navigationBarHeightPadding
 import com.xah.common.ui.util.text
 import com.xah.navigation.model.action.LaunchMode
@@ -261,7 +267,7 @@ fun AddEventScreen(
     var showDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val backDrop = rememberLayerBackdrop()
-
+    val hazeState = rememberHazeBlur()
 
     if(showDialog) {
         LittleDialog(
@@ -287,6 +293,7 @@ fun AddEventScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             MediumTopAppBar(
+                modifier = Modifier.topBarBlur(hazeState),
                 scrollBehavior = scrollBehavior,
                 colors = topBarTransplantColor(),
                 title = {
@@ -364,7 +371,11 @@ fun AddEventScreen(
         val canUse by produceState<Boolean?>(initialValue = null) {
             value = if(isSupabase) loginSupabaseWithCheck(jwt,refreshToken,vm,null) else true
         }
-        Column(modifier = Modifier.padding(innerPadding)) {
+        Column(
+            modifier = Modifier
+                .hazeSource(hazeState)
+                .backDropSource(backDrop)
+        ) {
             when(canUse) {
                 null -> {
                     CenterScreen {
@@ -372,7 +383,7 @@ fun AddEventScreen(
                     }
                 }
                 true -> {
-                    AddEventUI(vm,isSupabase,eventId,enableCopy) {
+                    AddEventUI(vm,isSupabase,eventId,enableCopy,innerPadding) {
                         navController.pop()
                     }
                 }
@@ -530,7 +541,7 @@ private fun SharedTransitionScope.SurfaceUI(
                             )
                         }
                         return@Column
-                        AddEventUI(vm,isSupabase,showChange = showChange)
+                        AddEventUI(vm,isSupabase,showChange = showChange, innerPadding = innerPadding)
                     }
                     false -> {
                         CenterScreen {
@@ -558,6 +569,7 @@ fun AddEventUI(
     isSupabase : Boolean,
     eventId: Int = -1,
     enableCopy : Boolean = false,
+    innerPadding : PaddingValues,
     showChange: (Boolean) -> Unit
 ) {
     val groupId = remember { UUID.randomUUID().toString() }
@@ -577,7 +589,7 @@ fun AddEventUI(
 
     var time by remember { mutableStateOf(Pair(EMPTY_STRING,EMPTY_STRING)) }
     var date by remember { mutableStateOf(Pair(EMPTY_STRING,EMPTY_STRING)) }
-//    val dates = remember { mutableStateListOf<String>() }
+    val timeParts = remember { mutableStateListOf(TimePart()) }
 
     LaunchedEffect(editedData) {
         editedData?.let {
@@ -754,7 +766,7 @@ fun AddEventUI(
                         )
                     )
                 )
-                .navigationBarsPadding()
+                .appNavigationBarPadding()
         ){
 
             OutlinedCard(
@@ -835,6 +847,7 @@ fun AddEventUI(
         }
 
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            InnerPaddingHeight(innerPadding,true)
             CustomSingleChoiceRow(
                 options = LocalEvent.entries,
                 selected = if(isScheduleType) LocalEvent.SCHEDULE else LocalEvent.DEADLINE,
@@ -843,8 +856,8 @@ fun AddEventUI(
                     LocalEvent.DEADLINE -> false
                     LocalEvent.SCHEDULE -> true
                 }
-                date = Pair("","")
-                time = Pair("","")
+                date = Pair(EMPTY_STRING,EMPTY_STRING)
+                time = Pair(EMPTY_STRING,EMPTY_STRING)
             }
             CardListItem(
                 cardModifier = Modifier.padding(bottom = CARD_NORMAL_DP),
@@ -859,15 +872,15 @@ fun AddEventUI(
                 },
                 modifier = Modifier.clickable {
                     isScheduleType = !isScheduleType
-                    date = Pair("","")
-                    time = Pair("","")
+                    date = Pair(EMPTY_STRING,EMPTY_STRING)
+                    time = Pair(EMPTY_STRING,EMPTY_STRING)
                 },
                 leadingContent = {
                     FilledTonalIconButton(
                         onClick = {
                             isScheduleType = !isScheduleType
-                            date = Pair("","")
-                            time = Pair("","")
+                            date = Pair(EMPTY_STRING,EMPTY_STRING)
+                            time = Pair(EMPTY_STRING,EMPTY_STRING)
                         },
                         content = typeIcon
                     )
@@ -968,6 +981,7 @@ fun AddEventUI(
                     FilledTonalButton (
                         onClick = {
                             showDevelopingToast()
+//                            timeParts.add(TimePart())
                         },
                         modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP),
                         shape = MaterialTheme.shapes.medium,
@@ -979,7 +993,7 @@ fun AddEventUI(
             } else {
                 Spacer(Modifier.height(CARD_NORMAL_DP*2))
                 CustomCard(color = cardNormalColor()) {
-                    var displaySelector by rememberSaveable() { mutableStateOf(false) }
+                    var displaySelector by remember { mutableStateOf(false) }
                     CustomTextField(
                         input = description,
                         label = { Text("备注(可为空)") },
@@ -997,15 +1011,7 @@ fun AddEventUI(
                                     displaySelector = !displaySelector
                                 }
                             ) {
-                                val rotation2 by androidx.compose.animation.core.animateFloatAsState(
-                                    targetValue = if (displaySelector) 180f else 0f,
-                                    label = "expand_rotation2"
-                                )
-                                Icon(
-                                    painterResource(Drawables.collapse_content),
-                                    null,
-                                    modifier = Modifier.rotate(rotation2)
-                                )
+                                Icon(painterResource(Drawables.expand_content), null)
                             }
                         },
                         modifier = Modifier,
@@ -1267,8 +1273,8 @@ fun AddEventUI(
                 Spacer(Modifier.height(5.dp))
                 BottomTip("结果将上传至云端,仅持有校园邮箱用户可访问")
             }
-
-            Spacer(Modifier.height(bottomHeight + APP_HORIZONTAL_DP).navigationBarsPadding())
+            InnerPaddingHeight(innerPadding,false)
+            Spacer(Modifier.height(bottomHeight + APP_HORIZONTAL_DP).appNavigationBarPadding())
         }
     }
 }
@@ -1451,7 +1457,7 @@ private fun TemporaryEventDatePickerDialog(
                     onSelected(Pair(s, it))
                 }
             },
-            onDismiss
+            onDismiss = onDismiss
         )
     }
 }
@@ -1502,7 +1508,14 @@ private fun EventDatePickerDialog(
                     onSelected(EventDatePickerSelectedResult.Range(Pair(s, it)))
                 }
             },
-            onDismiss
+            onDismiss = onDismiss
         )
     }
 }
+
+private data class TimePart(
+    val remark : String? = null,
+    val date : List<String> = emptyList(),
+    val time : Pair<String,String> = Pair(EMPTY_STRING,EMPTY_STRING),
+    val id : String = UUID.randomUUID().toString()
+)

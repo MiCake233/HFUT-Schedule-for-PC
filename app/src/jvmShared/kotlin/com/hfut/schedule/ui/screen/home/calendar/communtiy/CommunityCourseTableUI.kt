@@ -200,6 +200,7 @@ fun CommunityCourseTableUI(
             )
         }
     ) {
+        TimeTablePreviewWindow.Listener(weekSwap)
         TimeTable(
             items,
             currentWeek.toInt(),
@@ -217,10 +218,7 @@ fun CommunityCourseTableUI(
                 }
             },
             onLongTapBlankRegion = {
-                floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()) {
-                    weekSwap.goToWeek(it.toLong())
-                    floatingController.pop()
-                })
+                floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()))
             },
             onDoubleTapBlankRegion = {
                 if(!isFriend) {
@@ -275,10 +273,7 @@ fun CommunityCourseTableUI(
             onNext = { weekSwap.nextWeek() },
             onPrevious = { weekSwap.previousWeek() },
             onLongClick = {
-                floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()) {
-                    weekSwap.goToWeek(it.toLong())
-                    floatingController.pop()
-                })
+                floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()))
             }
         )
     }

@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.component.dialog
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

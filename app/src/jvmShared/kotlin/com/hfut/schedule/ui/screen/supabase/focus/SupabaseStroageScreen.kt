@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.supabase.focus
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable

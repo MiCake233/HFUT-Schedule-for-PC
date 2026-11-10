@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.my.webLab
+import com.hfut.schedule.ui.nav.destination.TipsDestination
 import com.hfut.schedule.logic.util.sys.isValidWebUrl
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -64,7 +65,6 @@ import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.container.cardNormalColor
-import com.hfut.schedule.ui.component.divider.DashedDivider
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.input.CustomTextField
 import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButton
@@ -87,7 +87,6 @@ import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.isEmptyOrBlank
-import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.align.RowHorizontal
@@ -95,6 +94,7 @@ import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.container.component.base.SharedContainer
 import com.xah.container.component.base.sharedContainer
+import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.size
@@ -295,15 +295,13 @@ fun WebNavigationScreen(
                         )
                     ) { inputCookies = it }
 
-                    if (showQr) {
-                        DashedDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP).padding(top = APP_HORIZONTAL_DP * 4))
-                        RowHorizontal {
-                            com.hfut.schedule.ui.component.qrcode.QrCodeImage(
-                                content = input,
-                                contentColor = color,
-                                modifier = Modifier.size(200.dp)
-                            )
-                        }
+                    if (showQr && input.isNotBlank()) {
+                        Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP))
+                        PaddingHorizontalDivider(isDashed = true)
+                        com.hfut.schedule.ui.component.qrcode.QrCodeImage(
+                            content = input,
+                            modifier = Modifier.padding(APP_HORIZONTAL_DP).fillMaxWidth(),
+                        )
                     }
 
                     /*
@@ -386,14 +384,14 @@ fun NotificationBoxScreen(
                         Text("解锁聚在工大的更多场景与用法")
                     },
                     leadingContent = {
-                        Icon(painterResource(SettingsTipsPlatformDestination.icon),null)
+                        Icon(painterResource(TipsDestination.icon),null)
                     },
                     modifier = Modifier.clickable {
-                        navController.push(SettingsTipsPlatformDestination)
+                        navController.push(TipsDestination)
                     },
                     shape = NoneRoundShape,
                     cardModifier = Modifier.sharedContainer(
-                        SettingsTipsPlatformDestination.key,
+                        TipsDestination.key,
                         MaterialTheme.shapes.medium,
                         cardNormalColor()
                     )

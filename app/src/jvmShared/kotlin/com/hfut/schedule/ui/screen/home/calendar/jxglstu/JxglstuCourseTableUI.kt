@@ -1,4 +1,6 @@
 package com.hfut.schedule.ui.screen.home.calendar.jxglstu
+import com.xah.common.logic.state.NetworkUiState
+import com.xah.common.logic.util.LogUtil
 import com.hfut.schedule.ui.component.button.PlatformBackdrop
 
 import com.hfut.schedule.logic.model.AppConst
@@ -33,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import com.hfut.schedule.logic.network.interceptor.GoToInterceptorState
 import com.hfut.schedule.logic.network.repo.UniAppRepository
 import com.hfut.schedule.logic.util.network.isNotBadRequest
-import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.file.LargeStringDataManager
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
@@ -52,22 +53,19 @@ import com.hfut.schedule.ui.screen.home.calendar.common.TimeTableWeekSwap
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.TimeTableType
 import com.hfut.schedule.ui.screen.home.calendar.timetable.logic.allToTimeTableData
 import com.hfut.schedule.ui.screen.home.calendar.timetable.ui.TimeTable
-import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventOrigin
 import com.hfut.schedule.ui.screen.home.getJxglstuCookie
 import com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.getHuiXinPsk
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPersonInfo
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.safelySetDate
+import com.hfut.schedule.ui.util.state.GlobalEventHolder
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.component.status.LoadingUI
-import com.xah.shader.state.ShaderState
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.style.padding.navigationBarHeightPadding
 import com.xah.floating.util.LocalFloatingController
-
 import com.xah.navigation.util.LocalNavController
-import com.xah.common.logic.util.LogUtil
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -469,7 +467,7 @@ fun JxglstuCourseTableUI(
                launch {
                    vm.getLessonIds(cookie, studentId = studentId, bizTypeId = bizTypeId)
                    val lessonResponse = (vm.lessonIds.state.value as? NetworkUiState.Success)?.data ?: return@launch
-                   vm.getLessonTimes(cookie,lessonResponse.timeTableLayoutId)
+//                   vm.getLessonTimes(cookie,lessonResponse.timeTableLayoutId)
                    vm.getDatum(cookie,lessonResponse.lessonIds)
                    val datum = (vm.datumData.state.value as? NetworkUiState.Success)?.data
                    if(datum == null) {
@@ -527,6 +525,7 @@ fun JxglstuCourseTableUI(
                 )
             }
         ) {
+            TimeTablePreviewWindow.Listener(weekSwap)
             TimeTable(
                 items,
                 currentWeek.toInt(),
@@ -544,18 +543,10 @@ fun JxglstuCourseTableUI(
                     }
                 },
                 onLongTapBlankRegion = {
-                    floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt() ) {
-                        weekSwap.goToWeek(it.toLong())
-                        floatingController.pop()
-                    })
+                    floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()))
                 },
                 onDoubleTapBlankRegion = {
-                    navController.push(
-                        AddEventDestination(
-                            null,
-                            AddEventOrigin.FOCUS_EDITED.name
-                        )
-                    )
+                    navController.push(AddEventDestination())
                 }
             ) { list ->
                 // 只有一节课
@@ -596,10 +587,7 @@ fun JxglstuCourseTableUI(
                 onNext = { weekSwap.nextWeek() },
                 onPrevious = { weekSwap.previousWeek() },
                 onLongClick = {
-                    floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()) {
-                        weekSwap.goToWeek(it.toLong())
-                        floatingController.pop()
-                    })
+                    floatingController.push(TimeTablePreviewWindow(items,currentWeek.toInt()))
                 }
             )
         }

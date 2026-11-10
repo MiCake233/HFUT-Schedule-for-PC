@@ -52,6 +52,13 @@ class SecretStoreTest {
         assertTrue(SecretStore.isSensitive("redirect"))
         assertTrue(SecretStore.isSensitive("xwx_password"))
         assertTrue(SecretStore.isSensitive("webvpn_cookie"))
+        assertTrue(SecretStore.isSensitive("llm_api_key"))
+        assertTrue(SecretStore.isSensitive("pins"))
+        assertTrue(SecretStore.isSensitive("GuaGuaPsk"))
+        assertTrue(SecretStore.isSensitive("stu"))
+        assertTrue(SecretStore.isSensitive("LOGIN_FLAVORING"))
+        assertTrue(SecretStore.isSensitive("webVpnKey"))
+        assertFalse(SecretStore.isSensitive("api_key"))
         assertFalse(SecretStore.isSensitive("Username"))
         assertFalse(SecretStore.isSensitive("color_mode"))
     }

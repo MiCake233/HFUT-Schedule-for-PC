@@ -12,7 +12,6 @@ import com.hfut.schedule.ui.screen.shower.home.function.StartShowerUI
 import com.hfut.schedule.ui.screen.shower.home.function.UseCodeUI
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.style.padding.InnerPaddingHeight
-import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.HazeState
 
 @Composable

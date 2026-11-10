@@ -25,7 +25,6 @@ import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.navigation.util.LocalNavDependencies
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.util.res
-import dev.chrisbanes.haze.hazeSource
 
 data class FailRateApiDestination(
     val courseName : String,

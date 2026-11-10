@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.jxglstu.transfer
+import com.xah.common.logic.util.LogUtil
 
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.util.helper.getCampusRegion
@@ -23,6 +24,7 @@ fun getMyTransfer(list : List<JxglstuTransferMajorMyApply>?, index : Int) : Jxgl
     return try {
         list?.get(index)?.changeMajorSubmit ?: n
     } catch (e : Exception) {
+        LogUtil.error(e)
         n
     }
 }
@@ -32,7 +34,8 @@ fun getApplyStatus(list : List<JxglstuTransferMajorMyApply>?, index : Int) : Boo
     return try {
        val data = list?.get(index)?.applyStatus ?: EMPTY_STRING
         data == "ACCEPTED"
-    } catch (_:Exception) {
+    } catch (e : Exception) {
+        LogUtil.error(e)
         null
     }
 }

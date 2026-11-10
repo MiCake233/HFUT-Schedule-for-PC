@@ -129,6 +129,24 @@ class DesktopBackupTest {
     }
 
     @Test
+    fun unmovableDataIsLeftUntouched() {
+        // 父目录不可写时，现有数据挪不走。恢复必须在覆盖之前停下来。
+        assertTrue(root.setWritable(false))
+        val archive = zip("locked.zip", mapOf("prefs/old.properties" to "s|Username=new"))
+        try {
+            DesktopBackup.replaceDataWith(archive, root)
+            fail("挪不走现有数据时必须中止")
+        } catch (expected: Exception) {
+            assertTrue(expected.message.orEmpty().contains("未覆盖") || expected.message.orEmpty().isNotEmpty())
+        } finally {
+            root.setWritable(true)
+        }
+        assertEquals("s|Username=old", File(root, "prefs/old.properties").readText())
+        assertEquals("keep", File(root, "cache/blob.bin").readText())
+        assertFalse(File(base, "escaped.txt").exists())
+    }
+
+    @Test
     fun noStagingDirectoriesAreLeftBehind() {
         val archive = zip("ok.zip", mapOf("prefs/old.properties" to "s|Username=new"))
         DesktopBackup.replaceDataWith(archive, root)

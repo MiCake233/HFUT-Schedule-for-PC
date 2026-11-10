@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.card.count.main
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn

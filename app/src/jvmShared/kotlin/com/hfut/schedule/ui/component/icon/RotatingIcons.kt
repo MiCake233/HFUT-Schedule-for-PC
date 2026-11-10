@@ -97,7 +97,7 @@ fun LoadingIconNew() {
 
 
 //@Composable
-//fun WindmillIcon() = RotatingIcon(R.drawable.toys_fan)
+//fun WindmillIcon() = RotatingIcon(Drawables.toys_fan)
 
 
 //@Composable

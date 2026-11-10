@@ -299,7 +299,7 @@ fun MyApply(vm: NetWorkViewModel, batchId : String, indexs : Int) {
                     if(data != null) {
                         Row {
                             TransplantListItem(
-//                                leadingContent = { Icon(painter = painterResource(id = R.drawable.award_star), contentDescription = EMPTY_STRING) },
+//                                leadingContent = { Icon(painter = painterResource(id = Drawables.award_star), contentDescription = EMPTY_STRING) },
                                 overlineContent = { ScrollText(text = "绩点") },
                                 headlineContent = { Text(text = "${grade.gpa.score}" ) },
                                 supportingContent = {
@@ -319,7 +319,7 @@ fun MyApply(vm: NetWorkViewModel, batchId : String, indexs : Int) {
                         }
                         Row {
                             TransplantListItem(
-//                                leadingContent = { Icon(painter = painterResource(id = R.drawable.award_star), contentDescription = EMPTY_STRING) },
+//                                leadingContent = { Icon(painter = painterResource(id = Drawables.award_star), contentDescription = EMPTY_STRING) },
                                 overlineContent = { ScrollText(text = "转专业考核") },
                                 headlineContent = { Text(text = "${grade.transferAvg.score}", fontWeight = FontWeight.Bold ) },
                                 supportingContent = {

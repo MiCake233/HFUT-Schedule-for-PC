@@ -17,6 +17,8 @@ import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.network.onListenStateHolderForNetwork
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import com.xah.common.logic.util.LogUtil
+import com.hfut.schedule.logic.network.interceptor.extractCasTgc
+import com.hfut.schedule.logic.network.interceptor.extractCasTicket
 import okhttp3.Headers
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -62,17 +64,18 @@ class LoginViewModel : ViewModel() {
 
                         call.enqueue(object : Callback<ResponseBody> {
                             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                location.value = response.headers()["Location"].toString()
+                                val locationHeader = response.headers()["Location"]
+                                location.value = locationHeader.orEmpty()
                                 code.value = response.code().toString()
-                                val tickets = response.headers()["Location"].toString().substringAfter("=")
+                                val tickets = extractCasTicket(locationHeader)
                                 LogUtil.debug("CAS登录ticket $tickets")
-                                saveString("ticket", tickets)
+                                tickets?.let { saveString("ticket", it) }
                                 ticketStValue.value = tickets
                             }
 
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 code.value = "XXX"
-                                t.printStackTrace()
+                                LogUtil.error(t)
                             }
                         })
                     }
@@ -89,19 +92,20 @@ class LoginViewModel : ViewModel() {
                     )
                     call.enqueue(object : Callback<ResponseBody> {
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                            location.value = response.headers()["Location"].toString()
-                            val tgc = response.headers()["Set-Cookie"].toString().substringBefore(";")
+                            val locationHeader = response.headers()["Location"]
+                            location.value = locationHeader.orEmpty()
+                            val tgc = extractCasTgc(response.headers().values("Set-Cookie"))
                             code.value = response.code().toString()
-                            val tickets = response.headers()["Location"].toString().substringAfter("=")
+                            val tickets = extractCasTicket(locationHeader)
                             LogUtil.debug("CAS登录ticket=$tickets,tgc=$tgc")
-                            saveString("ticket", tickets)
-                            saveString("TGC", tgc)
+                            tickets?.let { saveString("ticket", it) }
+                            tgc?.let { saveString("TGC", it) }
                             ticketStValue.value = tickets
                         }
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             code.value = "XXX"
-                            t.printStackTrace()
+                            LogUtil.error(t)
                         }
                     })
                 }
@@ -122,7 +126,7 @@ class LoginViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 code.value = "XXX"
-                t.printStackTrace()
+                LogUtil.error(t)
             }
         })
     }
@@ -158,7 +162,7 @@ class LoginViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 code.value = "XXX"
-                t.printStackTrace()
+                LogUtil.error(t)
             }
         })
     }
