@@ -31,6 +31,11 @@ object SecretStore {
         "loginCode",        // 呱呱洗浴
         "PE",
         "ZhiJian",
+        "stu",              // 学工系统 _WEU 会话
+        "LOGIN_FLAVORING",  // CAS 登录加密用的服务端 cookie
+        "webVpnKey",
+        "pins",             // 一卡通支付口令
+        "GuaGuaPsk",        // 洗浴账号密码
         "Password",         // 桌面上已不再写入，这里兜底旧数据
     )
 
@@ -48,7 +53,7 @@ object SecretStore {
         "jxglstu_password",
         "school_net_password",
         "uni_app_jwt",
-        "api_key",
+        "llm_api_key",
     )
 
     private const val MARKER = "dpapi1:"

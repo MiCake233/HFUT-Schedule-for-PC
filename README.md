@@ -44,9 +44,9 @@
 
 - **数据目录**：`%APPDATA%\HFUT-Schedule`（便携版相同）。备份不含 `cache` 与 `update` 两个子目录。
 - **密码**：桌面版**不保存**登录密码；旧版本曾写入的明文密码会在启动时清除。
-- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION），
-  位于该目录下的 `prefs\*.properties`，**未额外加密**（仅受 Windows 用户目录权限保护）。
-  与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会一并清掉本机保存的各平台 token。
+- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）、各平台 token 与用户保存的平台密码。
+  Windows 上这些值用 DPAPI 加密后写在 `prefs\*.properties` 与 DataStore 中，只有当前 Windows 用户能解开。
+  与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会清掉本机保存的会话与各平台 token。
 - **崩溃日志**：写入 `%APPDATA%\HFUT-Schedule\logs`，仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
 - **自动更新**：只从本仓库的 GitHub Releases 读取版本信息；安装包下载后校验 SHA-256 与 MSI 文件头，
   两者任一不符即删除文件并拒绝运行。安装包当前未做代码签名，校验值以 GitHub API 返回的资产摘要为准。
@@ -68,7 +68,7 @@
 
 ## 自检
 
-桌面端没有单元测试，验收靠下面这些可重复执行的 check（`packageMsi` 会自动先跑 `verifyClasspath`）：
+桌面端逻辑有 `./gradlew :desktopApp:test`（更新解析、备份恢复、凭据加密）。窗口和打包另有这些可重复执行的 check（`packageMsi` 会自动先跑 `verifyClasspath`）：
 
 ```powershell
 .\gradlew.bat :desktopApp:verifyClasspath  # 运行时 classpath 无重复类（同一 FQN 出现在两个 jar 即失败）

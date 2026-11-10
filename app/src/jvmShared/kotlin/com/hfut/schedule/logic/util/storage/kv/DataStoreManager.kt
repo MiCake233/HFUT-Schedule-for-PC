@@ -133,6 +133,22 @@ object DataStoreManager : IDataStore {
         return migrated
     }
 
+    /**
+     * 退出登录时清掉登录换来的会话（JWT / cookie / Bearer）。
+     * 用户在设置里自己保存的平台密码不在这里动。
+     */
+    suspend fun clearSessionSecrets() {
+        dataStore.edit { prefs ->
+            listOf(
+                SUPABASE_JWT,
+                SUPABASE_REFRESH_TOKEN,
+                WEBVPN_COOKIE,
+                WX_AUTH,
+                UNI_APP_JWT,
+            ).forEach { prefs[it] = "" }
+        }
+    }
+
     /** 自检用：DataStore 里敏感键是否都已是密文（缺失也算正常） */
     suspend fun sensitiveValuesEncoded(): Map<String, Boolean> {
         val prefs = dataStore.data.first()
