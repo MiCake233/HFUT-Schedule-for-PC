@@ -38,6 +38,26 @@ internal fun actionOnClose(closeToTray: Boolean, alreadyExiting: Boolean): Close
     if (closeToTray && !alreadyExiting) CloseAction.HideToTray else CloseAction.Exit
 
 /**
+ * macOS can hide the NSWindow (red close button) without delivering Compose's
+ * `onCloseRequest`. The first hide after the window has actually been shown
+ * must tear the composition down; later hides from that teardown are ignored.
+ */
+internal class NativeWindowCloseTracker {
+    private var shown: Boolean = false
+    private var handled: Boolean = false
+
+    fun onShown() {
+        shown = true
+    }
+
+    fun onHidden(): Boolean {
+        if (!shown || handled) return false
+        handled = true
+        return true
+    }
+}
+
+/**
  * Ask the VM to return unused heap after a window has been disposed.
  * The graphics buffers are the large part; this only tidies the Java heap.
  * It does not run on the UI thread.
