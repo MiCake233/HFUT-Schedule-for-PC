@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.school.work
+import com.xah.common.logic.state.NetworkUiState
 
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -19,13 +20,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -50,14 +48,11 @@ import androidx.compose.ui.util.fastMap
 import com.xah.common.logic.model.CampusRegion
 import com.hfut.schedule.logic.model.enumeration.WorkSearchType
 import com.hfut.schedule.logic.util.helper.getCampusRegion
-import com.xah.common.logic.state.NetworkUiState
-import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.BUTTON_PADDING
 import com.hfut.schedule.ui.component.button.LiquidButton
-import com.hfut.schedule.ui.component.button.NoPadding
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.component.button.containerBackDrop
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
@@ -70,25 +65,21 @@ import com.hfut.schedule.ui.component.screen.pager.CustomTabRow
 import com.hfut.schedule.ui.component.screen.pager.PaddingForPageControllerButton
 import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.ui.nav.destination.WorkDestination
-
+import com.hfut.schedule.ui.screen.home.search.QuickButtonForSearchScreen
 import com.hfut.schedule.ui.style.color.textFiledAllTransplant
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
-import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.logic.util.isEmptyOrBlank
-
-import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.component.text.ScrollText
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
-import com.xah.container.component.base.SharedContainer
+import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -103,13 +94,12 @@ fun Work() {
             Icon(painterResource(WorkDestination.icon),null)
         },
         trailingContent = {
-            FilledTonalIconButton(
+            QuickButtonForSearchScreen(
                 onClick = {
                     scope.launch {
                         Starter.startWebUrlInner(Constant.WORK_SYSTEM_URL + "Login.aspx","就业系统（学生端）")
                     }
-                },
-                modifier = Modifier.size(30.dp)
+                }
             ) {
                 // 特殊加大size
                 Icon(painterResource(Drawables.person),null, modifier = Modifier.size(20.dp+2.dp))

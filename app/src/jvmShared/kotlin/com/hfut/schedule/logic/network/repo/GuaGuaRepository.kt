@@ -1,4 +1,5 @@
 package com.hfut.schedule.logic.network.repo
+import com.xah.common.logic.util.LogUtil
 
 import com.hfut.schedule.logic.util.state.MutableLiveData
 
@@ -33,7 +34,9 @@ object GuaGuaRepository : GuaGuaRepositoryInf {
                 guaGuaUserInfo.value = response.body()?.string()
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) { t.printStackTrace() }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                LogUtil.error(t)
+            }
         })
     }
 

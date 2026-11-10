@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.annotation.RequiresPermission
 import com.hfut.schedule.application.MyApplication
-import com.sharednav.common.util.LogUtil
 import com.xah.navigation.anim.effect.JumpPageEffects
 import com.xah.navigation.anim.effect.JumpTransitionEffect
 import com.xah.navigation.anim.effect.defaultJumpBackground

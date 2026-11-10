@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.welcome
+import com.sharednav.common.helper.NoneRoundShape
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Arrangement

@@ -6,19 +6,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -34,20 +39,27 @@ import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.ClipBoardHelper
-import com.xah.common.ui.style.APP_HORIZONTAL_DP
-import com.hfut.schedule.ui.component.network.CommonNetworkScreen
-import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
+import com.hfut.schedule.logic.util.sys.LanguageHelper
+import com.hfut.schedule.logic.util.sys.TemperatureUtil
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.input.CustomTextField
+import com.hfut.schedule.ui.component.network.CommonNetworkScreen
+import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.screen.home.getStorageJxglstuCookie
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
+import com.hfut.schedule.viewmodel.network.NetWorkViewModel
+import com.xah.common.logic.util.AppMemoryUtil
+import com.xah.common.logic.util.CpuFreqUtil
+import com.xah.common.logic.util.EMPTY_STRING
+import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.align.ColumnVertical
 import com.xah.common.ui.style.padding.InnerPaddingHeight
-import com.hfut.schedule.viewmodel.network.NetWorkViewModel
-import com.xah.common.logic.util.EMPTY_STRING
+import java.util.Locale
+import kotlinx.coroutines.delay
 
+private fun Long.toGhzString(): String = String.format(Locale.US, "%.2f", this / 1_000_000.0)
 
 @Composable
 fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
@@ -109,6 +121,65 @@ fun DeveloperScreen(vm : NetWorkViewModel,innerPadding : PaddingValues) {
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         InnerPaddingHeight(innerPadding,true)
+        DividerTextExpandedWith("系统环境信息") {
+            var refresh by remember { mutableIntStateOf(0) }
+            LaunchedEffect(Unit) {
+                while(true) {
+                    delay(1000L)
+                    refresh++
+                }
+            }
+            CustomCard(color = MaterialTheme.colorScheme.surface) {
+                key(refresh) {
+                    TransplantListItem(
+                        headlineContent = {
+                            Text("系统 SDK ${AppInfo.sdkInt}")
+                        }
+                    )
+                    PaddingHorizontalDivider()
+                    TransplantListItem(
+                        headlineContent = {
+                            Text("进程内存 ${AppMemoryUtil.getRssMb()?.let { "${it}MB" } ?: "不可用"}")
+                        }
+                    )
+                    PaddingHorizontalDivider()
+                    TransplantListItem(
+                        headlineContent = {
+                            val temp = TemperatureUtil.getBatteryTemperature()
+                            Text("电池温度 ${temp?.let { "${it}℃" } ?: "不可用"}")
+                        }
+                    )
+                    PaddingHorizontalDivider()
+                    TransplantListItem(
+                        headlineContent = {
+                            val language = when {
+                                LanguageHelper.isChineseLanguage() -> "zh"
+                                LanguageHelper.isEnglishLanguage() -> "en"
+                                else -> "other"
+                            }
+                            Text("界面语言 $language")
+                        }
+                    )
+                    PaddingHorizontalDivider()
+                    TransplantListItem(
+                        headlineContent = {
+                            val current = CpuFreqUtil.getCurrentCpuMaxFreq()?.toGhzString()
+                            val max = CpuFreqUtil.getCpuMaxFreq()?.toGhzString()
+                            Text(
+                                if (current == null && max == null) "CPU频率 不可用"
+                                else "CPU频率 当前${current ?: "-"}GHz 最大${max ?: "-"}GHz"
+                            )
+                        }
+                    )
+                    PaddingHorizontalDivider()
+                    TransplantListItem(
+                        headlineContent = {
+                            Text("设备 ${AppInfo.deviceName}")
+                        }
+                    )
+                }
+            }
+        }
         DividerTextExpandedWith("Cookies & Authorization") {
             CustomCard(color = MaterialTheme.colorScheme.surface) {
                 TransplantListItem(

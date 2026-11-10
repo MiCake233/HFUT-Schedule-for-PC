@@ -21,7 +21,6 @@ import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.sys.Starter
 
 import com.hfut.schedule.ui.component.container.CardListItem
-import com.xah.common.ui.component.text.ScrollText
 import com.hfut.schedule.ui.component.icon.DepartmentIcons
 import com.hfut.schedule.ui.component.icon.departmentIcon
 import com.hfut.schedule.ui.component.network.CommonNetworkScreen
