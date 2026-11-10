@@ -159,9 +159,9 @@ fun main(args: Array<String>) {
         if (surfaces.fix) {
             FixWindow(icon)
         }
-        // 课表窗口拆掉后，1.11 会因为树上没有任何 Window 而结束 application。
-        // 这个窗口不画课表，只用来把托盘和提醒留住；退出时不留。
-        if (shouldKeepApplicationAlive(exiting, surfaces.any)) {
+        // 1.11 在最后一个 Window 离开组合的同一帧就会结束 application。
+        // 占位窗口必须从启动起就在，不能等课表窗口拆掉再补；退出时不留。
+        if (shouldKeepApplicationAlive(exiting)) {
             Window(
                 onCloseRequest = {},
                 state = rememberWindowState(size = DpSize(1.dp, 1.dp)),
