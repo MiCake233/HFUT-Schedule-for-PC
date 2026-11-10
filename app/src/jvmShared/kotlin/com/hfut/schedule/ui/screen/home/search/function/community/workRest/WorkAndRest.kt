@@ -1,4 +1,6 @@
 package com.hfut.schedule.ui.screen.home.search.function.community.workRest
+import com.xah.common.logic.util.LogUtil
+
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
@@ -15,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -25,9 +26,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.logic.util.network.MyApiParse.getMy
-
 import com.hfut.schedule.logic.util.parse.roundOffString
-import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.sys.ClipBoardHelper
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.logic.util.sys.datetime.DateTimeManager
@@ -35,16 +34,13 @@ import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
-import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.LargeCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.container.cardNormalColor
-
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.WorkAndRestDestination
-
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.getFormCommunity
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -56,11 +52,10 @@ import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.navigation.util.LocalNavController
 
 import com.xah.common.ui.component.text.ScrollText
-import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
+import com.xah.navigation.util.LocalNavController
 import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -198,6 +193,7 @@ fun TimeTableScreen(
         value = try {
             getMy()!!.schoolCalendarUrl
         } catch (e:Exception) {
+            LogUtil.error(e)
             null
         }
     }

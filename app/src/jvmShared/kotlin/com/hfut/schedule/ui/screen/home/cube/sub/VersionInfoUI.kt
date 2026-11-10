@@ -57,24 +57,24 @@ import com.xah.navigation.util.LocalNavControllerSafely
 import kotlinx.coroutines.launch
 import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordPlatformDestination
 
-private const val RELEASE_DATE = "2026-10-10"
+private const val RELEASE_DATE = "2026-11-09"
 
 @Composable
 fun VersionInfo() {
     VersionInfoCard()
     // 适配iOS后版本号跳为5.0
     DividerTextExpandedWith(text = "新特性") {
+        UpdateItems("新增 少量页面支持手机横屏、平板大屏适配")//
+        UpdateItems("修复 聚焦首页自动刷新机制首次被推迟1分钟的Bug")
+        UpdateItems("修复 适配微专业", developers = listOf("G-E-E-D"))//
+//        UpdateItems("重构 新增日程","支持一次性添加若干时间段、选择日期时支持多选若干天",to = To.Screen(AddEventDestination(origin = VersionInfoDestination.key)))
+//        UpdateItems("新增 扫码页面支持点击手动对焦")
+//        UpdateItems("新增 语言切换功能","位于 选项-偏好与配置-语言，支持中英文",to = To.Screen(SettingsConfigurationDestination))
 //        UpdateItems("新增 允许在课程表显示日历账户的日程")
-        UpdateItems("新增 支持极端场景下数据库升级失败而导致崩溃的止损措施")//
-        UpdateItems("新增 支持自动获取教务系统密码")//
-        UpdateItems("新增 修改教务系统密码的入口","位于 查询中心-个人信息-密码信息",to = To.Screen(SettingsJxglstuPasswordPlatformDestination))//
-        UpdateItems("重构 创建日程时选择日期不再按范围，而是自由选择若干日期")
-        UpdateItems("新增 支持克隆已有日程","编辑日程时右上角的复制图标，点击后会复制此日程信息到新建页面")//
-        UpdateItems("新增 支持接入大模型帮助创建日程","位于右上角彩色图标",to = To.Screen(AddEventDestination()))
+//        UpdateItems("新增 支持接入大模型帮助创建日程","位于右上角彩色图标",to = To.Screen(AddEventDestination()))
         // 重新引入历史记录，然后持久化到本地数据库，统计其次数。在查询中心顶部推荐并允许用户自定义固定
 //        UpdateItems("重构 去掉翻页器，改为尾部追加")
 //        UpdateItems("新增 课程表在使用背景时支持自定义深浅色模式","位于 选项-外观-课程表-深浅色",to = To.Screen(SettingsAppearanceDestination))
-//        UpdateItems("优化 部分界面的显示")// ￥滚动
 //        UpdateItems("新增 个人画像")
 //        UpdateItems("新增 支持在全校培养方案中分享培养方案", to = To.Screen(AllProgramsDestination(false)))
 //        UpdateItems("新增 支持将转专业列表生成长截图并保存")

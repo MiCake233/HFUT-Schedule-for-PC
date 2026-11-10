@@ -762,7 +762,11 @@ object Drawables {
         "widgets_filled",
         "wifi",
         "wifi_password",
-        "work"
+        "work",
+        "apple",
+        "directions_bus_filled",
+        "schedule_filled",
+        "swap_horiz"
     )
 
     const val account_balance_wallet: Int = 0
@@ -1516,6 +1520,10 @@ object Drawables {
     const val wifi: Int = 748
     const val wifi_password: Int = 749
     const val work: Int = 750
+    const val apple: Int = 751
+    const val directions_bus_filled: Int = 752
+    const val schedule_filled: Int = 753
+    const val swap_horiz: Int = 754
 
     val size: Int get() = names.size
 

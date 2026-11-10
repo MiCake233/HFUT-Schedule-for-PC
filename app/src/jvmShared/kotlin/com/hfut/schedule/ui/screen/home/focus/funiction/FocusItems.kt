@@ -1,5 +1,6 @@
 package com.hfut.schedule.ui.screen.home.focus.funiction
 import com.hfut.schedule.logic.util.sys.parseTimeItem
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -155,6 +156,8 @@ private fun ScheduleItemUI(listItem: GithubIoSchedule, isFuture : Boolean, activ
                                 showToast("添加到系统日历成功")
                             } catch (e : SecurityException) {
                                 showToast("未授予权限")
+                                LogUtil.error(e)
+                            } catch (e : Exception) {
                                 LogUtil.error(e)
                             }
                         }
@@ -470,7 +473,7 @@ fun CustomItemUI(
 
     val dest = AddEventDestination(
         item.id,
-        AddEventOrigin.FOCUS_EDITED.name
+        "FOCUS_EDITED"
     )
 
     CardListItem(

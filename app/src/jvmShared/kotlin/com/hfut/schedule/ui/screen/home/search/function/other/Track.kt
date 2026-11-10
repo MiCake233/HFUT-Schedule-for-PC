@@ -59,6 +59,7 @@ import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.BUTTON_PADDING
+import com.hfut.schedule.ui.component.button.LARGE_BUTTON_PADDING
 import com.hfut.schedule.ui.component.button.LargeButton
 import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
@@ -119,7 +120,7 @@ private fun ContributeButtons() {
                 }
             }
         )
-        Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
+        Spacer(Modifier.width(LARGE_BUTTON_PADDING))
         LargeButton(
             modifier = Modifier.fillMaxWidth().weight(.5f),
             text = "邮件反馈通道",

@@ -18,10 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -47,17 +44,14 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hfut.schedule.application.MyApplication.Companion.context
-import com.hfut.schedule.network.api.model.response.json.gitee.GiteeReleaseResponse
-import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.other.AppVersion
 import com.hfut.schedule.logic.util.sys.PermissionSet
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.logic.util.sys.Starter.refreshLogin
 import com.hfut.schedule.network.api.model.Constant
-import com.hfut.schedule.ui.component.button.LiquidButton
+import com.hfut.schedule.network.api.model.response.json.gitee.GiteeReleaseResponse
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
-import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.SmallCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
@@ -68,25 +62,25 @@ import com.hfut.schedule.ui.nav.destination.SettingsAboutDestination
 import com.hfut.schedule.ui.nav.destination.SettingsAppearanceDestination
 import com.hfut.schedule.ui.nav.destination.SettingsConfigurationDestination
 import com.hfut.schedule.ui.nav.destination.SettingsNetworkDestination
-import com.hfut.schedule.ui.nav.destination.SettingsSearchDestination
 import com.hfut.schedule.ui.nav.destination.UpdateHistoryDestination
 import com.hfut.schedule.ui.nav.destination.VersionInfoDestination
 import com.hfut.schedule.ui.screen.home.cube.sub.MyAPIItem
 import com.hfut.schedule.ui.screen.home.cube.sub.PersonPart
-import com.hfut.schedule.ui.screen.home.cube.sub.VersionInfo
 import com.hfut.schedule.ui.screen.home.cube.sub.update.PatchUpdateUI
 import com.hfut.schedule.ui.screen.home.cube.sub.update.UpdateUI
 import com.hfut.schedule.ui.screen.home.cube.sub.update.getPatchVersions
 import com.hfut.schedule.ui.screen.home.cube.sub.update.getUpdates
-import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.bsdiffs.model.Patch
 import com.xah.bsdiffs.util.BsdiffUpdate
-import com.xah.common.ui.component.text.BottomTip
+import com.xah.common.logic.state.NetworkUiState
+import com.xah.common.logic.util.EMPTY_STRING
+import com.xah.common.logic.util.remove
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
+import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.container.component.base.SharedContainer
 import com.sharednav.common.helper.NoneRoundShape
@@ -269,7 +263,7 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
                                 PaddingHorizontalDivider(isDashed = true)
                                 PatchUpdateUI(patchItem!!,vm,update)
                             } else if(!AppVersion.isDev) {
-                                BottomTip(stringResource(Strings.settings_update_tips_none_patch))
+//                                BottomTip(stringResource(Strings.settings_update_tips_none_patch))
                                 // 清理
                                 if(!hasCleaned) {
                                     hasCleaned = BsdiffUpdate.deleteCache(context)
@@ -277,7 +271,14 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
                             }
                         }
                         if(!canUseUpdate) {
-                            BottomTip(stringResource(Strings.settings_update_tips_different_architectures))
+                            Spacer(Modifier.height(CARD_NORMAL_DP))
+                            PaddingHorizontalDivider(isDashed = true)
+                            Spacer(Modifier.height(CARD_NORMAL_DP))
+                            CustomCard(
+                                color = MaterialTheme.colorScheme.surface
+                            ) {
+                                GithubDownloadUI(stringResource(Strings.settings_update_tips_different_architectures))
+                            }
                         }
                     }
                 }
@@ -299,7 +300,9 @@ fun HomeSettingScreen(innerPaddings : PaddingValues, vm : NetWorkViewModel, ) {
 
 
 @Composable
-fun GithubDownloadUI() {
+fun GithubDownloadUI(
+    text : String? = null
+) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     TransplantListItem(
@@ -307,7 +310,7 @@ fun GithubDownloadUI() {
             Text(stringResource(Strings.settings_about_update_by_github_title))
         },
         supportingContent = {
-            Text(stringResource(Strings.settings_about_update_by_github_description))
+            Text(text ?: stringResource(Strings.settings_about_update_by_github_description))
         },
         leadingContent = { Icon(painterResource(Drawables.cloud_download),null)},
         modifier = Modifier.clickable {

@@ -868,8 +868,8 @@ fun GradeDetailScreen(
         ) { innerPadding ->
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
                     .hazeSource(hazeState)
+                    .verticalScroll(rememberScrollState())
                     .fillMaxSize()
             ) {
                 InnerPaddingHeight(innerPadding,true)

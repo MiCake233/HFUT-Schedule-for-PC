@@ -1,4 +1,5 @@
 package com.hfut.schedule.logic.util.network
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 import com.hfut.schedule.logic.database.entity.CustomEventType
 import com.hfut.schedule.logic.model.supabase.SupabaseEventEntity

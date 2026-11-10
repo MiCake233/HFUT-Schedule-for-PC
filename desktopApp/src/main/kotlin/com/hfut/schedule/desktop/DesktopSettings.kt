@@ -170,13 +170,7 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                     TransplantListItem(
                         headlineContent = { Text("开机自动运行") },
                         supportingContent = {
-                            Text(
-                                if (autoStart) {
-                                    "已写入 Windows 启动项（开机后驻留托盘，点托盘图标打开窗口）"
-                                } else {
-                                    "登录 Windows 后自动启动，启动后驻留托盘、不弹窗"
-                                }
-                            )
+                            Text(AutoStart.statusText(autoStart))
                         },
                         leadingContent = { Icon(painterResource(Drawables.play_arrow), null) },
                         trailingContent = {
@@ -205,7 +199,13 @@ fun DesktopSettingsScreen(innerPadding: PaddingValues) {
                     TransplantListItem(
                         headlineContent = { Text("关闭窗口时最小化到托盘") },
                         supportingContent = {
-                            Text(if (closeToTray) "关闭按钮隐藏窗口，由托盘菜单退出" else "关闭按钮直接退出程序")
+                            Text(
+                                if (closeToTray) {
+                                    "关闭按钮隐藏窗口，由${com.hfut.schedule.desktop.platform.trayLabel()}菜单退出"
+                                } else {
+                                    "关闭按钮直接退出程序"
+                                }
+                            )
                         },
                         leadingContent = { Icon(painterResource(Drawables.desktop_windows), null) },
                         trailingContent = {

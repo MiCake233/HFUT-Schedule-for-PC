@@ -144,6 +144,7 @@ import com.hfut.schedule.ui.model.NewNavigationBarItemData
 import com.hfut.schedule.ui.nav.destination.AddEventDestination
 import com.hfut.schedule.ui.nav.destination.ControlCenterDestination
 import com.hfut.schedule.ui.nav.destination.FunctionsSortDestination
+import com.hfut.schedule.ui.nav.destination.HomeDestination
 import com.hfut.schedule.ui.nav.destination.NotificationBoxDestination
 import com.hfut.schedule.ui.nav.destination.TermCoursesDestination
 import com.hfut.schedule.ui.nav.destination.WorkAndRestDestination
@@ -157,7 +158,6 @@ import com.hfut.schedule.ui.screen.home.calendar.multi.CourseType
 import com.hfut.schedule.ui.screen.home.calendar.uniapp.UniAppCoursesScreen
 import com.hfut.schedule.ui.screen.home.calendar.zjgd.ZhiJianCourseTableUI
 import com.hfut.schedule.ui.screen.home.focus.TodayScreen
-import com.hfut.schedule.ui.screen.home.focus.funiction.AddEventOrigin
 import com.hfut.schedule.ui.screen.home.search.SearchAppBeanLite
 import com.hfut.schedule.ui.screen.home.search.SearchFuncs
 import com.hfut.schedule.ui.screen.home.search.SearchScreen
@@ -165,6 +165,7 @@ import com.hfut.schedule.ui.screen.home.search.function.jxglstu.person.getPerson
 import com.hfut.schedule.ui.screen.home.search.function.jxglstu.totalCourse.TotalCourseDataSource
 import com.hfut.schedule.ui.screen.home.search.function.my.notification.calculatedReadNotificationCount
 import com.hfut.schedule.ui.style.color.textFiledTransplant
+import com.hfut.schedule.ui.style.navigationBarSupplementPadding
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.newBottomBarBlur
@@ -193,6 +194,7 @@ import com.xah.common.ui.style.color.TransparentSystemBars
 import com.xah.common.ui.style.color.shimmerEffect
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.mask
+import com.xah.common.ui.style.padding.getNavigationBarHeight
 import com.xah.container.component.base.SharedContainer
 import com.xah.floating.util.LocalFloatingController
 import com.xah.navigation.anim.effect.Direction
@@ -386,9 +388,7 @@ fun MainScreen(
             }
         },
         floatingActionButton = {
-            val dest = AddEventDestination(
-                origin = AddEventOrigin.FOCUS_ADD.name
-            )
+            val dest = AddEventDestination(origin = HomeDestination(FOCUS).key)
             AnimatedVisibility(
                 enter = scaleIn(),
                 exit = scaleOut(),
@@ -736,7 +736,7 @@ fun MainScreen(
                                         Icon(
                                             painter = painter,
                                             contentDescription = EMPTY_STRING,
-                                            modifier = Modifier.padding(CARD_NORMAL_DP*3).rotate(expandRotation),
+                                            modifier = Modifier.padding(CARD_NORMAL_DP*3),
                                             tint = iconColor,
                                         )
                                     }
@@ -1001,7 +1001,8 @@ fun MainScreen(
                                 if (paddingSafely) {
                                     it.padding(bottom = APP_HORIZONTAL_DP)
                                 } else {
-                                    it.padding(bottom = CARD_NORMAL_DP)
+                                    // 额外垫高
+                                    it.navigationBarSupplementPadding()
                                 }
                             }
                             .navigationBarsPadding()

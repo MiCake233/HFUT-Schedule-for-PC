@@ -9,16 +9,19 @@ Upstream work:
   Copyright (c) the HFUT-Schedule authors and contributors
   Licensed under the Apache License, Version 2.0
 
-This fork ("HFUT-Schedule for PC") adds a Windows desktop port and is
-distributed under the same license, the Apache License, Version 2.0
+This fork ("HFUT-Schedule for PC") adds a Windows and macOS desktop port
+and is distributed under the same license, the Apache License, Version 2.0
 (see LICENSE). It is not affiliated with, endorsed by, or sponsored by the
 upstream authors or by Hefei University of Technology.
 
 Modifications (as required by Apache License 2.0, section 4(b))
 --------------------------------------------------------------
-1. Added module `desktopApp`: the Windows entry point (Compose Desktop window,
-   packaging via jpackage/MSI, app icon, window state, settings page,
-   session restore, autostart).
+1. Added module `desktopApp`: the desktop entry point (Compose Desktop window,
+   packaging via jpackage MSI on Windows and DMG on macOS, app icon, window
+   state, settings page, session restore, autostart). Windows keeps DPAPI and
+   the Run registry key. macOS uses the login keychain, a LaunchAgent, the
+   menu bar, and Notification Center. Both share one JVM target; the OS is
+   chosen at runtime.
 2. Added Android/JVM `jvmShared` source set in `:app` and moved the original
    Android sources into it, so the same UI and business logic build for both
    platforms; added `expect/actual` capability declarations
