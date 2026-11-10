@@ -21,6 +21,15 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
 import androidx.compose.ui.window.rememberWindowState
+import java.awt.EventQueue
+import java.awt.event.ComponentAdapter
+import java.awt.event.ComponentEvent
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicReference
+import javax.swing.JFrame
+import javax.swing.WindowConstants
 import com.hfut.schedule.desktop.platform.DesktopOs
 import com.hfut.schedule.desktop.platform.MacActivation
 import com.hfut.schedule.desktop.platform.MacNotifications
@@ -75,6 +84,12 @@ fun main(args: Array<String>) {
         val scope = rememberCoroutineScope()
         var windowVisible by remember { mutableStateOf(!args.contains("--minimized")) }
         var exiting by remember { mutableStateOf(false) }
+        val exitOnce = remember { AtomicBoolean(false) }
+        fun exitApp() {
+            if (!exitOnce.compareAndSet(false, true)) return
+            exiting = true
+            exitApplication()
+        }
         val surfaces = desktopSurfaces(
             mainRequested = windowVisible,
             widgetShown = DesktopWidgetState.visible,
@@ -125,10 +140,7 @@ fun main(args: Array<String>) {
                 })
                 Item("Panel always on top", onClick = { DesktopWidgetState.setOnTop(!DesktopWidgetState.alwaysOnTop) })
                 Separator()
-                Item("Quit", onClick = {
-                    exiting = true
-                    exitApplication()
-                })
+                Item("Quit", onClick = { exitApp() })
             }
         )
 
@@ -137,10 +149,7 @@ fun main(args: Array<String>) {
             MainScheduleWindow(
                 icon = icon,
                 onHideToTray = { windowVisible = false },
-                onExit = {
-                    exiting = true
-                    exitApplication()
-                },
+                onExit = { exitApp() },
                 exiting = exiting,
             )
         }
@@ -193,7 +202,48 @@ private fun MainScheduleWindow(
         state = state,
         icon = icon
     ) {
+        // 红色关闭按钮在 macOS 上会直接把 NSWindow 藏起来，不一定走 onCloseRequest。
+        // 窗口还在组合里时 Skia / IOSurface 就不会释放。
+        NativeCloseHook {
+            when (actionOnClose(DesktopWindowPrefs.closeToTray(), exiting)) {
+                CloseAction.HideToTray -> onHideToTray()
+                CloseAction.Exit -> onExit()
+            }
+        }
         DesktopApp(exitApp = onExit)
+    }
+}
+
+/**
+ * If AppKit hides the window without Compose's close callback, leave the composition
+ * so the Skia surface is disposed. The first hide counts; the dispose that follows does not.
+ */
+@androidx.compose.runtime.Composable
+private fun androidx.compose.ui.window.FrameWindowScope.NativeCloseHook(onTearDown: () -> Unit) {
+    val awt = window
+    val latest = remember { AtomicReference(onTearDown) }
+    latest.set(onTearDown)
+    DisposableEffect(awt) {
+        val tracker = NativeWindowCloseTracker()
+        if (awt.isVisible) tracker.onShown()
+        (awt as? JFrame)?.defaultCloseOperation = WindowConstants.DO_NOTHING_ON_CLOSE
+        fun fire() {
+            if (tracker.onHidden()) EventQueue.invokeLater { latest.get().invoke() }
+        }
+        val components = object : ComponentAdapter() {
+            override fun componentShown(e: ComponentEvent) = tracker.onShown()
+            override fun componentHidden(e: ComponentEvent) = fire()
+        }
+        val closing = object : WindowAdapter() {
+            override fun windowClosing(e: WindowEvent) = fire()
+            override fun windowClosed(e: WindowEvent) = fire()
+        }
+        awt.addComponentListener(components)
+        awt.addWindowListener(closing)
+        onDispose {
+            awt.removeComponentListener(components)
+            awt.removeWindowListener(closing)
+        }
     }
 }
 
@@ -221,6 +271,7 @@ private fun TodayCoursePanelWindow(icon: Painter?) {
         icon = icon,
         resizable = true
     ) {
+        NativeCloseHook { DesktopWidgetState.setShown(false) }
         DisposableEffect(Unit) {
             onDispose { saveWidgetState(widgetState) }
         }
@@ -239,6 +290,7 @@ private fun FixWindow(icon: Painter?) {
         state = rememberWindowState(size = DpSize(760.dp, 580.dp)),
         icon = icon
     ) {
+        NativeCloseHook { DesktopFixState.hide() }
         DesktopAppTheme {
             DesktopFixScreen(onClose = { DesktopFixState.hide() })
         }

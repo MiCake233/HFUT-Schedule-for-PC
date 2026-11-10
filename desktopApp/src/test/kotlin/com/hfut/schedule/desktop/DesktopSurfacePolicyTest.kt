@@ -71,6 +71,19 @@ class DesktopSurfacePolicyTest {
     fun activationPolicyIsNotAppliedOffMac() {
         assertFalse(MacActivation.apply(accessory = true, os = DesktopOs.WINDOWS))
         assertFalse(MacActivation.apply(accessory = false, os = DesktopOs.OTHER))
+        assertEquals(1, MacActivation.policyCode(true))
+        assertEquals(0, MacActivation.policyCode(false))
+    }
+
+    @Test
+    fun nativeHideAfterTheWindowWasShownTearsItDownOnce() {
+        val tracker = NativeWindowCloseTracker()
+        assertFalse(tracker.onHidden())
+        tracker.onShown()
+        assertTrue(tracker.onHidden())
+        assertFalse(tracker.onHidden())
+        tracker.onShown()
+        assertFalse(tracker.onHidden())
     }
 
     @Test
