@@ -9,8 +9,10 @@ Upstream work:
   Copyright (c) the HFUT-Schedule authors and contributors
   Licensed under the Apache License, Version 2.0
 
-This fork ("HFUT-Schedule for PC") adds a Windows desktop port and is
-distributed under the same license, the Apache License, Version 2.0
+This fork ("HFUT-Schedule for PC") adds a Windows desktop port and a macOS
+desktop port. The macOS installer is published as a prerelease; the macOS
+source is in pull request #2 and is not merged into this branch yet. The
+fork is distributed under the same license, the Apache License, Version 2.0
 (see LICENSE). It is not affiliated with, endorsed by, or sponsored by the
 upstream authors or by Hefei University of Technology.
 

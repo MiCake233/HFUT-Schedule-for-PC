@@ -4,7 +4,7 @@
   <img src="/docs/img/desktop-icon.png" width="128" alt="HFUT-Schedule for PC">
 </p>
 
-本仓库是开源项目 [HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule) 的 Windows 桌面端移植版本。
+本仓库是开源项目 [HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule) 的桌面端移植版本，支持 Windows 与 macOS。
 移植基于 Kotlin Multiplatform 与 Compose Multiplatform，复用上游的界面实现与业务逻辑。
 许可为 Apache License 2.0。
 
@@ -13,12 +13,15 @@
 
 ## 下载
 
-适用于 Windows 10 / 11 x64。安装文件见 [Releases](../../releases)。
+适用于 Windows 10 / 11 x64，以及 macOS 12 及以上。安装文件见 [Releases](../../releases)。
 
 | 文件 | 说明 |
 | --- | --- |
-| `HFUT-Schedule-Setup-x.y.z.msi` | 安装包。内置 JDK 21 运行时，无需预装 Java；高版本可覆盖升级。 |
-| `HFUT-Schedule-x.y.z-portable.zip` | 便携版。解压后运行 `HFUT-Schedule.exe`。 |
+| `HFUT-Schedule-Setup-x.y.z.msi` | Windows 安装包。内置 JDK 21 运行时，无需预装 Java；高版本可覆盖升级。 |
+| `HFUT-Schedule-x.y.z-portable.zip` | Windows 便携版。解压后运行 `HFUT-Schedule.exe`。 |
+| `HFUT-Schedule-10.1.0.dmg` | macOS 12 及以上。内置 JDK 21，打开后把应用拖到「应用程序」。本包未签名；第一次打开若被拦截，请到「系统设置 → 隐私与安全性」允许，或按住 Control 再点打开。以预发布挂在 Releases。 |
+
+macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：已安装的 Windows 版只读取正式版，且只接受 `.msi`。Windows 用户请继续使用 v10.0.0，直到出现带 MSI 的正式版。macOS 安装包已在 Releases 作为预发布；macOS 源码在[拉取请求 #2](https://github.com/MiCake233/HFUT-Schedule-for-PC/pull/2)，尚未合并进默认分支。
 
 ## 功能
 
@@ -27,10 +30,10 @@
 | 登录 | 统一身份认证（CAS）学号密码登录；会话凭据保存在本机，下次启动自动恢复，无需重复输入验证码；可一键退出登录并清除凭据。 |
 | 课表 | 周视图，打开即定位当前周，可左右翻周或一键回到本周；切换学期、切换课表来源（含好友课表）；拖拽排序；点击空白格新建日程；方格高度、文字大小、内边距、不透明度、模糊、时间轴可调；课程表可导出为 PNG 图片。 |
 | 今日课程面板 | 独立小窗口常驻桌面，显示今日课程的时间、课程名与地点；每 5 分钟自动刷新，可手动刷新；可始终置顶；窗口位置与大小自动记忆。 |
-| 系统托盘 | 关闭窗口默认最小化到托盘；托盘菜单可显示/隐藏主窗口、开关今日课程面板与置顶、退出程序；命令行参数 `--minimized` 启动后仅驻留托盘。 |
-| 提醒 | 上课与考试提醒，开始前 5～60 分钟（默认 20 分钟）通过系统托盘气泡提示，提前时间面板内可调。 |
-| 启动与窗口 | 开机自启动开关（写入当前用户 Windows 启动项，开机后驻留托盘不弹窗）；主窗口尺寸与位置记忆。 |
-| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）；下载后按发布资产的 SHA-256 校验，校验不通过一律拒绝运行；「选项」内亦提供手动检查与打开发布页。 |
+| 系统托盘 | Windows 为系统托盘，macOS 为菜单栏图标。关闭窗口默认最小化到托盘或菜单栏；菜单可显示/隐藏主窗口、开关今日课程面板与置顶、退出程序；命令行参数 `--minimized` 启动后仅驻留托盘或菜单栏。 |
+| 提醒 | 上课与考试提醒，开始前 5～60 分钟（默认 20 分钟），提前时间面板内可调。Windows 用托盘气泡，macOS 用通知中心。 |
+| 启动与窗口 | 开机自启动开关。Windows 写入当前用户启动项，开机后驻留托盘不弹窗；macOS 写入 `~/Library/LaunchAgents/com.hfut.schedule.desktop.plist`，启动项带 `--minimized`。主窗口尺寸与位置记忆。 |
+| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）。Windows 只接受 `.msi`。macOS 10.1.0 的 `.dmg` 是预发布，不会被 Windows 10.0.0 当成可安装更新。下载后按发布资产的 SHA-256 校验，校验不通过一律拒绝运行；「选项」内亦提供手动检查与打开发布页。 |
 | 数据 | 通过系统文件对话框备份 / 还原本机数据目录；恢复前先解压到临时目录校验，失败不会动原数据；崩溃日志自动落盘，可在「修复」窗口查看、预览、清空与打开目录。 |
 | 一卡通 | 余额、流水、账单分析、消费报表、限额。 |
 | 教务 | 成绩查询与 GPA 分析、考试成绩详情、考试安排、教学计划完成情况、总学分、挂科率、课程检索、教师检索、空闲教室、选课、退课、转专业、个人信息、学期报告（可导出为图片）。 |
@@ -42,10 +45,11 @@
 
 ## 安全与数据说明
 
-- **数据目录**：`%APPDATA%\HFUT-Schedule`（便携版相同）。备份不含 `cache` 与 `update` 两个子目录。
+- **数据目录**：Windows 为 `%APPDATA%\HFUT-Schedule`（便携版相同）；macOS 为 `~/Library/Application Support/HFUT-Schedule`。备份不含 `cache` 与 `update` 两个子目录。
 - **密码**：桌面版**不保存**登录密码；旧版本曾写入的明文密码会在启动时清除。
-- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION），
-  位于该目录下的 `prefs\*.properties`，**未额外加密**（仅受 Windows 用户目录权限保护）。
+- **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）。
+  Windows 上位于数据目录的 `prefs\*.properties`，**未额外加密**（仅受 Windows 用户目录权限保护）。
+  macOS 上用登录钥匙串里的 AES-GCM 主密钥加密后再落盘。
   与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会一并清掉本机保存的各平台 token。
 - **崩溃日志**：写入 `%APPDATA%\HFUT-Schedule\logs`，仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
 - **自动更新**：只从本仓库的 GitHub Releases 读取版本信息；安装包下载后校验 SHA-256 与 MSI 文件头，
@@ -54,7 +58,7 @@
 
 ## 从源码构建
 
-前置条件：JDK 21；编译 Android 目标需 Android SDK；生成 MSI 需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。
+前置条件：JDK 21；编译 Android 目标需 Android SDK；生成 MSI 需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。macOS 的 `.dmg` 由 `:desktopApp:packageDmg` 生成，必须在 Mac 上执行，不能在 Windows 或 Linux 上交叉打包。该任务在拉取请求 #2，尚未合并进本分支。
 
 ```powershell
 .\gradlew.bat :app:compileKotlinJvm            # 桌面端依赖的 JVM 目标
