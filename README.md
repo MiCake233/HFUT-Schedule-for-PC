@@ -13,13 +13,15 @@
 
 ## 下载
 
-安装文件见 [Releases](../../releases)。Windows 安装包已经随正式版发布；macOS 的 `.dmg` 需要在 Mac 上用 jpackage 打出（本仓库的 Linux 持续集成不能交叉生成 DMG）。
+安装文件见 [Releases](../../releases)。
 
 | 文件 | 说明 |
 | --- | --- |
-| `HFUT-Schedule-Setup-x.y.z.msi` | Windows 10 / 11 x64 安装包。内置 JDK 21 运行时，无需预装 Java；高版本可覆盖升级。 |
-| `HFUT-Schedule-x.y.z-portable.zip` | Windows 便携版。解压后运行 `HFUT-Schedule.exe`。 |
-| `HFUT-Schedule-x.y.z.dmg` | macOS 12+（Apple 芯片与 Intel 均可，取决于打包机的 JDK）。内置 JDK 21。拖到「应用程序」后打开。 |
+| `HFUT-Schedule-10.0.0.msi` | 已发布的 Windows 10 / 11 x64 正式版安装包。内置 JDK 21 运行时，无需预装 Java；按当前用户安装，高版本可覆盖升级。 |
+| `HFUT-Schedule-10.0.0-portable.zip` | 已发布的 Windows 便携版。解压后运行 `HFUT-Schedule.exe`。 |
+| `HFUT-Schedule-10.1.0.dmg` | macOS 12+（Apple 芯片与 Intel 均可，取决于打包机的 JDK）。内置 JDK 21。在 Mac 上用 jpackage 打出。本仓库的 Linux 持续集成不能交叉生成 DMG。 |
+
+这一档 macOS 包只附带 `.dmg`，不另做 Windows 10.1.0 的 MSI，并以预发布挂到 Releases。已经装上的 Windows 10.0.0 只看最新正式版，预发布不会推给它。Windows 请继续用上面的 v10.0.0，等到有 MSI 的正式版再升级。若把只有 `.dmg`、没有 `.msi` 的 10.1.0 标成正式版，Windows 10.0.0 会提示有新版本，点「下载并安装」后因找不到 `.msi` 而失败。
 
 ## 功能
 
@@ -31,7 +33,7 @@
 | 系统托盘 / 菜单栏 | Windows 为系统托盘，macOS 为菜单栏图标。关闭窗口默认最小化到托盘或菜单栏；菜单可显示/隐藏主窗口、开关今日课程面板与置顶、退出程序；命令行参数 `--minimized` 启动后不弹主窗口。 |
 | 提醒 | 上课与考试提醒，开始前 5～60 分钟（默认 20 分钟）。Windows 用托盘气泡，macOS 用通知中心。提前时间面板内可调。 |
 | 启动与窗口 | 开机自启动：Windows 写入当前用户启动项，macOS 写入 `~/Library/LaunchAgents`。登录后驻留托盘或菜单栏、不弹窗。主窗口尺寸与位置记忆。 |
-| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）。Windows 只接受 `.msi`，macOS 只接受 `.dmg`。下载后必须通过 SHA-256，并核对 MSI 的 OLE 头或 DMG 的 `koly` 尾。任一不符即删除文件并拒绝运行。「选项」内亦提供手动检查与打开发布页。 |
+| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）。Windows 只接受 `.msi`，macOS 只接受 `.dmg`。当前正式版是 Windows v10.0.0；macOS 10.1.0 的 `.dmg` 以预发布放在 Releases，不会被 Windows 10.0.0 当成可安装更新。下载后必须通过 SHA-256，并核对 MSI 的 OLE 头或 DMG 的 `koly` 尾。任一不符即删除文件并拒绝运行。「选项」内亦提供手动检查与打开发布页。 |
 | 数据 | 通过系统文件对话框备份 / 还原本机数据目录；恢复前先解压到临时目录校验，失败不会动原数据；崩溃日志自动落盘，可在「修复」窗口查看、预览、清空与打开目录。 |
 | 一卡通 | 余额、流水、账单分析、消费报表、限额。 |
 | 教务 | 成绩查询与 GPA 分析、考试成绩详情、考试安排、教学计划完成情况、总学分、挂科率、课程检索、教师检索、空闲教室、选课、退课、转专业、个人信息、学期报告（可导出为图片）。 |
@@ -49,7 +51,7 @@
   Windows 上这些值用 DPAPI 加密；macOS 上用登录钥匙串里的 AES-GCM 主密钥加密。密文写在 `prefs/*.properties` 与 DataStore 中，只有当前系统用户能解开。换机器或换用户会当成未登录。
   与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会清掉本机保存的会话与各平台 token。
 - **崩溃日志**：写在数据目录的 `logs` 下，仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
-- **自动更新**：只从本仓库的 GitHub Releases 读取版本信息，只接受 `https` 且主机为 `github.com`、`api.github.com` 或 `*.githubusercontent.com`。安装包下载后必须带有效 SHA-256，并核对文件头（MSI 为 OLE，DMG 为 UDIF `koly`）。任一不符即删除文件并拒绝运行。安装包当前未做代码签名，校验值以 GitHub API 返回的资产摘要为准。
+- **自动更新**：只从本仓库的 GitHub Releases 读取版本信息，只认最新正式版，只接受 `https` 且主机为 `github.com`、`api.github.com` 或 `*.githubusercontent.com`。Windows 只下载 `.msi`，macOS 只下载 `.dmg`。安装包下载后必须带有效 SHA-256，并核对文件头（MSI 为 OLE，DMG 为 UDIF `koly`）。任一不符即删除文件并拒绝运行。安装包当前未做代码签名，校验值以 GitHub API 返回的资产摘要为准。macOS 10.1.0 的 `.dmg` 作为预发布，避免已发布的 Windows 10.0.0 把它当成可升级的正式版。
 - **网络**：程序直接访问学校系统与 GitHub；不内置任何遥测或第三方统计上报（统计相关功能复用上游，需自行配置）。
 
 ## 平台差异
