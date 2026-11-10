@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.search.function.school
+import com.hfut.schedule.logic.util.helper.getCampus
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.ExperimentalFoundationApi

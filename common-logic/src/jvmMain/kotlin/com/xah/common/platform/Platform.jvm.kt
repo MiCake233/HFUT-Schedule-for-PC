@@ -39,13 +39,12 @@ actual object Platform {
     actual fun toast(msg: String) = PlatformDesktop.showToast(msg)
 
     actual fun dataDirPath(): String {
-        System.getProperty("hfut.dataDir")?.let { return ensureDir(it).absolutePath }
-        val os = System.getProperty("os.name", "").lowercase()
-        val base = if (os.contains("win")) {
-            File(System.getenv("APPDATA") ?: System.getProperty("user.home"), "HFUT-Schedule")
-        } else {
-            File(System.getProperty("user.home"), ".hfut-schedule")
-        }
+        val base = resolveDesktopDataDir(
+            osName = System.getProperty("os.name", ""),
+            appData = System.getenv("APPDATA"),
+            userHome = System.getProperty("user.home"),
+            override = System.getProperty("hfut.dataDir"),
+        )
         return ensureDir(base.absolutePath).absolutePath
     }
 

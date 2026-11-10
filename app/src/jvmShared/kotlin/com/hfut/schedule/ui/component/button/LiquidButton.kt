@@ -28,6 +28,8 @@ val BUTTON_PADDING = 6.25.dp
 
 val BUTTON_END_PADDING = APP_HORIZONTAL_DP - CARD_NORMAL_DP - 1.dp
 
+val BUTTON_HEIGHT = 42.dp
+
 @Composable
 fun NoPadding(content: @Composable () -> Unit) {
     CompositionLocalProvider(

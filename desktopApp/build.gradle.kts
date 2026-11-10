@@ -85,10 +85,10 @@ compose.desktop {
     application {
         mainClass = "com.hfut.schedule.desktop.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Msi)
+            targetFormats(TargetFormat.Msi, TargetFormat.Dmg)
             packageName = "HFUT-Schedule"
-            // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "10.0.0"
+            // 10.1.0：同步上游 4.21.4.1，并增加 macOS DMG
+            packageVersion = "10.1.0"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "Apache-2.0"
@@ -115,6 +115,12 @@ compose.desktop {
                 // 应用图标：icons/app.ico 由 icons/app-512.png 生成（卡通风格自制徽标，
                 // 不使用合工大官方校徽原图）。窗口/任务栏图标用同一张 PNG。
                 iconFile.set(project.file("icons/app.ico"))
+            }
+            macOS {
+                bundleID = "com.hfut.schedule.desktop"
+                dockName = "HFUT-Schedule"
+                // icons/app.icns 由 icons/app-512.png 生成。jpackage 只能在 macOS 上打出 DMG。
+                iconFile.set(project.file("icons/app.icns"))
             }
         }
     }
@@ -233,7 +239,7 @@ tasks.register<JavaExec>("verifyClasspath") {
 }
 
 // 打出安装包前先跑这道闸门
-tasks.matching { it.name == "packageMsi" || it.name == "createDistributable" }
+tasks.matching { it.name == "packageMsi" || it.name == "packageDmg" || it.name == "createDistributable" }
     .configureEach { dependsOn("verifyClasspath") }
 
 // 校验更新检查：版本比较 + 安装包直链 + sha256 解析

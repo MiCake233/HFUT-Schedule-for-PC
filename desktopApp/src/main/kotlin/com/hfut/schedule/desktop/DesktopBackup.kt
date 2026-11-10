@@ -15,11 +15,10 @@ import java.util.Locale
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
-import javax.swing.JFileChooser
+import com.hfut.schedule.desktop.platform.DesktopFiles
 import javax.swing.JOptionPane
 import javax.swing.SwingUtilities
 import javax.swing.UIManager
-import javax.swing.filechooser.FileNameExtensionFilter
 
 /**
  * 配置备份与恢复。
@@ -242,24 +241,12 @@ object DesktopBackup {
 
     private fun chooseSaveFile(defaultName: String): File? = onEdt {
         ensureLookAndFeel()
-        val chooser = JFileChooser().apply {
-            dialogTitle = "选择备份文件的保存位置"
-            selectedFile = File(defaultName)
-            fileFilter = FileNameExtensionFilter("ZIP 备份 (*.zip)", "zip")
-        }
-        if (chooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION) return@onEdt null
-        val file = chooser.selectedFile
-        if (file.name.lowercase().endsWith(".zip")) file else File(file.parentFile, "${file.name}.zip")
+        DesktopFiles.chooseSaveZip(defaultName)
     }
 
     private fun chooseOpenFile(): File? = onEdt {
         ensureLookAndFeel()
-        val chooser = JFileChooser().apply {
-            dialogTitle = "选择要恢复的备份文件"
-            fileFilter = FileNameExtensionFilter("ZIP 备份 (*.zip)", "zip")
-        }
-        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) return@onEdt null
-        chooser.selectedFile
+        DesktopFiles.chooseOpenZip()
     }
 
     private fun confirmRestore(): Boolean = onEdt {

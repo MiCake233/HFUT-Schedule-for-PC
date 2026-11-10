@@ -9,7 +9,6 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.hfut.schedule.BuildConfig
-import com.xah.common.logic.model.Campus
 import com.hfut.schedule.logic.model.enumeration.AppStatus
 import com.hfut.schedule.logic.model.Location
 import com.hfut.schedule.logic.util.dev.CrashHandler

@@ -15,7 +15,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
@@ -42,12 +40,10 @@ import com.hfut.schedule.network.api.model.response.json.one.OneFeeData
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
-import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.LoadingLargeCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.container.cardNormalColor
-import com.hfut.schedule.ui.component.divider.DashedDivider
 import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.FeeDestination
@@ -150,7 +146,7 @@ fun PayUI(vm: NetWorkViewModel,hazeState : HazeState) {
                     .padding(horizontal = APP_HORIZONTAL_DP, vertical = 5.dp), horizontalArrangement = Arrangement.Center) {
                     com.hfut.schedule.ui.component.qrcode.QrCodeImage(
                         content = Constant.PAY_FEE_URL,
-                        modifier = Modifier.size(220.dp)
+                        modifier = Modifier.size(220.dp),
                     )
                 }
                 Spacer(modifier = Modifier.height(APP_HORIZONTAL_DP))
@@ -226,13 +222,11 @@ fun PayUI(vm: NetWorkViewModel,hazeState : HazeState) {
                     ClipBoardHelper.copy(Constant.PAY_FEE_URL)
                 }
             )
-            DashedDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                com.hfut.schedule.ui.component.qrcode.QrCodeImage(
-                    content = Constant.PAY_FEE_URL,
-                    modifier = Modifier.size(200.dp)
-                )
-            }
+            PaddingHorizontalDivider(isDashed = true)
+            com.hfut.schedule.ui.component.qrcode.QrCodeImage(
+                content = Constant.PAY_FEE_URL,
+                modifier = Modifier.padding(APP_HORIZONTAL_DP).size(200.dp),
+            )
         }
     }
 }

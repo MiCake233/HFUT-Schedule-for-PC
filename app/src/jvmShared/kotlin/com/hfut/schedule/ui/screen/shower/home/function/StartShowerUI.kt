@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.shower.home.function
+import com.xah.common.logic.util.LogUtil
 import com.hfut.schedule.logic.util.sys.activityOrNull
 
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -146,7 +147,8 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
                             val list = text.split(",")
                             input = list[2]
                             show = false
-                        } catch (_:Exception) {
+                        } catch (e: Exception) {
+                            LogUtil.error(e)
                             showToast("解析出错")
                         }
                     }

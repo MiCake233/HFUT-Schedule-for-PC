@@ -142,7 +142,7 @@ fun Egg() {
                     RowHorizontal {
                         DraggableImage(Drawables.hfut_badge,dampingRatio, stiffness)
                         Spacer(Modifier.width(10.dp))
-//                        DraggableImage(R.drawable.hfut_dynamic,dampingRatio, stiffness)
+//                        DraggableImage(Drawables.hfut_dynamic,dampingRatio, stiffness)
                     }
                     Spacer(Modifier.height(10.dp))
                 }
@@ -151,7 +151,7 @@ fun Egg() {
                         DraggableImage(Drawables.hfut_building,dampingRatio, stiffness)
                     }
                     RowHorizontal {
-//                        DraggableImage(R.drawable.buliding_dynamic,dampingRatio, stiffness)
+//                        DraggableImage(Drawables.buliding_dynamic,dampingRatio, stiffness)
                     }
                 }
                 InnerPaddingHeight(innerPadding,false)

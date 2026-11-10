@@ -1,4 +1,5 @@
 package com.hfut.schedule.logic.network.repo
+import com.xah.common.logic.util.LogUtil
 
 import com.hfut.schedule.network.api.model.response.html.news.AcademicNewsList
 import com.hfut.schedule.network.api.model.response.html.news.AcademicNewsType
@@ -44,7 +45,9 @@ object NewsRepository : NewsRepositoryInf {
 //                newsXuanChengResult.value = response.body()?.string()
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) { t.printStackTrace() }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                LogUtil.error(t)
+            }
         })
     }
     override suspend fun getXuanChengNews(page: Int, newsXuanChengResult : UiStateHolder<List<News>>) =

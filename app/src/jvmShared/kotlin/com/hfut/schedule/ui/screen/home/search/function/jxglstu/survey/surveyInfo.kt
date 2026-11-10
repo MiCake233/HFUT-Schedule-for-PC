@@ -37,6 +37,7 @@ import com.hfut.schedule.network.core.StatusCode
 import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.sys.showToast
 import com.hfut.schedule.network.core.GsonInstance
+import com.hfut.schedule.ui.component.button.LARGE_BUTTON_PADDING
 import com.hfut.schedule.ui.component.button.LargeButton
 import com.hfut.schedule.ui.component.dialog.LittleDialog
 import com.hfut.schedule.ui.component.input.CustomTextField
@@ -148,7 +149,7 @@ private fun SurveyList(
                 icon = Drawables.edit,
             )
         }
-        Spacer(Modifier.height(APP_HORIZONTAL_DP/2))
+        Spacer(Modifier.height(LARGE_BUTTON_PADDING))
         RowHorizontal {
             LargeButton(
                 modifier = Modifier.fillMaxWidth().weight(.5f),
@@ -161,8 +162,8 @@ private fun SurveyList(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
-            Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
-            LargeButton (
+            Spacer(Modifier.width(LARGE_BUTTON_PADDING))
+            LargeButton(
                 modifier = Modifier.fillMaxWidth().weight(.5f),
                 onClick = {
                     postMode = PostMode.LOW
@@ -174,7 +175,7 @@ private fun SurveyList(
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
-        Spacer(Modifier.height(APP_HORIZONTAL_DP/2))
+        Spacer(Modifier.height(LARGE_BUTTON_PADDING))
         RowHorizontal {
             LargeButton(
                 modifier = Modifier.fillMaxWidth().weight(.5f),
@@ -185,8 +186,8 @@ private fun SurveyList(
                 text = "好评 100分",
                 icon = Drawables.thumb_up,
             )
-            Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
-            LargeButton (
+            Spacer(Modifier.width(LARGE_BUTTON_PADDING))
+            LargeButton(
                 modifier = Modifier.fillMaxWidth().weight(.5f),
                 onClick = {
                     postMode = PostMode.NONE

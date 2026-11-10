@@ -205,6 +205,47 @@ fun FixUI(
                     }
                 }
             )
+            PaddingHorizontalDivider()
+            TransplantListItem(
+                headlineContent = { Text(text = "Github主页") },
+                leadingContent = { Icon(painterResource(R.drawable.github), contentDescription = "Localized description",) },
+                modifier = Modifier.clickable{
+                    scope.launch {
+                        Starter.startWebUrlOuter(context,"${Constant.GITHUB_URL}${Constant.GITHUB_DEVELOPER_NAME}/${Constant.GITHUB_REPO_NAME}")
+                    }
+                }
+            )
+            PaddingHorizontalDivider()
+            TransplantListItem(
+                headlineContent = { Text(text = "备份与恢复") },
+                leadingContent = { Icon(painterResource(R.drawable.mail), contentDescription = "Localized description",) },
+                modifier = Modifier.clickable{
+                    showBottomSheetBackup = true
+                }
+            )
+            PaddingHorizontalDivider()
+            TransplantListItem(
+                headlineContent = { Text(text = "数据库兼容模式") },
+                supportingContent = {
+                    Text("打开后，将禁用数据库，防止版本升级造成崩溃影响整个应用")
+                },
+                trailingContent = {
+                    Switch(
+                        !enableDataStore,
+                        onCheckedChange = {
+                            scope.launch {
+                                DataStoreManager.saveEnableDataStore(!enableDataStore)
+                            }
+                        }
+                    )
+                },
+                leadingContent = { Icon(painterResource(R.drawable.database), contentDescription = "Localized description",) },
+                modifier = Modifier.clickable {
+                    scope.launch {
+                        DataStoreManager.saveEnableDataStore(!enableDataStore)
+                    }
+                }
+            )
         }
         MyAPIItem(color = MaterialTheme.colorScheme.surface)
     }
@@ -318,12 +359,12 @@ fun BugShare() {
             }
         },
         modifier = Modifier.clickable {
-            currentPlatformActivityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+            activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
             CrashHandler.enableSaveLogToFile = !CrashHandler.enableSaveLogToFile
         },
         trailingContent = {
             Switch(checked = CrashHandler.enableSaveLogToFile, onCheckedChange = {
-                currentPlatformActivityOrNull()?.let { PermissionSet.checkAndRequestStoragePermission(it) }
+                activity?.let { PermissionSet.checkAndRequestStoragePermission(it) }
                 CrashHandler.enableSaveLogToFile = !CrashHandler.enableSaveLogToFile
             })
         },

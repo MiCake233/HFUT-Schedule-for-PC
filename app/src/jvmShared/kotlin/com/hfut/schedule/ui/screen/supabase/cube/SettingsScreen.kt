@@ -150,7 +150,7 @@ fun SupabaseSettingsScreen(vm : NetWorkViewModel,innerPadding : PaddingValues,ha
                 )
             }
         }
-        BottomTip("平台管理请联系 zsh0908@outlook.com")
+        BottomTip("平台管理请联系 ${com.hfut.schedule.logic.model.AppConst.EMAIL}")
         InnerPaddingHeight(innerPadding,false)
     }
 }

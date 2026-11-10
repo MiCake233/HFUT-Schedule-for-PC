@@ -48,7 +48,6 @@ import com.xah.shader.state.ShaderState
 import com.hfut.schedule.ui.style.shader.GlassStyle
 import com.hfut.schedule.ui.style.shader.glassLayer
 import com.hfut.schedule.ui.style.shader.largeStyle
-import com.xah.common.logic.util.LogUtil
 import com.xah.common.ui.style.align.RowHorizontal
 import com.xah.container.util.LocalSharedRegistrySafely
 import com.xah.floating.util.LocalFloatingControllerSafely

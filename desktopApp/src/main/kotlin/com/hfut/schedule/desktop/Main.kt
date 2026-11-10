@@ -21,6 +21,10 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
 import androidx.compose.ui.window.rememberWindowState
+import com.hfut.schedule.desktop.platform.DesktopOs
+import com.hfut.schedule.desktop.platform.MacNotifications
+import com.hfut.schedule.desktop.platform.MacSecrets
+import com.hfut.schedule.desktop.platform.currentDesktopOs
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.xah.common.logic.util.LogUtil
 import java.util.prefs.Preferences
@@ -39,10 +43,22 @@ private val windowPrefs: Preferences = Preferences.userRoot().node("com/hfut/sch
  * 5. 正常启动：托盘 + 主窗口 + 今日课程面板 + 日志窗口。
  */
 fun main(args: Array<String>) {
+    if (currentDesktopOs() == DesktopOs.MACOS) {
+        // 必须在 AWT 起来之前设置，否则菜单栏名称和屏幕菜单不会生效
+        System.setProperty("apple.awt.application.name", "HFUT-Schedule")
+        System.setProperty("apple.laf.useScreenMenuBar", "true")
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "HFUT-Schedule")
+    }
     initAppInfo()
 
-    // 凭据加密：DPAPI 加密本机保存的 TGC / SESSION / 各类 token
-    val secretsReady = runCatching { Dpapi.install() }.getOrDefault(false)
+    // 凭据加密必须在任何 prefs 读取之前：Windows 用 DPAPI，macOS 用登录钥匙串
+    val secretsReady = runCatching {
+        when (currentDesktopOs()) {
+            DesktopOs.WINDOWS -> Dpapi.install()
+            DesktopOs.MACOS -> MacSecrets.install()
+            else -> false
+        }
+    }.getOrDefault(false)
     if (secretsReady) runCatching { Dpapi.migratePlaintextSecrets() }
 
     runCatching {
@@ -74,7 +90,11 @@ fun main(args: Array<String>) {
 
         DisposableEffect(Unit) {
             DesktopNotifier.sink = { title, message ->
-                trayState.sendNotification(Notification(title, message))
+                if (currentDesktopOs() == DesktopOs.MACOS) {
+                    MacNotifications.display(title, message)
+                } else {
+                    trayState.sendNotification(Notification(title, message))
+                }
             }
             DesktopReminders.start(scope)
             onDispose { DesktopNotifier.sink = null }
@@ -245,9 +265,13 @@ private fun saveWindowState(state: androidx.compose.ui.window.WindowState) {
 /** 桌面端的版本/环境信息注入（Android 侧在 MyApplication 里做同样的事） */
 private fun initAppInfo() {
     runCatching {
-        AppInfo.versionName = "4.21.2.4"
-        AppInfo.versionCode = 277
-        AppInfo.deviceName = "Desktop"
+        AppInfo.versionName = "4.21.4.1"
+        AppInfo.versionCode = 279
+        AppInfo.deviceName = when (currentDesktopOs()) {
+            DesktopOs.WINDOWS -> "Windows"
+            DesktopOs.MACOS -> "macOS"
+            else -> "Desktop"
+        }
         // 桌面端没有「调试版」概念，也没有 Android 的签名校验。这两位置对之后
         // isNormalEnv 才成立——否则主界面会一直挂着一个点了没反应的「环境异常」按钮。
         // 需要调试日志时用 -Dhfut.debug=true 启动。

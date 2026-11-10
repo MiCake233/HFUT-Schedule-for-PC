@@ -1,13 +1,17 @@
 package com.hfut.schedule.desktop
 
+import com.hfut.schedule.desktop.platform.DesktopOs
+import com.hfut.schedule.desktop.platform.MacAutoStart
+import com.hfut.schedule.desktop.platform.currentDesktopOs
+import com.hfut.schedule.desktop.platform.trayLabel
+
 /**
- * 开机自启动设置。
+ * 开机自启动。
  *
- * 读写当前用户注册表项 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`；
- * 仅对安装版与便携版的 exe 生效，从 IDE 直接运行时不可用。
- *
- * 写入启动项时带上 [START_ARG]：开机后直接驻留托盘，不抢焦点弹窗
- * （否则每次登录系统都会有一个课程表窗口怼在屏幕中间，比不开还烦）。
+ * Windows：当前用户注册表 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`。
+ * macOS：`~/Library/LaunchAgents/com.hfut.schedule.desktop.plist`。
+ * 两种都带上 [startArgument]，登录后驻留托盘或菜单栏，不抢焦点弹窗。
+ * 从 IDE 直接跑 `java` 时拿不到可执行文件，开关会失败并提示手动设置。
  */
 object AutoStart {
 
@@ -22,8 +26,42 @@ object AutoStart {
         return if (cmd != null && cmd.endsWith(".exe", ignoreCase = true)) cmd else null
     }
 
-    /** 是否已加入启动项 */
-    fun isEnabled(): Boolean = runCatching {
+    fun isEnabled(): Boolean = when (currentDesktopOs()) {
+        DesktopOs.MACOS -> MacAutoStart.isEnabled()
+        DesktopOs.WINDOWS -> windowsEnabled()
+        else -> false
+    }
+
+    fun setEnabled(enabled: Boolean): Boolean = when (currentDesktopOs()) {
+        DesktopOs.MACOS -> MacAutoStart.setEnabled(enabled)
+        DesktopOs.WINDOWS -> windowsSetEnabled(enabled)
+        else -> false
+    }
+
+    fun currentExePath(): String? = when (currentDesktopOs()) {
+        DesktopOs.MACOS -> MacAutoStart.executablePath()
+        else -> exePath()
+    }
+
+    fun startArgument(): String = START_ARG
+
+    fun statusText(enabled: Boolean): String {
+        val place = trayLabel()
+        return when (currentDesktopOs()) {
+            DesktopOs.MACOS -> if (enabled) {
+                "已写入登录项（登录后驻留$place，点图标打开窗口）"
+            } else {
+                "登录 macOS 后自动启动，启动后驻留$place、不弹窗"
+            }
+            else -> if (enabled) {
+                "已写入 Windows 启动项（开机后驻留$place，点图标打开窗口）"
+            } else {
+                "登录 Windows 后自动启动，启动后驻留$place、不弹窗"
+            }
+        }
+    }
+
+    private fun windowsEnabled(): Boolean = runCatching {
         val process = ProcessBuilder("reg", "query", RUN_KEY, "/v", VALUE_NAME)
             .redirectErrorStream(true)
             .start()
@@ -32,8 +70,7 @@ object AutoStart {
         code == 0 && output.contains(VALUE_NAME)
     }.getOrDefault(false)
 
-    /** 打开/关闭开机自启动；返回操作是否成功 */
-    fun setEnabled(enabled: Boolean): Boolean = runCatching {
+    private fun windowsSetEnabled(enabled: Boolean): Boolean = runCatching {
         val path = exePath() ?: return false
         val command = if (enabled) {
             listOf("reg", "add", RUN_KEY, "/v", VALUE_NAME, "/t", "REG_SZ", "/d", "\"$path\" $START_ARG", "/f")
@@ -44,10 +81,4 @@ object AutoStart {
         process.inputStream.bufferedReader().use { it.readText() }
         process.waitFor() == 0
     }.getOrDefault(false)
-
-    /** 当前程序路径（用于界面提示） */
-    fun currentExePath(): String? = exePath()
-
-    /** 启动项里写的参数，供界面/文档说明 */
-    fun startArgument(): String = START_ARG
 }

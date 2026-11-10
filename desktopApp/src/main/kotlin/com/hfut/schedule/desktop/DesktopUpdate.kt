@@ -1,6 +1,8 @@
 package com.hfut.schedule.desktop
 
+import com.hfut.schedule.desktop.platform.preferredInstallerSuffix
 import java.io.File
+import java.io.RandomAccessFile
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.Dispatchers
@@ -78,13 +80,16 @@ object DesktopUpdate {
      *
      * 单独抽出来是为了能离线单测：网络那层只负责取字符串。
      */
-    internal fun parseLatest(body: String): ParsedRelease? {
+    internal fun parseLatest(
+        body: String,
+        installerSuffix: String = preferredInstallerSuffix(),
+    ): ParsedRelease? {
         val tag = firstGroup(body, "\"tag_name\"\\s*:\\s*\"([^\"]+)\"") ?: return null
         val pageUrl = firstGroup(body, "\"html_url\"\\s*:\\s*\"([^\"]+)\"") ?: RELEASES_PAGE
         return ParsedRelease(
             latest = tag.removePrefix("v").removePrefix("V"),
             pageUrl = pageUrl,
-            asset = pickInstaller(body),
+            asset = pickInstaller(body, installerSuffix),
         )
     }
 
@@ -151,15 +156,18 @@ object DesktopUpdate {
     private fun firstGroup(text: String, pattern: String): String? =
         Regex(pattern).find(text)?.groupValues?.getOrNull(1)
 
-    /** 在 `"assets": [ ... ]` 里找出 `.msi` 资产（取第一个），顺带取 digest 与 size */
-    private fun pickInstaller(body: String): Asset? {
+    /**
+     * 在 `"assets": [ ... ]` 里找出当前系统的安装包。
+     * Windows 与 Linux 自检认 `.msi`，macOS 认 `.dmg`。两者都要求后续 SHA-256 校验。
+     */
+    private fun pickInstaller(body: String, suffix: String): Asset? {
         val assetsStart = body.indexOf("\"assets\"")
         if (assetsStart < 0) return null
         val arrayStart = body.indexOf('[', assetsStart)
         if (arrayStart < 0) return null
         for (chunk in topLevelObjects(body, arrayStart)) {
             val name = firstGroup(chunk, "\"name\"\\s*:\\s*\"([^\"]+)\"") ?: continue
-            if (!name.endsWith(".msi", ignoreCase = true)) continue
+            if (!name.endsWith(suffix, ignoreCase = true)) continue
             val url = firstGroup(chunk, "\"browser_download_url\"\\s*:\\s*\"([^\"]+)\"") ?: continue
             val digest = firstGroup(chunk, "\"digest\"\\s*:\\s*\"([^\"]+)\"")
             val size = firstGroup(chunk, "\"size\"\\s*:\\s*(\\d+)")?.toLongOrNull() ?: 0L
@@ -209,16 +217,17 @@ object DesktopUpdate {
         target: Result.Available,
         onProgress: (Long, Long) -> Unit = { _, _ -> },
     ): Download = withContext(Dispatchers.IO) {
+        val suffix = preferredInstallerSuffix()
         val url = target.assetUrl
-            ?: return@withContext Download.Error("该版本未提供 .msi 安装包，请到发布页手动下载")
+            ?: return@withContext Download.Error("该版本未提供 $suffix 安装包，请到发布页手动下载")
         if (!isTrustedUpdateUrl(url)) {
             return@withContext Download.Error("安装包地址不受信任，已阻止下载")
         }
         if (target.sha256?.matches(SHA256_HEX) != true) {
             return@withContext Download.Error("发布信息缺少有效的 SHA-256，已阻止下载")
         }
-        val fileName = target.assetName?.takeIf { it.endsWith(".msi", ignoreCase = true) }
-            ?: "HFUT-Schedule-${target.latest}.msi"
+        val fileName = target.assetName?.takeIf { it.endsWith(suffix, ignoreCase = true) }
+            ?: "HFUT-Schedule-${target.latest}$suffix"
         // 只允许纯文件名，杜绝 ../ 之类的路径穿越
         if (fileName.contains('/') || fileName.contains('\\') || fileName.contains("..")) {
             return@withContext Download.Error("安装包文件名异常，已阻止下载")
@@ -279,14 +288,37 @@ object DesktopUpdate {
         if (expectedSize > 0 && file.length() != expectedSize) {
             return Download.Error("安装包大小与发布信息不一致，已阻止运行")
         }
-        // MSI 是 OLE 复合文档，头 4 字节固定为 D0 CF 11 E0
+        if (!hasInstallerHeader(file)) {
+            return Download.Error("下载到的不是有效的安装包（文件头异常），已阻止运行")
+        }
+        return Download.Ok(file)
+    }
+
+    /** MSI 是 OLE 复合文档（D0 CF 11 E0）。DMG 的 UDIF 尾部 512 字节以 `koly` 开头。 */
+    internal fun hasInstallerHeader(file: File): Boolean {
+        val name = file.name.lowercase()
+        return if (name.endsWith(".dmg")) hasKolyTrailer(file) else hasOleHeader(file)
+    }
+
+    private fun hasOleHeader(file: File): Boolean {
         val head = ByteArray(4)
         val read = runCatching { file.inputStream().use { it.read(head) } }.getOrDefault(0)
-        val ole = read == 4 &&
+        return read == 4 &&
             head[0] == 0xD0.toByte() && head[1] == 0xCF.toByte() &&
             head[2] == 0x11.toByte() && head[3] == 0xE0.toByte()
-        if (!ole) return Download.Error("下载到的不是有效的安装包（文件头异常），已阻止运行")
-        return Download.Ok(file)
+    }
+
+    private fun hasKolyTrailer(file: File): Boolean {
+        if (file.length() < 512) return false
+        val magic = ByteArray(4)
+        return runCatching {
+            RandomAccessFile(file, "r").use { raf ->
+                raf.seek(file.length() - 512)
+                raf.readFully(magic)
+            }
+            magic[0] == 'k'.code.toByte() && magic[1] == 'o'.code.toByte() &&
+                magic[2] == 'l'.code.toByte() && magic[3] == 'y'.code.toByte()
+        }.getOrDefault(false)
     }
 
     private val SHA256_HEX = Regex("^[0-9a-fA-F]{64}$")

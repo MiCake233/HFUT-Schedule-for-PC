@@ -86,7 +86,6 @@ import com.xah.container.component.base.sharedContainer
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.model.CampusRegion
 import com.xah.common.logic.util.EMPTY_STRING
-import com.xah.common.logic.util.LogUtil
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -708,5 +707,3 @@ private fun PersonItems(
         }
     }
 }
-
-
