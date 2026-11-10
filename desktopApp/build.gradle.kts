@@ -114,8 +114,8 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 perUserInstall = true
-                // 应用图标：icons/app.ico 由 icons/app-512.png 生成（卡通风格自制徽标，
-                // 不使用合工大官方校徽原图）。窗口/任务栏图标用同一张 PNG。
+                // 应用图标：渐变 HFUT 字标，圆角方底，没有课表网格。
+                // icons/app.ico 与窗口/任务栏用的 PNG 是同一套图，不使用合工大官方校徽原图。
                 iconFile.set(project.file("icons/app.ico"))
             }
             macOS {
