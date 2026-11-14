@@ -1,35 +1,51 @@
 pluginManagement {
+    // GitHub Actions 会设置 CI=true。阿里云镜像一旦返回 502，Gradle 就不再尝试后面的仓库。
+    // 持续集成只走官方仓库和 JitPack。未设置 CI 时仍先用阿里云，供国内本机构建。
     repositories {
-        maven {
-            url 'https://maven.aliyun.com/repository/google'
+        if (System.getenv("CI") == "true") {
+            google()
+            mavenCentral()
+            gradlePluginPortal()
+            maven { url 'https://jitpack.io' }
+        } else {
+            maven {
+                url 'https://maven.aliyun.com/repository/google'
+            }
+            maven {
+                url 'https://jitpack.io'
+            }
+            google()
+            mavenCentral()
+            gradlePluginPortal()
         }
-        maven {
-            url 'https://jitpack.io'
-        }
-        google()
-        mavenCentral()
-        gradlePluginPortal()
     }
 }
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven {
-            url 'https://maven.aliyun.com/repository/google'
-        }
-        maven {
-            url 'https://jitpack.io'
-        }
-        google()
-        mavenCentral()
-        maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
-            allowInsecureProtocol = true
+        if (System.getenv("CI") == "true") {
+            google()
+            mavenCentral()
+            gradlePluginPortal()
+            maven { url 'https://jitpack.io' }
+        } else {
+            maven {
+                url 'https://maven.aliyun.com/repository/google'
+            }
+            maven {
+                url 'https://jitpack.io'
+            }
+            google()
+            mavenCentral()
+            maven {
+                url 'http://maven.aliyun.com/nexus/content/groups/public'
+                allowInsecureProtocol = true
+            }
+            maven {
+                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+                allowInsecureProtocol = true
+            }
         }
     }
 }
