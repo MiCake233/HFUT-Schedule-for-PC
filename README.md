@@ -45,26 +45,43 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
 
 ## 安全与数据说明
 
-- **数据目录**：Windows 为 `%APPDATA%\HFUT-Schedule`（便携版相同）；macOS 为 `~/Library/Application Support/HFUT-Schedule`。备份不含 `cache` 与 `update` 两个子目录。
+- **数据目录**：Windows 为 `%APPDATA%\HFUT-Schedule`（便携版相同）。已发布的 macOS 预发布为 `~/Library/Application Support/HFUT-Schedule`。默认分支上非 Windows 仍是 `~/.hfut-schedule`。备份不含 `cache` 与 `update` 两个子目录。
 - **密码**：桌面版**不保存**登录密码；旧版本曾写入的明文密码会在启动时清除。
 - **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）。
-  Windows 上位于数据目录的 `prefs\*.properties`，**未额外加密**（仅受 Windows 用户目录权限保护）。
-  macOS 上用登录钥匙串里的 AES-GCM 主密钥加密后再落盘。
+  当前 `desktop-windows` 源码在 Windows 启动时用 DPAPI 加密敏感值，再写入数据目录的 `prefs\*.properties`（前缀 `dpapi1:`）。已发布的正式版 v10.0.0 早于这次加密，那一版只受 Windows 用户目录权限保护。
+  macOS 预发布把主密钥放在登录钥匙串，磁盘上是 AES-GCM 密文。
   与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会一并清掉本机保存的各平台 token。
-- **崩溃日志**：写入 `%APPDATA%\HFUT-Schedule\logs`，仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
+- **崩溃日志**：写在数据目录的 `logs` 下。Windows 为 `%APPDATA%\HFUT-Schedule\logs`。仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
 - **自动更新**：只从本仓库的 GitHub Releases 读取版本信息；安装包下载后校验 SHA-256 与 MSI 文件头，
   两者任一不符即删除文件并拒绝运行。安装包当前未做代码签名，校验值以 GitHub API 返回的资产摘要为准。
 - **网络**：程序直接访问学校系统与 GitHub；不内置任何遥测或第三方统计上报（统计相关功能复用上游，需自行配置）。
 
 ## 从源码构建
 
-前置条件：JDK 21；编译 Android 目标需 Android SDK；生成 MSI 需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。macOS 的 `.dmg` 由 `:desktopApp:packageDmg` 生成，必须在 Mac 上执行，不能在 Windows 或 Linux 上交叉打包。该任务在拉取请求 #2，尚未合并进本分支。
+前置条件：JDK 21。配置阶段会加载 Android Gradle Plugin，需要 Android SDK（`compileSdk` 36）。生成 MSI 需 [WiX Toolset 3.11](https://github.com/wixtoolset/wix3/releases)，并由 `WIX_PATH` 指向其安装目录。
+
+仓库里的 `gradlew` 没有可执行位。Windows 用 `gradlew.bat`。macOS 与 Linux 若 `./gradlew` 被系统拒绝，先执行 `chmod +x gradlew`，或改用 `bash ./gradlew`。
+
+Windows：
 
 ```powershell
-.\gradlew.bat :app:compileKotlinJvm            # 桌面端依赖的 JVM 目标
-.\gradlew.bat :desktopApp:createDistributable  # 免安装目录
-.\gradlew.bat :desktopApp:packageMsi           # MSI 安装包
+.\gradlew.bat :app:compileKotlinJvm
+.\gradlew.bat :desktopApp:test
+.\gradlew.bat :desktopApp:detekt
+.\gradlew.bat :desktopApp:createDistributable
+.\gradlew.bat :desktopApp:packageMsi
 ```
+
+macOS / Linux：
+
+```bash
+./gradlew :app:compileKotlinJvm
+./gradlew :desktopApp:test
+./gradlew :desktopApp:detekt
+./gradlew :desktopApp:createDistributable
+```
+
+`:desktopApp:packageDmg` 只能在 Mac 上执行，Windows 与 Linux 不能交叉打包。默认分支的 `desktopApp/build.gradle.kts` 只声明 `TargetFormat.Msi`。DMG 任务在[拉取请求 #2](https://github.com/MiCake233/HFUT-Schedule-for-PC/pull/2)，尚未合并。
 
 依赖版本：Compose Multiplatform 的 `org.jetbrains.*` 坐标是「对齐壳」（本体只有几百字节，
 实现来自同名 `androidx.*` 坐标），壳与实现的版本在 `desktopApp/build.gradle.kts` 里用
@@ -72,7 +89,26 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
 
 ## 自检
 
-桌面端没有单元测试，验收靠下面这些可重复执行的 check（`packageMsi` 会自动先跑 `verifyClasspath`）：
+单元测试在 `desktopApp/src/test/kotlin/com/hfut/schedule/desktop/`：
+
+- `DesktopBackupTest`：备份恢复、路径越界、空包与损坏包。全部在临时目录里完成。
+- `DesktopUpdateTest`：版本比较，以及 `releases/latest` 响应的解析。不联网。
+- `SecretStoreTest`：用假加密器检查敏感键与落盘。不调用 Windows DPAPI，也不访问 macOS 钥匙串。
+
+静态检查是 `:desktopApp:detekt`，配置在 `desktopApp/detekt.yml`，只扫描 `desktopApp/src/main/kotlin`。`:desktopApp:check` 会带上 detekt。没有覆盖率百分比门槛。
+
+无界面环境只跑测试和 detekt。`.github/workflows/desktop.yml` 在拉取请求上，以及向 `desktop-windows` 推送时，用 Temurin JDK 21 执行这两项。
+
+```bash
+./gradlew :desktopApp:test :desktopApp:detekt
+```
+
+```powershell
+.\gradlew.bat :desktopApp:test
+.\gradlew.bat :desktopApp:detekt
+```
+
+下面的 `verify*` 仍用于本机验收。它们启动桌面入口，并把 `java.awt.headless` 设为 false，因此需要显示器；其中几项还读取本机数据。`packageMsi` 会先跑 `verifyClasspath`。持续集成不跑这些任务，也不跑 `packageMsi` 或 `packageDmg`。
 
 ```powershell
 .\gradlew.bat :desktopApp:verifyClasspath  # 运行时 classpath 无重复类（同一 FQN 出现在两个 jar 即失败）
@@ -86,6 +122,8 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
 .\gradlew.bat :desktopApp:verifyIcs        # 日程导出为 .ics
 .\gradlew.bat :desktopApp:verifyDrawables  # 天气等图标能从注册表按名字取到
 ```
+
+macOS 与 Linux 把 `.\gradlew.bat` 换成 `./gradlew`，任务名相同。
 
 安装版也可以直接复跑其中几项，例如 `HFUT-Schedule.exe --verify-classpath`（需从控制台启动才看得到输出）。
 
@@ -102,8 +140,67 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
   本桌面版基于上游源码修改而成，复用了其绝大部分界面与业务逻辑；
   上游版权归原作者及贡献者所有，贡献者名单见 [`docs/Developer.md`](docs/Developer.md)。
 * 修改说明：本仓库在 `desktop-windows` 分支上做了桌面移植改动，详见 [`NOTICE`](NOTICE)。
-* 桌面移植部分：新增 `:desktopApp` 模块，把 Android 源码逐步迁入 `jvmShared` 共享源集，用 `expect/actual` 划分平台边界。
+* 桌面移植部分：新增 `:desktopApp` 模块，把 Android 源码逐步迁入 `jvmShared` 共享源集，用 `expect/actual` 划分平台边界。目录见下一节。
 * 许可证：**Apache License 2.0**（与上游一致），详见 [`LICENSE`](LICENSE)。
+
+## 维护说明
+
+本节给后续改桌面端的人。横线以上是本仓库的桌面移植，Windows 与 macOS 的说明改这里。横线以下是上游 Android 应用的原文，标题为「聚在工大」，保持原样。
+
+### 分支
+
+默认分支是 `desktop-windows`。新工作从 `desktop-windows` 拉功能分支，用拉取请求合入 `desktop-windows`。
+
+macOS 桌面源码在[拉取请求 #2](https://github.com/MiCake233/HFUT-Schedule-for-PC/pull/2)，尚未进入默认分支。凭据、跳转与备份方面的修复在[拉取请求 #1](https://github.com/MiCake233/HFUT-Schedule-for-PC/pull/1)，同样尚未合并。
+
+### 模块
+
+`:desktopApp`（目录 `desktopApp/`）是桌面壳：窗口、启动、托盘、桌面设置、备份、更新检查和安装包。业务界面来自 `:app` 的 JVM 目标。
+
+共享实现在 `jvmShared`：`app/src/jvmShared`，以及 `common-logic`、`common-ui`、`network-api`、`network-core`、`consumption-forecast` 下的同名目录。Android 专有代码在 `androidMain`。桌面专有实现在 `jvmMain`，目前有这个目录的是 `:app`、`common-logic` 与 `common-ui`。`common-logic` 与 `common-ui` 另有 `commonMain`。
+
+平台边界用 `expect` / `actual`。`app/src/jvmShared/kotlin/com/hfut/schedule/logic/platform/AppCapabilities.kt` 声明能力，`AppCapabilities.android.kt` 与 `AppCapabilities.jvm.kt` 分别实现。`common-logic` 的 `Platform` 在 `commonMain` 声明，桌面数据目录实现在 `common-logic/src/jvmMain/kotlin/com/xah/common/platform/Platform.jvm.kt`。
+
+同步上游时保留 `:desktopApp`、这套源集，以及桌面侧的 `actual`。不要用上游的 Android 工程覆盖这些目录。
+
+### 与上游同步
+
+本仓库 fork 自 [Chiu-xaH/HFUT-Schedule](https://github.com/Chiu-xaH/HFUT-Schedule)，上游默认分支是 `dev`。
+
+同步时拉取上游 `dev`，在从 `desktop-windows` 拉出的功能分支上合并，再提拉取请求。只接入上游的业务改动，桌面壳和 `jvmMain` 里的桌面实现留在本仓库。
+
+拉取请求 #2 已经包含一次较大的上游同步（至 4.21.4.1）以及 macOS 移植。后续同步先对照那条请求，避免在默认分支上再做一遍互相覆盖的合并。
+
+### 发布
+
+当前 `desktop-windows` 的更新检查在 `desktopApp/src/main/kotlin/com/hfut/schedule/desktop/DesktopUpdate.kt`：只请求正式版接口 `/releases/latest`，并且只选取 `.msi` 资产。预发布不会进入这个结果。若把只含 `.dmg` 的版本标成正式版，按这份源码打出的 Windows 安装包会提示有更新，随后因为没有 `.msi` 而失败。
+
+已发布的 v10.0.0 对应提交 `e68deb99`。那一版请求的是 `/releases` 列表，再按响应里的第一个 `tag_name` 拼出 `HFUT-Schedule-<版本>.msi`。这个列表包含预发布。标签 `v10.0.0` 及其安装包保持不动，不要改标签，也不要替换标签上的文件。
+
+macOS 10.1.0 以预发布挂出，使正式版 `/releases/latest` 仍停在带 MSI 的 v10.0.0。
+
+已发布的 macOS 包是标签 `v10.1.0`，指向提交 `11956d4d1b3f56db2ce122e2877f1cd17228b5c1`。其后的 `eb44ebf3` 与 `0f65b52b` 加入了一个隐藏的 1 dp 占位窗口，用来在最后一个真实窗口关闭后保住进程。这两次提交不要打进安装包。合并拉取请求 #2 时，已发布的 macOS 源码以 `v10.1.0` 为准，不要把该请求的最新提交当成发行依据。
+
+### 数据与凭据
+
+| | 默认分支 `desktop-windows` | 拉取请求 #2，以及标签 v10.1.0 |
+| --- | --- | --- |
+| Windows 数据目录 | `%APPDATA%\HFUT-Schedule` | 同左 |
+| 非 Windows 数据目录 | `~/.hfut-schedule`（`Platform.jvm.kt`） | macOS 为 `~/Library/Application Support/HFUT-Schedule`（`DesktopPaths.kt`）；Linux 仍是 `~/.hfut-schedule` |
+| Windows 凭据 | `desktopApp/.../Dpapi.kt`，启动时 `Dpapi.install()`。v10.0.0（`e68deb99`）还没有这次提交 | 同左 |
+| macOS 凭据 | 默认分支没有钥匙串实现。非 Windows 不安装 DPAPI | `desktopApp/.../platform/MacSecrets.kt`：登录钥匙串保存 32 字节主密钥，磁盘上为 AES-GCM |
+
+不要提交 token、密码或钥匙串材料。上游曾带入写死的 Gitee 访问令牌，常量名是 `network-api/src/jvmShared/kotlin/com/hfut/schedule/network/api/model/Constant.kt` 里的 `GITEE_TOKEN`。默认分支上这个常量还在。拉取请求 #1 已删除它。同步或合并时不要把该常量加回去。
+
+### 关闭到托盘
+
+「关闭窗口时最小化到托盘」是用户偏好。键名 `window.closeToTray`，由 `DesktopWindowPrefs` 读写，缺省为 true。设置页开关文案即此句；关闭按钮据此隐藏窗口或退出程序（`Main.kt`）。macOS 上同一偏好决定关闭后是留在菜单栏还是退出。维护时不要改写用户已经保存的值，也不要在迁移里把它强制改回默认。
+
+### 仓库卫生
+
+不要提交 `.DS_Store`、`Thumbs.db`，也不要提交 IDE 的个人配置。`.gitignore` 忽略前两者。`.idea/` 在 `.gitignore` 里保持注释：本仓库有意跟踪一部分共享的 IntelliJ / Android Studio 文件。只去掉其中的 `.DS_Store`，不要删除整个 `.idea/`。
+
+下列图标是现成的品牌资源，不要随手重新生成：`desktopApp/icons/app.ico`、`desktopApp/icons/app-512.png`、`desktopApp/src/main/resources/app-icon.png`、`docs/img/desktop-icon.png`。拉取请求 #2 中的 `desktopApp/icons/app.icns` 同样保留原文件。
 
 ---
 
