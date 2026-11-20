@@ -59,7 +59,7 @@ import com.hfut.schedule.ui.component.media.checkOrDownloadVideo
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.SettingsAboutDeveloperDestination
 import com.hfut.schedule.ui.nav.destination.SettingsDeveloperDestination
-import com.hfut.schedule.ui.nav.destination.SettingsTipsDestination
+import com.hfut.schedule.ui.nav.destination.TipsDestination
 import com.hfut.schedule.ui.nav.destination.VersionInfoDestination
 import com.hfut.schedule.ui.screen.fix.about.Egg
 import com.hfut.schedule.ui.screen.fix.fix.BugShare
@@ -201,7 +201,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                 )
                 PaddingHorizontalDivider()
                 SharedContainer(
-                    key = SettingsTipsDestination.key,
+                    key = TipsDestination.key,
                     shape = NoneRoundShape,
                     containerColor = MaterialTheme.colorScheme.surface
                 ) {
@@ -219,7 +219,7 @@ fun AboutSettingsScreen(innerPadding : PaddingValues,) {
                             )
                         },
                         modifier = Modifier.clickable {
-                            navTopController.push(SettingsTipsDestination)
+                            navTopController.push(TipsDestination)
                         }
                     )
                 }

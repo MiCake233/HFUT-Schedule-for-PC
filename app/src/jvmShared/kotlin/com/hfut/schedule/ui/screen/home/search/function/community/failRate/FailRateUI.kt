@@ -1,13 +1,18 @@
 package com.hfut.schedule.ui.screen.home.search.function.community.failRate
+import com.xah.navigation.util.LocalNavController
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,7 +25,6 @@ import androidx.compose.ui.Modifier
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.hfut.schedule.network.api.model.response.json.community.CommunityCourseFailRate
-import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.cardNormalColor
@@ -29,9 +33,12 @@ import com.hfut.schedule.ui.component.screen.pager.PageController
 import com.hfut.schedule.ui.component.status.EmptyIcon
 import com.hfut.schedule.ui.nav.destination.FailRateDestination
 import com.hfut.schedule.ui.nav.destination.FailRateDetailDestination
+import com.hfut.schedule.ui.util.layout.currentUiWidthSizeColumnsForCard
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
+import com.sharednav.common.helper.NoneRoundShape
+import com.xah.common.logic.state.NetworkUiState
+import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
-import com.xah.navigation.util.LocalNavController
 import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.container.component.base.sharedContainer
@@ -91,20 +98,27 @@ fun FailRateUI(
     }
 }
 
-
-
-
+// 大屏适配参考用例
 @Composable
 fun FailRateDetailScreen(
     innerPadding : PaddingValues,
     detailList : List<CommunityCourseFailRate>
 ) {
-    LazyColumn {
-        item { InnerPaddingHeight(innerPadding,true) }
+    val columns = currentUiWidthSizeColumnsForCard()
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(columns),
+        modifier = Modifier.padding(horizontal = APP_HORIZONTAL_DP),
+        horizontalArrangement = Arrangement.spacedBy(CARD_NORMAL_DP*2),
+    ) {
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            InnerPaddingHeight(innerPadding,true)
+        }
         items(detailList.size,key = { it }){ item ->
             val dataItem = detailList[item]
             val rate = (1 - dataItem.successRate) * 100
             CardListItem(
+                horizontalPadding = false,
                 headlineContent = {  Text("平均分 ${dataItem.avgScore}") },
                 supportingContent = { Text("人数: 挂科 ${dataItem.failCount} | 总 ${dataItem.totalCount}") },
                 overlineContent = { Text(text = "${dataItem.termYear}年 第${dataItem.termPeriod}学期")},
@@ -112,7 +126,8 @@ fun FailRateDetailScreen(
                 trailingContent = { Text("挂科率 ${String.format("%.2f", rate)} %") },
             )
         }
-        item { InnerPaddingHeight(innerPadding,true) }
-        item { Spacer(Modifier.height(APP_HORIZONTAL_DP).navigationBarsPadding()) }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            InnerPaddingHeight(innerPadding,false)
+        }
     }
 }

@@ -1,13 +1,17 @@
 package com.hfut.schedule.desktop
 
 import com.hfut.schedule.logic.model.enumeration.CasLoginType
+import com.hfut.schedule.logic.network.interceptor.setCookieValue
+import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import java.net.URI
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
@@ -67,7 +71,13 @@ object DesktopSession {
         "loginCode",       // 呱呱洗浴
         "PE",              // 体育
         "ZhiJian",
+        "stu",             // 学工 _WEU
+        "LOGIN_FLAVORING",
+        "webVpnKey",
     )
+
+    /** 退出登录时会清掉的键，供测试核对「没有漏网的会话」 */
+    internal val credentialKeysClearedOnLogout: List<String> get() = CREDENTIAL_KEYS
 
     /** 清除已保存的登录状态 */
     fun clear() {
@@ -75,6 +85,7 @@ object DesktopSession {
             CREDENTIAL_KEYS.forEach { SharedPrefs.saveString(it, "") }
             SharedPrefs.saveString("Password", "")
             GlobalUiStateHolder.casCookies = null
+            runBlocking { DataStoreManager.clearSessionSecrets() }
         }
     }
 
@@ -94,45 +105,23 @@ object DesktopSession {
         runCatching {
             val service = CasLoginType.JXGLSTU.service ?: return@runCatching null
             val url = Constant.CAS_LOGIN_URL + "cas/login?service=" + URLEncoder.encode(service, "UTF-8")
-            val ticketUrl = client.newCall(
-                Request.Builder()
-                    .url(url)
-                    .header("Cookie", tgcCookie)
-                    .header("User-Agent", UA)
-                    .build()
-            ).execute().use { resp ->
-                // 会话过期时 CAS 直接返回登录页（200），此时无法恢复
-                if (resp.code != 302 && resp.code != 303) return@runCatching null
-                val location = resp.header("Location") ?: return@runCatching null
-                if (!location.contains("ticket=")) return@runCatching null
-                location
-            }
+            val first = hop(url, tgcCookie)
+            // 会话过期时 CAS 直接返回登录页（200），此时无法恢复
+            val ticketUrl = first.next ?: return@runCatching null
+            if (!ticketUrl.contains("ticket=")) return@runCatching null
 
-            // 跟随一次到两次跳转，从 Set-Cookie 里取教务 SESSION
+            // 跟随一次到两次跳转，从 Set-Cookie 里取教务 SESSION。
+            // TGC 只发给 CAS 主机；教务那边只需要 URL 里的 ticket。
             var target = ticketUrl
             var session: String? = null
             var hops = 0
             while (hops < 4 && session == null) {
                 val current = target
-                var next: String? = null
-                client.newCall(
-                    Request.Builder()
-                        .url(current)
-                        .header("Cookie", tgcCookie)
-                        .header("User-Agent", UA)
-                        .build()
-                ).execute().use { resp ->
-                    resp.headers("Set-Cookie").forEach { cookie ->
-                        val value = cookie.substringAfter("SESSION=", "")
-                        if (value.isNotEmpty() && session == null) {
-                            session = value.substringBefore(";")
-                        }
-                    }
-                    val location = resp.header("Location")
-                    if (resp.code == 302 || resp.code == 303) next = location
-                }
+                val result = hop(current, cookieFor(current, tgcCookie))
+                session = result.session
+                val next = result.next
                 if (session == null && next != null) {
-                    target = next!!
+                    target = next
                 } else {
                     break
                 }
@@ -145,4 +134,45 @@ object DesktopSession {
             redirect
         }.getOrNull()
     }
+
+    private data class Hop(val session: String?, val next: String?)
+
+    /** 请求一跳。Location 必须落在 CAS 或教务主机上，否则丢掉，不把 TGC 送出去。 */
+    private fun hop(url: String, cookie: String?): Hop {
+        if (!isTrustedSessionUrl(url)) return Hop(null, null)
+        val builder = Request.Builder().url(url).header("User-Agent", UA)
+        if (cookie != null) builder.header("Cookie", cookie)
+        client.newCall(builder.build()).execute().use { resp ->
+            val session = resp.headers("Set-Cookie").firstNotNullOfOrNull { setCookieValue(it, "SESSION") }
+            val location = if (resp.code == 302 || resp.code == 303) resp.header("Location") else null
+            val next = location?.let { resolveTrusted(url, it) }
+            return Hop(session, next)
+        }
+    }
+
+    private fun cookieFor(url: String, tgcCookie: String): String? =
+        if (hostOf(url) == hostOf(Constant.CAS_LOGIN_URL)) tgcCookie else null
 }
+
+/** 恢复登录时允许跟随的地址：仅 CAS 与教务系统，且不能带 userinfo。 */
+internal fun isTrustedSessionUrl(url: String): Boolean {
+    val uri = runCatching { URI(url) }.getOrNull() ?: return false
+    val scheme = uri.scheme?.lowercase() ?: return false
+    if (scheme != "http" && scheme != "https") return false
+    if (uri.userInfo != null) return false
+    val host = uri.host?.lowercase() ?: return false
+    return host in sessionHosts()
+}
+
+internal fun resolveTrusted(currentUrl: String, location: String): String? {
+    val resolved = runCatching { URI(currentUrl).resolve(location).toString() }.getOrNull() ?: return null
+    return resolved.takeIf { isTrustedSessionUrl(it) }
+}
+
+private fun sessionHosts(): Set<String> = setOfNotNull(
+    hostOf(Constant.CAS_LOGIN_URL),
+    CasLoginType.JXGLSTU.service?.let { hostOf(it) },
+)
+
+private fun hostOf(url: String): String? =
+    runCatching { URI(url).host?.lowercase() }.getOrNull()

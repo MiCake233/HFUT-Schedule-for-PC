@@ -48,8 +48,6 @@ import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.common.ui.util.text
 import com.xah.navigation.model.action.LaunchMode
-import com.xah.navigation.util.LocalNavController
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File

@@ -84,11 +84,13 @@ configurations.configureEach {
 compose.desktop {
     application {
         mainClass = "com.hfut.schedule.desktop.MainKt"
+        // 空闲时的大头是 Skia / IOSurface，靠拆掉隐藏窗口释放，而不是把堆压得很小。
+        // 窗口打开时几百 MB 是正常的；设一个很紧的 -Xmx 会在界面还开着时 OOM。
         nativeDistributions {
-            targetFormats(TargetFormat.Msi)
+            targetFormats(TargetFormat.Msi, TargetFormat.Dmg)
             packageName = "HFUT-Schedule"
-            // 1.0.0 有「CAS 登录拿不到 cookie 一直转圈」的缺陷，升到 1.0.1 以便覆盖升级
-            packageVersion = "10.0.0"
+            // 10.1.0：同步上游 4.21.4.1，并增加 macOS DMG
+            packageVersion = "10.1.0"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "Apache-2.0"
@@ -112,9 +114,15 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 perUserInstall = true
-                // 应用图标：icons/app.ico 由 icons/app-512.png 生成（卡通风格自制徽标，
-                // 不使用合工大官方校徽原图）。窗口/任务栏图标用同一张 PNG。
+                // 应用图标：渐变 HFUT 字标，圆角方底，没有课表网格。
+                // icons/app.ico 与窗口/任务栏用的 PNG 是同一套图，不使用合工大官方校徽原图。
                 iconFile.set(project.file("icons/app.ico"))
+            }
+            macOS {
+                bundleID = "com.hfut.schedule.desktop"
+                dockName = "HFUT-Schedule"
+                // icons/app.icns 由 icons/app-512.png 生成。jpackage 只能在 macOS 上打出 DMG。
+                iconFile.set(project.file("icons/app.icns"))
             }
         }
     }
@@ -233,7 +241,7 @@ tasks.register<JavaExec>("verifyClasspath") {
 }
 
 // 打出安装包前先跑这道闸门
-tasks.matching { it.name == "packageMsi" || it.name == "createDistributable" }
+tasks.matching { it.name == "packageMsi" || it.name == "packageDmg" || it.name == "createDistributable" }
     .configureEach { dependsOn("verifyClasspath") }
 
 // 校验更新检查：版本比较 + 安装包直链 + sha256 解析

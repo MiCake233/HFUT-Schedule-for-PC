@@ -1,8 +1,7 @@
 package com.hfut.schedule.ui.screen.home.search.function.my.supabase
+import com.hfut.schedule.ui.screen.home.search.QuickButtonForSearchScreen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,13 +36,15 @@ fun Supabase() {
 //            }
         },
         trailingContent = {
-            FilledTonalIconButton(
-                modifier = Modifier.size(30.dp),
+            QuickButtonForSearchScreen(
                 onClick = {
                     navController.push(SupabaseLoginDestination, effect = JumpTransitionEffectWallpaper())
                 }
             ) {
-                Icon(painterResource(Drawables.refresh),null)
+                Icon(
+                    painterResource(Drawables.refresh),
+                    null
+                )
             }
         },
         modifier = Modifier.clickable {

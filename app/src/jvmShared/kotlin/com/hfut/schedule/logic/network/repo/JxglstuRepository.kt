@@ -231,7 +231,7 @@ object JxglstuRepository : JxglstuRepositoryInf {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                t.printStackTrace()
+                LogUtil.error(t)
             }
         })
     }
@@ -506,7 +506,9 @@ object JxglstuRepository : JxglstuRepositoryInf {
         val call = jxglstu.jxglstulogin(cookie)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {}
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) { t.printStackTrace() }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                LogUtil.error(t)
+            }
         })
     }
 
@@ -549,7 +551,7 @@ object JxglstuRepository : JxglstuRepositoryInf {
         holder = holder,
         request = { jxglstu.getStudentId(cookie) },
         transformRedirect = { headers -> parseStudentId(headers) },
-        transformSuccess = { _, _ -> -1 }
+        transformSuccess = { _, html -> parseStudentIdForMulti(html) }
     )
     @JvmStatic
     private fun parseStudentId(headers: Headers): Int {
@@ -565,6 +567,22 @@ object JxglstuRepository : JxglstuRepositoryInf {
         } catch (e : Exception) {
             throw e
         }
+    }
+    // 多学籍默认使用主修，兼容未标注培养类型的旧版页面。
+    @JvmStatic
+    private fun parseStudentIdForMulti(html: String): Int {
+        val document = Jsoup.parse(html)
+        val mainCard = document.select(".student-panel-block").firstOrNull { card ->
+            card.select("dt").any { label ->
+                label.text() == "培养类型" && label.nextElementSibling()?.text() == "主修"
+            }
+        }
+        val button = mainCard?.selectFirst("button[value]")
+            ?: document.selectFirst(".student-panel-block button[value]")
+        return button?.attr("value")?.trim()
+            ?.takeIf { it.matches(Regex("""\d+""")) }
+            ?.toIntOrNull()
+            ?: error("未找到StudentId，请联系开发者")
     }
 
     override suspend fun getLessonIds(cookie : String,studentId : Int,bizTypeId : Int,holder : UiStateHolder<JxglstuTermLessonResponse>) =
@@ -638,7 +656,7 @@ object JxglstuRepository : JxglstuRepositoryInf {
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.printStackTrace()
+                    LogUtil.error(t)
                 }
             })
             val call2 = jxglstu.getMyProfile(cookie)
@@ -655,7 +673,7 @@ object JxglstuRepository : JxglstuRepositoryInf {
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.printStackTrace()
+                    LogUtil.error(t)
                 }
             })
         }
@@ -836,7 +854,7 @@ object JxglstuRepository : JxglstuRepositoryInf {
                     }
 
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        t.printStackTrace()
+                        LogUtil.error(t)
                     }
                 })
             }

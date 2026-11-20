@@ -152,6 +152,24 @@ class MainActivity : BaseActivity() {
                     postedUse = true
                 }
             }
+            launch {
+                // 判定非合理KV值并纠正，有些用户使用数据恢复时会把非法KV带进来
+                if(!AppVersion.CAN_MOTION_BLUR) {
+                    DataStoreManager.saveMotionBlur(false)
+                }
+                if(!AppVersion.CAN_SHADER) {
+                    DataStoreManager.saveLiquidGlass(false)
+                }
+                if(!AppVersion.CAN_PREDICTIVE) {
+                    DataStoreManager.savePredict(false)
+                }
+                if(AppVersion.isRunningOnHusk) {
+                    DataStoreManager.saveMotionBlur(false)
+                    DataStoreManager.saveLiquidGlass(false)
+                    DataStoreManager.savePredict(false)
+                    DataStoreManager.saveHazeBlur(false)
+                }
+            }
         }
     }
 }

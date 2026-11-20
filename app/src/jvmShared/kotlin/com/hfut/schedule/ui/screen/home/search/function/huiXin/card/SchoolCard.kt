@@ -1,13 +1,13 @@
 package com.hfut.schedule.ui.screen.home.search.function.huiXin.card
+import com.xah.common.ui.component.text.ScrollText
+import com.hfut.schedule.logic.model.enumeration.FocusSchoolCardQuickButton
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +19,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -28,102 +29,95 @@ import com.xah.common.ui.res.Strings
 import com.xah.common.ui.res.stringOf
 import com.xah.common.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hfut.schedule.network.api.model.response.json.community.CommunityToday
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.network.api.model.Constant
-import com.hfut.schedule.ui.component.status.EmptyIcon
-import com.xah.common.ui.component.text.ScrollText
+import com.hfut.schedule.network.api.model.response.json.community.CommunityToday
 import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.container.cardNormalColor
+import com.hfut.schedule.ui.component.status.EmptyIcon
 import com.hfut.schedule.ui.nav.destination.SchoolCardDestination
+import com.hfut.schedule.ui.screen.home.search.QuickButtonForSearchScreen
 import com.hfut.schedule.ui.util.state.GlobalUiStateHolder
-
 import com.sharednav.common.helper.NoneRoundShape
 import com.xah.common.logic.util.EMPTY_STRING
 import com.xah.container.component.base.sharedContainer
 import com.xah.navigation.util.LocalNavController
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun SchoolCardItem(isFromFocus : Boolean) {
     val navController = LocalNavController.current
-    val interactionSource2 = remember { MutableInteractionSource() }
-    val isPressed2 by interactionSource2.collectIsPressedAsState()
-    val scale2 = animateFloatAsState(
-        targetValue = if (isPressed2) 0.9f else 1f, // 按下时为0.9，松开时为1
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-        label = EMPTY_STRING // 使用弹簧动画
-    )
     val cardValue by remember { derivedStateOf { GlobalUiStateHolder.cardValue } }
     var text by remember { mutableStateOf(cardValue?.balance ?: prefs.getString("card","00")) }
+    val nullStr = remember { "--" }
 
     LaunchedEffect(cardValue) {
         text = cardValue?.balance ?: prefs.getString("card","00")
-        if(text == "00") { text = stringOf(Strings.navigation_label_school_card_not_login) }
+        if(text == "00") { text = nullStr }
     }
 
-    val showAdd by DataStoreManager.enableShowFocusSchoolCardAddButton.collectAsState(true)
+    val focusSchoolCardQuickButton by DataStoreManager.focusSchoolCardQuickButton.collectAsState(FocusSchoolCardQuickButton.NONE.code)
+    val color = if (text != null && text != nullStr) {
+        if(text!!.length <= 4) {
+            MaterialTheme.colorScheme.error
+        } else {
+            LocalContentColor.current
+        }
+    } else {
+        LocalContentColor.current
+    }
+
 
     TransplantListItem(
         color = cardNormalColor(),
         headlineContent = {
-            ScrollText(
-                text = "￥$text",
-                color = if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
-                    if(text!!.length <= 4){
-                        MaterialTheme.colorScheme.error
-                    } else LocalContentColor.current
-                } else LocalContentColor. current
-            )
+            if(!isFromFocus || focusSchoolCardQuickButton != FocusSchoolCardQuickButton.NONE.code) {
+                ScrollText(
+                    text = "￥$text",
+                    color = color
+                )
+            } else {
+                Row {
+                    Text(
+                        text = "￥",
+                        color = color
+                    )
+                    ScrollText(
+                        text = "$text",
+                        color = color
+                    )
+                }
+            }
         },
         overlineContent = {
             ScrollText(
-                if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
+                if (text != null && text != nullStr) {
                     if(text!!.length <= 4){
                         stringResource(Strings.navigation_label_school_card_warn)
                     } else stringResource(Strings.navigation_label_school_card)
                 } else stringResource(Strings.navigation_label_school_card),
-                color = if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
-                    if(text!!.length <= 4){
-                        MaterialTheme.colorScheme.error
-                    } else LocalContentColor.current
-                } else LocalContentColor. current
+                color = color
             )
         },
         leadingContent = {
             Icon(
                 painterResource(Drawables.credit_card),
                 contentDescription = "Localized description",
-                tint = if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login)) {
-                    if(text!!.length <= 4) {
-                        MaterialTheme.colorScheme.error
-                    } else {
-                        LocalContentColor.current
-                    }
-                } else {
-                    LocalContentColor. current
-                }
+                tint = color
             )
         },
-        trailingContent={
-            if (text != null && text != stringResource(Strings.navigation_label_school_card_not_login) && (showAdd || text!!.length <= 4)) {
-                FilledTonalIconButton(
-                    modifier = Modifier
-                        .scale(scale2.value)
-                        .size(30.dp),
-                    interactionSource = interactionSource2,
-                    onClick = {
-                        Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
-                    },
-                ) {
-                    Icon(
-                        painterResource(Drawables.add),
-                        contentDescription = "Localized description"
-                    )
+        trailingContent= {
+            if(isFromFocus) {
+                when(focusSchoolCardQuickButton) {
+                    FocusSchoolCardQuickButton.ADD.code -> SchoolCardAddQuickButton()
+                    FocusSchoolCardQuickButton.PAY.code -> HuiXinPayQuickButton()
                 }
+            } else {
+                SchoolCardAddQuickButton()
             }
         },
         modifier = Modifier
@@ -196,3 +190,32 @@ fun TodayInfo(bean : CommunityToday) {
 }
 
 
+@Composable
+private fun SchoolCardAddQuickButton() {
+    QuickButtonForSearchScreen(
+        onClick = {
+            Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
+        }
+    ) {
+        Icon(
+            painterResource(Drawables.add),
+            null
+        )
+    }
+}
+
+@Composable
+fun HuiXinPayQuickButton() {
+    val scope = rememberCoroutineScope()
+    QuickButtonForSearchScreen(
+        onClick = {
+            scope.launch {
+                val url = Constant.HUI_XIN_URL + "plat/pay" + "?synjones-auth=" + prefs.getString("auth","")
+                Starter.startWebUrlInner(url,"付款码",icon = Drawables.barcode)
+            }
+        }
+    ) {
+        // 特殊缩小size
+        Icon(painterResource(Drawables.barcode),null, modifier = Modifier.size(20.dp-1.dp))
+    }
+}

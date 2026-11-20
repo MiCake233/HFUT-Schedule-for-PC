@@ -24,7 +24,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.xah.common.logic.state.NetworkUiState
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.LiquidButton
@@ -38,11 +37,7 @@ import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.util.res
-import com.xah.container.component.base.SharedContainer
-import com.sharednav.common.helper.NoneRoundShape
-import com.xah.navigation.util.LocalNavController
 import com.xah.navigation.util.LocalNavDependencies
-import dev.chrisbanes.haze.hazeSource
 
 data class CourseSearchApiDestination(
     val courseName : String?,

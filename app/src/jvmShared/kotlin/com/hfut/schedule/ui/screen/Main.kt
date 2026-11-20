@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen
+import androidx.navigation.compose.rememberNavController
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background

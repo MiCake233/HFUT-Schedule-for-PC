@@ -29,12 +29,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
+import com.google.zxing.NotFoundException
 import com.google.zxing.RGBLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import com.hfut.schedule.logic.util.other.QRCodeAnalyzer
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.ui.component.status.StatusIcon
 import com.hfut.schedule.ui.nav.destination.ScanQrCodeDestination
+import com.xah.common.logic.util.LogUtil
 import com.xah.common.ui.component.status.LoadingScreen
 import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.util.text
@@ -107,7 +109,10 @@ fun decode(bitmap: Bitmap): com.google.zxing.Result? {
     val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
     return try {
         MultiFormatReader().decode(binaryBitmap)
-    } catch (e: Exception) { null }
+    } catch (e: Exception) {
+        LogUtil.error(e)
+        null
+    }
 }
 
 @Composable
@@ -144,7 +149,8 @@ fun ScanQrCodeView2(
                     decode(image.toBitmap())?.let { result ->
                         onResult(result)
                     }
-                } catch (_: Exception) {
+                } catch (e: Exception) {
+                    LogUtil.error(e)
                 } finally {
                     image.close()
                 }

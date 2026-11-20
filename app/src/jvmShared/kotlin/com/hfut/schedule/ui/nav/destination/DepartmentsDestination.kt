@@ -25,7 +25,6 @@ import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.util.res
 import com.xah.navigation.util.LocalNavDependencies
-import dev.chrisbanes.haze.hazeSource
 
 object DepartmentsDestination : NavDestination() {
     override val key = "all_department"

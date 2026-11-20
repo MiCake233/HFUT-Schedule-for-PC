@@ -197,6 +197,7 @@ object AppTracer {
             val method = clazz.getMethod("currentPackageName")
             method.invoke(null) as String
         } catch (e: Exception) {
+            LogUtil.error(e)
             "unknown"
         }
     }

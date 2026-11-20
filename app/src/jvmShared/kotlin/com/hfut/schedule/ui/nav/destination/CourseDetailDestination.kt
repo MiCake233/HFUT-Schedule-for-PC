@@ -25,7 +25,6 @@ import com.hfut.schedule.ui.style.special.rememberHazeBlur
 import com.hfut.schedule.ui.style.special.topBarBlur
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.util.res
-import dev.chrisbanes.haze.hazeSource
 
 data class CourseDetailDestination(
     val lesson : JxglstuLesson,

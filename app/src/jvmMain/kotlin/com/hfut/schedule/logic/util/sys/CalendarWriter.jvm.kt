@@ -88,6 +88,20 @@ actual suspend fun addToCalendars(
 
 private val ICS_DT: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
+/** iCalendar 要求用 CRLF 断行。只写 LF 时，部分日历（Outlook / Google）会拒绝导入。 */
+private const val ICS_EOL = "\r\n"
+
+/**
+ * 转义 TEXT 值。回车也要处理：只替换 `\n` 时，标题里的 `\r` 可以另起一行注入 `BEGIN:VEVENT`。
+ */
+fun escapeIcsText(value: String): String = value
+    .replace("\\", "\\\\")
+    .replace("\r\n", "\\n")
+    .replace("\n", "\\n")
+    .replace("\r", "\\n")
+    .replace(",", "\\,")
+    .replace(";", "\\;")
+
 private fun parse(date: String, time: String): LocalDateTime? = runCatching {
     LocalDateTime.parse("$date $time", ICS_DT)
 }.getOrNull()
@@ -150,49 +164,43 @@ internal object IcsExporter {
                 return@runCatching
             }
             val sb = StringBuilder(events)
-            sb.append('\n')
-            sb.append("BEGIN:VEVENT\n")
-            sb.append("UID:").append(uid).append('\n')
-            sb.append("DTSTAMP:").append(utcStamp()).append('\n')
-            sb.append("DTSTART:").append(event.start.format(dtFormat)).append('\n')
-            sb.append("DTEND:").append(event.end.format(dtFormat)).append('\n')
-            sb.append("SUMMARY:").append(escape(event.title)).append('\n')
+            sb.append(ICS_EOL)
+            sb.append("BEGIN:VEVENT").append(ICS_EOL)
+            sb.append("UID:").append(uid).append(ICS_EOL)
+            sb.append("DTSTAMP:").append(utcStamp()).append(ICS_EOL)
+            sb.append("DTSTART:").append(event.start.format(dtFormat)).append(ICS_EOL)
+            sb.append("DTEND:").append(event.end.format(dtFormat)).append(ICS_EOL)
+            sb.append("SUMMARY:").append(escapeIcsText(event.title)).append(ICS_EOL)
             event.place?.takeIf { it.isNotBlank() }?.let {
-                sb.append("LOCATION:").append(escape(it)).append('\n')
+                sb.append("LOCATION:").append(escapeIcsText(it)).append(ICS_EOL)
             }
             event.remark?.takeIf { it.isNotBlank() }?.let {
-                sb.append("DESCRIPTION:").append(escape(it)).append('\n')
+                sb.append("DESCRIPTION:").append(escapeIcsText(it)).append(ICS_EOL)
             }
             event.remindMinutes?.let {
-                sb.append("BEGIN:VALARM\n")
-                sb.append("TRIGGER:-PT").append(it).append("M\n")
-                sb.append("ACTION:DISPLAY\n")
-                sb.append("DESCRIPTION:").append(escape(event.title)).append('\n')
-                sb.append("END:VALARM\n")
+                sb.append("BEGIN:VALARM").append(ICS_EOL)
+                sb.append("TRIGGER:-PT").append(it).append('M').append(ICS_EOL)
+                sb.append("ACTION:DISPLAY").append(ICS_EOL)
+                sb.append("DESCRIPTION:").append(escapeIcsText(event.title)).append(ICS_EOL)
+                sb.append("END:VALARM").append(ICS_EOL)
             }
-            sb.append("END:VEVENT\n")
-            sb.append("END:VCALENDAR\n")
+            sb.append("END:VEVENT").append(ICS_EOL)
+            sb.append("END:VCALENDAR").append(ICS_EOL)
             file.writeText(sb.toString())
             com.hfut.schedule.logic.util.sys.showToast("已导出到 ${file.absolutePath}")
         }
     }
 
     private fun header(): String = buildString {
-        append("BEGIN:VCALENDAR\n")
-        append("VERSION:2.0\n")
-        append("PRODID:-//HFUT-Schedule//Desktop//CN\n")
-        append("CALSCALE:GREGORIAN\n")
-        append("METHOD:PUBLISH\n")
+        append("BEGIN:VCALENDAR").append(ICS_EOL)
+        append("VERSION:2.0").append(ICS_EOL)
+        append("PRODID:-//HFUT-Schedule//Desktop//CN").append(ICS_EOL)
+        append("CALSCALE:GREGORIAN").append(ICS_EOL)
+        append("METHOD:PUBLISH").append(ICS_EOL)
     }
 
     private fun stripTrailer(text: String): String =
         text.substringBefore("END:VCALENDAR")
-
-    private fun escape(value: String): String = value
-        .replace("\\", "\\\\")
-        .replace("\n", "\\n")
-        .replace(",", "\\,")
-        .replace(";", "\\;")
 
     /** 供「导出当前课表」按钮使用：一次性写入多个事件 */
     fun exportAll(events: List<IcsEvent>) {
@@ -201,17 +209,17 @@ internal object IcsExporter {
         events.forEach { event ->
             val uid = "hfut-" + event.start.toString().hashCode().toUInt().toString(16) +
                 "-" + event.title.hashCode().toUInt().toString(16) + "@hfut-schedule"
-            sb.append("BEGIN:VEVENT\n")
-            sb.append("UID:").append(uid).append('\n')
-            sb.append("DTSTAMP:").append(utcStamp()).append('\n')
-            sb.append("DTSTART:").append(event.start.format(dtFormat)).append('\n')
-            sb.append("DTEND:").append(event.end.format(dtFormat)).append('\n')
-            sb.append("SUMMARY:").append(escape(event.title)).append('\n')
-            event.place?.takeIf { it.isNotBlank() }?.let { sb.append("LOCATION:").append(escape(it)).append('\n') }
-            event.remark?.takeIf { it.isNotBlank() }?.let { sb.append("DESCRIPTION:").append(escape(it)).append('\n') }
-            sb.append("END:VEVENT\n")
+            sb.append("BEGIN:VEVENT").append(ICS_EOL)
+            sb.append("UID:").append(uid).append(ICS_EOL)
+            sb.append("DTSTAMP:").append(utcStamp()).append(ICS_EOL)
+            sb.append("DTSTART:").append(event.start.format(dtFormat)).append(ICS_EOL)
+            sb.append("DTEND:").append(event.end.format(dtFormat)).append(ICS_EOL)
+            sb.append("SUMMARY:").append(escapeIcsText(event.title)).append(ICS_EOL)
+            event.place?.takeIf { it.isNotBlank() }?.let { sb.append("LOCATION:").append(escapeIcsText(it)).append(ICS_EOL) }
+            event.remark?.takeIf { it.isNotBlank() }?.let { sb.append("DESCRIPTION:").append(escapeIcsText(it)).append(ICS_EOL) }
+            sb.append("END:VEVENT").append(ICS_EOL)
         }
-        sb.append("END:VCALENDAR\n")
+        sb.append("END:VCALENDAR").append(ICS_EOL)
         runCatching {
             file.writeText(sb.toString())
             com.hfut.schedule.logic.util.sys.showToast("已导出到 ${file.absolutePath}")

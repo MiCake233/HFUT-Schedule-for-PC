@@ -1,4 +1,5 @@
 package com.hfut.schedule.ui.screen.home.calendar.timetable.logic
+import com.hfut.schedule.logic.util.sys.parseTimeItem
 
 import com.hfut.schedule.logic.util.sys.parseTimeItem
 

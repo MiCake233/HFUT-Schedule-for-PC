@@ -43,6 +43,7 @@ import com.hfut.schedule.logic.util.storage.kv.SharedPrefs.prefs
 import com.hfut.schedule.logic.util.sys.Starter.refreshLogin
 import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
 import com.hfut.schedule.ui.component.button.BUTTON_PADDING
+import com.hfut.schedule.ui.component.button.LARGE_BUTTON_PADDING
 import com.hfut.schedule.ui.component.button.LargeButton
 import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.button.NoPadding
@@ -54,6 +55,7 @@ import com.hfut.schedule.ui.nav.destination.AllProgramsDestination
 import com.hfut.schedule.ui.nav.destination.ProgramCompetitionDestination
 import com.hfut.schedule.ui.nav.destination.ProgramConfirmationDestination
 import com.hfut.schedule.ui.nav.destination.ProgramDestination
+import com.hfut.schedule.ui.screen.home.search.QuickButtonForSearchScreen
 import com.hfut.schedule.ui.style.special.backDropSource
 import com.hfut.schedule.ui.style.special.bottomBarBlur
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
@@ -92,16 +94,13 @@ fun Program(
                 shape = CircleShape,
                 containerColor = IconButtonDefaults.filledTonalIconButtonColors().containerColor
             ) {
-                NoPadding {
-                    FilledTonalIconButton(
-                        shape = NoneRoundShape,
-                        onClick = {
-                            navController.push(dest)
-                        },
-                        modifier = Modifier.size(30.dp)
-                    ) {
-                        Icon(painterResource(Drawables.search),null, modifier = Modifier.size(20.dp))
+                QuickButtonForSearchScreen(
+                    shape = NoneRoundShape,
+                    onClick = {
+                        navController.push(dest)
                     }
+                ) {
+                    Icon(painterResource(Drawables.search),null, modifier = Modifier.size(20.dp))
                 }
             }
         },
@@ -178,7 +177,7 @@ fun ProgramScreen(
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 contentColor = MaterialTheme.colorScheme.secondary
                             )
-                            Spacer(Modifier.width(APP_HORIZONTAL_DP/2))
+                            Spacer(Modifier.width(LARGE_BUTTON_PADDING))
                             LargeButton(
                                 modifier = Modifier
                                     .fillMaxWidth()

@@ -297,6 +297,7 @@ suspend fun loginGuaGuaClick(
 fun getGuaGuaPersonInfo() : GuaGuaLoginData? = try {
     val json = prefs.getString("GuaGuaPersonInfo",null)
     GsonInstance.fromJson(json, GuaGuaLoginResponse::class.java).data
-} catch (_:Exception) {
+} catch (e: Exception) {
+    LogUtil.error(e)
     null
 }

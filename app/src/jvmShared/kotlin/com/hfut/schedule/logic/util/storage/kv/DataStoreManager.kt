@@ -14,6 +14,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.xah.common.logic.model.CampusRegion
+import com.hfut.schedule.logic.model.enumeration.FocusSchoolCardQuickButton
 import com.hfut.schedule.logic.model.enumeration.Language
 import com.hfut.schedule.logic.util.helper.getCampusRegion
 import com.hfut.schedule.logic.util.other.AppInfo
@@ -49,13 +50,13 @@ import kotlinx.coroutines.withContext
 /**
  * 键值对存储
  *
- * 尽量别用SP了，要弃用了，存键值对来这里存
+ * 尽量别用[SharedPrefs]了，要弃用了，存键值对来这里存
  *
  * 需要数据变更时，在key的尾部添加版本号。例如  enable_new_style_bottom_bar_v2
  *
- * 对于多个选项的存储，有封装好的BaseChoice，可以去看一下怎么用的，然后子类就不要放在这里了目前已有的我后续也会清理出去
+ * 对于多个选项的存储，有封装好的[BaseChoice]，可以去看一下怎么用的，然后子类就不要放在这里了目前已有的我后续也会清理出去
  *
- * 对于大文本的存储，建议去LargeDataStoreManager
+ * 对于大文本的存储，建议去[LargeStringDataManager]
  *
  * 对于简单的List、Map等，允许在这里存储
  *
@@ -131,6 +132,22 @@ object DataStoreManager : IDataStore {
             }
         }
         return migrated
+    }
+
+    /**
+     * 退出登录时清掉登录换来的会话（JWT / cookie / Bearer）。
+     * 用户在设置里自己保存的平台密码不在这里动。
+     */
+    suspend fun clearSessionSecrets() {
+        dataStore.edit { prefs ->
+            listOf(
+                SUPABASE_JWT,
+                SUPABASE_REFRESH_TOKEN,
+                WEBVPN_COOKIE,
+                WX_AUTH,
+                UNI_APP_JWT,
+            ).forEach { prefs[it] = "" }
+        }
     }
 
     /** 自检用：DataStore 里敏感键是否都已是密文（缺失也算正常） */
@@ -241,7 +258,7 @@ object DataStoreManager : IDataStore {
     private val SHOW_FOCUS_SCHOOL_NET = booleanPreferencesKey("show_focus_school_net")
     private val SHOW_FOCUS_SCHOOL_CARD = booleanPreferencesKey("show_focus_school_card")
     private val SHOW_FOCUS_TODAY = booleanPreferencesKey("show_focus_today")
-    private val SHOW_FOCUS_SCHOOL_CARD_ADD_BUTTON = booleanPreferencesKey("show_focus_school_card_add_button")
+    private val FOCUS_SCHOOL_CARD_QUICK_BUTTON = intPreferencesKey("focus_school_card_quick_button")
     private val SHOW_FOCUS_GRADE = intPreferencesKey("show_focus_grade")
     private val CAN_USE = booleanPreferencesKey("can_use")
     private val UNI_APP_GRADE_COUNT = intPreferencesKey("uni_app_grade_count")
@@ -340,7 +357,7 @@ object DataStoreManager : IDataStore {
     suspend fun saveEnableFocusElectric(value: Boolean) = saveValue(SHOW_FOCUS_ELECTRIC, value)
     suspend fun saveEnableFocusSchoolNet(value: Boolean) = saveValue(SHOW_FOCUS_SCHOOL_NET, value)
     suspend fun saveEnableFocusSchoolCard(value: Boolean) = saveValue(SHOW_FOCUS_SCHOOL_CARD, value)
-    suspend fun saveEnableFocusSchoolCardAddButton(value: Boolean) = saveValue(SHOW_FOCUS_SCHOOL_CARD_ADD_BUTTON, value)
+    suspend fun saveFocusSchoolCardQuickButton(value: FocusSchoolCardQuickButton) = saveValue(FOCUS_SCHOOL_CARD_QUICK_BUTTON, value.code)
     suspend fun saveEnableUse(value: Boolean) = saveValue(CAN_USE, value)
     suspend fun saveEnableShowFocusGrade(value: GradeAutoCheckMode) = saveValue(SHOW_FOCUS_GRADE, value.code)
     suspend fun saveUniAppGradeCount(value: Int) = saveValue(UNI_APP_GRADE_COUNT, value)
@@ -436,13 +453,13 @@ object DataStoreManager : IDataStore {
     val enableShowFocusElectric = getFlow(SHOW_FOCUS_ELECTRIC,true)
     val enableShowFocusSchoolNet = getFlow(SHOW_FOCUS_SCHOOL_NET,true)
     val enableShowFocusSchoolCard = getFlow(SHOW_FOCUS_SCHOOL_CARD,true)
-    val enableShowFocusSchoolCardAddButton = getFlow(SHOW_FOCUS_SCHOOL_CARD_ADD_BUTTON,true)
+    val focusSchoolCardQuickButton = getFlow(FOCUS_SCHOOL_CARD_QUICK_BUTTON,FocusSchoolCardQuickButton.NONE.code)
     val enableShowFocusGrade = getFlow(SHOW_FOCUS_GRADE,GradeAutoCheckMode.ONLY_VACATION.code)
     val enableMergeSquare = getFlow(MERGE_SQUARE,false)
     val enableUse = getFlow(CAN_USE, false)
     val uniAppGradeCount = getFlow(UNI_APP_GRADE_COUNT, -1)
     val enableNewBottomBar = getFlow(NEW_BOTTOM_BAR, false)
-    val enableNewBottomBarSafelyPadding = getFlow(NEW_BOTTOM_BAR_SAFELY_PADDING, true)
+    val enableNewBottomBarSafelyPadding = getFlow(NEW_BOTTOM_BAR_SAFELY_PADDING, false)
     val enableShowCalendarTimeLine = getFlow(SHOW_CALENDAR_TIME_LINE, false)
     val enableIgnoreUnjoinedGradeItems = getFlow(IGNORE_UNJOINED_GRADE_ITEMS, false)
     val enableDataStore = getFlow(ENABLE_ROOM_DATA_STORE, true)

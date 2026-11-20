@@ -21,6 +21,7 @@ import com.hfut.schedule.ui.component.icon.LoadingIcon
 import com.hfut.schedule.ui.component.icon.RotatingIcon
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.icon.LoadingIconNew
+import com.hfut.schedule.ui.screen.home.search.QuickButtonForSearchScreen
 import com.hfut.schedule.ui.style.special.HazeBottomSheet
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.logic.util.EMPTY_STRING
@@ -56,13 +57,10 @@ fun Shower(vm: NetWorkViewModel, hazeState: HazeState) {
             }
         },
         trailingContent = {
-            FilledTonalIconButton(
-                modifier = Modifier
-                    .size(30.dp),
+            QuickButtonForSearchScreen(
                 onClick = {
-                    // 瓜瓜乐自动登录只在 Android 端实现；桌面端未注册该动作时什么都不做
-                    com.hfut.schedule.ui.nav.UiSlots.action("guagua_start")?.invoke(listOf(vm, navController))
-                },
+                    getInGuaGua(vm, navController) { loading = it }
+                }
             ) { Icon( painterResource(Drawables.shower), contentDescription = "Localized description",) }
         },
         modifier = Modifier.clickable {

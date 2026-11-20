@@ -24,7 +24,6 @@ import com.hfut.schedule.ui.style.special.topBarBlur
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.common.ui.style.padding.InnerPaddingHeight
 import com.xah.common.ui.util.text
-import dev.chrisbanes.haze.hazeSource
 
 /**
  * 临时的，懒得写在学期切换时驱动刷新课程表，直接利用导航吧

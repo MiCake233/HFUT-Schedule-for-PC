@@ -9,6 +9,7 @@ package com.hfut.schedule.logic.util.storage.kv
  *
  * 具体加密由各端在启动时注入：
  * - Windows 桌面：Windows DPAPI（当前用户范围，见 `desktopApp/Dpapi.kt`）；
+ * - macOS 桌面：登录钥匙串里的 AES-GCM 主密钥（见 `desktopApp` 的 `MacSecrets`）；
  * - 其它平台或不支持时：[protector] 为 null，行为退化为明文（与旧版本一致）。
  *
  * 兼容性：只有带 [MARKER] 前缀的值才尝试解密；旧版本留下的明文值原样返回，
@@ -31,6 +32,11 @@ object SecretStore {
         "loginCode",        // 呱呱洗浴
         "PE",
         "ZhiJian",
+        "stu",              // 学工系统 _WEU 会话
+        "LOGIN_FLAVORING",  // CAS 登录加密用的服务端 cookie
+        "webVpnKey",
+        "pins",             // 一卡通支付口令
+        "GuaGuaPsk",        // 洗浴账号密码
         "Password",         // 桌面上已不再写入，这里兜底旧数据
     )
 
@@ -48,9 +54,13 @@ object SecretStore {
         "jxglstu_password",
         "school_net_password",
         "uni_app_jwt",
-        "api_key",
+        "llm_api_key",
     )
 
+    /**
+     * 密文标记。名字沿用 Windows 首次引入时的 `dpapi1:`，macOS 的 AES-GCM 密文也用它，
+     * 这样已经加密的 Windows 数据不用迁移格式。解开靠各端注入的 [unprotector]，换平台解不开就当未登录。
+     */
     private const val MARKER = "dpapi1:"
 
     /** 加密：明文 → 可落盘字符串；返回 null 表示加密失败 */
