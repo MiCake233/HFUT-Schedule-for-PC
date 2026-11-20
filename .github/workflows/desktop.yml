@@ -1,0 +1,47 @@
+# 无界面检查：桌面单元测试与 detekt。
+# snapshot、verify* 会拉起窗口或依赖本机数据；packageMsi / packageDmg 是打包任务，不在这里跑。
+name: desktop
+
+on:
+  pull_request:
+  push:
+    branches:
+      - desktop-windows
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: unit tests and detekt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      # :desktopApp 依赖 :app 的 JVM 目标，配置阶段会加载 Android Gradle Plugin，因此需要 SDK。
+      # 不使用 android-actions/setup-android：它会执行 `sdkmanager tools`，而当前 cmdline-tools 已没有这个包。
+      - name: Install Android SDK
+        run: |
+          set -euo pipefail
+          SDK="$HOME/android-sdk"
+          mkdir -p "$SDK/cmdline-tools"
+          curl -fsSL -o /tmp/cmdtools.zip https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+          unzip -q /tmp/cmdtools.zip -d "$SDK/cmdline-tools"
+          mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          mkdir -p "$SDK/licenses"
+          printf '%s\n' "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$SDK/licenses/android-sdk-license"
+          "$SDK/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-36" "build-tools;35.0.0" "build-tools;36.0.0"
+
+      - name: Desktop unit tests and detekt
+        env:
+          # 托管运行器没有显示器。只传给 Gradle 与测试进程，避免 AWT 去连接 X11。
+          JAVA_TOOL_OPTIONS: -Djava.awt.headless=true
+        run: bash ./gradlew :desktopApp:test :desktopApp:detekt
