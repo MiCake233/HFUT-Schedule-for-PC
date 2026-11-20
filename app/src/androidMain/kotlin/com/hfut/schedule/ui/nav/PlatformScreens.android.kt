@@ -178,7 +178,8 @@ actual fun RenderPlatformDestination(destination: NavDestination): Boolean = whe
             true
         }
         is com.hfut.schedule.ui.nav.destination.AiDestination -> {
-                    AIScreen()
+                    val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+                    com.hfut.schedule.ui.screen.home.search.function.other.AiScreen(vm, destination.keyword)
             true
         }
         is com.hfut.schedule.ui.nav.destination.AllExamDestination -> {
@@ -253,8 +254,9 @@ actual fun RenderPlatformDestination(destination: NavDestination): Boolean = whe
                     ClassroomScreen(vm)
             true
         }
-        is com.hfut.schedule.ui.nav.destination.CommunityAppointmentDestination -> {
-                    AppointmentScreen()
+        is com.hfut.schedule.ui.nav.destination.AppointmentDestination -> {
+                    val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+                    AppointmentScreen(vm)
             true
         }
         is com.hfut.schedule.ui.nav.destination.ControlCenterDestination -> {
@@ -265,9 +267,9 @@ actual fun RenderPlatformDestination(destination: NavDestination): Boolean = whe
                     CornerSettingsScreen()
             true
         }
-        is com.hfut.schedule.ui.nav.destination.CourseClassmatesScreen -> {
+        is com.hfut.schedule.ui.nav.destination.CourseClassmatesDestination -> {
                     val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
-                    ClassmatesScreen(vm,destination.lessonId,text("${CourseClassmatesScreen.TITLE}-${destination.description}"),destination.isScheduled)
+                    ClassmatesScreen(vm,destination.lessonId,text("${CourseClassmatesDestination.TITLE}-${destination.description}"),destination.isScheduled)
             true
         }
         is com.hfut.schedule.ui.nav.destination.CourseDetailApiDestination -> {

@@ -8,8 +8,6 @@ import android.webkit.WebViewClient
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -28,7 +26,6 @@ import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
 import com.hfut.schedule.network.api.model.Constant
 import com.hfut.schedule.ui.component.screen.CustomTransitionScaffold
 import com.hfut.schedule.ui.nav.destination.WebViewDestination
-import com.hfut.schedule.ui.util.FORCE_DARK_JS
 import com.hfut.schedule.ui.util.WebViewBackHandler
 import com.hfut.schedule.ui.util.WebViewBackIcon
 import com.hfut.schedule.ui.util.WebViewContent
@@ -46,7 +43,6 @@ import com.hfut.schedule.ui.util.updateTitle
 import com.hfut.schedule.ui.util.updateUrl
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.logic.util.LogUtil
-import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -97,6 +93,7 @@ fun WebViewScreenForNavigation(
             currentUrl,
             currentTitle,
             url,
+            loading = loading,
             onSearch = { showSearch = !showSearch }
         ) {
         }

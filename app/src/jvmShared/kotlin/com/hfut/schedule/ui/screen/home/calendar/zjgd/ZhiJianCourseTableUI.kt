@@ -648,6 +648,8 @@ fun ZhiJianCourseTableUI(
                     )
                 }
             }
+            val enableNewBottomBar by DataStoreManager.enableNewBottomBar.collectAsState(initial = false)
+            val paddingBottomValue = innerPadding.calculateBottomPadding() - if(enableNewBottomBar) 0.dp else navigationBarHeightPadding
             // 上一周
             AnimatedVisibility(
                 visible = shouldShowAddButton,
@@ -655,7 +657,7 @@ fun ZhiJianCourseTableUI(
                 exit = scaleOut(),
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(bottom = innerPadding.calculateBottomPadding() - navigationBarHeightPadding)
+                    .padding(bottom = paddingBottomValue)
                     .padding(APP_HORIZONTAL_DP)
             ) {
                 FloatingActionButton(
@@ -672,7 +674,7 @@ fun ZhiJianCourseTableUI(
                 exit = scaleOut(),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = innerPadding.calculateBottomPadding() - navigationBarHeightPadding)
+                    .padding(bottom = paddingBottomValue)
                     .padding(APP_HORIZONTAL_DP)
             ) {
                 ExtendedFloatingActionButton(
@@ -700,7 +702,7 @@ fun ZhiJianCourseTableUI(
                 exit = scaleOut(),
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(bottom = innerPadding.calculateBottomPadding() - navigationBarHeightPadding)
+                    .padding(bottom = paddingBottomValue)
                     .padding(APP_HORIZONTAL_DP)
             ) {
                 FloatingActionButton(

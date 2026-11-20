@@ -26,7 +26,6 @@ import com.xah.common.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.room.Update
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.sys.JumpTransitionEffectWallpaper
 import com.hfut.schedule.logic.util.sys.Starter
@@ -41,9 +40,10 @@ import com.hfut.schedule.ui.component.divider.PaddingHorizontalDivider
 import com.hfut.schedule.ui.component.network.UrlImage
 import com.hfut.schedule.ui.component.text.DividerTextExpandedWith
 import com.hfut.schedule.ui.nav.destination.AddEventDestination
-import com.hfut.schedule.ui.nav.destination.ClassroomDestination
+import com.hfut.schedule.ui.nav.destination.AiDestination
+import com.hfut.schedule.ui.nav.destination.PersonInfoDestination
+import com.hfut.schedule.ui.nav.destination.AppointmentDestination
 import com.hfut.schedule.ui.nav.destination.TrackDestination
-import com.hfut.schedule.ui.nav.destination.VersionInfoDestination
 import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.nav.window.base.FloatingWindow
 import com.sharednav.common.helper.NoneRoundShape
@@ -57,18 +57,19 @@ import com.xah.navigation.util.LocalNavControllerSafely
 import kotlinx.coroutines.launch
 import com.hfut.schedule.ui.nav.destination.SettingsJxglstuPasswordPlatformDestination
 
-private const val RELEASE_DATE = "2026-11-09"
+private const val RELEASE_DATE = "2026-11-11"
 
 @Composable
 fun VersionInfo() {
     VersionInfoCard()
     // 适配iOS后版本号跳为5.0
     DividerTextExpandedWith(text = "新特性") {
-        UpdateItems("新增 少量页面支持手机横屏、平板大屏适配")//
-        UpdateItems("修复 聚焦首页自动刷新机制首次被推迟1分钟的Bug")
-        UpdateItems("修复 适配微专业", developers = listOf("G-E-E-D"))//
+        UpdateItems("新增 大模型","位于 查询中心-大模型，目前仅支持DeepSeek",to = To.Screen(AiDestination()))
+        UpdateItems("新增 新建日程及网页支持使用DeepSeek辅助",to = To.Screen(AddEventDestination()))
+        UpdateItems("新增 合工大教务数据源的开课查询、培养方案、个人信息",to = To.Screen(PersonInfoDestination))
+        UpdateItems("新增 社区预约","位于 查询中心-社区预约",to = To.Screen(AppointmentDestination))
+        UpdateItems("修复 指间工大在新底栏下的避让Bug")
 //        UpdateItems("重构 新增日程","支持一次性添加若干时间段、选择日期时支持多选若干天",to = To.Screen(AddEventDestination(origin = VersionInfoDestination.key)))
-//        UpdateItems("新增 扫码页面支持点击手动对焦")
 //        UpdateItems("新增 语言切换功能","位于 选项-偏好与配置-语言，支持中英文",to = To.Screen(SettingsConfigurationDestination))
 //        UpdateItems("新增 允许在课程表显示日历账户的日程")
 //        UpdateItems("新增 支持接入大模型帮助创建日程","位于右上角彩色图标",to = To.Screen(AddEventDestination()))
@@ -89,7 +90,6 @@ fun VersionInfo() {
 //            UpdateItems("新增 启动台与聚焦支持固定项目")
 //            UpdateItems("新增 图书馆我的书架、收藏","位于 查询中心-图书馆")
 //            UpdateItems("新增 图书馆斛兵知搜支持阅读电子书")
-//            UpdateItems("新增 大模型","位于 查询中心-大模型,应用场景：通知公告的提炼、新增聚焦日程")
 //            UpdateItems("新增 合工大教务接口的评教","位于 查询中心-评教")
 //            UpdateItems("新增 开课查询数据源：合工大教务")
 //            UpdateItems("新增 合肥校区电费的快速充值")
@@ -104,7 +104,6 @@ fun VersionInfo() {
 //            UpdateItems("新增 共建平台忘记密码、修改密码、注销")
 //            UpdateItems("新增 教务课程表导出为ics文件", "位于 课程表-多课表-写入日历日程",UpdateType.ADD)
 //            UpdateItems("新增 本地聚焦卡片快速转化为云端卡片", null, UpdateType.ADD)
-//            UpdateItems("重构 部分界面，使其适配平板、折叠屏等大屏设备", null, UpdateType.RENEW)
 //            UpdateItems("新增 智慧后勤的登录")
     }
     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP, vertical = CARD_NORMAL_DP), horizontalArrangement = Arrangement.Center) {

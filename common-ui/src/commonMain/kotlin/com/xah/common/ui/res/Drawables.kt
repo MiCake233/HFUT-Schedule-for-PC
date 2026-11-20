@@ -766,7 +766,10 @@ object Drawables {
         "apple",
         "directions_bus_filled",
         "schedule_filled",
-        "swap_horiz"
+        "swap_horiz",
+        "table_restaurant_filled",
+        "waving_hand",
+        "where_to_vote"
     )
 
     const val account_balance_wallet: Int = 0
@@ -1524,6 +1527,9 @@ object Drawables {
     const val directions_bus_filled: Int = 752
     const val schedule_filled: Int = 753
     const val swap_horiz: Int = 754
+    const val table_restaurant_filled: Int = 755
+    const val waving_hand: Int = 756
+    const val where_to_vote: Int = 757
 
     val size: Int get() = names.size
 

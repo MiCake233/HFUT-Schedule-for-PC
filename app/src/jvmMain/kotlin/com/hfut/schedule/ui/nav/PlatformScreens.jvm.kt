@@ -75,7 +75,6 @@ import com.hfut.schedule.ui.screen.home.search.function.my.notification.Notifica
 import com.hfut.schedule.ui.screen.home.search.function.my.webLab.NotificationBoxScreen
 import com.hfut.schedule.ui.screen.home.search.function.my.webLab.WebNavigationScreen
 import com.hfut.schedule.ui.screen.home.search.function.one.pay.FeeScreen
-import com.hfut.schedule.ui.screen.home.search.function.other.AIScreen
 import com.hfut.schedule.ui.screen.home.search.function.other.TrackScreen
 import com.hfut.schedule.ui.screen.home.search.function.other.life.LifeScreen
 import com.hfut.schedule.ui.screen.home.search.function.other.wechat.AlumniScreen
@@ -139,15 +138,44 @@ actual fun RenderPlatformDestination(destination: NavDestination): Boolean {
 /** 少数只有 key、没有参数对象的平台页面（设置页壳）走这个入口 */
 @Composable
 actual fun RenderPlatformScreen(key: String): Boolean {
+    val id = key.split("#").first()
+    if (id == "platform_settings_ai_api_key") {
+        AiApiKeyScreen()
+        return true
+    }
     val factory = PlatformHooks.platformScreenFactory
     if (factory != null) {
-        val content = factory(key.split("#").first())
+        val content = factory(id)
         if (content != null) {
             content()
             return true
         }
     }
     return false
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AiApiKeyScreen() {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val hazeState = rememberHazeBlur()
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            MediumTopAppBar(
+                modifier = Modifier.topBarBlur(hazeState, MaterialTheme.colorScheme.surfaceContainer),
+                scrollBehavior = scrollBehavior,
+                title = { Text("设置: 大模型") },
+                colors = topBarTransplantColor(),
+                navigationIcon = { TopBarNavigationIcon() },
+            )
+        },
+    ) { innerPadding ->
+        Column(modifier = Modifier.fillMaxSize().hazeSource(hazeState)) {
+            com.hfut.schedule.ui.screen.home.cube.sub.ApiKeyScreen(innerPadding)
+        }
+    }
 }
 
 @Composable
@@ -173,7 +201,8 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         true
     }
     is com.hfut.schedule.ui.nav.destination.AiDestination -> {
-        AIScreen()
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        com.hfut.schedule.ui.screen.home.search.function.other.AiScreen(vm, destination.keyword)
         true
     }
     is com.hfut.schedule.ui.nav.destination.AllExamDestination -> {
@@ -216,20 +245,21 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         ClassroomScreen(vm)
         true
     }
-    is com.hfut.schedule.ui.nav.destination.CommunityAppointmentDestination -> {
-        AppointmentScreen()
+    is com.hfut.schedule.ui.nav.destination.AppointmentDestination -> {
+        val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        AppointmentScreen(vm)
         true
     }
     is com.hfut.schedule.ui.nav.destination.CornerSettingsDestination -> {
         CornerSettingsScreen()
         true
     }
-    is com.hfut.schedule.ui.nav.destination.CourseClassmatesScreen -> {
+    is com.hfut.schedule.ui.nav.destination.CourseClassmatesDestination -> {
         val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
         TotalCourseClassmatesScreen(
             vm,
             destination.lessonId,
-            text("${CourseClassmatesScreen.TITLE}-${destination.description}"),
+            text("${CourseClassmatesDestination.TITLE}-${destination.description}"),
             destination.isScheduled
         )
         true

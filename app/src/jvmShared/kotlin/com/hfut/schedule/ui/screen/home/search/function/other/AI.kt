@@ -1,63 +1,116 @@
 package com.hfut.schedule.ui.screen.home.search.function.other
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import com.xah.common.ui.res.Drawables
 import com.xah.common.ui.res.painterResource
 import com.xah.common.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.hfut.schedule.logic.model.enumeration.ChatRole
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
+import com.hfut.schedule.logic.util.sys.ClipBoardHelper
+import com.hfut.schedule.logic.util.sys.showDevelopingToast
+import com.hfut.schedule.logic.util.sys.showToast
+import com.hfut.schedule.network.api.model.response.json.ai.AiChatChoice
+import com.hfut.schedule.network.api.model.response.json.ai.AiChatMsg
+import com.hfut.schedule.ui.component.button.BUTTON_END_PADDING
+import com.hfut.schedule.ui.component.button.BUTTON_PADDING
+import com.hfut.schedule.ui.component.button.LiquidButton
 import com.hfut.schedule.ui.component.button.TopBarNavigationIcon
+import com.hfut.schedule.ui.component.button.containerBackDrop
+import com.hfut.schedule.ui.component.container.CARD_NORMAL_DP
 import com.hfut.schedule.ui.component.container.TransplantListItem
-
-import com.hfut.schedule.ui.component.status.DevelopingIcon
+import com.hfut.schedule.ui.component.container.cardNormalColor
+import com.hfut.schedule.ui.component.input.CustomTextField
+import com.hfut.schedule.ui.component.network.CommonNetworkScreen
+import com.hfut.schedule.ui.component.status.StatusIcon
 import com.hfut.schedule.ui.nav.destination.AiDestination
+import com.hfut.schedule.ui.nav.destination.SettingsAiApiKeyPlatformDestination
+import com.hfut.schedule.ui.style.color.textFiledAllTransplant
+import com.hfut.schedule.ui.style.special.backDropSource
+import com.hfut.schedule.ui.style.special.bottomBarBlur
 import com.hfut.schedule.ui.style.special.rememberHazeBlur
-
 import com.hfut.schedule.ui.style.special.topBarBlur
-
-import com.xah.navigation.util.LocalNavController
-
+import com.hfut.schedule.ui.util.navigation.AppAnimationManager
+import com.hfut.schedule.viewmodel.network.NetWorkViewModel
+import com.hfut.schedule.ui.component.button.rememberLayerBackdrop
+import com.xah.common.logic.state.NetworkUiState
+import com.xah.common.logic.util.EMPTY_STRING
+import com.xah.common.logic.util.LogUtil
+import com.xah.common.logic.util.isNotNullAndEmptyAndBlank
+import com.xah.common.logic.util.isNullOrEmptyOrBlank
 import com.xah.common.ui.component.text.ScrollText
+import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.align.CenterScreen
 import com.xah.common.ui.style.color.topBarTransplantColor
-import dev.chrisbanes.haze.rememberHazeState
+import com.xah.common.ui.style.padding.InnerPaddingHeight
+import com.xah.common.ui.util.text
+import com.xah.navigation.util.LocalNavController
+import dev.chrisbanes.haze.hazeSource
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
-    ExperimentalSharedTransitionApi::class
-)
+/*
+TODO
+
+输入框：模型切换
+
+右上角：TOken情况、上下文情况、保存（三期规划）
+
+我的对话：复制、编辑并重发（二期规划）
+
+对方对话：复制，顶部思考（四期规划）
+ */
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun AI(
-) {
+fun AI() {
     val navController = LocalNavController.current
     TransplantListItem(
-        headlineContent = { ScrollText(text = AiDestination.title.asString()) },
+        headlineContent = { ScrollText(text = AiDestination.TITLE.asString()) },
         leadingContent = {
             Box() {
-                Icon(painterResource(AiDestination.icon), contentDescription = null)
+                Icon(painterResource(AiDestination.ICON), contentDescription = null)
             }
         },
         modifier = Modifier.clickable {
-            navController.push(AiDestination)
+            navController.push(AiDestination())
         }
     )
 }
@@ -108,15 +161,53 @@ fun RotatingRainbowGlow(
 }
 
 
-
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun AIScreen(
-//    navController : NavHostController,
+fun AiScreen(
+    vm : NetWorkViewModel,
+    keyword : String? = null,
 ) {
     val hazeState = rememberHazeBlur()
-
+    val backdrop = rememberLayerBackdrop()
+    val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val navController = LocalNavController.current
+
+    var input by remember { mutableStateOf(keyword ?: EMPTY_STRING) }
+    val uiState by vm.aiChatResp.state.collectAsState()
+    val apiKey by DataStoreManager.apiKey.collectAsState(initial = EMPTY_STRING)
+
+    LaunchedEffect(apiKey,keyword) {
+        // ApiKey
+        if(apiKey.isNullOrEmptyOrBlank()) {
+            return@LaunchedEffect
+        }
+        // 注入对话 直接开始
+        if(keyword.isNotNullAndEmptyAndBlank()) {
+            val newMsg = AiChatMsg(
+                role = ChatRole.USER.name.lowercase(),
+                content = keyword!!
+            )
+            vm.chatWithAi(apiKey, listOf(newMsg))
+            when(val uiState = vm.aiChatResp.state.first()) {
+                is NetworkUiState.Success -> {
+                    val newData = uiState.data
+                    vm.aiChatResp.emitData(
+                        listOf(AiChatChoice(newMsg,EMPTY_STRING)) + newData
+                    )
+                    input = EMPTY_STRING
+                }
+                else -> Unit
+            }
+            return@LaunchedEffect
+        }
+        // 非注入对话
+        if(uiState is NetworkUiState.Success) {
+            return@LaunchedEffect
+        }
+        vm.aiChatResp.emitPrepare()
+    }
+
     Scaffold (
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -124,15 +215,239 @@ fun AIScreen(
                 scrollBehavior = scrollBehavior,
                 modifier = Modifier.topBarBlur(hazeState),
                 colors = topBarTransplantColor(),
-                title = { Text(AiDestination.title.asString()) },
+                title = { Text(AiDestination.TITLE.asString()) },
                 navigationIcon = {
                     TopBarNavigationIcon()
                 },
+                actions = {
+                    if(uiState is NetworkUiState.Success) {
+                        LiquidButton(
+                            onClick = {
+                                // TODO TOken、上下文情况
+                                showDevelopingToast()
+                            },
+                            isCircle = true,
+                            backdrop = backdrop,
+                            modifier = Modifier.padding(end = BUTTON_PADDING)
+                        ) {
+                            Icon(
+                                painterResource(Drawables.planner_review),
+                                null,
+                            )
+                        }
+                        LiquidButton(
+                            onClick = {
+                                // TODO 保存
+                                showDevelopingToast()
+                            },
+                            isCircle = true,
+                            backdrop = backdrop,
+                            modifier = Modifier.padding(end = BUTTON_PADDING)
+                        ) {
+                            Icon(
+                                painterResource(Drawables.save),
+                                null,
+                            )
+                        }
+                        LiquidButton(
+                            onClick = {
+                                // TODO Dialog
+                                input = EMPTY_STRING
+                                vm.aiChatResp.emitPrepare()
+                            },
+                            isCircle = true,
+                            backdrop = backdrop,
+                            modifier = Modifier.padding(end = BUTTON_END_PADDING)
+                        ) {
+                            Icon(
+                                painterResource(Drawables.delete),
+                                null,
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
+                }
             )
         },
+        bottomBar = {
+            val display = uiState !is NetworkUiState.Loading
+            AnimatedVisibility(
+                visible = display,
+                enter = AppAnimationManager.toBottomAnimation.enter,
+                exit = AppAnimationManager.toBottomAnimation.exit,
+                modifier = Modifier.bottomBarBlur(hazeState)
+            ) {
+                CustomTextField(
+                    colors = textFiledAllTransplant(),
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(bottom = APP_HORIZONTAL_DP)
+                        .padding(horizontal = APP_HORIZONTAL_DP)
+                        .containerBackDrop(backdrop, MaterialTheme.shapes.medium),
+                    input = input,
+                    singleLine = false,
+                    leadingIcon = {
+                        IconButton(
+                            onClick = {
+                                // TODO 切换模型
+                                showDevelopingToast()
+                            }
+                        ) {
+                            Icon(
+                                painterResource(Drawables.swap_vert),
+                                null
+                            )
+                        }
+                    },
+                    trailingIcon = {
+                        IconButton(
+                            enabled = input.isNotEmpty() && uiState !is NetworkUiState.Loading,
+                            onClick = {
+                                scope.launch {
+                                    val oldList = (uiState as? NetworkUiState.Success)?.data ?: emptyList()
+                                    val newMsg = AiChatMsg(
+                                        role = ChatRole.USER.name.lowercase(),
+                                        content = input
+                                    )
+                                    vm.chatWithAi(
+                                        apiKey,
+                                        oldList.map { it.message } + newMsg
+                                    )
+                                    when(val uiState = vm.aiChatResp.state.first()) {
+                                        is NetworkUiState.Success -> {
+                                            val newData = uiState.data
+                                            vm.aiChatResp.emitData(
+                                                oldList + AiChatChoice(newMsg,EMPTY_STRING) + newData
+                                            )
+                                            input = EMPTY_STRING
+                                        }
+                                        is NetworkUiState.Error -> {
+                                            val errorData = uiState
+                                            // 复原对话
+                                            vm.aiChatResp.emitData(oldList)
+                                            showToast(errorData.exception?.message ?: "错误")
+                                            errorData.exception?.let {
+                                                LogUtil.error(it)
+                                            }
+                                        }
+                                        else -> Unit
+                                    }
+                                }
+                            }
+                        ) {
+                            Icon(
+                                painterResource(Drawables.arrow_upward),
+                                null
+                            )
+                        }
+                    },
+                    label = {
+                        Text("输入内容后发送")
+                    }
+                ) {
+                    input = it
+                }
+            }
+        }
     ) { innerPadding ->
-        CenterScreen {
-            DevelopingIcon()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .hazeSource(hazeState)
+                .backDropSource(backdrop)
+        ) {
+            if(apiKey.isNullOrEmptyOrBlank()) {
+                CenterScreen {
+                    StatusIcon(
+                        Drawables.settings,
+                        text("请先点击配置ApiKey"),
+                        onTextClick = {
+                            navController.push(SettingsAiApiKeyPlatformDestination)
+                        }
+                    )
+                }
+                return@Column
+            }
+            CommonNetworkScreen(
+                uiState,
+                onReload = {
+                    input = EMPTY_STRING
+                    vm.aiChatResp.emitPrepare()
+                },
+                prepareContent = {
+                    StatusIcon(
+                        Drawables.waving_hand,
+                        text("发送消息以开始对话")
+                    )
+                }
+            ) {
+                val data = (uiState as NetworkUiState.Success).data
+                LazyColumn {
+                    item { InnerPaddingHeight(innerPadding,true) }
+                    items(data.size, key = { it }) { index ->
+                        val item = data[index]
+                        ChatMsgUI(item,index == 0 && keyword.isNotNullAndEmptyAndBlank())
+                    }
+                    item { InnerPaddingHeight(innerPadding,false) }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChatMsgUI(
+    item: AiChatChoice,
+    fold : Boolean
+) {
+    val role = when (item.message.role.uppercase()) {
+        ChatRole.USER.name -> ChatRole.USER
+        ChatRole.ASSISTANT.name -> ChatRole.ASSISTANT
+        ChatRole.SYSTEM.name -> ChatRole.SYSTEM
+        else -> null
+    }
+
+    Box(modifier = Modifier.fillMaxWidth().padding(horizontal = APP_HORIZONTAL_DP)) {
+        Surface(
+            shape = MaterialTheme.shapes.small,
+            color = when(role) {
+                ChatRole.USER -> MaterialTheme.colorScheme.secondaryContainer
+                ChatRole.ASSISTANT -> cardNormalColor()
+                else -> MaterialTheme.colorScheme.errorContainer
+            },
+            modifier = Modifier
+                .align(
+                    if(role == ChatRole.USER) {
+                        Alignment.CenterEnd
+                    } else {
+                        Alignment.CenterStart
+                    }
+                )
+                .padding(vertical = CARD_NORMAL_DP*2)
+                .combinedClickable(
+                    onClick = {
+                        if(role == ChatRole.USER) {
+                            // TODO 编辑
+                            showDevelopingToast()
+                        } else {
+                            showToast("长按复制")
+                        }
+                    },
+                    onLongClick = {
+                        ClipBoardHelper.copy(item.message.content)
+                    }
+                )
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(vertical = APP_HORIZONTAL_DP/3, horizontal = APP_HORIZONTAL_DP/2)
+            ) {
+                Text(
+                    item.message.content,
+                    maxLines = if(fold) 3 else Int.MAX_VALUE,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
     }
 }

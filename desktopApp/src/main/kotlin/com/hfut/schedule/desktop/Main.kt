@@ -362,8 +362,8 @@ private fun saveWindowState(state: androidx.compose.ui.window.WindowState) {
 /** 桌面端的版本/环境信息注入（Android 侧在 MyApplication 里做同样的事） */
 private fun initAppInfo() {
     runCatching {
-        AppInfo.versionName = "4.21.4.1"
-        AppInfo.versionCode = 279
+        AppInfo.versionName = "4.21.4.2 Dev"
+        AppInfo.versionCode = 280
         AppInfo.deviceName = when (currentDesktopOs()) {
             DesktopOs.WINDOWS -> "Windows"
             DesktopOs.MACOS -> "macOS"

@@ -1,11 +1,13 @@
 package com.hfut.schedule.ui.screen.home.cube.sub
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +28,9 @@ import com.xah.common.ui.res.painterResource
 import androidx.navigation.NavHostController
 import com.hfut.schedule.logic.util.other.AppInfo
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
+import com.hfut.schedule.logic.util.sys.Starter
 import com.hfut.schedule.logic.util.sys.showToast
+import com.hfut.schedule.ui.component.container.CardListItem
 import com.hfut.schedule.ui.component.container.CustomCard
 import com.hfut.schedule.ui.component.container.TransplantListItem
 import com.hfut.schedule.ui.component.input.CustomTextField
@@ -65,6 +69,19 @@ fun ApiKeyScreen(
                 TransplantListItem(
                     headlineContent = { Text("ApiKey") },
                     leadingContent = { Icon(painterResource(Drawables.edit),null) },
+                    trailingContent = {
+                        FilledTonalButton(
+                            onClick = {
+                                scope.launch {
+                                    Starter.startWebUrlInner(
+                                        "https://platform.deepseek.com/api_keys"
+                                    )
+                                }
+                            }
+                        ) {
+                            Text("获取")
+                        }
+                    }
                 )
 
                 CustomTextField(
