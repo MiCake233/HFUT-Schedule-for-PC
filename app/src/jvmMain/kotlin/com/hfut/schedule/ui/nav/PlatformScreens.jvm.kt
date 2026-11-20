@@ -459,6 +459,11 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         ShowerGuaGua(networkVm)
         true
     }
+    is com.hfut.schedule.ui.nav.destination.GuaGuaLoginDestination -> {
+        val networkVm = LocalNavDependencies.current.get<NetWorkViewModel>()
+        com.hfut.schedule.ui.screen.shower.login.ShowerLogin(networkVm)
+        true
+    }
     is com.hfut.schedule.ui.nav.destination.HaiLeWashingDestination -> {
         val vm = LocalNavDependencies.current.get<NetWorkViewModel>()
         HaiLeWashingScreen(vm)

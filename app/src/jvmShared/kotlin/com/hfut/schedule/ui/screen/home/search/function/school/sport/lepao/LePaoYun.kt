@@ -39,11 +39,13 @@ fun LePaoYun() {
             Icon(painterResource(icon), contentDescription = null)
         },
         trailingContent = {
-            QuickButtonForSearchScreen(
-                onClick = {
-                    Starter.startAppLaunch(Starter.AppPackages.LE_PAO)
-                }
-            ) { Icon( painterResource(Drawables.directions_run), contentDescription = null, modifier = Modifier.size(20.dp)) }
+            if (com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()) {
+                QuickButtonForSearchScreen(
+                    onClick = {
+                        Starter.startAppLaunch(Starter.AppPackages.LE_PAO)
+                    }
+                ) { Icon( painterResource(Drawables.directions_run), contentDescription = null, modifier = Modifier.size(20.dp)) }
+            }
         },
         modifier = Modifier.clickable {
             scope.launch {

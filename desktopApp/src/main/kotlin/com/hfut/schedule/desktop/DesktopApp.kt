@@ -110,6 +110,31 @@ fun DesktopApp(exitApp: () -> Unit) {
         com.hfut.schedule.ui.nav.UiSlots.register("calendar_ui_settings") {
             CalendarSettingsPanel(androidx.compose.foundation.layout.PaddingValues(0.dp))
         }
+        // 查询中心里电费、洗浴、校园网的底页在共享层，走慧新 / 呱呱的网络接口。
+        // Android 仍由自己的入口直接调用，这里只补桌面端未注册的槽位。
+        com.hfut.schedule.ui.nav.UiSlots.register("electric") { arg ->
+            com.hfut.schedule.ui.screen.home.search.function.huiXin.electric.EleUI(
+                arg as NetWorkViewModel,
+                com.hfut.schedule.ui.style.special.rememberHazeBlur(),
+            )
+        }
+        com.hfut.schedule.ui.nav.UiSlots.register("shower") { arg ->
+            com.hfut.schedule.ui.screen.home.search.function.huiXin.shower.ShowerUI(
+                arg as NetWorkViewModel,
+                hazeState = com.hfut.schedule.ui.style.special.rememberHazeBlur(),
+            )
+        }
+        com.hfut.schedule.ui.nav.UiSlots.register("huixin_login") { arg ->
+            com.hfut.schedule.ui.screen.home.search.function.huiXin.loginWeb.LoginWebScaUI(
+                arg as NetWorkViewModel,
+            )
+        }
+        com.hfut.schedule.ui.nav.UiSlots.register("guagua_person") { arg ->
+            com.hfut.schedule.ui.screen.shower.home.function.GuaGuaPersonInfoUI(
+                arg as NetWorkViewModel,
+                com.hfut.schedule.ui.style.special.rememberHazeBlur(),
+            )
+        }
         // 平台页面工厂：外观设置页在桌面端用自己的实现（Android 那套是壁纸/小组件相关）
         PlatformHooks.platformScreenFactory = { key ->
             if (key == "platform_settings_appearance") {
@@ -133,6 +158,10 @@ fun DesktopApp(exitApp: () -> Unit) {
                 "course_events_ui",
                 "fix",
                 "calendar_ui_settings",
+                "electric",
+                "shower",
+                "huixin_login",
+                "guagua_person",
             ).forEach { com.hfut.schedule.ui.nav.UiSlots.unregister(it) }
             // Cancel in-flight UI work. Reminders do not use these ViewModels.
             owner.viewModelStore.clear()

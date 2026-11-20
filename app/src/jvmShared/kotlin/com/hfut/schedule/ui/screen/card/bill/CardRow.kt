@@ -73,7 +73,13 @@ fun CardRow(vm : NetWorkViewModel, hazeState: HazeState) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(.5f)
-                    .clickable { Starter.startAppUrl(Constant.ALIPAY_CARD_URL) },
+                    .then(
+                        if (com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()) {
+                            Modifier.clickable { Starter.startAppUrl(Constant.ALIPAY_CARD_URL) }
+                        } else {
+                            Modifier
+                        }
+                    ),
                 overlineContent = { ScrollText(text = "待圈存 ￥${cardValue?.settle ?: settle}") },
                 leadingContent = { Icon(painterResource(Drawables.account_balance_wallet), contentDescription = "Localized description",) },
             )

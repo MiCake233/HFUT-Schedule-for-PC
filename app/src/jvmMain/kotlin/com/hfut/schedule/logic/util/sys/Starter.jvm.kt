@@ -33,16 +33,16 @@ actual object PlatformStarter {
     }
 
     actual fun launchApp(packageName: String, appName: String) {
-        showToast("桌面端不支持启动$appName")
+        showToast("$appName${com.hfut.schedule.logic.platform.PlatformFeatures.DESKTOP_UNSUPPORTED}")
     }
 
     actual fun openAppUrl(url: String, appName: String?) {
         if (!openInSystemBrowser(url)) showToast("打开失败：$url")
     }
 
-    actual fun startPddExpress() = showToast("桌面端不支持拼多多快递查询")
+    actual fun startPddExpress() = showToast("拼多多快递${com.hfut.schedule.logic.platform.PlatformFeatures.DESKTOP_UNSUPPORTED}")
 
-    actual fun startTaoBaoExpress() = showToast("桌面端不支持淘宝快递查询")
+    actual fun startTaoBaoExpress() = showToast("淘宝快递${com.hfut.schedule.logic.platform.PlatformFeatures.DESKTOP_UNSUPPORTED}")
 
     actual fun openWlanSettings() {
         val os = System.getProperty("os.name", "").lowercase()

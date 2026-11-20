@@ -274,9 +274,10 @@ fun SearchScreen(
     }
     val state = rememberLazyGridState()
 
-    // 先按平台能力过滤，再按关键词过滤
+    // 先按平台能力过滤，再按关键词过滤。无 route 的条目（热水等）靠功能 id 判断。
     val filteredList = funcMaps
         .filter { com.hfut.schedule.logic.platform.PlatformFeatures.supports(it.route) }
+        .filter { com.hfut.schedule.logic.platform.PlatformFeatures.supportsFunc(it.id) }
         .filter { it.searchKeyWord.contains(input, ignoreCase = true) }
 
 

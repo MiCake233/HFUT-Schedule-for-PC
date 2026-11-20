@@ -56,6 +56,8 @@ actual object AppCapabilities {
                     com.hfut.schedule.network.api.model.Constant.UNIPUS_AI_URL
                 else com.hfut.schedule.network.api.model.Constant.UNIPUS_URL
             )
+            info.contains("学习通") || info.contains("雨课堂") || info.contains("MOOC") ->
+                com.hfut.schedule.logic.util.sys.showToast(PlatformFeatures.DESKTOP_UNSUPPORTED)
             com.hfut.schedule.logic.util.sys.isValidWebUrl(info) ->
                 com.hfut.schedule.logic.util.sys.Starter.startWebUrlOuter(info)
             else -> com.hfut.schedule.logic.util.sys.showToast("此条未做点击适配")
