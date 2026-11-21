@@ -120,4 +120,32 @@ interface CommunityService {
         @Query("week") week : Int? = null,
         @Query("semester") semester : String? = null,
     ) : Call<ResponseBody>
+    // 自习室预约
+    @GET("api//mobile/community/seat/pageSeat")
+    fun getAppointmentSeats(
+        @Header("X-Access-Token") token : String,
+        @Query("pageNo") page : Int = 1,
+        @Query("pageSize") pageSize : Int = Constant.DEFAULT_PAGE_SIZE,
+    ) : Call<ResponseBody>
+    // 场地预约
+    @GET("api//mobile/community/site/page")
+    fun getAppointmentPlaces(
+        @Header("X-Access-Token") token : String,
+        @Query("localDate") date : String,
+        @Query("pageNo") page : Int = 1,
+        @Query("pageSize") pageSize : Int = Constant.DEFAULT_PAGE_SIZE,
+    ) : Call<ResponseBody>
+
+    @GET("api/mobile/community/site/getSiteByIdOrTime")
+    fun getAppointmentPlaceDetail(
+        @Header("X-Access-Token") token : String,
+        @Query("localDate") date : String,
+        @Query("siteId") page : String,
+    ) : Call<ResponseBody>
+
+    @GET("api//mobile/community/appointment/queryAppointmentDetail")
+    fun getAppointmentPlaceTimeFrameDetail(
+        @Header("X-Access-Token") token : String,
+        @Query("id") id : String,
+    ) : Call<ResponseBody>
 }

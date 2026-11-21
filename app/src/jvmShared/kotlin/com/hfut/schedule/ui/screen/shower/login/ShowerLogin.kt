@@ -1,7 +1,6 @@
 package com.hfut.schedule.ui.screen.shower.login
 import com.hfut.schedule.logic.util.sys.runOnMain
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,6 +59,7 @@ import com.hfut.schedule.ui.style.special.topBarBlur
 import com.hfut.schedule.ui.util.navigation.AppAnimationManager
 import com.hfut.schedule.viewmodel.network.NetWorkViewModel
 import com.xah.common.logic.util.EMPTY_STRING
+import com.xah.common.logic.util.LogUtil
 import com.xah.common.ui.style.APP_HORIZONTAL_DP
 import com.xah.common.ui.style.color.topBarTransplantColor
 import com.xah.navigation.controller.NavigationController
@@ -77,7 +77,6 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowerLogin(vm : NetWorkViewModel) {
-    val context = LocalActivity.current
     var show by remember { mutableStateOf(false) }
     val Savedusername = prefs.getString("PHONENUM", EMPTY_STRING)
     var username by remember { mutableStateOf(Savedusername ?: EMPTY_STRING) }
@@ -102,7 +101,11 @@ fun ShowerLogin(vm : NetWorkViewModel) {
                             Text("备用登录方式")
                         }
                         IconButton(onClick = {
-                            context?.finish()
+                            if (com.hfut.schedule.logic.platform.AppCapabilities.isAndroidPlatform()) {
+                                com.hfut.schedule.logic.platform.AppCapabilities.finishCurrentScreen()
+                            } else {
+                                navController.pop()
+                            }
                         }) {
                             Icon(painterResource(id = Drawables.close), contentDescription = EMPTY_STRING,tint = MaterialTheme.colorScheme.primary)
                         }

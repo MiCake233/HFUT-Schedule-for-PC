@@ -138,7 +138,9 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
             }
         ) {
             Box(modifier = Modifier.height(height)) {
-                com.hfut.schedule.ui.nav.UiSlots.Render("scan_camera", null) { androidx.compose.material3.Text("桌面端暂不支持扫码") }
+                com.hfut.schedule.ui.nav.UiSlots.Render("scan_camera", null) {
+                    androidx.compose.material3.Text("扫码${com.hfut.schedule.logic.platform.PlatformFeatures.DESKTOP_UNSUPPORTED}")
+                }
                 val result: String? = null
                 if (result != null) {
                     val text = result
@@ -272,14 +274,20 @@ fun StartShowerUI(vm: NetWorkViewModel, hazeState: HazeState) {
             label = { Text("花洒MAC地址" ) },
             singleLine = true,
             trailingIcon = {
-                IconButton(
-                    onClick = {
-                        // 桌面端没有摄像头扫码，直接提示不可用
-                        checkAndRequestCameraPermission(null)
-                        show = true
-                    }) {
-                    Icon(painter = painterResource(Drawables.qr_code_scanner), contentDescription = "description")
+                if (com.hfut.schedule.logic.platform.PlatformFeatures.supports("scan_qr_code")) {
+                    IconButton(
+                        onClick = {
+                            checkAndRequestCameraPermission(null)
+                            show = true
+                        }) {
+                        Icon(painter = painterResource(Drawables.qr_code_scanner), contentDescription = "description")
+                    }
                 }
+            },
+            supportingText = if (!com.hfut.schedule.logic.platform.PlatformFeatures.supports("scan_qr_code")) {
+                { Text("扫码${com.hfut.schedule.logic.platform.PlatformFeatures.DESKTOP_UNSUPPORTED}，请填写贴纸上的 MAC") }
+            } else {
+                null
             },
             shape = MaterialTheme.shapes.medium,
             colors = textFiledTransplant(),

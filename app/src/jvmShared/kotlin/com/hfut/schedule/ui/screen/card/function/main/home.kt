@@ -389,7 +389,11 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                                             if (text != null) {
                                                 //余额不足//未登录//正常
                                                 if (text != "00" && text!!.toDouble() < 10) {
-                                                    Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
+                                                    if (com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()) {
+                                                        Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
+                                                    } else {
+                                                        showToast(com.hfut.schedule.logic.platform.PlatformFeatures.DESKTOP_UNSUPPORTED)
+                                                    }
                                                 } else if (text == "00") {
                                                     refreshLogin()
                                                 } else {
@@ -443,7 +447,14 @@ fun CardHomeScreen(innerPadding : PaddingValues, vm : NetWorkViewModel, navContr
                             headlineContent = { Text(text = "充值") },
                             supportingContent = { Text(text = "跳转至支付宝校园卡页面")},
                             leadingContent = { Icon(painter = painterResource(id = Drawables.add_card), contentDescription = EMPTY_STRING)},
-                            modifier = Modifier.clickable { Starter.startAppUrl(Constant.ALIPAY_CARD_URL) }
+                            trailingContent = if (!com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()) {
+                                { com.hfut.schedule.ui.component.text.DesktopUnsupportedLabel() }
+                            } else null,
+                            modifier = if (com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()) {
+                                Modifier.clickable { Starter.startAppUrl(Constant.ALIPAY_CARD_URL) }
+                            } else {
+                                Modifier
+                            }
                         )
                         PaddingHorizontalDivider()
                         SharedContainer(

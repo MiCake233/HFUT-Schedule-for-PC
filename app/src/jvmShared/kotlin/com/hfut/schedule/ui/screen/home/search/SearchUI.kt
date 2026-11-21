@@ -60,7 +60,7 @@ import com.hfut.schedule.ui.nav.destination.AiDestination
 import com.hfut.schedule.ui.nav.destination.AlumniDestination
 import com.hfut.schedule.ui.nav.destination.BusDestination
 import com.hfut.schedule.ui.nav.destination.ClassroomDestination
-import com.hfut.schedule.ui.nav.destination.CommunityAppointmentDestination
+import com.hfut.schedule.ui.nav.destination.AppointmentDestination
 import com.hfut.schedule.ui.nav.destination.CourseSearchDestination
 import com.hfut.schedule.ui.nav.destination.DormitoryDestination
 import com.hfut.schedule.ui.nav.destination.ExamDestination
@@ -258,8 +258,8 @@ fun SearchScreen(
                 SearchAppBean(43,"${OfficeHallDestination.title.asStringNow()}", { OfficeHall() }, OfficeHallDestination.key),
                 SearchAppBean(44,"${stringOf(Strings.navigation_label_hui_xin)} ${stringOf(Strings.navigation_label_hui_xin)} 校园卡 账单 充值 缴费 合肥" , { HuiXin() }, WebViewDestination.getKey(getHuiXinURL())),
                 SearchAppBean(45,"${SecondClassDestination.title.asStringNow()}", { SecondClass() }, SecondClassDestination.key),
-                SearchAppBean(46,"${CommunityAppointmentDestination.title.asStringNow()} 场地预约 座位预约 宿舍自习室预约 智慧社区平台", { Appointment() }, CommunityAppointmentDestination.key),
-//                SearchAppBean(47,"AI 人工智能 ${stringOf(Strings.navigation_label_ai)}", { AI() }, AiDestination.key),
+                SearchAppBean(46,"${AppointmentDestination.title.asStringNow()} 场地预约 座位预约 宿舍自习室预约 智慧社区平台", { Appointment() }, AppointmentDestination.key),
+                SearchAppBean(47,"AI 人工智能 ${stringOf(Strings.navigation_label_ai)}", { AI() }, AiDestination().key),
                 SearchAppBean(48,"事务跟踪 事务追踪 issue 反馈 开发 ${stringOf(Strings.navigation_label_track)}", { Track() }, TrackDestination.key),
                 SearchAppBean(49,"拼多多 淘宝 快递 取件码 包裹 ${stringOf(Strings.navigation_label_express)}", { Express() },ExpressWindow.key),
                 SearchAppBean(50,"${stringOf(Strings.navigation_label_feedback)} 反馈 建议", { Feedback() }, FeedbackWindow.key),
@@ -274,9 +274,10 @@ fun SearchScreen(
     }
     val state = rememberLazyGridState()
 
-    // 先按平台能力过滤，再按关键词过滤
+    // 先按平台能力过滤，再按关键词过滤。无 route 的条目（热水等）靠功能 id 判断。
     val filteredList = funcMaps
         .filter { com.hfut.schedule.logic.platform.PlatformFeatures.supports(it.route) }
+        .filter { com.hfut.schedule.logic.platform.PlatformFeatures.supportsFunc(it.id) }
         .filter { it.searchKeyWord.contains(input, ignoreCase = true) }
 
 

@@ -19,13 +19,14 @@ import com.xah.common.ui.util.res
 data class HomeDestination(
     val subStartDestination: BottomBarItems? = null
 ) : NavDestination() {
-    override val key: String = KEY
-    override val title: UiText = res(Strings.navigation_label_home)
-    override val icon = Drawables.home
-
+    override val key: String = "${KEY}_${subStartDestination}"
+    override val title: UiText = TITLE
+    override val icon = ICON
 
     companion object {
         const val KEY = "home"
+        val TITLE = res(Strings.navigation_label_home)
+        val ICON = Drawables.home
     }
 
     @Composable

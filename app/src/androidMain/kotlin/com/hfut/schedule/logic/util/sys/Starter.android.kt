@@ -219,6 +219,18 @@ fun TileService.startActivitySafely(intent: Intent) {
     }
 }
 
+/** 网页里的「用 DeepSeek 归纳」走应用内深链，只在 Android 有内嵌 WebView。 */
+fun Starter.startDeepLink(context: Context, deepLink: String) {
+    val it = Intent(context, MainActivity::class.java).apply {
+        putExtra("login", false)
+        data = deepLink.toUri()
+        if (context !is Activity) {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+    }
+    context.startActivity(it)
+}
+
 /** 兼容旧签名：仍需要 Context 的内嵌网页打开 */
 fun openWebInner(url: String, title: String = getPureUrl(url), cookie: String? = null, icon: Int = Drawables.net) {
     PlatformStarter.openWebPage(url, title, cookie, icon)

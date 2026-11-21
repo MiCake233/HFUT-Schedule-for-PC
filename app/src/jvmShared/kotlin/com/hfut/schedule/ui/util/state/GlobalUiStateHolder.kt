@@ -19,7 +19,7 @@ import com.hfut.schedule.ui.nav.destination.AiDestination
 import com.hfut.schedule.ui.nav.destination.AlumniDestination
 import com.hfut.schedule.ui.nav.destination.BusDestination
 import com.hfut.schedule.ui.nav.destination.ClassroomDestination
-import com.hfut.schedule.ui.nav.destination.CommunityAppointmentDestination
+import com.hfut.schedule.ui.nav.destination.AppointmentDestination
 import com.hfut.schedule.ui.nav.destination.CourseSearchDestination
 import com.hfut.schedule.ui.nav.destination.DormitoryDestination
 import com.hfut.schedule.ui.nav.destination.ExamDestination
@@ -47,10 +47,8 @@ import com.hfut.schedule.ui.nav.destination.WebFolderDestination
 import com.hfut.schedule.ui.nav.destination.WebVpnDestination
 import com.hfut.schedule.ui.nav.destination.WorkAndRestDestination
 import com.hfut.schedule.ui.nav.destination.WorkDestination
-import com.hfut.schedule.ui.nav.destination.base.NavDestination
 import com.hfut.schedule.ui.screen.home.search.SearchAppBeanLite
 import com.hfut.schedule.ui.util.navigation.DestinationTrack
-import com.xah.navigation.model.dest.Destination
 import com.xah.shader.state.ShaderState
 import kotlinx.coroutines.flow.MutableStateFlow
 import com.hfut.schedule.ui.screen.util.TAB_STACK
@@ -148,8 +146,8 @@ object GlobalUiStateHolder {
         SearchAppBeanLite(43, OfficeHallDestination.title.resId,  OfficeHallDestination.icon),
         SearchAppBeanLite(44, Strings.navigation_label_hui_xin ,Drawables.corporate_fare),
         SearchAppBeanLite(45, SecondClassDestination.title.resId,SecondClassDestination.icon),
-        SearchAppBeanLite(46, CommunityAppointmentDestination.title.resId,CommunityAppointmentDestination.icon),
-//        SearchAppBeanLite(47, AiDestination.title.resId,AiDestination.icon),
+        SearchAppBeanLite(46, AppointmentDestination.title.resId,AppointmentDestination.icon),
+        SearchAppBeanLite(47, AiDestination.TITLE.resId,AiDestination.ICON),
         SearchAppBeanLite(48, TrackDestination.title.resId,TrackDestination.icon),
         SearchAppBeanLite(49, Strings.navigation_label_express,Drawables.package_2),
         SearchAppBeanLite(50, Strings.navigation_label_feedback,Drawables.voice_selection),

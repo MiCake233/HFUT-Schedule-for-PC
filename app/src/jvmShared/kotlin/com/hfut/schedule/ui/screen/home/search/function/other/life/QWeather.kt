@@ -109,141 +109,62 @@ fun HuoZaiFeiXuan() {
 外部应用 新生      ->       外部
  */
 @Composable
+private fun AndroidAppEntry(
+    app: Starter.AppPackages,
+    description: String,
+    onLaunch: () -> Unit,
+) {
+    val supported = com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()
+    CardListItem(
+        headlineContent = { Text(app.appName) },
+        supportingContent = { Text(description) },
+        trailingContent = if (!supported) {
+            { com.hfut.schedule.ui.component.text.DesktopUnsupportedLabel() }
+        } else {
+            null
+        },
+        modifier = if (supported) Modifier.clickable(onClick = onLaunch) else Modifier,
+        leadingContent = { StartAppIcon(app) },
+    )
+}
+
+@Composable
 fun StarterScreen() {
 
     HuoZaiFeiXuan()
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.ANHUI_HALL.appName) },
-        supportingContent = {
-            Text("医保缴费、宣城市实时公交等功能")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.ANHUI_HALL)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.ANHUI_HALL)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.PDD.appName) },
-        supportingContent = {
-            Text("拼多多身份码，校区快递站用")
-        },
-        modifier = Modifier.clickable {
-            Starter.startPddExpress()
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.PDD)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.TAO_BAO.appName) },
-        supportingContent = {
-            Text("淘宝身份码，合肥校区快递站用")
-        },
-        modifier = Modifier.clickable {
-            Starter.startTaoBaoExpress()
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.TAO_BAO)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.ALIPAY.appName) },
-        supportingContent = {
-            Text("校园卡缴费")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.ALIPAY)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.ALIPAY.appName) },
-        supportingContent = {
-            Text("海乐生活热水机")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppUrl(Constant.ALIPAY_HOT_WATER_URL)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.ALIPAY)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.LE_PAO.appName) },
-        supportingContent = {
-            Text("大一大二校园跑")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.LE_PAO)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.LE_PAO)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.TODAY_CAMPUS.appName) },
-        supportingContent = {
-            Text("节假日离返校、心理测试等")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.TODAY_CAMPUS)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.TODAY_CAMPUS)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.RAIN_CLASSROOM.appName) },
-        supportingContent = {
-            Text("考勤、作业等课堂功能")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.RAIN_CLASSROOM)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.RAIN_CLASSROOM)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.CHAO_XING.appName) },
-        supportingContent = {
-            Text("考勤、作业等课堂功能")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.CHAO_XING)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.CHAO_XING)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.MOOC.appName) },
-        supportingContent = {
-            Text("网课、作业等课堂功能")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.MOOC)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.MOOC)
-        }
-    )
-    CardListItem(
-        headlineContent = { Text(Starter.AppPackages.WECHAT.appName) },
-        supportingContent = {
-            Text("合工大教务公众号、第二课堂小程序等")
-        },
-        modifier = Modifier.clickable {
-            Starter.startAppLaunch(Starter.AppPackages.WECHAT)
-        },
-        leadingContent = {
-            StartAppIcon(Starter.AppPackages.WECHAT)
-        }
-    )
+    AndroidAppEntry(Starter.AppPackages.ANHUI_HALL, "医保缴费、宣城市实时公交等功能") {
+        Starter.startAppLaunch(Starter.AppPackages.ANHUI_HALL)
+    }
+    AndroidAppEntry(Starter.AppPackages.PDD, "拼多多身份码，校区快递站用") {
+        Starter.startPddExpress()
+    }
+    AndroidAppEntry(Starter.AppPackages.TAO_BAO, "淘宝身份码，合肥校区快递站用") {
+        Starter.startTaoBaoExpress()
+    }
+    AndroidAppEntry(Starter.AppPackages.ALIPAY, "校园卡缴费") {
+        Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
+    }
+    AndroidAppEntry(Starter.AppPackages.ALIPAY, "海乐生活热水机") {
+        Starter.startAppUrl(Constant.ALIPAY_HOT_WATER_URL)
+    }
+    AndroidAppEntry(Starter.AppPackages.LE_PAO, "大一大二校园跑") {
+        Starter.startAppLaunch(Starter.AppPackages.LE_PAO)
+    }
+    AndroidAppEntry(Starter.AppPackages.TODAY_CAMPUS, "节假日离返校、心理测试等") {
+        Starter.startAppLaunch(Starter.AppPackages.TODAY_CAMPUS)
+    }
+    AndroidAppEntry(Starter.AppPackages.RAIN_CLASSROOM, "考勤、作业等课堂功能") {
+        Starter.startAppLaunch(Starter.AppPackages.RAIN_CLASSROOM)
+    }
+    AndroidAppEntry(Starter.AppPackages.CHAO_XING, "考勤、作业等课堂功能") {
+        Starter.startAppLaunch(Starter.AppPackages.CHAO_XING)
+    }
+    AndroidAppEntry(Starter.AppPackages.MOOC, "网课、作业等课堂功能") {
+        Starter.startAppLaunch(Starter.AppPackages.MOOC)
+    }
+    AndroidAppEntry(Starter.AppPackages.WECHAT, "合工大教务公众号、第二课堂小程序等") {
+        Starter.startAppLaunch(Starter.AppPackages.WECHAT)
+    }
 }
 
 

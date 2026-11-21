@@ -192,6 +192,7 @@ fun TodayInfo(bean : CommunityToday) {
 
 @Composable
 private fun SchoolCardAddQuickButton() {
+    if (!com.hfut.schedule.logic.platform.PlatformFeatures.supportsAndroidAppLink()) return
     QuickButtonForSearchScreen(
         onClick = {
             Starter.startAppUrl(Constant.ALIPAY_CARD_URL)
