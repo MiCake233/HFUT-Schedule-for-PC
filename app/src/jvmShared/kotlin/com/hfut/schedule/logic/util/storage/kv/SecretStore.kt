@@ -10,7 +10,8 @@ package com.hfut.schedule.logic.util.storage.kv
  * 具体加密由各端在启动时注入：
  * - Windows 桌面：Windows DPAPI（当前用户范围，见 `desktopApp/Dpapi.kt`）；
  * - macOS 桌面：登录钥匙串里的 AES-GCM 主密钥（见 `desktopApp` 的 `MacSecrets`）；
- * - 其它平台或不支持时：[protector] 为 null，行为退化为明文（与旧版本一致）。
+ * - 其它平台或不支持时：[protector] 为 null。Android 仍退化为明文（与旧版本一致）。
+ *   桌面发行版会把 [requireEncryption] 设为 true：加密器不可用或加密失败时拒绝写入，不落明文。
  *
  * 兼容性：只有带 [MARKER] 前缀的值才尝试解密；旧版本留下的明文值原样返回，
  * 下次写入时自然升级为密文，不需要一次性迁移脚本。
@@ -69,14 +70,38 @@ object SecretStore {
     /** 解密：落盘字符串 → 明文；返回 null 表示解不开（换用户 / 换机器 / 被篡改） */
     var unprotector: ((String) -> String?)? = null
 
+    /**
+     * 桌面发行版在启动时设为 true。此时敏感值必须加密后才能落盘；
+     * 加密器缺失或失败时 [encode] 返回 null，调用方不得改回明文。
+     * Android 保持 false。
+     */
+    var requireEncryption: Boolean = false
+
+    /** 加密不可用，界面据此提示用户。 */
+    var encryptionUnavailable: Boolean = false
+
+    /** 拒绝一次明文写入后通知界面（可能在组合之外触发）。 */
+    var onEncryptionUnavailable: (() -> Unit)? = null
+
+    fun noteUnsafeWriteRefused() {
+        encryptionUnavailable = true
+        onEncryptionUnavailable?.invoke()
+    }
+
     fun isSensitive(key: String): Boolean = key in SENSITIVE_KEYS || key in DATASTORE_SECRET_KEYS
 
-    /** 写入前的编码；非敏感键、空值、已编码的值都原样返回 */
+    /**
+     * 写入前的编码。非敏感键、空值、已编码的值都原样返回。
+     * 敏感值加密失败时：桌面发行版（[requireEncryption]）返回 null，调用方必须放弃这次写入；
+     * Android 未安装加密器时仍返回原文。
+     */
     fun encode(key: String, value: String?): String? {
         if (value == null) return null
         if (!isSensitive(key) || value.isEmpty() || value.startsWith(MARKER)) return value
-        val enc = protector?.let { runCatching { it(value) }.getOrNull() } ?: return value
-        return MARKER + enc
+        val enc = protector?.let { runCatching { it(value) }.getOrNull() }?.takeIf { it.isNotEmpty() }
+        if (enc != null) return MARKER + enc
+        if (requireEncryption) return null
+        return value
     }
 
     /** 读取后的解码；纯明文（旧数据）原样返回，密文解不开时返回 null（上层按「未登录」处理） */

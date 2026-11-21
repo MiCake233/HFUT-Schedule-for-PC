@@ -63,6 +63,17 @@ class MacDesktopTest {
     }
 
     @Test
+    fun masterKeyIsNotAProcessArgument() {
+        val key = java.util.Base64.getEncoder().encodeToString(ByteArray(32) { 3 })
+        val add = MacSecrets.keychainAddInvocation(key)
+        assertEquals(listOf("security", "-i"), add.args)
+        assertFalse(add.args.any { it.contains(key) })
+        assertTrue(add.stdin.contains("add-generic-password"))
+        assertTrue(add.stdin.contains("-w $key"))
+        assertTrue(add.stdin.endsWith("\n"))
+    }
+
+    @Test
     fun keychainPayloadMustBe32Bytes() {
         val key = java.util.Base64.getEncoder().encodeToString(ByteArray(32) { 1 })
         assertEquals(32, MacSecrets.decodeKey(key)!!.size)

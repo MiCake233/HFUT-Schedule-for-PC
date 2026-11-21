@@ -79,9 +79,16 @@ class PlatformSharedPreferences(private val file: File) {
             synchronized(lock) {
                 removes.forEach { props.remove(it) }
                 puts.forEach { (k, v) ->
-                    // 敏感键（凭据 / token）在落盘前加密；普通键原样写入
+                    // 敏感键（凭据 / token）在落盘前加密；普通键原样写入。
+                    // 桌面发行版加密失败时删掉该键，避免明文留下。
                     val stored = if (k.startsWith("s|")) {
-                        SecretStore.encode(k.removePrefix("s|"), v) ?: v
+                        val encoded = SecretStore.encode(k.removePrefix("s|"), v)
+                        if (encoded == null) {
+                            props.remove(k)
+                            SecretStore.noteUnsafeWriteRefused()
+                            return@forEach
+                        }
+                        encoded
                     } else {
                         v
                     }

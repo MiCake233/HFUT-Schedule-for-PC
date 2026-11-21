@@ -30,11 +30,24 @@ object AppInfo {
     val CAN_LIVE_UPDATE: Boolean get() = sdkInt >= 36
     val CAN_SHADER: Boolean get() = sdkInt >= 33
 
+    /**
+     * 桌面发行版把上游版本号（可能带 `Dev` 后缀）只当作展示文案。
+     * 为 true 时，这个后缀不再把正式包判成开发环境。
+     */
+    var versionLabelIsInformational: Boolean = false
+
     val isDev: Boolean
-        get() = !Regex("^\\d+\\.\\d+(\\.\\d+)*$").matches(versionName)
+        get() = isDevVersionName(versionName, versionLabelIsInformational)
 
     val isNormalEnv: Boolean
-        get() = !isDebug && isSignatureValid && !isDev && !isRunningOnAvd && !isRunningOnWsa && !isHarmony
+        get() = isNormalEnvironment(
+            debug = isDebug,
+            signatureValid = isSignatureValid,
+            dev = isDev,
+            runningOnAvd = isRunningOnAvd,
+            runningOnWsa = isRunningOnWsa,
+            harmony = isHarmony,
+        )
 
     // 属性与旧函数 API 并存：@JvmName 只改 JVM 签名，Kotlin 调用方不受影响
     @JvmName("versionNameText")
@@ -43,3 +56,19 @@ object AppInfo {
     @JvmName("versionCodeValue")
     fun getVersionCode(): Int = versionCode
 }
+
+private val RELEASE_VERSION = Regex("^\\d+\\.\\d+(\\.\\d+)*$")
+
+/** 上游版本号是否应视为开发包。`informational` 为 true 时后缀只用于展示。 */
+fun isDevVersionName(versionName: String, informational: Boolean = false): Boolean =
+    !informational && !RELEASE_VERSION.matches(versionName)
+
+/** 与 [AppInfo.isNormalEnv] 相同的判定，便于不改全局状态做测试。 */
+fun isNormalEnvironment(
+    debug: Boolean,
+    signatureValid: Boolean,
+    dev: Boolean,
+    runningOnAvd: Boolean,
+    runningOnWsa: Boolean,
+    harmony: Boolean,
+): Boolean = !debug && signatureValid && !dev && !runningOnAvd && !runningOnWsa && !harmony

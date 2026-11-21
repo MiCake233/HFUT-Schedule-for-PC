@@ -708,7 +708,7 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
         true
     }
     is com.hfut.schedule.ui.nav.destination.WebViewDestination -> {
-        OpenWebPageInBrowser(destination.url, destination.description)
+        OpenWebPageInBrowser(destination.url, destination.description, destination.cookies)
         true
     }
     is com.hfut.schedule.ui.nav.destination.WorkAndRestDestination -> {
@@ -729,20 +729,21 @@ private fun RenderSharedDestination(destination: NavDestination): Boolean = when
     else -> false
 }
 
-/** 网页类页面在桌面端的实现：交给系统默认浏览器。 */
+/** 网页类页面在桌面端的实现：普通地址交给系统浏览器；带登录态或凭据的地址只说明原因。 */
 @Composable
-private fun OpenWebPageInBrowser(url: String, name: String?) {
+private fun OpenWebPageInBrowser(url: String, name: String?, cookie: String? = null) {
+    val decision = com.hfut.schedule.logic.util.sys.decideDesktopBrowse(url, cookie)
+    val refusal = com.hfut.schedule.logic.util.sys.desktopBrowseRefusal(decision)
     val opened = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     val open: () -> Unit = {
-        opened.value = runCatching {
-            if (java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
-                java.awt.Desktop.getDesktop().browse(java.net.URI(url)); true
-            } else {
-                false
-            }
-        }.getOrDefault(false)
+        if (refusal != null) {
+            com.hfut.schedule.logic.util.sys.showToast(refusal)
+            opened.value = false
+        } else {
+            opened.value = com.hfut.schedule.logic.util.sys.openDesktopWeb(url, cookie)
+        }
     }
-    androidx.compose.runtime.LaunchedEffect(url) { open() }
+    androidx.compose.runtime.LaunchedEffect(url) { if (refusal == null) open() }
     androidx.compose.foundation.layout.Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = androidx.compose.ui.Alignment.Center
@@ -764,17 +765,20 @@ private fun OpenWebPageInBrowser(url: String, name: String?) {
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = if (opened.value) "已在系统浏览器中打开该页面。" else "点击下方按钮在系统浏览器中打开该页面。",
+                text = refusal
+                    ?: if (opened.value) "已在系统浏览器中打开该页面。" else "点击下方按钮在系统浏览器中打开该页面。",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Text(
-                text = url,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            androidx.compose.material3.Button(onClick = { open() }) {
-                Text("在浏览器中打开")
+            if (refusal == null) {
+                Text(
+                    text = url,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                androidx.compose.material3.Button(onClick = { open() }) {
+                    Text("在浏览器中打开")
+                }
             }
         }
     }

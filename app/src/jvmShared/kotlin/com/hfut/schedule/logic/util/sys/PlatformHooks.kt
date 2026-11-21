@@ -11,6 +11,12 @@ object PlatformHooks {
     /** 登录成功后切到主界面 */
     var onLoginSuccess: (() -> Unit)? = null
 
+    /**
+     * 重新进入桌面登录流程（会话失效、用户点「刷新登录」）。
+     * 由窗口层注册：清掉已登录标记，回到登录 / 会话恢复页。
+     */
+    var onRestartToLogin: (() -> Unit)? = null
+
     /** 回到首页（欢迎页「同意」按钮等） */
     var onNavigateHome: (() -> Unit)? = null
 

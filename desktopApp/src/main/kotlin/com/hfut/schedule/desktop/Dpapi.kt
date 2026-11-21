@@ -54,7 +54,9 @@ internal object Dpapi {
      * @return 升级了多少个键
      */
     fun migratePlaintextSecrets(): Int {
-        if (SecretStore.protector == null) return 0
+        // 没有加密器且不要求加密（Android / 非发行桌面）时保持原样。
+        // 发行版要求加密但加密器没装上：下面的写入会删掉明文，而不是再写一遍。
+        if (SecretStore.protector == null && !SecretStore.requireEncryption) return 0
         var migrated = 0
         val prefs = SharedPrefs.prefs
         SecretStore.SENSITIVE_KEYS.forEach { key ->

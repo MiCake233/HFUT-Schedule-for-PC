@@ -36,6 +36,7 @@ import com.hfut.schedule.desktop.platform.MacNotifications
 import com.hfut.schedule.desktop.platform.MacSecrets
 import com.hfut.schedule.desktop.platform.currentDesktopOs
 import com.hfut.schedule.logic.util.other.AppInfo
+import com.hfut.schedule.logic.util.storage.kv.SecretStore
 import com.xah.common.logic.util.LogUtil
 import java.util.prefs.Preferences
 
@@ -46,8 +47,9 @@ private val windowPrefs: Preferences = Preferences.userRoot().node("com/hfut/sch
  * 桌面端入口。
  *
  * 启动顺序有讲究，别随意调整：
- * 1. 注入版本/环境信息；
- * 2. 装好凭据加密（**必须在任何 prefs 读取之前**，否则会读到解释失败的值）；
+ * 1. 注入版本/环境信息（此时不要读 prefs）；
+ * 2. 装好凭据加密（**必须在任何 prefs 读取之前**，否则会读到解释失败的值），
+ *    然后再清掉旧的登录密码；
  * 3. 装崩溃日志；
  * 4. 处理命令行自检（`--snapshot` 等），命中就直接返回，不开窗口；
  * 5. 正常启动：托盘 + 主窗口 + 今日课程面板 + 日志窗口。
@@ -61,7 +63,13 @@ fun main(args: Array<String>) {
     }
     initAppInfo()
 
-    // 凭据加密必须在任何 prefs 读取之前：Windows 用 DPAPI，macOS 用登录钥匙串
+    // 凭据加密必须在任何 prefs 读取之前：Windows 用 DPAPI，macOS 用登录钥匙串。
+    // 发行版加密失败就拒绝明文写入，而不是静默退回明文。
+    val desktopRelease = when (currentDesktopOs()) {
+        DesktopOs.WINDOWS, DesktopOs.MACOS -> true
+        else -> false
+    }
+    if (desktopRelease) SecretStore.requireEncryption = true
     val secretsReady = runCatching {
         when (currentDesktopOs()) {
             DesktopOs.WINDOWS -> Dpapi.install()
@@ -69,7 +77,12 @@ fun main(args: Array<String>) {
             else -> false
         }
     }.getOrDefault(false)
-    if (secretsReady) runCatching { Dpapi.migratePlaintextSecrets() }
+    if (desktopRelease && !secretsReady) SecretStore.noteUnsafeWriteRefused()
+    // 旧密码清理必须在解密器装上之后。装之前读不到密文，会误以为已经是空的而跳过。
+    runCatching { com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString("Password", "") }
+    if (secretsReady || SecretStore.requireEncryption) {
+        runCatching { Dpapi.migratePlaintextSecrets() }
+    }
 
     runCatching {
         com.hfut.schedule.logic.util.dev.CrashHandler.enableSaveLogToFile = true
@@ -363,6 +376,8 @@ private fun saveWindowState(state: androidx.compose.ui.window.WindowState) {
 private fun initAppInfo() {
     runCatching {
         AppInfo.versionName = "4.21.4.2 Dev"
+        // 后缀只说明基于哪一版上游，正式桌面包不能因此被当成开发环境。
+        AppInfo.versionLabelIsInformational = true
         AppInfo.versionCode = 280
         AppInfo.deviceName = when (currentDesktopOs()) {
             DesktopOs.WINDOWS -> "Windows"
@@ -380,6 +395,4 @@ private fun initAppInfo() {
         // 桌面端按「现代 Android」处理，玻璃/模糊/着色器全部可用
         AppInfo.sdkInt = 34
     }
-    // 旧版本曾把登录密码明文写进 prefs（与 Android 端共用同一个键），桌面端一律清掉
-    runCatching { com.hfut.schedule.logic.util.storage.kv.SharedPrefs.saveString("Password", "") }
 }
