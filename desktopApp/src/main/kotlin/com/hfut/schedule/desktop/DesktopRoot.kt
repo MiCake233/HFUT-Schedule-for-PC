@@ -37,6 +37,14 @@ object DesktopWindowState {
 }
 
 /**
+ * 离开已登录的主界面，回到桌面根页面。
+ * 根页面会尝试用 TGC 恢复会话；恢复失败才显示登录表单。
+ */
+internal fun returnToDesktopLogin() {
+    DesktopWindowState.loggedIn = false
+}
+
+/**
  * 桌面端根页面。
  *
  * 显示顺序：用户协议 → 会话恢复（本地存有 TGC 时）→ 登录页或主界面。

@@ -1,14 +1,19 @@
 package com.hfut.schedule.desktop
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -16,6 +21,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.hfut.schedule.logic.util.storage.kv.DataStoreManager
+import com.hfut.schedule.logic.util.storage.kv.SecretStore
 import com.hfut.schedule.logic.util.sys.PlatformHooks
 import com.hfut.schedule.ui.model.ColorStyle
 import com.hfut.schedule.ui.model.choice.ColorMode
@@ -87,6 +93,7 @@ fun DesktopApp(exitApp: () -> Unit) {
             DesktopWindowState.loggedIn = true
             applyLoggedIn(networkVm, scope)
         }
+        PlatformHooks.onRestartToLogin = { returnToDesktopLogin() }
         PlatformHooks.onNavigateHome = { /* 协议页同意后 DataStore 会自动置位，无需额外状态 */ }
         PlatformHooks.onExitApp = exitApp
         // 「修复 / 日志」在桌面端是独立窗口
@@ -149,6 +156,7 @@ fun DesktopApp(exitApp: () -> Unit) {
         }
         onDispose {
             PlatformHooks.onLoginSuccess = null
+            PlatformHooks.onRestartToLogin = null
             PlatformHooks.onNavigateHome = null
             PlatformHooks.onExitApp = null
             PlatformHooks.onShowFix = null
@@ -203,6 +211,7 @@ fun DesktopApp(exitApp: () -> Unit) {
             // 登录成功前后是两套 MainHost 参数（对应 Android 的 MainActivity / SuccessActivity），
             // 用 key 强制重建导航栈，否则 rememberNavController 会沿用旧的起始页。
             UpdateAvailableDialog()
+            EncryptionUnavailableDialog()
 
             androidx.compose.runtime.key(loggedIn) {
                 MainHost(
@@ -226,6 +235,31 @@ fun DesktopApp(exitApp: () -> Unit) {
  * 登录成功（含会话恢复）后的收尾处理：保存会话以供下次免登录，
  * 并以 redirect cookie 换取教务会话。
  */
+/** 加密器没装上时告诉用户：不会把会话和密码写成明文。 */
+@Composable
+private fun EncryptionUnavailableDialog() {
+    var visible by remember { mutableStateOf(SecretStore.encryptionUnavailable) }
+    DisposableEffect(Unit) {
+        val previous = SecretStore.onEncryptionUnavailable
+        SecretStore.onEncryptionUnavailable = { visible = true }
+        onDispose { SecretStore.onEncryptionUnavailable = previous }
+    }
+    if (!visible) return
+    AlertDialog(
+        onDismissRequest = { visible = false },
+        title = { Text("无法加密保存登录凭据") },
+        text = {
+            Text(
+                "Windows 数据保护或 macOS 钥匙串不可用。为避免密码和会话以明文写入磁盘，" +
+                    "本次启动不会保存这些凭据。请检查系统凭据服务后重新打开。"
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = { visible = false }) { Text("知道了") }
+        },
+    )
+}
+
 private fun applyLoggedIn(
     networkVm: NetWorkViewModel,
     scope: kotlinx.coroutines.CoroutineScope

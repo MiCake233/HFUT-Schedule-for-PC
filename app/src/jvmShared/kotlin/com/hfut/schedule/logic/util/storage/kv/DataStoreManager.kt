@@ -79,7 +79,8 @@ object DataStoreManager : IDataStore {
     private const val EMPTY_STRING = com.xah.common.logic.util.EMPTY_STRING
 
     override suspend fun <T> saveValue(key: Preferences.Key<T>, value: T) {
-        dataStore.edit { it[key] = secretEncode(key.name, value) }
+        val stored = secretEncode(key.name, value) ?: return
+        dataStore.edit { it[key] = stored }
     }
     override fun <T> getFlow(key: Preferences.Key<T>, default: T): Flow<T> =
         dataStore.data.map { secretDecode(key.name, it[key]) ?: default }
@@ -101,13 +102,18 @@ object DataStoreManager : IDataStore {
     }
 
     /**
-     * 敏感键（密码 / token / cookie）在落盘前用 DPAPI 加密，读出后透明解密；
-     * 非字符串或非敏感键原样通过。Android 端没装加密器时退化为明文（与旧行为一致）。
+     * 敏感键（密码 / token / cookie）在落盘前加密，读出后透明解密。
+     * 非字符串或非敏感键原样通过。Android 没装加密器时仍写明文。
+     * 桌面发行版要求加密：加密失败返回 null，调用方放弃这次写入。
      */
     @Suppress("UNCHECKED_CAST")
-    private fun <T> secretEncode(name: String, value: T): T {
+    private fun <T> secretEncode(name: String, value: T): T? {
         if (value !is String || !SecretStore.isSensitive(name)) return value
-        return (SecretStore.encode(name, value) ?: value) as T
+        val encoded = SecretStore.encode(name, value) ?: run {
+            SecretStore.noteUnsafeWriteRefused()
+            return null
+        }
+        return encoded as T
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -127,7 +133,14 @@ object DataStoreManager : IDataStore {
                 val key = stringPreferencesKey(name)
                 val current = prefs[key] ?: return@forEach
                 if (current.isEmpty() || SecretStore.isEncoded(current)) return@forEach
-                prefs[key] = SecretStore.encode(name, current) ?: current
+                val encoded = SecretStore.encode(name, current)
+                if (encoded == null) {
+                    // 不能加密就不要留着明文
+                    prefs.remove(key)
+                    SecretStore.noteUnsafeWriteRefused()
+                    return@forEach
+                }
+                prefs[key] = encoded
                 migrated++
             }
         }

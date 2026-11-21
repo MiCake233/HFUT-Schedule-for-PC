@@ -11,7 +11,8 @@ import javax.crypto.spec.SecretKeySpec
  * macOS 凭据加密：主密钥放在登录钥匙串，磁盘上的值是 AES-GCM 密文。
  *
  * 钥匙串项只有当前用户能读，拷到别的账号或别的机器解不开，效果对齐 Windows DPAPI。
- * 不在 macOS 上时 [install] 直接返回 false，调用方保持明文回退。
+ * 新建主密钥时把口令写到 `security -i` 的标准输入，不放进进程参数。
+ * 不在 macOS 上时 [install] 直接返回 false。桌面发行版会因此拒绝明文写入。
  */
 internal object MacSecrets {
 
@@ -20,9 +21,24 @@ internal object MacSecrets {
 
     internal data class CommandResult(val code: Int, val output: String)
 
-    /** 测试可以换掉，避免真的调用 `security`。 */
-    internal var runner: (List<String>) -> CommandResult = { args ->
+    internal data class KeychainAdd(val args: List<String>, val stdin: String)
+
+    /**
+     * 新建钥匙串项的调用方式。参数里只有 `security -i`，主密钥在标准输入的命令行里。
+     */
+    internal fun keychainAddInvocation(encodedKey: String): KeychainAdd = KeychainAdd(
+        args = listOf("security", "-i"),
+        stdin = "add-generic-password -a $ACCOUNT -s $SERVICE -w $encodedKey -U\n",
+    )
+
+    /** 测试可以换掉，避免真的调用 `security`。第二参是可选的标准输入。 */
+    internal var runner: (List<String>, String?) -> CommandResult = { args, stdin ->
         val process = ProcessBuilder(args).redirectErrorStream(true).start()
+        if (stdin != null) {
+            process.outputStream.bufferedWriter().use { it.write(stdin) }
+        } else {
+            process.outputStream.close()
+        }
         val text = process.inputStream.bufferedReader().use { it.readText() }
         CommandResult(process.waitFor(), text)
     }
@@ -39,13 +55,15 @@ internal object MacSecrets {
     }
 
     internal fun readOrCreateKey(): ByteArray? {
-        val found = runner(listOf("security", "find-generic-password", "-a", ACCOUNT, "-s", SERVICE, "-w"))
+        val found = runner(
+            listOf("security", "find-generic-password", "-a", ACCOUNT, "-s", SERVICE, "-w"),
+            null,
+        )
         val existing = found.output.trim().takeIf { found.code == 0 && it.isNotEmpty() }
         val encoded = existing ?: run {
             val created = Base64.getEncoder().encodeToString(SecureRandom().generateSeed(32))
-            val added = runner(
-                listOf("security", "add-generic-password", "-a", ACCOUNT, "-s", SERVICE, "-w", created, "-U")
-            )
+            val add = keychainAddInvocation(created)
+            val added = runner(add.args, add.stdin)
             if (added.code != 0) return null
             created
         }

@@ -19,9 +19,9 @@
 | --- | --- |
 | `HFUT-Schedule-Setup-x.y.z.msi` | Windows 10 / 11 x64 安装包。内置 JDK 21 运行时，无需预装 Java；高版本可覆盖升级。 |
 | `HFUT-Schedule-x.y.z-portable.zip` | Windows 便携版。解压后运行 `HFUT-Schedule.exe`。 |
-| `HFUT-Schedule-x.y.z.dmg` | macOS 12 及以上（Apple 芯片与 Intel 均可，取决于打包机的 JDK）。内置 JDK 21，打开后把应用拖到「应用程序」。本包未签名；第一次打开若被拦截，请到「系统设置 → 隐私与安全性」允许，或按住 Control 再点打开。已发布的 10.1.0 以预发布挂在 Releases。 |
+| `HFUT-Schedule-x.y.z.dmg` | macOS 12 及以上（Apple 芯片与 Intel 均可，取决于打包机的 JDK）。内置 JDK 21，打开后把应用拖到「应用程序」。本包未签名；第一次打开若被拦截，请到「系统设置 → 隐私与安全性」允许，或按住 Control 再点打开。已发布的 10.1.0 是正式版，和 Windows 的 MSI 在同一个 Release 里。 |
 
-macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：已安装的 Windows 版只读取正式版，且只接受 `.msi`。Windows 用户请继续使用 v10.0.0，直到出现带 MSI 的正式版。从源码生成 `.dmg` 必须在 Mac 上用 jpackage 打出，本仓库的 Linux 持续集成不能交叉生成 DMG。
+v10.1.0 已作为正式版发布，同一个 Release 里同时有 Windows 的 `.msi` 和 macOS 的 `.dmg`。已安装的 10.1.0 通过 `/releases/latest` 检查更新。从源码生成 `.dmg` 必须在 Mac 上用 jpackage 打出，本仓库的 Linux 持续集成不能交叉生成 DMG。
 
 ## 功能
 
@@ -33,7 +33,7 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
 | 系统托盘 / 菜单栏 | Windows 为系统托盘，macOS 为菜单栏图标。关闭窗口默认最小化到托盘或菜单栏；菜单可显示/隐藏主窗口、开关今日课程面板与置顶、退出程序；命令行参数 `--minimized` 启动后仅驻留托盘或菜单栏。 |
 | 提醒 | 上课与考试提醒，开始前 5～60 分钟（默认 20 分钟），提前时间面板内可调。Windows 用托盘气泡，macOS 用通知中心。 |
 | 启动与窗口 | 开机自启动开关。Windows 写入当前用户启动项，开机后驻留托盘不弹窗；macOS 写入 `~/Library/LaunchAgents/com.hfut.schedule.desktop.plist`，启动项带 `--minimized`。主窗口尺寸与位置记忆。 |
-| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）。Windows 只接受 `.msi`，macOS 只接受 `.dmg`。macOS 10.1.0 的 `.dmg` 是预发布，不会被 Windows 10.0.0 当成可安装更新。下载后必须通过 SHA-256，并核对 MSI 的 OLE 头或 DMG 的 `koly` 尾。任一不符即删除文件并拒绝运行。「选项」内亦提供手动检查与打开发布页。 |
+| 更新 | 启动时自动检查新版本并弹窗提示，只认 GitHub 的**正式版**（预发布不会推送）。Windows 只接受 `.msi`，macOS 只接受 `.dmg`。v10.1.0 正式版同时提供这两种安装包。下载后必须通过 SHA-256，并核对 MSI 的 OLE 头或 DMG 的 `koly` 尾。任一不符即删除文件并拒绝运行。「选项」内亦提供手动检查与打开发布页。 |
 | 数据 | 通过系统文件对话框备份 / 还原本机数据目录；恢复前先解压到临时目录校验，失败不会动原数据；崩溃日志自动落盘，可在「修复」窗口查看、预览、清空与打开目录。 |
 | 一卡通 | 余额、流水、账单分析、消费报表、限额。 |
 | 教务 | 成绩查询与 GPA 分析、考试成绩详情、考试安排、教学计划完成情况、总学分、挂科率、课程检索、教师检索、空闲教室、选课、退课、转专业、个人信息、学期报告（可导出为图片）。 |
@@ -48,7 +48,7 @@ macOS 10.1.0 以预发布发出，以免挤掉 Windows 10.0.0 的自动更新：
 - **数据目录**：Windows 为 `%APPDATA%\HFUT-Schedule`（便携版相同）；macOS 为 `~/Library/Application Support/HFUT-Schedule`。备份不含 `cache` 与 `update` 两个子目录。Linux 上从源码运行时落在 `~/.hfut-schedule`，不是发行目标。
 - **密码**：桌面版**不保存**登录密码；旧版本曾写入的明文密码会在启动时清除。
 - **登录状态**：为避免每次都输验证码，本机会保存 CAS 的会话凭据（TGC / SESSION）、各平台 token 与用户保存的平台密码。
-  Windows 上这些值用 DPAPI 加密；macOS 上用登录钥匙串里的 AES-GCM 主密钥加密。密文写在 `prefs/*.properties` 与 DataStore 中，只有当前系统用户能解开。换机器或换用户会当成未登录。
+  Windows 上这些值用 DPAPI 加密；macOS 上用登录钥匙串里的 AES-GCM 主密钥加密。密文写在 `prefs/*.properties` 与 DataStore 中，只有当前系统用户能解开。换机器或换用户会当成未登录。加密器装不上时，程序会提示，并拒绝把这些凭据写成明文。
   已发布的正式版 v10.0.0 早于这次加密，那一版只受 Windows 用户目录权限保护。
   与他人共用电脑时，请用「选项 → 启动 → 退出登录」清除，该操作会清掉本机保存的会话与各平台 token。
 - **崩溃日志**：写在数据目录的 `logs` 下。Windows 为 `%APPDATA%\HFUT-Schedule\logs`。仅保存在本机，内容含学号与堆栈，发送给他人前请自行检查。
@@ -186,9 +186,7 @@ macOS 移植以及凭据、跳转与备份方面的修复已经合入 `desktop-w
 
 已发布的 v10.0.0 对应提交 `e68deb99`。那一版请求的是 `/releases` 列表，再按响应里的第一个 `tag_name` 拼出 `HFUT-Schedule-<版本>.msi`。这个列表包含预发布。标签 `v10.0.0` 及其安装包保持不动，不要改标签，也不要替换标签上的文件。
 
-macOS 10.1.0 以预发布挂出，使正式版 `/releases/latest` 仍停在带 MSI 的 v10.0.0。
-
-已发布的 macOS 包是标签 `v10.1.0`，指向提交 `11956d4d1b3f56db2ce122e2877f1cd17228b5c1`。其后的 `eb44ebf3` 与 `0f65b52b` 加入了一个隐藏的 1 dp 占位窗口，用来在最后一个真实窗口关闭后保住进程。这两次提交没有合入默认分支，也不要打进安装包。已发布的 macOS 源码以 `v10.1.0` 为准。
+v10.1.0 是正式版，标签指向提交 `fcd087017b24d4e55605be36b8a83ff6e02a9310`，同一个 Release 里有 `.msi` 和 `.dmg`。不要把隐藏占位窗口那类提交打进安装包。已发布的桌面源码以这个标签为准。
 
 ### 数据与凭据
 

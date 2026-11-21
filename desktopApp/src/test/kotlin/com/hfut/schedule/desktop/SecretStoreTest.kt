@@ -43,6 +43,9 @@ class SecretStoreTest {
     fun tearDown() {
         SecretStore.protector = null
         SecretStore.unprotector = null
+        SecretStore.requireEncryption = false
+        SecretStore.encryptionUnavailable = false
+        SecretStore.onEncryptionUnavailable = null
         dir.deleteRecursively()
     }
 
@@ -89,11 +92,34 @@ class SecretStoreTest {
     }
 
     @Test
-    fun withoutProtectorValuesStayPlaintext() {
+    fun withoutProtectorAndroidStillStoresPlaintext() {
         SecretStore.protector = null
         SecretStore.unprotector = null
+        SecretStore.requireEncryption = false
         assertEquals("TGT-123", SecretStore.encode("TGC", "TGT-123"))
         assertEquals("TGT-123", SecretStore.decode("TGC", "TGT-123"))
+    }
+
+    @Test
+    fun desktopRefusesPlaintextWhenEncryptionIsRequired() {
+        SecretStore.protector = null
+        SecretStore.unprotector = null
+        SecretStore.requireEncryption = true
+        assertNull(SecretStore.encode("TGC", "TGT-123"))
+        assertEquals("", SecretStore.encode("TGC", ""))
+
+        val file = File(dir, "closed.properties")
+        val store = PlatformSharedPreferences(file)
+        store.edit {
+            putString("TGC", "TGT-123")
+            putString("Username", "2026212855")
+        }
+        val onDisk = file.readText()
+        assertFalse(onDisk.contains("TGT-123"))
+        assertFalse(onDisk.contains("dpapi1"))
+        assertTrue(onDisk.contains("2026212855"))
+        assertEquals("", store.getString("TGC", ""))
+        assertTrue(SecretStore.encryptionUnavailable)
     }
 
     @Test
