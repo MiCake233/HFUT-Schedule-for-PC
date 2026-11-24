@@ -90,7 +90,8 @@ compose.desktop {
             targetFormats(TargetFormat.Msi, TargetFormat.Dmg)
             packageName = "HFUT-Schedule"
             // 10.1.0：同步上游 4.21.4.1，并增加 macOS DMG
-            packageVersion = "10.1.0"
+            // 10.1.1：包含已合入的桌面修复
+            packageVersion = "10.1.1"
             description = "HFUT 课程表 桌面版"
             vendor = "HFUT-Schedule Desktop Port"
             copyright = "Apache-2.0"
