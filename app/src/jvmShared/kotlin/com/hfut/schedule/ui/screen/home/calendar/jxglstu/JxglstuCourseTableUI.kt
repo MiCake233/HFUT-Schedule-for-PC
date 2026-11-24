@@ -126,6 +126,21 @@ private suspend fun loginHuiXIn(cookies: String, vm: NetWorkViewModel) {
     vm.goToHuiXin(cookies)
 }
 
+/**
+ * 合工大教务的刷新方式。
+ *
+ * 没有 token，或 token 已经 401，都走学号密码登录。空 token 不是第二课堂的 CAS 跳转，
+ * 第二课堂在上面的分支里自己处理。其它状态码保持原样，不因为一次 5xx 就把会话判死。
+ */
+fun uniAppSessionAction(token: String, statusCode: Int?): UniAppSessionAction {
+    if (token.isEmpty() || statusCode == StatusCode.UNAUTHORIZED.code) {
+        return UniAppSessionAction.Login
+    }
+    return UniAppSessionAction.Keep
+}
+
+enum class UniAppSessionAction { Login, Keep }
+
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun JxglstuCourseTableUI(
@@ -414,18 +429,13 @@ fun JxglstuCourseTableUI(
                    // 合工大教务
                    launch uniapp@ {
                        val auth = DataStoreManager.uniAppJwt.first()
-                       if(auth.isEmpty()) {
-                           vm.gotoSecondClass(cookies)
-                       } else {
-                           // 检测可用性
-                           val statusCode = UniAppRepository.checkLogin(auth)
-                           val result = statusCode != StatusCode.UNAUTHORIZED.code
-                           if(result) {
+                       val statusCode = if (auth.isEmpty()) null else UniAppRepository.checkLogin(auth)
+                       when (uniAppSessionAction(auth, statusCode)) {
+                           UniAppSessionAction.Keep -> {
                                LogUtil.debug("无需刷新合工大教务")
                                return@uniapp
-                           } else {
-                               UniAppRepository.login()
                            }
+                           UniAppSessionAction.Login -> UniAppRepository.login()
                        }
                    }
                }

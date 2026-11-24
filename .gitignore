@@ -29,6 +29,9 @@ render.experimental.xml
 *.jks
 *.keystore
 
+# 和风天气签名材料，只放在本机数据目录或这个被忽略的文件里
+qweather.properties
+
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 

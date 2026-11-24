@@ -10,18 +10,22 @@ import com.hfut.schedule.network.api.inf.QWeatherService
 import com.hfut.schedule.logic.util.network.launchRequestState
 import com.hfut.schedule.network.api.impl.QWeatherServiceCreator
 import com.hfut.schedule.network.api.repo.QWeatherRepositoryInf
+import com.hfut.schedule.network.api.util.CryptoUtil
 import com.xah.common.logic.state.UiStateHolder
 import com.hfut.schedule.network.core.GsonInstance
 import com.hfut.schedule.network.core.StatusCode
 import com.hfut.schedule.ui.screen.home.search.function.other.life.getLocation
+import okhttp3.Headers
+import okhttp3.ResponseBody
+import retrofit2.Call
 
 object QWeatherRepository : QWeatherRepositoryInf {
     private val qWeather = QWeatherServiceCreator.create(QWeatherService::class.java)
 
     override suspend fun getWeatherWarn(campus: CampusRegion, weatherWarningData : UiStateHolder<QWeatherWarnResponse>) =
-        launchRequestState(
+        withWeatherAuth(
             holder = weatherWarningData,
-            request = { qWeather.getWeatherWarn(locationID = getLocation(campus)) },
+            request = { auth -> qWeather.getWeatherWarn(locationID = getLocation(campus), authorization = auth) },
             transformSuccess = { _, json -> parseWeatherWarn(json) }
         )
 
@@ -31,11 +35,24 @@ object QWeatherRepository : QWeatherRepositoryInf {
     } catch (e : Exception) { throw e }
 
     override suspend fun getWeather(campus: CampusRegion, qWeatherResult : UiStateHolder<QWeatherNowResponse>) =
-        launchRequestState(
+        withWeatherAuth(
             holder = qWeatherResult,
-            request = { qWeather.getWeather(locationID = getLocation(campus)) },
+            request = { auth -> qWeather.getWeather(locationID = getLocation(campus), authorization = auth) },
             transformSuccess = { _, json -> parseWeatherNow(json) }
         )
+
+    private suspend fun <T> withWeatherAuth(
+        holder: UiStateHolder<T>,
+        request: suspend (auth: String) -> Call<ResponseBody>,
+        transformSuccess: suspend (Headers, String) -> T,
+    ) {
+        val auth = CryptoUtil.getQWeatherAuth()
+        if (auth.isBlank()) {
+            holder.emitError(IllegalStateException("未配置和风天气签名"))
+            return
+        }
+        launchRequestState(holder = holder, request = { request(auth) }, transformSuccess = transformSuccess)
+    }
 
     @JvmStatic
     private fun parseWeatherNow(json : String) : QWeatherNowResponse = try {

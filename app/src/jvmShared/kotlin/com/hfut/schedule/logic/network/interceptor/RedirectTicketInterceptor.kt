@@ -200,8 +200,13 @@ private fun hit(current : String,target : String) : Boolean =
     locationMatchesService(current, target) ||
         locationMatchesService(current, WebVpnConvertor.getWebVpnUrl(target))
 
-/** 换主机时丢掉原请求的 Cookie，避免把 CAS 会话送到教务 / 图书馆等其它站点。 */
-private fun Request.follow(location: String): Request {
+/**
+ * 手动跟随一条 Location。
+ *
+ * OkHttp 4.9 自动重定向时，换主机或换协议只丢掉 Authorization，Cookie 会原样带上。
+ * 这里换主机就去掉 Cookie，CAS 的 TGC 不会被送到教务、慧新易校或其它站点。
+ */
+fun Request.follow(location: String): Request {
     val resolved = url.resolve(location) ?: return newBuilder().url(location).removeHeader("Cookie").build()
     val builder = newBuilder().url(resolved)
     if (!resolved.host.equals(url.host, ignoreCase = true)) builder.removeHeader("Cookie")
