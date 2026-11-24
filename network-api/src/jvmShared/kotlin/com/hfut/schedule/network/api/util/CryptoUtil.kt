@@ -156,15 +156,20 @@ object CryptoUtil {
         return java.util.Base64.getEncoder().encodeToString(encryptedBytes)
     }
 
-    //用于生成和风天气密钥
+    /**
+     * 和风天气 Bearer。签名材料来自 [QWeatherCredentials]，没有配置或签不出来时返回空串，
+     * 调用方不要发请求。这里不内置私钥。
+     */
     @JvmStatic
     fun getQWeatherAuth() : String {
-        return "Bearer " + QWeatherKeyGenerator()
-            .generate(
-            "MC4CAQAwBQYDK2VwBCIEILpLcCmyt8JbbBaEMiBvA9ys3RLb2v63rWhuFC83KDGZ",
-            "4HTJ5N7F37",
-            "THB3UBK56Q"
-        )
+        val credentials = QWeatherCredentials.load() ?: return ""
+        return runCatching {
+            "Bearer " + QWeatherKeyGenerator().generate(
+                credentials.privateKeyPkcs8,
+                credentials.projectId,
+                credentials.keyId,
+            )
+        }.getOrDefault("")
     }
 
     @JvmStatic
